@@ -163,6 +163,7 @@ dependencies = [
     { name = "nflreadpy" },
     { name = "pandas" },
     { name = "pyarrow" },
+    { name = "pydantic" },
     { name = "python-dotenv" },
 ]
 
@@ -173,6 +174,7 @@ requires-dist = [
     { name = "nflreadpy", specifier = ">=0.1.5" },
     { name = "pandas", specifier = ">=3.0.2" },
     { name = "pyarrow", specifier = ">=24.0.0" },
+    { name = "pydantic", specifier = ">=2.13.3" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
 ]
 

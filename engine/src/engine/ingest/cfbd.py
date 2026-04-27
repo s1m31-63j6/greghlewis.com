@@ -15,7 +15,9 @@ def _client() -> cfbd.ApiClient:
         raise RuntimeError(
             "CFBD_API_KEY not set. Sign up at https://collegefootballdata.com/ and add to .env"
         )
-    cfg = cfbd.Configuration(access_token=api_key)
+    cfg = cfbd.Configuration()
+    cfg.api_key["Authorization"] = api_key
+    cfg.api_key_prefix["Authorization"] = "Bearer"
     return cfbd.ApiClient(cfg)
 
 
