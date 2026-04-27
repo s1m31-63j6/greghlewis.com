@@ -3,7 +3,7 @@ import os
 
 import aws_cdk as cdk
 
-from stacks.data_stack import DataStack
+from stacks.nfl_comparables_data import DataStack
 
 app = cdk.App()
 

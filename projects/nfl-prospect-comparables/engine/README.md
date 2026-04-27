@@ -22,4 +22,4 @@ CFBD API key: free, sign up at https://collegefootballdata.com/
 
 ## AWS
 
-Reads/writes the buckets provisioned by `../infra/`. Uses the local `portfolio` AWS profile by default.
+Reads/writes the buckets provisioned by `../../../infra/` (the repo-root CDK app, stack `NflComparablesData`). Uses the local `portfolio` AWS profile by default.
