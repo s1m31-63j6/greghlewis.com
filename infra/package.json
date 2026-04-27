@@ -1,0 +1,15 @@
+{
+  "name": "infra",
+  "version": "1.0.0",
+  "description": "AWS CDK stacks for the `portfolio` AWS account (ID `397483229232`). Python CDK; CDK CLI pinned per-project via `package.json`.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "aws-cdk": "^2.1119.0"
+  }
+}
