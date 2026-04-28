@@ -20,6 +20,7 @@ from engine.io import s3 as s3io
 from engine.features import qb as qb_features
 from engine.features import rb as rb_features
 from engine.features import universal
+from engine.features import wr as wr_features
 from engine.parse import attribute
 from engine.schema import PlayerProfile, Position
 
@@ -84,6 +85,7 @@ def run(
     # Position-specific filtered contexts.
     qb_ctx = None
     rb_ctx = None
+    wr_ctx = None
     if include_qb and any(p.position == Position.QB for p in pooled):
         qb_canon = _canon_ids_for_position(pooled, pfr_to_canon_id, Position.QB)
         qb_ctx = qb_features.build_qb_context(cohort_attr.plays, qb_canon)
@@ -98,6 +100,13 @@ def run(
             print(f"    rb attributed plays: {rb_ctx.plays.height:,}")
             print(f"    rb (rb_id, season) pairs: {rb_ctx.seasons.height}")
 
+    if any(p.position == Position.WR for p in pooled):
+        wr_canon = _canon_ids_for_position(pooled, pfr_to_canon_id, Position.WR)
+        wr_ctx = wr_features.build_wr_context(cohort_attr.plays, wr_canon)
+        if wr_ctx.seasons.height > 0:
+            print(f"    wr attributed plays: {wr_ctx.plays.height:,}")
+            print(f"    wr (wr_id, season) pairs: {wr_ctx.seasons.height}")
+
     summary = {}
     for name, profiles in all_profiles.items():
         print(f"\n  computing features for {name} ({len(profiles)} profiles)...")
@@ -109,6 +118,13 @@ def run(
             if rb_ctx is not None and prof.position == Position.RB:
                 feats.update(rb_features.compute(
                     prof, rb_ctx, pfr_to_canon_id=pfr_to_canon_id, pss_wide=ctx.pss_wide
+                ))
+            if wr_ctx is not None and prof.position == Position.WR:
+                feats.update(wr_features.compute(
+                    prof, wr_ctx,
+                    pfr_to_canon_id=pfr_to_canon_id,
+                    pss_wide=ctx.pss_wide,
+                    team_pass_dist=cohort_attr.team_pass_dist,
                 ))
             prof.features = feats
             for fname in feats:

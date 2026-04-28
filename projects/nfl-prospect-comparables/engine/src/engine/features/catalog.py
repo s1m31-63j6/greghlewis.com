@@ -195,35 +195,71 @@ RB_FEATURES: list[FeatureSpec] = [
 
 WR_ONLY = (Position.WR,)
 
+# Audited 2026-04-28 against the WR-analyst frameworks (Reception Perception,
+# Hayden Winks, JJ Zachariason, Eric Eager / SumerSports, PFF, PlayerProfiler,
+# Mockdraftable, Open Source Football, Peter Howard, Campus2Canton, Ryan Heath,
+# Jakob Sanderson). The hard public-data ceiling is route counts and coverage
+# labels (man/zone/press/off) — neither exists in CFBD. The community's
+# workaround is per-team-pass-attempt denominators (RYPTPA / TPTPA / 1DPTPA)
+# as the college analogue of PFF's per-route metrics. WR_DEFERRED below
+# enumerates the specs we cannot compute without paid charting.
 WR_FEATURES: list[FeatureSpec] = [
-    # --- target / opportunity ---
+    # --- per-team-pass-attempt family (Howard / Campus2Canton / Heath) ---
+    FeatureSpec("wr_ryptpa", WR_ONLY, "opportunity", "Receiving yards per team pass attempt — public-data analogue of PFF YPRR", "career rec_yards / team pass attempts (across his team-seasons)", ("cfbd_pbp",)),
+    FeatureSpec("wr_tptpa", WR_ONLY, "opportunity", "Targets per team pass attempt — proxy for target-per-route", "career targets / team pass attempts", ("cfbd_pbp",)),
+    FeatureSpec("wr_1dptpa", WR_ONLY, "opportunity", "First downs per team pass attempt — Campus2Canton 1DRR analogue", "career first downs via reception / team pass attempts", ("cfbd_pbp",)),
+    # --- volume / opportunity ---
     FeatureSpec("wr_targets_per_game", WR_ONLY, "opportunity", "Targets per game", "targets / games_played", ("cfbd_pbp",)),
-    FeatureSpec("wr_target_share", WR_ONLY, "opportunity", "Career target share of team passes", "targets / team_pass_attempts", ("cfbd_pbp",)),
-    FeatureSpec("wr_air_yards_share", WR_ONLY, "opportunity", "Career air yards share", "sum(air_yards) / team_air_yards", ("cfbd_pbp",)),
-    FeatureSpec("wr_wopr", WR_ONLY, "opportunity", "Weighted Opportunity Rating: 1.5*tgt_share + 0.7*ay_share", "Josh Hermsmeyer's WOPR formula", ("cfbd_pbp",)),
-    FeatureSpec("wr_yprr", WR_ONLY, "opportunity", "Yards per route run (where derivable)", "rec_yards / routes_run (proxy if needed)", ("cfbd_pbp",)),
-    FeatureSpec("wr_targets_per_route", WR_ONLY, "opportunity", "Targets per route run (proxy)", "targets / routes_run", ("cfbd_pbp",)),
     # --- production ---
-    FeatureSpec("wr_yards_per_game", WR_ONLY, "production", "Receiving yards per game", "rec_yards / games_played", ("cfbd_box",)),
-    FeatureSpec("wr_rec_per_game", WR_ONLY, "production", "Receptions per game", "receptions / games_played", ("cfbd_box",)),
-    FeatureSpec("wr_td_per_game", WR_ONLY, "production", "Receiving TDs per game", "rec_tds / games_played", ("cfbd_box",)),
+    FeatureSpec("wr_yards_per_game", WR_ONLY, "production", "Receiving yards per game", "rec_yards / games_played", ("cfbd_pbp",)),
+    FeatureSpec("wr_rec_per_game", WR_ONLY, "production", "Receptions per game", "receptions / games_played", ("cfbd_pbp",)),
+    FeatureSpec("wr_td_per_game", WR_ONLY, "production", "Receiving TDs per game", "rec_tds / games_played", ("cfbd_pbp",)),
     FeatureSpec("wr_big_play_rate", WR_ONLY, "production", "Big-play rate (≥20 yard receptions per game)", "count(rec_yds ≥ 20) / games_played", ("cfbd_pbp",)),
     FeatureSpec("wr_first_down_per_rec", WR_ONLY, "production", "First-down rate per reception", "first_downs_via_rec / receptions", ("cfbd_pbp",)),
     # --- efficiency ---
     FeatureSpec("wr_catch_rate", WR_ONLY, "efficiency", "Catch rate", "receptions / targets", ("cfbd_pbp",)),
-    FeatureSpec("wr_adot", WR_ONLY, "efficiency", "Average depth of target", "mean(air_yards) over targets", ("cfbd_pbp",)),
-    FeatureSpec("wr_yac_per_reception", WR_ONLY, "efficiency", "YAC per reception", "sum(yac) / receptions", ("cfbd_pbp",)),
-    FeatureSpec("wr_yac_over_expected", WR_ONLY, "efficiency", "YAC over expected per reception", "actual_yac - model_yac(catch_loc, defenders)", ("cfbd_pbp",)),
-    FeatureSpec("wr_drop_rate_proxy", WR_ONLY, "efficiency", "Drop rate proxy from incompletion locations", "easy_incompletions / catchable_targets", ("cfbd_pbp",)),
-    # --- formation / role ---
-    FeatureSpec("wr_slot_rate_proxy", WR_ONLY, "role", "Slot rate proxy from formation/personnel", "slot_snaps / total_offensive_snaps", ("cfbd_pbp",)),
-    FeatureSpec("wr_outside_rate_proxy", WR_ONLY, "role", "Wide/outside snap rate proxy", "outside_snaps / total_offensive_snaps", ("cfbd_pbp",)),
-    FeatureSpec("wr_personnel_11_share", WR_ONLY, "role", "Share of snaps in 11 personnel", "snaps_in_11 / total_snaps", ("cfbd_pbp",)),
-    FeatureSpec("wr_motion_rate_proxy", WR_ONLY, "role", "Pre-snap motion rate proxy (where data available)", "motion_snaps / total_snaps", ("cfbd_pbp",)),
-    # --- trajectory / breakout ---
-    FeatureSpec("wr_breakout_age_yprr", WR_ONLY, "trajectory", "Age at first 2.0+ YPRR season", "min age where season YPRR ≥ 2.0", ("cfbd_pbp",)),
+    FeatureSpec("wr_epa_per_target", WR_ONLY, "efficiency", "EPA per target — Eric Eager's target-level efficiency metric", "sum(ppa) on attributed targets / targets", ("cfbd_pbp",)),
+    FeatureSpec("wr_success_rate", WR_ONLY, "efficiency", "Share of targets with positive EPA", "targets where ppa > 0 / targets", ("cfbd_pbp",)),
+    FeatureSpec("wr_rating", WR_ONLY, "efficiency", "Passer rating when targeted (PFF WR Rating concept)", "NFL passer rating formula applied to targets-as-attempts", ("cfbd_pbp",)),
+    # --- premium / above-teammate (PlayerProfiler) ---
+    FeatureSpec("wr_target_premium", WR_ONLY, "premium", "Player YPT minus teammate YPT — isolates 'is he better than his teammates'", "player yards/target - team yards/target (excl. self)", ("cfbd_pbp",)),
+    FeatureSpec("wr_yards_above_teammate_pct", WR_ONLY, "premium", "Career rec yards as fraction of team's top WR — Hog Rate without snap-share", "self_rec_yards / max_teammate_rec_yards (per team-season, then averaged)", ("cfbd_pbp",)),
+    # --- situational market share ---
+    FeatureSpec("wr_third_down_target_share", WR_ONLY, "situational", "Share of team's 3rd-down targets — trust signal", "self 3rd-down targets / team 3rd-down targets", ("cfbd_pbp",)),
+    FeatureSpec("wr_red_zone_target_share", WR_ONLY, "situational", "Share of team's red-zone targets — TD-equity signal", "self RZ targets / team RZ targets", ("cfbd_pbp",)),
+    # --- trajectory ---
+    FeatureSpec("wr_breakout_age_dominator", WR_ONLY, "trajectory", "Age at first season with dominator ≥ 0.20 (Hayden Winks standard)", "min age where season dominator ≥ 0.20", ("cfbd_pbp",)),
     FeatureSpec("wr_target_share_yoy_slope", WR_ONLY, "trajectory", "YoY target share slope", "linear regression slope across seasons", ("cfbd_pbp",)),
-    FeatureSpec("wr_dominator_peak", WR_ONLY, "trajectory", "Peak season dominator rating (rec yds + TDs share)", "max_season(rec_yards_share + rec_td_share) / 2", ("cfbd_box",)),
+    FeatureSpec("wr_dominator_peak", WR_ONLY, "trajectory", "Peak season dominator rating (rec yds + TDs share)", "max_season((rec_yards_share + rec_td_share) / 2)", ("cfbd_pbp",)),
+    FeatureSpec("wr_career_yards_slope", WR_ONLY, "trajectory", "YoY slope of receiving yards per game", "linear regression slope of yds/game by season", ("cfbd_pbp",)),
+    FeatureSpec("wr_final_year_dominator", WR_ONLY, "trajectory", "Most recent season's dominator rating — current-state signal", "(rec_yards_share + rec_td_share) / 2 in final season", ("cfbd_pbp",)),
+]
+
+
+# WR specs we could compute with paid charting / route data but cannot derive
+# from free public play-by-play. Documented here so the methodology page can
+# render the public-data ceiling explicitly. NOT included in CATALOG.
+WR_DEFERRED: list[FeatureSpec] = [
+    # No air yards in CFBD playText (only final yardline).
+    FeatureSpec("wr_air_yards_share", WR_ONLY, "deferred", "Career air yards share", "sum(air_yards) / team_air_yards", ("PFF/SIS",)),
+    FeatureSpec("wr_wopr", WR_ONLY, "deferred", "Hermsmeyer WOPR — depends on air_yards_share", "1.5*tgt_share + 0.7*ay_share", ("PFF/SIS",)),
+    FeatureSpec("wr_adot", WR_ONLY, "deferred", "Average depth of target", "mean(air_yards) over targets", ("PFF/SIS",)),
+    # No route counts in CFBD.
+    FeatureSpec("wr_yprr", WR_ONLY, "deferred", "Yards per route run — PFF flagship metric", "rec_yards / routes_run", ("PFF",)),
+    FeatureSpec("wr_targets_per_route", WR_ONLY, "deferred", "Targets per route run", "targets / routes_run", ("PFF",)),
+    # No YAC signal in CFBD playText (final yardline only, not catch location).
+    FeatureSpec("wr_yac_per_reception", WR_ONLY, "deferred", "YAC per reception", "sum(yac) / receptions", ("PFF/SIS",)),
+    FeatureSpec("wr_yac_over_expected", WR_ONLY, "deferred", "Baldwin's xYAC residual — needs catch location + defender model", "actual_yac - model_yac", ("nflverse_nextgen",)),
+    # No catchable / contested labels in any free source.
+    FeatureSpec("wr_drop_rate_proxy", WR_ONLY, "deferred", "Drop rate", "drops / catchable targets", ("PFF/SIS",)),
+    # No formation data in CFBD.
+    FeatureSpec("wr_slot_rate_proxy", WR_ONLY, "deferred", "Slot snap share", "slot_snaps / total_offensive_snaps", ("PFF/nextgen",)),
+    FeatureSpec("wr_outside_rate_proxy", WR_ONLY, "deferred", "Wide/outside snap share", "outside_snaps / total_offensive_snaps", ("PFF/nextgen",)),
+    FeatureSpec("wr_personnel_11_share", WR_ONLY, "deferred", "Share of snaps in 11 personnel", "snaps_in_11 / total_snaps", ("PFF/nextgen",)),
+    FeatureSpec("wr_motion_rate_proxy", WR_ONLY, "deferred", "Pre-snap motion rate", "motion_snaps / total_snaps", ("PFF/nextgen",)),
+    # Replaced by wr_breakout_age_dominator (Winks standard) — YPRR-anchored
+    # version requires route counts.
+    FeatureSpec("wr_breakout_age_yprr", WR_ONLY, "deferred", "Age at first 2.0+ YPRR season", "min age where season YPRR ≥ 2.0", ("PFF",)),
 ]
 
 # ---------------------------------------------------------------------------

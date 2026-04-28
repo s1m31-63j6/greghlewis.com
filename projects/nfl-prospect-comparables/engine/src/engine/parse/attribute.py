@@ -25,6 +25,13 @@ from engine.parse.playtext import (
     normalize_name,
     parse_play,
 )
+
+
+# Two-point conversions and sacks are in PASS_PLAY_TYPES but excluded from
+# team-level pass-attempt denominators: 2-pts are a separate game state, and
+# "pass attempt" conventionally excludes sacks (no target/route on a sack).
+TWO_POINT_PLAY_TYPES = frozenset({"Two Point Pass", "Two Point Rush"})
+SACK_PLAY_TYPES = frozenset({"Sack"})
 from engine.parse.resolver import NameResolver
 from engine.schema import PlayerProfile
 
@@ -126,6 +133,10 @@ def build_cohort_id_set(
 class CohortAttribution:
     plays: pl.DataFrame  # one row per play involving any cohort player
     pfr_to_canon_id: dict[str, int]  # nflverse pfr_id → canonical cohort id
+    team_pass_dist: pl.DataFrame  # per-(team, season) team-level pass-attempt counts
+    # team_pass_dist columns: team, season, pass_attempts, third_down_pass_attempts,
+    # red_zone_pass_attempts. Excludes sacks and 2-pts. Used as denominators for
+    # *_target_share features without re-parsing the corpus.
 
 
 def build_attributed_plays(
@@ -162,6 +173,8 @@ def build_attributed_plays(
     )
     n = len(keys)
     rows: list[dict] = []
+    # team-level pass distribution (counted alongside attribution — same loop)
+    team_pass: dict[tuple[str, int], list[int]] = {}  # (team, season) → [total, 3rd_dn, rz]
     started = time.monotonic()
 
     for i, k in enumerate(keys, 1):
@@ -172,10 +185,28 @@ def build_attributed_plays(
         df = df.filter(pl.col("playType").is_in(list(PASS_PLAY_TYPES | RUSH_PLAY_TYPES)))
 
         for row in df.iter_rows(named=True):
-            pp = parse_play(row.get("playType"), row.get("playText"))
+            play_type = row.get("playType")
+            offense = row.get("offense")
+            # Team-level pass-attempt distribution. Counted regardless of
+            # whether a cohort player was involved. Excludes sacks (no target)
+            # and 2-pts (separate game state) — matches conventional "pass
+            # attempt" semantics.
+            if (
+                play_type in PASS_PLAY_TYPES
+                and play_type not in TWO_POINT_PLAY_TYPES
+                and play_type not in SACK_PLAY_TYPES
+                and offense
+            ):
+                tp = team_pass.setdefault((offense, season), [0, 0, 0])
+                tp[0] += 1
+                if row.get("down") == 3:
+                    tp[1] += 1
+                if (row.get("yardsToGoal") or 100) <= 20:
+                    tp[2] += 1
+
+            pp = parse_play(play_type, row.get("playText"))
             if pp.parsed_type in ("other", "kneel"):
                 continue
-            offense = row.get("offense")
 
             passer_id: int | None = None
             rusher_id: int | None = None
@@ -226,8 +257,30 @@ def build_attributed_plays(
                 flush=True,
             )
 
+    team_pass_dist = pl.from_dicts(
+        [
+            {
+                "team": team,
+                "season": season,
+                "pass_attempts": counts[0],
+                "third_down_pass_attempts": counts[1],
+                "red_zone_pass_attempts": counts[2],
+            }
+            for (team, season), counts in team_pass.items()
+        ],
+        schema={
+            "team": pl.Utf8,
+            "season": pl.Int64,
+            "pass_attempts": pl.Int64,
+            "third_down_pass_attempts": pl.Int64,
+            "red_zone_pass_attempts": pl.Int64,
+        },
+    ) if team_pass else pl.DataFrame()
+
     if not rows:
-        return CohortAttribution(plays=pl.DataFrame(), pfr_to_canon_id={})
+        return CohortAttribution(
+            plays=pl.DataFrame(), pfr_to_canon_id={}, team_pass_dist=team_pass_dist
+        )
 
     # Explicit schema — polars' default schema-inference samples the first 100
     # rows, which fails when early partitions emit only one role's id (e.g. a
@@ -270,4 +323,6 @@ def build_attributed_plays(
         pl.col("receiver_id").replace_strict(canon_map, default=pl.col("receiver_id")),
     ])
 
-    return CohortAttribution(plays=plays, pfr_to_canon_id=canonical)
+    return CohortAttribution(
+        plays=plays, pfr_to_canon_id=canonical, team_pass_dist=team_pass_dist
+    )
