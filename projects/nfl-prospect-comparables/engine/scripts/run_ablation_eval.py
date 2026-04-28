@@ -47,9 +47,9 @@ def main() -> int:
     overall_correct = sum(int(info["accuracy"] * info["n"]) for info in base.values())
     print(f"  overall: {overall_correct}/{overall_n} = {100 * overall_correct / overall_n:.1f}%")
 
-    # Per-arm kNN
+    # Per-arm kNN — 4-arm split per memory's plan + the hybrid composite
     results = []
-    for arm in ("hybrid", "feature", "text"):
+    for arm in ("hybrid", "feature", "engineered", "measurables", "text"):
         r = ablation.evaluate_arm(
             cur, arm=arm, k=args.k, weighted=not args.no_weighted
         )
@@ -57,18 +57,22 @@ def main() -> int:
         print(ablation.format_result(r))
 
     # Summary table
-    print("\n" + "=" * 70)
+    print("\n" + "=" * 78)
     print("ABLATION SUMMARY")
-    print("=" * 70)
+    print("=" * 78)
     base_pct = 100 * overall_correct / overall_n
-    print(f"  {'arm':>10}  {'exact':>8}  {'±1 tier':>9}  {'macro F1':>10}  {'lift (exact)':>15}")
-    print(f"  {'baseline':>10}  {base_pct:>7.1f}%  {'':>9}  {'':>10}  {'':>15}")
+    print(
+        f"  {'arm':>12}  {'exact':>7}  {'±1 tier':>8}  "
+        f"{'F1':>6}  {'P@5':>6}  {'P@5±1':>6}"
+    )
+    print(f"  {'baseline':>12}  {base_pct:>6.1f}%  {'':>8}  {'':>6}  {'':>6}  {'':>6}")
     for r in results:
-        lift = 100 * r.accuracy - base_pct
         print(
-            f"  {r.arm:>10}  {100 * r.accuracy:>7.1f}%  "
-            f"{100 * r.adjacent_accuracy:>8.1f}%  "
-            f"{r.macro_f1:>10.3f}  {lift:>+14.1f}pp"
+            f"  {r.arm:>12}  {100 * r.accuracy:>6.1f}%  "
+            f"{100 * r.adjacent_accuracy:>7.1f}%  "
+            f"{r.macro_f1:>6.3f}  "
+            f"{100 * r.precision_at_k:>5.1f}%  "
+            f"{100 * r.precision_at_k_adjacent:>5.1f}%"
         )
     return 0
 

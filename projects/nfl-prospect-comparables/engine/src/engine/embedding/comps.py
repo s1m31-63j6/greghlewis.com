@@ -20,6 +20,33 @@ import polars as pl
 COHORTS_DEFAULT = ("training_2014_2020", "validation_2021_2025")
 VEC_COLS = {"hybrid": "hybrid_vec", "feature": "feature_vec", "text": "text_vec"}
 
+# "measurables" and "engineered" are sub-arms of the feature vector — they
+# slice the per-position feature_vec by feature-name category. Built on demand
+# in load_pool from feature_vectors.parquet + feature_stats.json (the raw
+# z-scored vectors, not the L2-normalized ones in hybrid_vectors.parquet).
+SLICE_ARMS = {"measurables", "engineered"}
+
+# Names of features that count as "measurables" — pre-college-production data
+# (combine + size + age + recruit pedigree + draft capital). Everything else in
+# the feature_vec is "engineered" (CFBD play-by-play production stats +
+# trajectory + situational splits).
+MEASURABLE_FEATURE_NAMES = frozenset({
+    # combine drills (percentiles + composites)
+    "forty_pct", "vertical_pct", "broad_jump_pct", "three_cone_pct",
+    "shuttle_pct", "bench_pct",
+    "athletic_composite", "ras_score", "speed_score", "burst_score",
+    "agility_score", "forty_per_pound", "catch_radius",
+    # size
+    "height_pct", "weight_pct", "bmi",
+    # age
+    "age_at_draft_pct", "days_since_birthday_at_draft",
+    # recruit pedigree
+    "recruit_composite_pct", "recruit_star_rating",
+    "recruiting_to_draft_delta", "weight_change_recruit_to_draft",
+    # draft signal (post-draft but non-college-production)
+    "draft_capital_pct",
+})
+
 
 @dataclass
 class Comp:
@@ -45,14 +72,28 @@ def load_pool(
     *,
     arm: str = "hybrid",
 ) -> CompPool:
-    """Load hybrid vectors for given cohorts and pre-build per-position
-    numpy matrices for kNN. `arm` selects which vector to use:
-      - "hybrid"  (default) — feature + text concat
-      - "feature" — structured features only
-      - "text"    — Titan v2 text only
+    """Load vectors for given cohorts and pre-build per-position numpy
+    matrices for kNN. `arm` selects which vector to use:
+      - "hybrid"      (default) — L2-normalized feature + L2-normalized
+                                   text concat (1080+-dim)
+      - "feature"     — full structured-feature vector, L2-normalized
+      - "text"        — Titan v2 text only, L2-normalized
+      - "measurables" — sub-slice of feature_vec: combine + size + age +
+                        recruit pedigree + draft signal (pre-college-
+                        production), L2-normalized
+      - "engineered"  — sub-slice of feature_vec: CFBD-production +
+                        trajectory + situational, L2-normalized
     """
-    if arm not in VEC_COLS:
-        raise ValueError(f"arm must be one of {list(VEC_COLS)}, got {arm!r}")
+    if arm in VEC_COLS:
+        return _load_pool_named(curated_bucket, cohorts, arm)
+    if arm in SLICE_ARMS:
+        return _load_pool_sliced(curated_bucket, cohorts, arm)
+    raise ValueError(f"arm must be one of {list(VEC_COLS) + list(SLICE_ARMS)}, got {arm!r}")
+
+
+def _load_pool_named(
+    curated_bucket: str, cohorts: tuple[str, ...], arm: str
+) -> CompPool:
     vec_col = VEC_COLS[arm]
     s3 = boto3.client("s3")
     parts: list[pl.DataFrame] = []
@@ -65,7 +106,53 @@ def load_pool(
         df = df.with_columns(pl.lit(c).alias("cohort"))
         parts.append(df)
     df = pl.concat(parts)
+    return _build_pool(df, vec_col)
 
+
+def _load_pool_sliced(
+    curated_bucket: str, cohorts: tuple[str, ...], arm: str
+) -> CompPool:
+    """Build a pool from feature_vectors.parquet + feature_stats.json by
+    slicing the raw z-scored feature vector into measurables / engineered
+    sub-vectors per position."""
+    import json as _json
+    s3 = boto3.client("s3")
+    # Load feature stats to get per-position feature_order
+    stats_body = s3.get_object(
+        Bucket=curated_bucket, Key="embeddings/feature_stats.json"
+    )["Body"].read()
+    stats = _json.loads(stats_body)
+    # Per-position mask: indices in feature_order that are measurables
+    pos_mask: dict[str, list[int]] = {}
+    for pos, info in stats.items():
+        order = info["feature_order"]
+        if arm == "measurables":
+            pos_mask[pos] = [i for i, n in enumerate(order) if n in MEASURABLE_FEATURE_NAMES]
+        else:  # engineered
+            pos_mask[pos] = [i for i, n in enumerate(order) if n not in MEASURABLE_FEATURE_NAMES]
+
+    parts: list[pl.DataFrame] = []
+    for c in cohorts:
+        body = s3.get_object(
+            Bucket=curated_bucket,
+            Key=f"embeddings/feature_vectors/cohort={c}/data.parquet",
+        )["Body"].read()
+        df = pl.read_parquet(io.BytesIO(body))
+        df = df.with_columns(pl.lit(c).alias("cohort"))
+        parts.append(df)
+    df = pl.concat(parts)
+
+    # Slice each row's vector by position-specific mask
+    sliced_vecs = []
+    for row in df.iter_rows(named=True):
+        full = np.asarray(row["vector"], dtype=np.float64)
+        idxs = pos_mask[row["position"]]
+        sliced_vecs.append(full[idxs].tolist())
+    df = df.with_columns(pl.Series(name="sliced_vec", values=sliced_vecs))
+    return _build_pool(df, "sliced_vec")
+
+
+def _build_pool(df: pl.DataFrame, vec_col: str) -> CompPool:
     by_position: dict[str, np.ndarray] = {}
     pos_index: dict[str, list[int]] = {}
     for pos in df["position"].unique().to_list():

@@ -60,6 +60,8 @@ class ArmResult:
     adjacent_correct: int   # within ±1 tier
     adjacent_accuracy: float
     macro_f1: float         # average F1 across the 5 tiers
+    precision_at_k: float          # mean per-query: top-K share actual tier
+    precision_at_k_adjacent: float  # mean per-query: top-K within ±1 of actual
     confusion: dict[str, dict[str, int]]  # actual → predicted → count
     by_position: dict[str, tuple[int, int]]  # pos → (correct, n)
 
@@ -93,27 +95,38 @@ def _macro_f1(confusion: dict[str, dict[str, int]]) -> float:
     return sum(f1s) / len(f1s) if f1s else 0.0
 
 
-def _knn_predict(
+def _knn_predict_with_precision(
     q_vec: np.ndarray,
     train_M: np.ndarray,
     train_outcomes_in_pos: list[str],
+    actual: str,
     *,
     k: int,
     weighted: bool = True,
-) -> str:
-    """Predict outcome via top-K cosine majority (or similarity-weighted) vote."""
+) -> tuple[str, float, float]:
+    """Predict outcome + compute precision@K over the same top-K neighbors.
+
+    Returns (predicted_tier, precision_exact, precision_adjacent).
+      precision_exact:  fraction of top-K whose outcome equals actual
+      precision_adjacent: fraction within ±1 tier of actual
+    """
     qn = q_vec / (np.linalg.norm(q_vec) or 1.0)
     sims = train_M @ qn  # train_M is already L2-normalized
     top = np.argsort(-sims)[:k]
     labels = [train_outcomes_in_pos[int(i)] for i in top]
+    # Prediction
     if not weighted:
-        return Counter(labels).most_common(1)[0][0]
-    # similarity-weighted: sum sims per label, return argmax
-    label_score: dict[str, float] = {}
-    for i in top:
-        lab = train_outcomes_in_pos[int(i)]
-        label_score[lab] = label_score.get(lab, 0.0) + float(sims[int(i)])
-    return max(label_score.items(), key=lambda kv: kv[1])[0]
+        prediction = Counter(labels).most_common(1)[0][0]
+    else:
+        label_score: dict[str, float] = {}
+        for i in top:
+            lab = train_outcomes_in_pos[int(i)]
+            label_score[lab] = label_score.get(lab, 0.0) + float(sims[int(i)])
+        prediction = max(label_score.items(), key=lambda kv: kv[1])[0]
+    # Precision@K
+    p_exact = sum(1 for lab in labels if lab == actual) / k
+    p_adj = sum(1 for lab in labels if _is_adjacent(actual, lab)) / k
+    return prediction, p_exact, p_adj
 
 
 def evaluate_arm(
@@ -149,10 +162,14 @@ def evaluate_arm(
     correct = 0
     adjacent_correct = 0
     n = 0
+    p_exact_sum = 0.0
+    p_adj_sum = 0.0
     confusion: dict[str, dict[str, int]] = {t: {} for t in OUTCOME_TIERS}
     by_position: dict[str, list[int]] = {p: [0, 0] for p in train_pool.by_position}
 
-    vec_col = comps_mod.VEC_COLS[arm]
+    # vec_col selects the column in val_pool.df that holds the query vector.
+    # sliced arms use a synthetic "sliced_vec" column built at load time.
+    vec_col = comps_mod.VEC_COLS.get(arm, "sliced_vec")
     for row in val_pool.df.iter_rows(named=True):
         pid = row["player_id"]
         actual = val_outcomes.get(pid)
@@ -163,9 +180,12 @@ def evaluate_arm(
             continue
         q_vec = np.asarray(row[vec_col], dtype=np.float64)
         train_M = train_pool.by_position[pos]
-        pred = _knn_predict(
-            q_vec, train_M, train_outcomes_by_pos[pos], k=k, weighted=weighted
+        pred, p_exact, p_adj = _knn_predict_with_precision(
+            q_vec, train_M, train_outcomes_by_pos[pos], actual,
+            k=k, weighted=weighted,
         )
+        p_exact_sum += p_exact
+        p_adj_sum += p_adj
         confusion.setdefault(actual, {})
         confusion[actual][pred] = confusion[actual].get(pred, 0) + 1
         if pred == actual:
@@ -185,6 +205,8 @@ def evaluate_arm(
         adjacent_correct=adjacent_correct,
         adjacent_accuracy=adjacent_correct / n if n else 0.0,
         macro_f1=_macro_f1(confusion),
+        precision_at_k=p_exact_sum / n if n else 0.0,
+        precision_at_k_adjacent=p_adj_sum / n if n else 0.0,
         confusion=confusion,
         by_position={p: (c, t) for p, (c, t) in by_position.items()},
     )
@@ -196,6 +218,7 @@ def format_result(r: ArmResult) -> str:
         f"  exact:           {r.correct}/{r.n} = {100 * r.accuracy:.1f}%",
         f"  within ±1 tier:  {r.adjacent_correct}/{r.n} = {100 * r.adjacent_accuracy:.1f}%",
         f"  macro F1:        {r.macro_f1:.3f}",
+        f"  precision@{r.k}:      {100 * r.precision_at_k:.1f}% (exact)  /  {100 * r.precision_at_k_adjacent:.1f}% (±1)",
         f"  by position (exact):",
     ]
     for pos, (c, t) in sorted(r.by_position.items()):
