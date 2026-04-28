@@ -21,6 +21,7 @@ from engine.features import qb as qb_features
 from engine.features import rb as rb_features
 from engine.features import universal
 from engine.features import wr as wr_features
+from engine.features import te as te_features
 from engine.parse import attribute
 from engine.schema import PlayerProfile, Position
 
@@ -107,6 +108,14 @@ def run(
             print(f"    wr attributed plays: {wr_ctx.plays.height:,}")
             print(f"    wr (wr_id, season) pairs: {wr_ctx.seasons.height}")
 
+    te_ctx = None
+    if any(p.position == Position.TE for p in pooled):
+        te_canon = _canon_ids_for_position(pooled, pfr_to_canon_id, Position.TE)
+        te_ctx = te_features.build_te_context(cohort_attr.plays, te_canon)
+        if te_ctx.seasons.height > 0:
+            print(f"    te attributed plays: {te_ctx.plays.height:,}")
+            print(f"    te (te_id, season) pairs: {te_ctx.seasons.height}")
+
     summary = {}
     for name, profiles in all_profiles.items():
         print(f"\n  computing features for {name} ({len(profiles)} profiles)...")
@@ -122,6 +131,13 @@ def run(
             if wr_ctx is not None and prof.position == Position.WR:
                 feats.update(wr_features.compute(
                     prof, wr_ctx,
+                    pfr_to_canon_id=pfr_to_canon_id,
+                    pss_wide=ctx.pss_wide,
+                    team_pass_dist=cohort_attr.team_pass_dist,
+                ))
+            if te_ctx is not None and prof.position == Position.TE:
+                feats.update(te_features.compute(
+                    prof, te_ctx,
                     pfr_to_canon_id=pfr_to_canon_id,
                     pss_wide=ctx.pss_wide,
                     team_pass_dist=cohort_attr.team_pass_dist,

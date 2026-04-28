@@ -268,20 +268,56 @@ WR_DEFERRED: list[FeatureSpec] = [
 
 TE_ONLY = (Position.TE,)
 
+# CFBD playText doesn't differentiate TE from WR — no formation, blocking,
+# or route data. Same 22 receiver-math features as WR (te_ prefix); the
+# position-conditioned cohort distributions in Phase 2 will let the embedding
+# distinguish a TE getting 8 yds/target from a WR getting 8 yds/target.
+# Position-specific TE features (in-line/flexed/blocking) live in
+# TE_DEFERRED — public-data-impossible.
 TE_FEATURES: list[FeatureSpec] = [
-    FeatureSpec("te_inline_rate", TE_ONLY, "role", "Inline (attached) snap rate vs total", "inline_snaps / total_snaps", ("cfbd_pbp",)),
-    FeatureSpec("te_flexed_rate", TE_ONLY, "role", "Flexed/slot snap rate", "flexed_snaps / total_snaps", ("cfbd_pbp",)),
-    FeatureSpec("te_route_participation", TE_ONLY, "role", "Snaps with a route run / total snaps", "route_snaps / total_snaps", ("cfbd_pbp",)),
-    FeatureSpec("te_targets_per_route", TE_ONLY, "opportunity", "Targets per route run", "targets / routes_run", ("cfbd_pbp",)),
-    FeatureSpec("te_target_share", TE_ONLY, "opportunity", "Career target share of team passes", "targets / team_pass_attempts", ("cfbd_pbp",)),
-    FeatureSpec("te_air_yards_per_route", TE_ONLY, "opportunity", "Air yards per route run", "sum(air_yards) / routes_run", ("cfbd_pbp",)),
-    FeatureSpec("te_yards_per_game", TE_ONLY, "production", "Receiving yards per game", "rec_yards / games_played", ("cfbd_box",)),
-    FeatureSpec("te_rec_per_game", TE_ONLY, "production", "Receptions per game", "receptions / games_played", ("cfbd_box",)),
-    FeatureSpec("te_yac_per_reception", TE_ONLY, "efficiency", "YAC per reception", "sum(yac) / receptions", ("cfbd_pbp",)),
-    FeatureSpec("te_red_zone_target_share", TE_ONLY, "situational", "Share of team RZ targets", "rz_targets / team_rz_targets", ("cfbd_pbp",)),
-    FeatureSpec("te_blocking_exposure", TE_ONLY, "role", "Inline-and-no-route snap rate (run-block proxy)", "inline_no_route_snaps / total_snaps", ("cfbd_pbp",)),
-    FeatureSpec("te_two_way_index", TE_ONLY, "composite", "Composite of receiving production + blocking exposure", "z(rec_production) + 0.5 * z(blocking_exposure)", ("cfbd_pbp",)),
+    # --- per-team-pass-attempt family ---
+    FeatureSpec("te_ryptpa", TE_ONLY, "opportunity", "Receiving yards per team pass attempt", "career rec_yards / team pass attempts", ("cfbd_pbp",)),
+    FeatureSpec("te_tptpa", TE_ONLY, "opportunity", "Targets per team pass attempt", "career targets / team pass attempts", ("cfbd_pbp",)),
+    FeatureSpec("te_1dptpa", TE_ONLY, "opportunity", "First downs per team pass attempt", "career first downs / team pass attempts", ("cfbd_pbp",)),
+    # --- volume / opportunity ---
+    FeatureSpec("te_targets_per_game", TE_ONLY, "opportunity", "Targets per game", "targets / games_played", ("cfbd_pbp",)),
+    # --- production ---
+    FeatureSpec("te_yards_per_game", TE_ONLY, "production", "Receiving yards per game", "rec_yards / games_played", ("cfbd_pbp",)),
+    FeatureSpec("te_rec_per_game", TE_ONLY, "production", "Receptions per game", "receptions / games_played", ("cfbd_pbp",)),
+    FeatureSpec("te_td_per_game", TE_ONLY, "production", "Receiving TDs per game", "rec_tds / games_played", ("cfbd_pbp",)),
+    FeatureSpec("te_big_play_rate", TE_ONLY, "production", "Big-play rate (≥20 yard receptions per game)", "count(rec_yds ≥ 20) / games_played", ("cfbd_pbp",)),
+    FeatureSpec("te_first_down_per_rec", TE_ONLY, "production", "First-down rate per reception", "first_downs_via_rec / receptions", ("cfbd_pbp",)),
+    # --- efficiency ---
+    FeatureSpec("te_catch_rate", TE_ONLY, "efficiency", "Catch rate", "receptions / targets", ("cfbd_pbp",)),
+    FeatureSpec("te_epa_per_target", TE_ONLY, "efficiency", "EPA per target", "sum(ppa) / targets", ("cfbd_pbp",)),
+    FeatureSpec("te_success_rate", TE_ONLY, "efficiency", "Share of targets with positive EPA", "targets where ppa > 0 / targets", ("cfbd_pbp",)),
+    FeatureSpec("te_rating", TE_ONLY, "efficiency", "Passer rating when targeted (PFF Rating concept)", "NFL passer rating formula on targets-as-attempts", ("cfbd_pbp",)),
+    # --- premium / above-teammate ---
+    FeatureSpec("te_target_premium", TE_ONLY, "premium", "Player YPC minus teammate YPC — isolates 'better than his teammates'", "player yards/rec - team yards/rec (excl. self)", ("cfbd_pbp",)),
+    FeatureSpec("te_yards_above_teammate_pct", TE_ONLY, "premium", "Career rec yards as fraction of team's top non-self receiver", "self_rec_yards / max_teammate_rec_yards (per team-season, then averaged)", ("cfbd_pbp",)),
+    # --- situational market share ---
+    FeatureSpec("te_third_down_target_share", TE_ONLY, "situational", "Share of team's 3rd-down targets", "self 3rd-down targets / team 3rd-down targets", ("cfbd_pbp",)),
+    FeatureSpec("te_red_zone_target_share", TE_ONLY, "situational", "Share of team's red-zone targets", "self RZ targets / team RZ targets", ("cfbd_pbp",)),
+    # --- trajectory ---
+    FeatureSpec("te_breakout_age_dominator", TE_ONLY, "trajectory", "Age at first season with dominator ≥ 0.20", "min age where season dominator ≥ 0.20", ("cfbd_pbp",)),
     FeatureSpec("te_target_share_yoy_slope", TE_ONLY, "trajectory", "YoY target share slope", "linear regression slope across seasons", ("cfbd_pbp",)),
+    FeatureSpec("te_dominator_peak", TE_ONLY, "trajectory", "Peak season dominator rating (rec yds + TDs share)", "max_season((rec_yards_share + rec_td_share) / 2)", ("cfbd_pbp",)),
+    FeatureSpec("te_career_yards_slope", TE_ONLY, "trajectory", "YoY slope of receiving yards per game", "linear regression slope of yds/game by season", ("cfbd_pbp",)),
+    FeatureSpec("te_final_year_dominator", TE_ONLY, "trajectory", "Most recent season's dominator rating", "(rec_yards_share + rec_td_share) / 2 in final season", ("cfbd_pbp",)),
+]
+
+
+# TE-specific specs that need formation, snap, or blocking data. Public PBP
+# has none of this. Documented for the methodology page.
+TE_DEFERRED: list[FeatureSpec] = [
+    FeatureSpec("te_inline_rate", TE_ONLY, "deferred", "Inline (attached) snap rate", "inline_snaps / total_snaps", ("PFF/nextgen",)),
+    FeatureSpec("te_flexed_rate", TE_ONLY, "deferred", "Flexed/slot snap rate", "flexed_snaps / total_snaps", ("PFF/nextgen",)),
+    FeatureSpec("te_route_participation", TE_ONLY, "deferred", "Snaps with a route run / total snaps", "route_snaps / total_snaps", ("PFF",)),
+    FeatureSpec("te_blocking_exposure", TE_ONLY, "deferred", "Inline-and-no-route snap rate (run-block proxy)", "inline_no_route_snaps / total_snaps", ("PFF",)),
+    FeatureSpec("te_two_way_index", TE_ONLY, "deferred", "Composite of receiving production + blocking exposure", "z(rec_production) + 0.5 * z(blocking_exposure)", ("PFF",)),
+    FeatureSpec("te_targets_per_route", TE_ONLY, "deferred", "Targets per route run", "targets / routes_run", ("PFF",)),
+    FeatureSpec("te_air_yards_per_route", TE_ONLY, "deferred", "Air yards per route run", "sum(air_yards) / routes_run", ("PFF/SIS",)),
+    FeatureSpec("te_yac_per_reception", TE_ONLY, "deferred", "YAC per reception", "sum(yac) / receptions", ("PFF/SIS",)),
 ]
 
 # ---------------------------------------------------------------------------
