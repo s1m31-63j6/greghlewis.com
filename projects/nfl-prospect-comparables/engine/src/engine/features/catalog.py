@@ -61,14 +61,21 @@ UNIVERSAL: list[FeatureSpec] = [
     FeatureSpec("burst_score", ALL, "athletic", "Vertical + broad jump (lower-body explosive index)", "vertical_inches + broad_jump_inches", ("combine",)),
     FeatureSpec("agility_score", ALL, "athletic", "3-cone + shuttle (change-of-direction index)", "three_cone + shuttle (lower = better)", ("combine",)),
     FeatureSpec("catch_radius", (Position.WR, Position.TE), "athletic", "Effective catch radius proxy", "height_inches + arm_length_inches", ("combine",)),
+    # --- composite athletic indices (custom) ---
+    FeatureSpec("forty_per_pound", (Position.RB, Position.WR, Position.TE), "athletic", "Weight-adjusted forty (size-fast vs flat-fast)", "forty * sqrt(weight / 200)", ("combine",)),
+    FeatureSpec("athletic_composite", ALL, "athletic", "Geometric mean of available drill percentiles (own RAS)", "geo_mean over available {forty,vert,broad,cone,shuttle,bench}_pct", ("combine",)),
     # --- recruiting pedigree ---
     FeatureSpec("recruit_composite_pct", ALL, "background", "247Sports composite recruit rating percentile", "ECDF over CFBD recruit rankings", ("cfbd_recruit",)),
     FeatureSpec("recruit_star_rating", ALL, "background", "Star rating out of high school (3-5)", "raw star rating", ("cfbd_recruit",)),
+    FeatureSpec("recruiting_to_draft_delta", ALL, "background", "Riser/faller signal: draft capital pct minus recruit composite pct", "draft_capital_pct - recruit_composite_pct (range -1..+1)", ("cfbd_recruit", "nflverse_player")),
+    FeatureSpec("weight_change_recruit_to_draft", ALL, "background", "Body-comp development from HS recruiting to combine", "draft_weight_lbs - recruit_weight_lbs", ("cfbd_recruit", "combine")),
     # --- college longevity / context ---
     FeatureSpec("college_seasons", ALL, "background", "Number of seasons played in college", "count of distinct seasons with snap > 0", ("cfbd_box",)),
     FeatureSpec("transferred", ALL, "background", "Whether player transferred during college", "1 if multiple schools in record, else 0", ("cfbd_box",)),
     FeatureSpec("conference_p5", ALL, "background", "Played most career snaps in a Power-5 conference", "1/0 indicator", ("cfbd_box",)),
     FeatureSpec("age_at_draft", ALL, "background", "Age in decimal years at draft date", "draft_date - birth_date", ("nflverse_player",)),
+    FeatureSpec("age_at_draft_pct", ALL, "background", "Age-at-draft percentile within position cohort (lower = younger = better)", "1 - ECDF(age_at_draft) within position", ("nflverse_player",)),
+    FeatureSpec("days_since_birthday_at_draft", ALL, "background", "Refines age_at_draft with within-year fraction", "draft_date.day_of_year - birth_date.day_of_year (mod 365)", ("nflverse_player",)),
     FeatureSpec("draft_capital_pct", ALL, "background", "Inverse draft pick percentile (higher = earlier)", "1 - (pick / 256)", ("nflverse_player",)),
     # --- schedule strength / opposition quality ---
     FeatureSpec("sos_mean", ALL, "context", "Career mean strength of schedule (SP+ rating of opponents)", "weighted mean opponent SP+ across all games", ("cfbd_box",)),
@@ -76,6 +83,8 @@ UNIVERSAL: list[FeatureSpec] = [
     FeatureSpec("perf_vs_ranked_delta", ALL, "context", "Production rate delta vs ranked opponents", "(rate vs ranked) - (rate vs unranked), normalized", ("cfbd_box",)),
     FeatureSpec("perf_in_bowl_games", ALL, "context", "Production in bowl/playoff games (z vs season avg)", "z-score of bowl-game production vs regular season", ("cfbd_box",)),
     FeatureSpec("perf_road_delta", ALL, "context", "Production rate delta in road games", "(road rate) - (home rate), normalized", ("cfbd_box",)),
+    FeatureSpec("team_quality_at_breakout", ALL, "context", "SP+ rating of player's college team during peak season", "sp_rating(team, breakout_season)", ("cfbd_box",)),
+    FeatureSpec("returning_production_role", ALL, "context", "Share of team's offensive production in player's final season", "(player rec_yds + rush_yds + 0.5*pass_yds) / team total in final season", ("cfbd_box",)),
     # --- career arc / trajectory ---
     FeatureSpec("career_trend_slope", ALL, "trajectory", "Slope of season-over-season production rate", "linear regression slope of EPA/play (or position-equivalent) by season", ("cfbd_pbp",)),
     FeatureSpec("best_season_age", ALL, "trajectory", "Age at peak-production season", "argmax over season age vs production index", ("cfbd_pbp",)),
@@ -84,6 +93,8 @@ UNIVERSAL: list[FeatureSpec] = [
     FeatureSpec("breakout_age", ALL, "trajectory", "Age at first season with elite production (top-quartile in pos cohort)", "min age where season percentile > 75 in cohort", ("cfbd_pbp",)),
     FeatureSpec("dominator_rating", (Position.WR, Position.TE, Position.RB), "trajectory", "Share of team production captured at peak", "max season share of team's relevant production", ("cfbd_box",)),
     FeatureSpec("late_career_growth", ALL, "trajectory", "Final-year minus rookie-year production rate", "production_rate(final) - production_rate(first)", ("cfbd_pbp",)),
+    FeatureSpec("age_adjusted_dominator", (Position.WR, Position.TE, Position.RB), "trajectory", "Dominator weighted by youth at breakout (Hayden Winks-style)", "dominator_rating * (1 + 0.05 * (22 - breakout_age))", ("cfbd_box",)),
+    FeatureSpec("production_variance_ratio", ALL, "trajectory", "Coefficient of variation of season-to-season production (boom/bust separator)", "stdev(season_production) / mean(season_production), clipped 0..3", ("cfbd_box",)),
 ]
 
 # ---------------------------------------------------------------------------
