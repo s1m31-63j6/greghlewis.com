@@ -52,3 +52,7 @@ __pycache__/
 # aws cdk
 cdk.out/
 cdk.context.json
+
+# scouting corpus — licensed material (Brugler "The Beast") + scrapeable
+# free sources. Per-project; never committed.
+corpus/
