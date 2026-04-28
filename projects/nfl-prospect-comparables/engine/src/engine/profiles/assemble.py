@@ -243,11 +243,26 @@ def _ht_string_to_inches(s: str | None) -> float | None:
         return None
 
 
-def _row_to_profile(row: dict, *, has_outcome: bool) -> PlayerProfile | None:
+def _row_to_profile(
+    row: dict, *, has_outcome: bool, allow_synthetic_id: bool = False
+) -> PlayerProfile | None:
     """Build a PlayerProfile from a fully-joined row dict."""
     pfr_id = row.get("pfr_player_id")
     if not pfr_id:
-        return None  # no canonical id → skip
+        if not allow_synthetic_id:
+            return None  # no canonical id → skip
+        # Prediction-cohort fallback: pfr_id may not exist yet for fresh
+        # draftees. Use cfb_player_id (ESPN id) or draft-pick coordinates.
+        cfb = row.get("cfb_player_id")
+        if cfb:
+            pfr_id = f"cfb-{cfb}"
+        else:
+            season = row.get("season")
+            pick = row.get("pick")
+            if season and pick:
+                pfr_id = f"draft-{int(season)}-pick{int(pick):03d}"
+            else:
+                return None
 
     category = row.get("category") or row.get("position")
     if category not in SKILL_CATEGORIES:
@@ -363,6 +378,7 @@ def assemble_cohort(
     *,
     raw_bucket: str,
     has_outcome: bool,
+    allow_synthetic_id: bool = False,
 ) -> tuple[list[PlayerProfile], dict[str, float]]:
     """Join spine with all source tables and build PlayerProfile records.
 
@@ -374,12 +390,26 @@ def assemble_cohort(
     college_stats = load_college_stats(raw_bucket)
     rosters_meta = load_rosters_meta(raw_bucket)
 
-    # Bridge: spine.gsis_id → ff_playerids.espn_id, then college tables on espn_id.
+    # Bridge: spine.gsis_id → ff_playerids.espn_id, then college tables on
+    # espn_id. For prediction cohorts (fresh draft years where ff_playerids
+    # hasn't propagated yet) the spine may carry cfb_player_id directly via
+    # CFBD-recruits matching — coalesce that into espn_id so the college
+    # tables still join.
     enriched = (
         spine
         .join(crosswalk, on="gsis_id", how="left")
         .join(players_meta, on="gsis_id", how="left")
         .join(combine, left_on="pfr_player_id", right_on="pfr_id", how="left")
+    )
+    if "cfb_player_id" in enriched.columns:
+        enriched = enriched.with_columns(
+            pl.coalesce([
+                pl.col("espn_id"),
+                pl.col("cfb_player_id").cast(pl.Int64, strict=False),
+            ]).alias("espn_id")
+        )
+    enriched = (
+        enriched
         .join(college_stats, on="espn_id", how="left")
         .join(rosters_meta, on="espn_id", how="left")
     )
@@ -387,7 +417,9 @@ def assemble_cohort(
     profiles: list[PlayerProfile] = []
     skipped = 0
     for row in enriched.iter_rows(named=True):
-        prof = _row_to_profile(row, has_outcome=has_outcome)
+        prof = _row_to_profile(
+            row, has_outcome=has_outcome, allow_synthetic_id=allow_synthetic_id
+        )
         if prof is None:
             skipped += 1
             continue
