@@ -43,10 +43,29 @@ def _load_feature_vectors(s3, bucket: str, cohort: str) -> pl.DataFrame:
     return pl.read_parquet(io.BytesIO(body))
 
 
+def _load_cached_text_vecs(s3, bucket: str, cohort: str) -> dict[str, list[float]]:
+    """Load existing text_vec column (per player_id) from a previous run if
+    present. Used to skip Bedrock re-embedding when only the feature vector
+    changed (e.g., stats were recomputed across an enlarged pool)."""
+    try:
+        body = s3.get_object(
+            Bucket=bucket, Key=f"embeddings/hybrid_vectors/cohort={cohort}/data.parquet"
+        )["Body"].read()
+    except Exception:
+        return {}
+    df = pl.read_parquet(io.BytesIO(body))
+    return {row["player_id"]: row["text_vec"] for row in df.iter_rows(named=True)}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--cohort", action="append", help="cohort name (repeatable)")
     ap.add_argument("--region", default="us-east-1", help="Bedrock region")
+    ap.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="ignore existing hybrid_vectors text_vec cache; re-embed everything",
+    )
     args = ap.parse_args()
 
     cohorts = args.cohort if args.cohort else DEFAULT_COHORTS
@@ -62,13 +81,21 @@ def main() -> int:
             row["player_id"]: np.asarray(row["vector"], dtype=np.float64)
             for row in feature_df.iter_rows(named=True)
         }
-        print(f"  loaded: {len(profiles)} profiles, {len(feature_lookup)} feature vectors")
+        cached_text = {} if args.no_cache else _load_cached_text_vecs(s3, cur, cohort)
+        if cached_text:
+            print(
+                f"  loaded: {len(profiles)} profiles, {len(feature_lookup)} feature vectors, "
+                f"{len(cached_text)} cached text vectors"
+            )
+        else:
+            print(f"  loaded: {len(profiles)} profiles, {len(feature_lookup)} feature vectors")
 
         rows: list[dict] = []
         n_with_text = 0
         n_with_brugler = 0
         n_with_wiki = 0
         n_no_text = 0
+        n_cached = 0
         started = time.monotonic()
 
         for i, p in enumerate(profiles, 1):
@@ -83,7 +110,13 @@ def main() -> int:
                     n_with_brugler += 1
                 if sources["wikipedia"]:
                     n_with_wiki += 1
-                tvec = text_embed.bedrock_embed(text, bedrock_client=bedrock)
+                # Reuse cached text_vec if present (text didn't change; only
+                # the feature half of the hybrid does after stats recompute).
+                if p.player_id in cached_text:
+                    tvec = np.asarray(cached_text[p.player_id], dtype=np.float64)
+                    n_cached += 1
+                else:
+                    tvec = text_embed.bedrock_embed(text, bedrock_client=bedrock)
             else:
                 n_no_text += 1
                 tvec = np.zeros(text_embed.TITAN_DIM, dtype=np.float64)
@@ -103,8 +136,8 @@ def main() -> int:
                 elapsed = time.monotonic() - started
                 rate = i / elapsed if elapsed > 0 else 0
                 print(
-                    f"  [{i}/{len(profiles)}] text={n_with_text} (B={n_with_brugler}, W={n_with_wiki}) "
-                    f"none={n_no_text}  elapsed {elapsed/60:.1f} min  rate {rate:.1f}/s",
+                    f"  [{i}/{len(profiles)}] text={n_with_text} (B={n_with_brugler}, W={n_with_wiki}, "
+                    f"cached={n_cached}) none={n_no_text}  elapsed {elapsed/60:.1f} min  rate {rate:.1f}/s",
                     flush=True,
                 )
 

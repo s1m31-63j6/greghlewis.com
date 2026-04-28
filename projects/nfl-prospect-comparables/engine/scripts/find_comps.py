@@ -30,15 +30,23 @@ def main() -> int:
     ap.add_argument("--top-k", type=int, default=10)
     ap.add_argument(
         "--arm",
-        choices=["hybrid", "feature", "text"],
+        choices=["hybrid", "feature", "text", "measurables", "engineered"],
         default="hybrid",
-        help="which embedding arm to query (hybrid / feature / text — for ablation)",
+        help="which embedding arm to query (hybrid / feature / text / measurables / engineered)",
+    )
+    ap.add_argument(
+        "--include-prediction",
+        action="store_true",
+        help="include prediction_2026 cohort in the pool (default: train + val only)",
     )
     args = ap.parse_args()
 
     cur = os.environ["S3_CURATED_BUCKET"]
-    print(f"Loading {args.arm} pool from {cur}...")
-    pool = comps_mod.load_pool(cur, arm=args.arm)
+    cohorts = ("training_2014_2020", "validation_2021_2025")
+    if args.include_prediction:
+        cohorts = cohorts + ("prediction_2026",)
+    print(f"Loading {args.arm} pool from {cur} (cohorts: {', '.join(cohorts)})...")
+    pool = comps_mod.load_pool(cur, cohorts=cohorts, arm=args.arm)
     print(f"  {pool.df.height} vectors across {len(pool.by_position)} positions")
 
     res = comps_mod.find_comps(pool, args.player, top_k=args.top_k)

@@ -79,7 +79,10 @@ def split_profiles(full_text: str) -> list[BruglerProfile]:
     section header or end of doc.
     """
     profiles: list[BruglerProfile] = []
-    matches = list(re.finditer(r"SUMMARY:\s+", full_text))
+    # 2018-2024 use "SUMMARY: " (colon + space). 2026 dropped the colon and
+    # switched to bullet-point STRENGTHS / WEAKNESSES sections — SUMMARY in
+    # 2026 is followed by a newline. Accept either format.
+    matches = list(re.finditer(r"SUMMARY:?\s+", full_text))
     for i, m in enumerate(matches):
         # Block content runs from the previous SUMMARY-end (or doc start) up
         # to the END of this SUMMARY paragraph (next "SUMMARY:" or +5000 chars
