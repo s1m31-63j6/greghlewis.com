@@ -1,21 +1,26 @@
-"""RB feature engineering.
+"""RB feature engineering — public-PBP gold-standard set, audited 2026-04-28
+against the RB-analyst community (JJ Zachariason, Hayden Winks, Eric Eager,
+Bill Connelly / SP+, Mike Clay / 4for4, Kevin Cole / OSF, PlayerProfiler,
+Pat Thorman, FFFaceoff PSI).
 
 Reads the shared cohort-attributed plays frame (engine.parse.attribute) plus
-`cfbd/player_season_stats` aggregates (via universal CohortContext.pss_wide)
-for receiving share and team-level denominators.
+universal CohortContext.pss_wide for team-level player_season_stats
+aggregates and team denominators.
 
-Implementable now (17 features):
-  efficiency:    epa_per_rush, ypc, success_rate, explosive_rate, stuff_rate
-  situational:   epa_per_rush_early_down, epa_per_rush_third_short,
-                 goalline_td_rate
-  receiving:     targets_per_game, catch_rate, yards_per_reception,
-                 receiving_yards_share
-  workload:      touches_per_game, career_touches, workload_concentration
-  trajectory:    yoy_yards_slope, breakout_season
+19 features computed (see catalog.RB_FEATURES). The hard public-data ceiling
+is contact-charting (PFF YACO / forced missed tackles / elusive rating) and
+defensive-context labels (box count, snap share). 10 deferred specs in
+catalog.RB_DEFERRED.
 
-Deferred (no public data without PFF/charting):
-  yards_over_expected, perf_vs_stacked_box, perf_vs_light_box,
-  snap_share_peak, route_participation_proxy, yac_per_reception.
+Headline analyst-framework concepts:
+  - opportunity_rate + highlight_yards_per_opportunity (Connelly / SP+) — the
+    public-PBP analogue of PFF YACO; isolates RB-driven yards from line yards
+    by counting only the RB's contribution beyond the first 5.
+  - yards_per_team_play (Zachariason) — single most predictive RB input in
+    his model; team-pace-normalized career production.
+  - weighted_opportunity_per_game (Mike Clay) — gold-standard RB workload.
+  - expected_tds_minus_actual (Mike Clay) — TD regression signal that
+    neutralizes goal-line luck better than goalline_td_rate.
 """
 
 from __future__ import annotations
@@ -25,6 +30,44 @@ from dataclasses import dataclass
 import polars as pl
 
 from engine.schema import PlayerProfile, Position
+
+
+# ---------- TD baselines (yardline → P(TD)) ----------
+
+# Approximation; refine in Phase 1.1 by computing empirically from the
+# parsed_plays frame. Per-play TD probability conditional on yards-to-goal
+# bucket. Lower goalline rates than NFL because college play-action /
+# passing TDs from goalline are rarer.
+RUSH_TD_BASELINE: dict[int, float] = {
+    1: 0.50,
+    5: 0.18,
+    10: 0.05,
+    20: 0.020,
+    50: 0.005,
+    100: 0.001,
+}
+CATCH_TD_BASELINE: dict[int, float] = {
+    1: 0.45,
+    5: 0.20,
+    10: 0.07,
+    20: 0.025,
+    50: 0.008,
+    100: 0.002,
+}
+
+
+def _ytg_bucket_expr() -> pl.Expr:
+    """Return a polars expression that buckets `yards_to_goal` into the
+    keys of {RUSH,CATCH}_TD_BASELINE."""
+    return (
+        pl.when(pl.col("yards_to_goal") <= 1).then(1)
+        .when(pl.col("yards_to_goal") <= 5).then(5)
+        .when(pl.col("yards_to_goal") <= 10).then(10)
+        .when(pl.col("yards_to_goal") <= 20).then(20)
+        .when(pl.col("yards_to_goal") <= 50).then(50)
+        .otherwise(100)
+        .alias("_ytg_bucket")
+    )
 
 
 # ---------- aggregations ----------
@@ -37,7 +80,8 @@ def _safe_div(num, den, *, default=None, ndigits=3):
 
 
 def _aggregate_per_season(plays: pl.DataFrame) -> pl.DataFrame:
-    """Per (rb_id, season) aggregates split by role."""
+    """Per (rb_id, season) aggregates split by role, with TD-expected
+    sub-aggregates for the rb_expected_tds_minus_actual feature."""
     not_two_point = ~pl.col("is_two_point")
     is_rusher = (pl.col("role") == "rusher") & not_two_point
     is_receiver = (pl.col("role") == "receiver") & not_two_point
@@ -47,11 +91,16 @@ def _aggregate_per_season(plays: pl.DataFrame) -> pl.DataFrame:
         is_rusher.alias("_is_rusher"),
         is_receiver.alias("_is_receiver"),
         is_catch.alias("_is_catch"),
+        _ytg_bucket_expr(),
+    ]).with_columns([
+        pl.col("_ytg_bucket").replace_strict(RUSH_TD_BASELINE, default=0.001).alias("_rush_td_exp"),
+        pl.col("_ytg_bucket").replace_strict(CATCH_TD_BASELINE, default=0.001).alias("_catch_td_exp"),
     ])
     return (
         df.group_by(["rb_id", "season"])
         .agg([
             pl.col("game_id").n_unique().alias("games_played"),
+            pl.col("offense").first().alias("team"),
             # Rushing
             pl.col("_is_rusher").sum().alias("rush_attempts"),
             (pl.col("_is_rusher").cast(pl.Int64) * pl.col("yards_gained").fill_null(0)).sum().alias("rush_yards"),
@@ -60,20 +109,65 @@ def _aggregate_per_season(plays: pl.DataFrame) -> pl.DataFrame:
             (pl.col("_is_rusher") & (pl.col("ppa") > 0)).sum().alias("rush_success"),
             (pl.col("_is_rusher") & (pl.col("yards_gained") >= 10)).sum().alias("rush_explosive"),
             (pl.col("_is_rusher") & (pl.col("yards_gained") <= 0)).sum().alias("rush_stuffed"),
+            # Opportunity (Connelly): carries gaining ≥ 5 yards
+            (pl.col("_is_rusher") & (pl.col("yards_gained") >= 5)).sum().alias("opportunity_carries"),
+            # Highlight yards: (yards - 5) on opportunity carries (≥5 yd carries only)
+            (
+                pl.col("_is_rusher").cast(pl.Int64)
+                * pl.when(pl.col("yards_gained") >= 5)
+                  .then(pl.col("yards_gained") - 5)
+                  .otherwise(0)
+            ).sum().alias("highlight_yards"),
             # Situational
             (pl.col("_is_rusher") & (pl.col("down") <= 2)).sum().alias("rush_early_down"),
             ((pl.col("_is_rusher") & (pl.col("down") <= 2)).cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_rush_early"),
             (pl.col("_is_rusher") & (pl.col("down") == 3) & (pl.col("distance") <= 2)).sum().alias("rush_third_short"),
             ((pl.col("_is_rusher") & (pl.col("down") == 3) & (pl.col("distance") <= 2)).cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_rush_third_short"),
-            (pl.col("_is_rusher") & (pl.col("yards_to_goal") <= 5)).sum().alias("rush_goalline"),
-            (pl.col("_is_rusher") & (pl.col("yards_to_goal") <= 5) & pl.col("is_touchdown")).sum().alias("rush_goalline_tds"),
             # Receiving
             pl.col("_is_receiver").sum().alias("targets"),
             pl.col("_is_catch").sum().alias("receptions"),
             (pl.col("_is_catch").cast(pl.Int64) * pl.col("yards_gained").fill_null(0)).sum().alias("rec_yards"),
             ((pl.col("_is_catch") & pl.col("is_touchdown")).cast(pl.Int64)).sum().alias("rec_tds"),
+            # Expected TDs (Mike Clay TD regression baseline)
+            (pl.col("_is_rusher").cast(pl.Float64) * pl.col("_rush_td_exp")).sum().alias("expected_rush_tds"),
+            (pl.col("_is_catch").cast(pl.Float64) * pl.col("_catch_td_exp")).sum().alias("expected_catch_tds"),
         ])
     )
+
+
+# ---------- team / cohort denominator helpers ----------
+
+
+def _team_total_plays_lookup(pss_wide: pl.DataFrame) -> dict[tuple[str, int], int]:
+    """Per (team, season) → total team plays (pass + rush attempts summed across players)."""
+    agg = (
+        pss_wide
+        .group_by(["team", "season"])
+        .agg(
+            (pl.col("pass_attempts").fill_null(0).sum() + pl.col("rush_attempts").fill_null(0).sum())
+            .alias("team_plays")
+        )
+    )
+    return {
+        (row["team"], int(row["season"])): int(row["team_plays"])
+        for row in agg.iter_rows(named=True)
+    }
+
+
+def _team_total_scrim_yds_lookup(pss_wide: pl.DataFrame) -> dict[tuple[str, int], int]:
+    """Per (team, season) → team scrimmage yards (rush + receiving)."""
+    agg = (
+        pss_wide
+        .group_by(["team", "season"])
+        .agg(
+            (pl.col("rush_yards").fill_null(0).sum() + pl.col("rec_yards").fill_null(0).sum())
+            .alias("team_scrim_yards")
+        )
+    )
+    return {
+        (row["team"], int(row["season"])): int(row["team_scrim_yards"])
+        for row in agg.iter_rows(named=True)
+    }
 
 
 def _team_rushing_yds_lookup(pss_wide: pl.DataFrame) -> dict[tuple[str, int], int]:
@@ -109,7 +203,6 @@ def _career_features(
     pss_wide: pl.DataFrame,
     rb_id: int,
 ) -> dict[str, float]:
-    """Reduce per-season RB aggregates → career features."""
     if seasons_df.height == 0:
         return {}
     s = seasons_df.sort("season")
@@ -124,15 +217,18 @@ def _career_features(
     receptions = int(sum_["receptions"][0])
     rec_yds = int(sum_["rec_yards"][0])
     rec_tds = int(sum_["rec_tds"][0])
+    opp_carries = int(sum_["opportunity_carries"][0])
+    highlight_yds = int(sum_["highlight_yards"][0])
 
     f: dict[str, float] = {}
 
     # --- rushing efficiency ---
     f["rb_epa_per_rush"] = _safe_div(float(sum_["ppa_rush"][0]), rush_att)
-    f["rb_ypc"] = _safe_div(rush_yds, rush_att)
     f["rb_success_rate"] = _safe_div(int(sum_["rush_success"][0]), rush_att)
     f["rb_explosive_rate"] = _safe_div(int(sum_["rush_explosive"][0]), rush_att)
     f["rb_stuff_rate"] = _safe_div(int(sum_["rush_stuffed"][0]), rush_att)
+    f["rb_opportunity_rate"] = _safe_div(opp_carries, rush_att)
+    f["rb_highlight_yards_per_opportunity"] = _safe_div(highlight_yds, opp_carries, ndigits=2)
 
     # --- situational ---
     f["rb_epa_per_rush_early_down"] = _safe_div(
@@ -141,17 +237,14 @@ def _career_features(
     f["rb_epa_per_rush_third_short"] = _safe_div(
         float(sum_["ppa_rush_third_short"][0]), int(sum_["rush_third_short"][0])
     )
-    f["rb_goalline_td_rate"] = _safe_div(
-        int(sum_["rush_goalline_tds"][0]), int(sum_["rush_goalline"][0])
-    )
 
     # --- receiving ---
     f["rb_targets_per_game"] = _safe_div(targets, games)
     f["rb_catch_rate"] = _safe_div(receptions, targets)
     f["rb_yards_per_reception"] = _safe_div(rec_yds, receptions)
+    f["rb_receiving_yards_per_game"] = _safe_div(rec_yds, games, ndigits=1)
 
-    # rb_receiving_yards_share via pss_wide for the player's team-seasons.
-    # pss_wide is more reliable than parsed yard sums for share denominators.
+    # rb_receiving_yards_share via pss_wide (more reliable than parsed sums)
     team_rec_lookup = _team_rec_yds_lookup(pss_wide)
     player_team_seasons = (
         pss_wide.filter(pl.col("espn_id") == rb_id)
@@ -167,11 +260,10 @@ def _career_features(
         f["rb_receiving_yards_share"] = _safe_div(num, den, ndigits=4)
 
     # --- workload ---
-    f["rb_career_touches"] = float(rush_att + receptions)
     f["rb_touches_per_game"] = _safe_div(rush_att + receptions, games)
+    f["rb_weighted_opportunity_per_game"] = _safe_div(rush_att + 2 * targets, games, ndigits=2)
 
     # workload_concentration: avg over seasons of (player rush yds / team rush yds).
-    # High = bell-cow back; low = committee.
     team_rush_lookup = _team_rushing_yds_lookup(pss_wide)
     if player_team_seasons:
         rb_seasons = s.to_dicts()
@@ -189,20 +281,29 @@ def _career_features(
         if shares:
             f["rb_workload_concentration"] = round(sum(shares) / len(shares), 3)
 
-    # --- trajectory ---
-    if n >= 2:
-        scrim_by_season = []
-        for row in s.iter_rows(named=True):
-            scrim = (row["rush_yards"] or 0) + (row["rec_yards"] or 0)
-            scrim_by_season.append((row["season"], scrim))
-        xs = [p[0] for p in scrim_by_season]
-        ys = [p[1] for p in scrim_by_season]
-        x_mean = sum(xs) / len(xs)
-        y_mean = sum(ys) / len(ys)
-        num = sum((xs[i] - x_mean) * (ys[i] - y_mean) for i in range(len(xs)))
-        den = sum((x - x_mean) ** 2 for x in xs)
-        if den > 0:
-            f["rb_yoy_yards_slope"] = round(num / den, 1)
+    # --- yards per team play (Zachariason) ---
+    team_plays_lookup = _team_total_plays_lookup(pss_wide)
+    if player_team_seasons:
+        team_plays_total = sum(
+            team_plays_lookup.get((row["team"], int(row["season"])), 0)
+            for row in player_team_seasons
+        )
+        f["rb_yards_per_team_play"] = _safe_div(rush_yds + rec_yds, team_plays_total, ndigits=3)
+
+    # --- expected_tds_minus_actual (Mike Clay TD regression) ---
+    expected_tds = float(sum_["expected_rush_tds"][0]) + float(sum_["expected_catch_tds"][0])
+    actual_tds = rush_tds + rec_tds
+    f["rb_expected_tds_minus_actual"] = round(actual_tds - expected_tds, 2)
+
+    # --- final_year_dominator (replaces yoy_yards_slope) ---
+    team_scrim_lookup = _team_total_scrim_yds_lookup(pss_wide)
+    last_season_row = s.tail(1).to_dicts()[0]
+    last_team = last_season_row["team"]
+    last_season = int(last_season_row["season"])
+    team_scrim = team_scrim_lookup.get((last_team, last_season), 0)
+    if team_scrim > 0:
+        player_last_scrim = (last_season_row["rush_yards"] or 0) + (last_season_row["rec_yards"] or 0)
+        f["rb_final_year_dominator"] = round(player_last_scrim / team_scrim, 3)
 
     return {k: v for k, v in f.items() if v is not None}
 
@@ -220,11 +321,11 @@ def build_rb_context(
     attributed_plays: pl.DataFrame,
     rb_canon_ids: set[int],
 ) -> RBContext:
-    """Filter the shared cohort plays to RB-relevant rows and aggregate.
+    """Filter shared cohort plays to RB-relevant rows and aggregate.
 
-    A play is RB-relevant when the rusher_id (running plays) or receiver_id
-    (pass plays — RBs are pass catchers too) matches a cohort RB. The role
-    column is derived from which id matched.
+    A play is RB-relevant when rusher_id (rushing plays) or receiver_id
+    (RB receptions) matches a cohort RB. Role column derived from which
+    id matched.
     """
     if attributed_plays.height == 0 or not rb_canon_ids:
         return RBContext(plays=pl.DataFrame(), seasons=pl.DataFrame())

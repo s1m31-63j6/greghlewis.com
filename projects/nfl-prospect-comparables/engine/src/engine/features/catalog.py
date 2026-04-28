@@ -159,34 +159,58 @@ QB_FEATURES: list[FeatureSpec] = [
 
 RB_ONLY = (Position.RB,)
 
+# Audited 2026-04-28 against the RB-analyst frameworks (JJ Zachariason,
+# Hayden Winks, Eric Eager, Bill Connelly / SP+, Mike Clay / 4for4, Kevin
+# Cole / OSF, PlayerProfiler, Pat Thorman, FFFaceoff PSI). The hard public-
+# data ceiling is contact charting (PFF YACO / forced missed tackles /
+# elusive rating) and defensive context (box count, snap share). RB_DEFERRED
+# below enumerates those.
 RB_FEATURES: list[FeatureSpec] = [
     # --- rushing efficiency ---
-    FeatureSpec("rb_epa_per_rush", RB_ONLY, "efficiency", "EPA per rush attempt", "sum(epa) / rush_attempts", ("cfbd_pbp",)),
-    FeatureSpec("rb_ypc", RB_ONLY, "efficiency", "Career yards per carry", "rush_yards / rush_attempts", ("cfbd_pbp",)),
-    FeatureSpec("rb_success_rate", RB_ONLY, "efficiency", "Rush success rate (EPA > 0)", "count(epa>0) / rush_attempts", ("cfbd_pbp",)),
+    FeatureSpec("rb_epa_per_rush", RB_ONLY, "efficiency", "EPA per rush attempt — Eric Eager's preferred RB metric", "sum(ppa) / rush_attempts", ("cfbd_pbp",)),
+    FeatureSpec("rb_success_rate", RB_ONLY, "efficiency", "Rush success rate (EPA > 0)", "count(ppa > 0) / rush_attempts", ("cfbd_pbp",)),
     FeatureSpec("rb_explosive_rate", RB_ONLY, "efficiency", "Explosive run rate (≥10 yards)", "count(rush_yds ≥ 10) / rush_attempts", ("cfbd_pbp",)),
     FeatureSpec("rb_stuff_rate", RB_ONLY, "efficiency", "Stuff rate (≤0 yards)", "count(rush_yds ≤ 0) / rush_attempts", ("cfbd_pbp",)),
-    FeatureSpec("rb_yards_over_expected", RB_ONLY, "efficiency", "Yards over expected per rush (custom model)", "actual_yards - expected_yards(box, situation)", ("cfbd_pbp",)),
-    # --- situational rushing ---
+    FeatureSpec("rb_opportunity_rate", RB_ONLY, "efficiency", "Opportunity rate — % of carries gaining ≥5 yards (Connelly / SP+)", "count(rush_yds ≥ 5) / rush_attempts", ("cfbd_pbp",)),
+    FeatureSpec("rb_highlight_yards_per_opportunity", RB_ONLY, "efficiency", "Highlight yards / opportunity carry — RB-driven yards isolated from line yards (Connelly)", "sum(max(rush_yds - 5, 0)) on opportunity carries / opportunity carries", ("cfbd_pbp",)),
+    # --- situational ---
     FeatureSpec("rb_epa_per_rush_early_down", RB_ONLY, "situational", "EPA/rush on 1st & 2nd down", "filter to down ≤ 2", ("cfbd_pbp",)),
     FeatureSpec("rb_epa_per_rush_third_short", RB_ONLY, "situational", "EPA/rush on 3rd-and-short (≤2)", "filter to down=3 and ydstogo ≤ 2", ("cfbd_pbp",)),
-    FeatureSpec("rb_goalline_td_rate", RB_ONLY, "situational", "TD rate from inside the 5", "goalline_tds / goalline_carries", ("cfbd_pbp",)),
-    FeatureSpec("rb_perf_vs_stacked_box", RB_ONLY, "situational", "EPA/rush vs ≥8 in box (where data available)", "filter to box_count ≥ 8", ("cfbd_pbp",)),
-    FeatureSpec("rb_perf_vs_light_box", RB_ONLY, "situational", "EPA/rush vs ≤6 in box", "filter to box_count ≤ 6", ("cfbd_pbp",)),
+    FeatureSpec("rb_expected_tds_minus_actual", RB_ONLY, "situational", "Actual TDs minus expected from yardline distribution (Mike Clay TD regression)", "actual_tds - sum(P(TD | yards_to_goal_bucket)) over career touches", ("cfbd_pbp",)),
     # --- receiving role ---
     FeatureSpec("rb_targets_per_game", RB_ONLY, "receiving", "Targets per game", "targets / games_played", ("cfbd_pbp",)),
     FeatureSpec("rb_catch_rate", RB_ONLY, "receiving", "Catch rate", "receptions / targets", ("cfbd_pbp",)),
-    FeatureSpec("rb_yac_per_reception", RB_ONLY, "receiving", "YAC per reception", "sum(yac) / receptions", ("cfbd_pbp",)),
+    FeatureSpec("rb_yards_per_reception", RB_ONLY, "receiving", "Yards per reception", "rec_yards / receptions", ("cfbd_pbp",)),
+    FeatureSpec("rb_receiving_yards_per_game", RB_ONLY, "receiving", "Receiving yards per game — Cole: 3× the predictive coefficient of rushing yards/game", "rec_yards / games_played", ("cfbd_pbp",)),
     FeatureSpec("rb_receiving_yards_share", RB_ONLY, "receiving", "Share of team's receiving yards", "rec_yards / team_rec_yards", ("cfbd_pbp",)),
-    FeatureSpec("rb_route_participation_proxy", RB_ONLY, "receiving", "Snaps where targeted or in route region (proxy)", "(targets + receiving snaps proxy) / total snaps", ("cfbd_pbp",)),
     # --- workload ---
-    FeatureSpec("rb_touches_per_game", RB_ONLY, "volume", "Touches (rush + receptions) per game", "(rush_att + rec) / games_played", ("cfbd_pbp",)),
-    FeatureSpec("rb_career_touches", RB_ONLY, "volume", "Total career touches", "sum(rush_att) + sum(rec)", ("cfbd_pbp",)),
-    FeatureSpec("rb_snap_share_peak", RB_ONLY, "volume", "Peak season snap share", "max season snap_share", ("cfbd_pbp",)),
-    FeatureSpec("rb_workload_concentration", RB_ONLY, "volume", "Backfield share concentration (Gini-style)", "Gini coefficient of touches across team RBs", ("cfbd_pbp",)),
+    FeatureSpec("rb_touches_per_game", RB_ONLY, "volume", "Touches (rush + receptions) per game", "(rush_att + receptions) / games_played", ("cfbd_pbp",)),
+    FeatureSpec("rb_weighted_opportunity_per_game", RB_ONLY, "volume", "Weighted opportunity per game (Mike Clay) — gold-standard RB workload", "(rush_att + 2 × targets) / games_played", ("cfbd_pbp",)),
+    FeatureSpec("rb_workload_concentration", RB_ONLY, "volume", "Average season share of team rushing yards — bell-cow vs committee proxy", "mean over seasons of player_rush_yds / team_rush_yds", ("cfbd_pbp",)),
+    FeatureSpec("rb_yards_per_team_play", RB_ONLY, "volume", "Career scrimmage yards per team play — Zachariason's #1 single predictor", "career (rush_yds + rec_yds) / team plays during team-seasons", ("cfbd_pbp",)),
     # --- trajectory ---
-    FeatureSpec("rb_yoy_yards_slope", RB_ONLY, "trajectory", "YoY rushing yards/game slope", "linear regression slope across seasons", ("cfbd_pbp",)),
-    FeatureSpec("rb_breakout_season", RB_ONLY, "trajectory", "First season > 1000 yards from scrimmage (age)", "min age where total_yards ≥ 1000", ("cfbd_box",)),
+    FeatureSpec("rb_final_year_dominator", RB_ONLY, "trajectory", "Final-season scrimmage-yards share of team — current-state signal (Cole, Winks)", "(rush_yds + rec_yds) / team scrimmage yards in final season", ("cfbd_pbp",)),
+]
+
+
+# RB specs that need contact charting, box count, or snap data — none of
+# which exist in free public PBP. Documented here for the methodology page
+# to render the explicit public-data gap. NOT included in CATALOG.
+RB_DEFERRED: list[FeatureSpec] = [
+    # PFF / SIS contact charting
+    FeatureSpec("rb_pff_rushing_grade", RB_ONLY, "deferred", "PFF rushing grade (play-by-play graded)", "PFF play-graded sum", ("PFF",)),
+    FeatureSpec("rb_forced_missed_tackles_per_attempt", RB_ONLY, "deferred", "Forced missed tackles per attempt — primary RB-driven yards signal", "FMT / attempts", ("PFF",)),
+    FeatureSpec("rb_yards_after_contact_per_attempt", RB_ONLY, "deferred", "Yards after contact per attempt", "YACO / attempts", ("PFF",)),
+    FeatureSpec("rb_elusive_rating", RB_ONLY, "deferred", "PFF Elusive Rating composite", "(FMT / touches) × (YACO × 100)", ("PFF",)),
+    # Defensive box count not in CFBD
+    FeatureSpec("rb_yards_over_expected", RB_ONLY, "deferred", "Yards over expected per rush — needs box count + expected-yards model", "actual_yards - expected_yards(box, situation)", ("nflverse_nextgen",)),
+    FeatureSpec("rb_perf_vs_stacked_box", RB_ONLY, "deferred", "EPA/rush vs 8+ in box", "filter to box ≥ 8", ("nflverse_nextgen",)),
+    FeatureSpec("rb_perf_vs_light_box", RB_ONLY, "deferred", "EPA/rush vs ≤6 in box", "filter to box ≤ 6", ("nflverse_nextgen",)),
+    # Snap data not in CFBD
+    FeatureSpec("rb_snap_share_peak", RB_ONLY, "deferred", "Peak season snap share", "max season snap_share", ("PFF",)),
+    FeatureSpec("rb_route_participation_proxy", RB_ONLY, "deferred", "Snaps with a route run / total snaps", "route_snaps / total_snaps", ("PFF",)),
+    # YAC not derivable from playText
+    FeatureSpec("rb_yac_per_reception", RB_ONLY, "deferred", "YAC per reception", "sum(yac) / receptions", ("PFF/SIS",)),
 ]
 
 # ---------------------------------------------------------------------------
