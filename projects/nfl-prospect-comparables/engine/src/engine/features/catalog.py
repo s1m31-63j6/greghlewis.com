@@ -103,54 +103,65 @@ UNIVERSAL: list[FeatureSpec] = [
 
 QB_ONLY = (Position.QB,)
 
+# Audited 2026-04-28 against the QB-analyst community (Ben Baldwin / OSF,
+# Hayden Winks, Eric Eager, PFF, Steve Palazzolo, Brian Burke / Total QBR,
+# Football Outsiders DVOA, Bill Connelly / SP+, Kevin Cole / Unexpected
+# Points, Cynthia Frelund). The hard public-data ceiling is air yards,
+# pressure data, and PFF charting (BTT% / TWP% / CPOE / aDOT). QB_DEFERRED
+# below enumerates those plus model-based v1.1 candidates (xPass PROE,
+# EPA-over-expected baseline regression).
 QB_FEATURES: list[FeatureSpec] = [
-    # --- efficiency: overall ---
-    FeatureSpec("qb_epa_per_db", QB_ONLY, "efficiency", "EPA per dropback (career)", "sum(epa where pass_or_scramble) / dropbacks", ("cfbd_pbp",)),
-    FeatureSpec("qb_success_rate", QB_ONLY, "efficiency", "Dropback success rate (EPA > 0)", "count(epa>0) / dropbacks", ("cfbd_pbp",)),
-    FeatureSpec("qb_completion_pct", QB_ONLY, "efficiency", "Career completion percentage", "completions / attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_cpoe", QB_ONLY, "efficiency", "Completion percentage over expected", "actual_cp - model_expected_cp(aDOT, distance, situation)", ("cfbd_pbp",)),
-    FeatureSpec("qb_yards_per_attempt", QB_ONLY, "efficiency", "Career Y/A", "pass_yards / attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_adjusted_ypa", QB_ONLY, "efficiency", "Adjusted Y/A: (yards + 20*TD - 45*INT) / attempts", "PFR formula", ("cfbd_pbp",)),
-    FeatureSpec("qb_adot", QB_ONLY, "efficiency", "Average depth of target", "mean(air_yards) over attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_air_yards_per_attempt", QB_ONLY, "efficiency", "Air yards per attempt", "sum(air_yards) / attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_yac_per_completion", QB_ONLY, "efficiency", "YAC per completion", "sum(yac) / completions", ("cfbd_pbp",)),
-    # --- efficiency: situational splits ---
-    FeatureSpec("qb_epa_per_db_3rd_down", QB_ONLY, "situational", "EPA/dropback on 3rd down", "filter to down=3", ("cfbd_pbp",)),
-    FeatureSpec("qb_epa_per_db_4th_down", QB_ONLY, "situational", "EPA/dropback on 4th down", "filter to down=4", ("cfbd_pbp",)),
-    FeatureSpec("qb_epa_per_db_red_zone", QB_ONLY, "situational", "EPA/dropback in red zone (yardline ≤ 20)", "filter to yardline_100 ≤ 20", ("cfbd_pbp",)),
-    FeatureSpec("qb_epa_per_db_leading", QB_ONLY, "situational", "EPA/dropback when leading (margin > 0)", "filter to score_diff > 0", ("cfbd_pbp",)),
-    FeatureSpec("qb_epa_per_db_tied", QB_ONLY, "situational", "EPA/dropback when tied", "filter to score_diff == 0", ("cfbd_pbp",)),
-    FeatureSpec("qb_epa_per_db_trailing", QB_ONLY, "situational", "EPA/dropback when trailing", "filter to score_diff < 0", ("cfbd_pbp",)),
-    FeatureSpec("qb_epa_per_db_late_close", QB_ONLY, "situational", "EPA/dropback in 4Q within one score", "filter to qtr=4 and abs(score_diff) ≤ 8", ("cfbd_pbp",)),
-    FeatureSpec("qb_epa_per_db_garbage_time", QB_ONLY, "situational", "EPA/dropback in garbage time (4Q, margin > 16)", "filter to qtr=4 and abs(score_diff) > 16", ("cfbd_pbp",)),
-    FeatureSpec("qb_redzone_td_rate", QB_ONLY, "situational", "TD rate inside the 20", "rz_td_passes / rz_dropbacks", ("cfbd_pbp",)),
-    FeatureSpec("qb_third_down_conversion_rate", QB_ONLY, "situational", "Career 3rd-down conversion rate via dropback", "1st downs gained on 3rd down dropbacks / 3rd down dropbacks", ("cfbd_pbp",)),
-    # --- efficiency: by depth ---
-    FeatureSpec("qb_short_attempt_share", QB_ONLY, "depth", "Share of attempts ≤ 5 air yards", "count(air_yards ≤ 5) / attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_intermediate_attempt_share", QB_ONLY, "depth", "Share of attempts 5-15 air yards", "count(5 < ay ≤ 15) / attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_deep_attempt_share", QB_ONLY, "depth", "Share of attempts > 15 air yards", "count(ay > 15) / attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_deep_completion_pct", QB_ONLY, "depth", "Completion % on > 15-air-yard attempts", "deep_completions / deep_attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_deep_epa_per_attempt", QB_ONLY, "depth", "EPA per deep attempt", "sum(epa) / deep_attempts", ("cfbd_pbp",)),
-    # --- play extension / mobility ---
-    FeatureSpec("qb_scramble_rate", QB_ONLY, "mobility", "Scrambles per dropback", "scrambles / dropbacks", ("cfbd_pbp",)),
-    FeatureSpec("qb_yards_per_scramble", QB_ONLY, "mobility", "Yards per scramble", "scramble_yards / scrambles", ("cfbd_pbp",)),
-    FeatureSpec("qb_designed_run_rate", QB_ONLY, "mobility", "Designed runs per offensive snap", "designed_runs / snaps", ("cfbd_pbp",)),
-    FeatureSpec("qb_yards_per_designed_run", QB_ONLY, "mobility", "Yards per designed run", "designed_run_yards / designed_runs", ("cfbd_pbp",)),
-    FeatureSpec("qb_rush_td_rate", QB_ONLY, "mobility", "Rushing TDs per rush attempt", "rush_tds / rush_attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_sack_rate", QB_ONLY, "mobility", "Sack rate", "sacks / dropbacks", ("cfbd_pbp",)),
-    FeatureSpec("qb_pressure_to_sack_proxy", QB_ONLY, "mobility", "Long-developing-play sack rate proxy", "sacks where play_duration > p75 / dropbacks", ("cfbd_pbp",)),
-    # --- decision making / risk ---
-    FeatureSpec("qb_int_rate", QB_ONLY, "decision", "Interception rate", "interceptions / attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_td_to_int", QB_ONLY, "decision", "Career TD:INT ratio", "pass_tds / interceptions (inf-clipped)", ("cfbd_pbp",)),
-    FeatureSpec("qb_btt_rate_proxy", QB_ONLY, "decision", "Big-time-throw rate proxy: deep completions in tight windows", "deep_completions in trafficked situations / attempts", ("cfbd_pbp",)),
-    FeatureSpec("qb_twp_rate_proxy", QB_ONLY, "decision", "Turnover-worthy-play rate proxy", "deep incompletions to high-leverage areas + INTs / attempts", ("cfbd_pbp",)),
     # --- volume ---
     FeatureSpec("qb_total_attempts", QB_ONLY, "volume", "Career pass attempts", "sum(attempts)", ("cfbd_pbp",)),
     FeatureSpec("qb_attempts_per_game", QB_ONLY, "volume", "Pass attempts per game", "attempts / games_played", ("cfbd_pbp",)),
     FeatureSpec("qb_dropbacks_per_game", QB_ONLY, "volume", "Dropbacks per game", "dropbacks / games_played", ("cfbd_pbp",)),
+    # --- efficiency ---
+    FeatureSpec("qb_epa_per_db", QB_ONLY, "efficiency", "EPA per dropback (career) — foundational", "sum(ppa where pass_or_sack) / dropbacks", ("cfbd_pbp",)),
+    FeatureSpec("qb_success_rate", QB_ONLY, "efficiency", "Dropback success rate (EPA > 0)", "count(ppa > 0) / dropbacks", ("cfbd_pbp",)),
+    FeatureSpec("qb_adjusted_ypa", QB_ONLY, "efficiency", "Adjusted Y/A — PFR formula, dominates raw YPA", "(yards + 20*TD - 45*INT) / attempts", ("cfbd_pbp",)),
+    FeatureSpec("qb_int_rate", QB_ONLY, "efficiency", "Interception rate — unique predictive content vs efficiency (PFF/Cole)", "interceptions / attempts", ("cfbd_pbp",)),
+    FeatureSpec("qb_isoppp_pass", QB_ONLY, "efficiency", "Mean EPA on successful dropbacks only — pure explosiveness (Connelly / SP+)", "mean(ppa where ppa > 0 AND dropback)", ("cfbd_pbp",)),
+    FeatureSpec("qb_early_down_epa_per_db", QB_ONLY, "efficiency", "EPA/dropback on 1st & 2nd down — Baldwin's cleanest passer-quality signal", "filter dropbacks to down ≤ 2", ("cfbd_pbp",)),
+    FeatureSpec("qb_clutch_weighted_epa_per_db", QB_ONLY, "efficiency", "Continuous WP-leverage-weighted EPA (Burke / Total QBR) — replaces leading/tied/trailing/late_close/garbage splits", "sum(weight × ppa) / sum(weight); weight = exp(-|score_diff|/14) × period_multiplier", ("cfbd_pbp",)),
+    FeatureSpec("qb_opponent_adj_epa_per_db", QB_ONLY, "efficiency", "Per-play EPA residual against opponent's season pass-defense baseline (Burke / Connelly schedule strength)", "mean(ppa - opp_pass_d_mean_ppa) per dropback", ("cfbd_pbp",)),
+    # --- situational ---
+    FeatureSpec("qb_epa_per_db_3rd_down", QB_ONLY, "situational", "EPA/dropback on 3rd down — high-leverage situational", "filter to down=3", ("cfbd_pbp",)),
+    FeatureSpec("qb_epa_per_db_red_zone", QB_ONLY, "situational", "EPA/dropback in red zone — distinct situational signal", "filter to yards_to_goal ≤ 20", ("cfbd_pbp",)),
+    FeatureSpec("qb_redzone_td_rate", QB_ONLY, "situational", "TD rate inside the 20 — TD-equity signal", "rz_td_passes / rz_dropbacks", ("cfbd_pbp",)),
+    # --- mobility ---
+    FeatureSpec("qb_rush_rate", QB_ONLY, "mobility", "Rush attempts as share of total dropbacks + rushes", "rush_att / (dropbacks + rush_att)", ("cfbd_pbp",)),
+    FeatureSpec("qb_yards_per_rush", QB_ONLY, "mobility", "Yards per rush attempt", "rush_yards / rush_attempts", ("cfbd_pbp",)),
+    FeatureSpec("qb_rush_td_rate", QB_ONLY, "mobility", "Rushing TDs per rush attempt", "rush_tds / rush_attempts", ("cfbd_pbp",)),
+    FeatureSpec("qb_sack_rate", QB_ONLY, "mobility", "Sack rate", "sacks / dropbacks", ("cfbd_pbp",)),
     # --- trajectory ---
     FeatureSpec("qb_epa_yoy_slope", QB_ONLY, "trajectory", "Year-over-year slope of EPA/dropback", "linear regression slope across seasons", ("cfbd_pbp",)),
-    FeatureSpec("qb_final_year_epa_z", QB_ONLY, "trajectory", "Final-season EPA/dropback z vs prior seasons", "z-score(final, prior_career)", ("cfbd_pbp",)),
+    FeatureSpec("qb_final_year_epa_z", QB_ONLY, "trajectory", "Final-season EPA/dropback z vs prior seasons (clipped ±5)", "z-score(final, prior_career)", ("cfbd_pbp",)),
+]
+
+
+# QB specs that need air yards, pressure data, charting, or model regressions
+# that are not in scope for Phase 1. Documented for the methodology page.
+QB_DEFERRED: list[FeatureSpec] = [
+    # PFF / SIS charting
+    FeatureSpec("qb_cpoe", QB_ONLY, "deferred", "Completion percentage over expected", "actual_cp - model_expected_cp(aDOT, distance, situation)", ("PFF/nflverse",)),
+    FeatureSpec("qb_btt_rate_proxy", QB_ONLY, "deferred", "Big-time-throw rate (PFF concept)", "PFF charting", ("PFF",)),
+    FeatureSpec("qb_twp_rate_proxy", QB_ONLY, "deferred", "Turnover-worthy-play rate (PFF concept)", "PFF charting", ("PFF",)),
+    # Air yards (no air-yard data in CFBD)
+    FeatureSpec("qb_adot", QB_ONLY, "deferred", "Average depth of target", "mean(air_yards)", ("PFF/nextgen",)),
+    FeatureSpec("qb_air_yards_per_attempt", QB_ONLY, "deferred", "Air yards per attempt", "sum(air_yards) / attempts", ("PFF/nextgen",)),
+    FeatureSpec("qb_deep_attempt_share", QB_ONLY, "deferred", "Share of attempts > 15 air yards", "count(ay > 15) / attempts", ("PFF/nextgen",)),
+    FeatureSpec("qb_deep_completion_pct", QB_ONLY, "deferred", "Completion % on deep attempts", "deep_completions / deep_attempts", ("PFF/nextgen",)),
+    FeatureSpec("qb_deep_epa_per_attempt", QB_ONLY, "deferred", "EPA per deep attempt", "sum(epa) / deep_attempts", ("PFF/nextgen",)),
+    FeatureSpec("qb_yac_per_completion", QB_ONLY, "deferred", "YAC per completion — needs catch location", "sum(yac) / completions", ("PFF/nextgen",)),
+    FeatureSpec("qb_yac_adjusted_epa_per_db", QB_ONLY, "deferred", "QB EPA isolated from receiver YAC contribution", "sum(epa - expected_yac_epa)", ("PFF/nextgen",)),
+    # Pre-snap intent
+    FeatureSpec("qb_scramble_rate", QB_ONLY, "deferred", "Scrambles per dropback (vs designed runs)", "scrambles / dropbacks", ("PFF/nextgen",)),
+    FeatureSpec("qb_designed_run_rate", QB_ONLY, "deferred", "Designed runs per offensive snap", "designed_runs / snaps", ("PFF/nextgen",)),
+    # Pressure data
+    FeatureSpec("qb_pressure_to_sack", QB_ONLY, "deferred", "Sack rate when pressured", "sacks / pressures", ("PFF",)),
+    # Model-based v1.1 candidates
+    FeatureSpec("qb_xpass_proe", QB_ONLY, "deferred", "Pass rate over expected (Baldwin xPass) — needs trained model", "actual_pass_rate - model_expected_pass_rate", ("model_v1_1",)),
+    FeatureSpec("qb_epa_over_expected_per_db", QB_ONLY, "deferred", "DVOA-style EPA residual against situation baseline — needs trained model", "ppa - expected_ppa(down, distance, yardline, score, time)", ("model_v1_1",)),
 ]
 
 # ---------------------------------------------------------------------------

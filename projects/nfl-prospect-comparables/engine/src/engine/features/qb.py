@@ -1,24 +1,30 @@
-"""QB feature engineering — efficiency, situational splits, mobility, trajectory.
+"""QB feature engineering — public-PBP gold-standard set, audited 2026-04-28
+against the QB-analyst community (Ben Baldwin / OSF, Hayden Winks, Eric Eager,
+PFF, Steve Palazzolo, Cynthia Frelund, Brian Burke / Total QBR, Football
+Outsiders DVOA, Bill Connelly / SP+, Kevin Cole / Unexpected Points,
+Mockdraftable / Pat Kerrane).
 
-Reads the shared cohort-attributed plays frame produced by
-`engine.parse.attribute.build_attributed_plays` (parser + resolver were
-applied once across all positions). This module filters that frame to
-plays where the QB is the passer or rusher and computes per-season
+Reads the shared cohort-attributed plays frame (engine.parse.attribute) and
+its defense_pass_epa frame for opponent-adjusted residuals. Filters the
+frame to plays where the QB is the passer or rusher and computes per-season
 aggregates.
 
-What we compute (Tier 1 — implementable from parsed plays + PPA):
-  efficiency:    epa_per_db, success_rate, completion_pct, ypa, adjusted_ypa,
-                 td_rate, int_rate, td_to_int
-  volume:        total_attempts, attempts_per_game, dropbacks_per_game
-  situational:   epa_per_db_{3rd_down, red_zone, late_close, leading, tied, trailing}
-                 redzone_td_rate, third_down_conversion_rate, garbage_time_share
-  mobility:      rush_rate, yards_per_rush, rush_td_rate, sack_rate
-  trajectory:    epa_yoy_slope, final_year_epa_z
+20 features computed (see catalog.QB_FEATURES). The hard public-data
+ceiling is air yards, pressure data, and PFF charting (BTT% / TWP% /
+CPOE / aDOT). 12 deferred specs in catalog.QB_DEFERRED, including the
+two model-based v1.1 candidates (xPass PROE, EPA-over-expected baseline
+regression).
 
-What we explicitly DO NOT compute (no public-data path without PFF):
-  cpoe, adot, air_yards_per_attempt, deep_attempt_share, deep_completion_pct,
-  yac_per_completion, scramble_rate, designed_run_rate, pressure_to_sack
-  → flagged in feature catalog and methodology page.
+Headline analyst-framework concepts in this set:
+  - early_down_epa_per_db (Baldwin) — "the cleanest passer-quality signal"
+    because late-down EPA is dominated by situation
+  - isoppp_pass (Connelly / SP+) — pure explosiveness on successful
+    dropbacks, decoupled from efficiency
+  - clutch_weighted_epa_per_db (Burke / Total QBR) — continuous WP-weighted
+    leverage; replaces 5 partition splits (leading/tied/trailing/late-close/
+    garbage_time) with one less-noisy signal
+  - opponent_adj_epa_per_db (Burke / Connelly) — per-play EPA residual
+    against opponent's season pass-defense baseline; schedule strength
 """
 
 from __future__ import annotations
@@ -35,22 +41,35 @@ PASS_TYPES = ("pass_complete", "pass_incomplete", "pass_int", "pass_td")
 COMPLETION_TYPES = ("pass_complete", "pass_td")
 
 
-# ---------- aggregation ----------
-
-
 def _safe_div(num, den, *, default=None, ndigits=3):
     if den is None or den == 0:
         return default
     return round(num / den, ndigits)
 
 
+# ---------- aggregation ----------
+
+
 def _aggregate_per_season(df: pl.DataFrame) -> pl.DataFrame:
-    """Per (qb_id, season) aggregates that downstream features key off."""
+    """Per (qb_id, season) aggregates that downstream features key off.
+
+    Expects `df` to already include `qb_id` (filtered + coalesced) and
+    `opp_mean_ppa` (joined from defense_pass_epa) columns.
+    """
     is_pass = pl.col("parsed_type").is_in(list(PASS_TYPES))
     is_completion = pl.col("parsed_type").is_in(list(COMPLETION_TYPES))
     is_dropback = is_pass | (pl.col("parsed_type") == "sack")
     is_qb_rush = pl.col("parsed_type").is_in(["rush", "rush_td"])
     not_two_point = ~pl.col("is_two_point")
+
+    # Clutch weight per dropback: continuous WP-leverage approximation.
+    # Late-and-close (4Q, |score| ≤ 8) ~ weight 1.5+
+    # Garbage time (4Q, |score| > 16) ~ weight ~0.3
+    # Mid-game close ~ weight 1.0
+    clutch_w = (
+        (-pl.col("score_diff").abs().cast(pl.Float64) / 14.0).exp()
+        * (1.0 + 0.5 * (pl.col("period") >= 4).cast(pl.Float64))
+    )
 
     return (
         df.with_columns([
@@ -58,6 +77,7 @@ def _aggregate_per_season(df: pl.DataFrame) -> pl.DataFrame:
             (is_completion & not_two_point).alias("_is_completion"),
             (is_dropback & not_two_point).alias("_is_dropback"),
             is_qb_rush.alias("_is_qb_rush"),
+            clutch_w.alias("_clutch_w"),
         ])
         .group_by(["qb_id", "season"])
         .agg([
@@ -74,23 +94,36 @@ def _aggregate_per_season(df: pl.DataFrame) -> pl.DataFrame:
             ((pl.col("parsed_type") == "rush_td").cast(pl.Int64)).sum().alias("rush_tds"),
             (pl.col("_is_dropback").cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_dropbacks"),
             (pl.col("_is_dropback") & (pl.col("ppa") > 0)).sum().alias("ppa_positive_dropbacks"),
+            # Sum of ppa on successful dropbacks only — for isoppp_pass
+            (
+                (pl.col("_is_dropback") & (pl.col("ppa") > 0)).cast(pl.Float64)
+                * pl.col("ppa").fill_null(0)
+            ).sum().alias("ppa_successful"),
+            # Early-down (1st/2nd) dropbacks — Baldwin's cleanest signal
+            (pl.col("_is_dropback") & (pl.col("down") <= 2)).sum().alias("dropbacks_early"),
+            (
+                (pl.col("_is_dropback") & (pl.col("down") <= 2)).cast(pl.Int64)
+                * pl.col("ppa").fill_null(0)
+            ).sum().alias("ppa_early"),
+            # Clutch-weighted EPA — continuous WP-leverage replacement for
+            # leading/tied/trailing/late_close/garbage splits
+            (pl.col("_is_dropback").cast(pl.Float64) * pl.col("_clutch_w")).sum().alias("clutch_weight_sum"),
+            (
+                pl.col("_is_dropback").cast(pl.Float64)
+                * pl.col("_clutch_w")
+                * pl.col("ppa").fill_null(0)
+            ).sum().alias("clutch_ppa_sum"),
+            # Opponent residual: ppa - opp_mean_ppa per dropback, summed
+            (
+                pl.col("_is_dropback").cast(pl.Float64)
+                * (pl.col("ppa").fill_null(0) - pl.col("opp_mean_ppa").fill_null(0))
+            ).sum().alias("opp_residual_sum"),
+            (pl.col("_is_dropback") & pl.col("opp_mean_ppa").is_not_null()).sum().alias("dropbacks_with_opp"),
+            # 3rd-down + red-zone splits we keep
             (pl.col("_is_dropback") & (pl.col("down") == 3)).sum().alias("dropbacks_3rd"),
             ((pl.col("_is_dropback") & (pl.col("down") == 3)).cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_3rd"),
             (pl.col("_is_dropback") & (pl.col("yards_to_goal") <= 20)).sum().alias("dropbacks_rz"),
             ((pl.col("_is_dropback") & (pl.col("yards_to_goal") <= 20)).cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_rz"),
-            (pl.col("_is_dropback") & (pl.col("period") == 4) & (pl.col("score_diff").abs() <= 8)).sum().alias("dropbacks_late_close"),
-            ((pl.col("_is_dropback") & (pl.col("period") == 4) & (pl.col("score_diff").abs() <= 8)).cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_late_close"),
-            (pl.col("_is_dropback") & (pl.col("score_diff") < 0)).sum().alias("dropbacks_trailing"),
-            ((pl.col("_is_dropback") & (pl.col("score_diff") < 0)).cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_trailing"),
-            (pl.col("_is_dropback") & (pl.col("score_diff") > 0)).sum().alias("dropbacks_leading"),
-            ((pl.col("_is_dropback") & (pl.col("score_diff") > 0)).cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_leading"),
-            (pl.col("_is_dropback") & (pl.col("score_diff") == 0)).sum().alias("dropbacks_tied"),
-            ((pl.col("_is_dropback") & (pl.col("score_diff") == 0)).cast(pl.Int64) * pl.col("ppa").fill_null(0)).sum().alias("ppa_tied"),
-            (pl.col("_is_dropback") & (pl.col("period") == 4) & (pl.col("score_diff").abs() > 16)).sum().alias("dropbacks_garbage"),
-            (
-                pl.col("_is_dropback") & (pl.col("down") == 3)
-                & (pl.col("is_first_down") | pl.col("is_touchdown"))
-            ).sum().alias("third_down_conversions"),
             (pl.col("_is_dropback") & (pl.col("yards_to_goal") <= 20) & pl.col("is_touchdown")).sum().alias("rz_tds"),
         ])
     )
@@ -104,7 +137,6 @@ def _career_features(seasons_df: pl.DataFrame) -> dict[str, float]:
     sum_ = s.sum()
     n = s.height
     pass_att = int(sum_["pass_attempts"][0])
-    completions = int(sum_["completions"][0])
     dropbacks = int(sum_["dropbacks"][0])
     sacks = int(sum_["sacks"][0])
     pass_yards = int(sum_["pass_yards"][0])
@@ -115,48 +147,56 @@ def _career_features(seasons_df: pl.DataFrame) -> dict[str, float]:
     rush_tds = int(sum_["rush_tds"][0])
     games = int(s["games_played"].sum())
     ppa_db = float(sum_["ppa_dropbacks"][0])
+    successful_dropbacks = int(sum_["ppa_positive_dropbacks"][0])
 
     f: dict[str, float] = {}
-    # Volume
+
+    # --- volume ---
     f["qb_total_attempts"] = float(pass_att)
     f["qb_attempts_per_game"] = _safe_div(pass_att, games)
     f["qb_dropbacks_per_game"] = _safe_div(dropbacks, games)
 
-    # Efficiency
+    # --- efficiency ---
     f["qb_epa_per_db"] = _safe_div(ppa_db, dropbacks)
-    f["qb_success_rate"] = _safe_div(int(sum_["ppa_positive_dropbacks"][0]), dropbacks)
-    f["qb_completion_pct"] = _safe_div(completions, pass_att)
-    f["qb_ypa"] = _safe_div(pass_yards, pass_att)
+    f["qb_success_rate"] = _safe_div(successful_dropbacks, dropbacks)
     if pass_att > 0:
-        # Adjusted Y/A: (yards + 20*TD - 45*INT) / attempts (PFR formula)
         f["qb_adjusted_ypa"] = round(
             (pass_yards + 20 * pass_tds - 45 * interceptions) / pass_att, 2
         )
-    f["qb_td_rate"] = _safe_div(pass_tds, pass_att)
     f["qb_int_rate"] = _safe_div(interceptions, pass_att)
-    if interceptions > 0:
-        f["qb_td_to_int"] = round(min(pass_tds / interceptions, 20.0), 2)
-    elif pass_tds > 0:
-        f["qb_td_to_int"] = 20.0  # cap when no INTs
 
-    # Mobility
+    # IsoPPP — mean EPA on successful dropbacks only (Connelly explosiveness)
+    f["qb_isoppp_pass"] = _safe_div(
+        float(sum_["ppa_successful"][0]), successful_dropbacks, ndigits=3
+    )
+
+    # Early-down EPA/db (Baldwin)
+    f["qb_early_down_epa_per_db"] = _safe_div(
+        float(sum_["ppa_early"][0]), int(sum_["dropbacks_early"][0])
+    )
+
+    # Clutch-weighted EPA (Burke / Total QBR)
+    f["qb_clutch_weighted_epa_per_db"] = _safe_div(
+        float(sum_["clutch_ppa_sum"][0]), float(sum_["clutch_weight_sum"][0])
+    )
+
+    # Opponent-adjusted EPA (Burke / Connelly)
+    f["qb_opponent_adj_epa_per_db"] = _safe_div(
+        float(sum_["opp_residual_sum"][0]), int(sum_["dropbacks_with_opp"][0])
+    )
+
+    # --- mobility ---
     f["qb_sack_rate"] = _safe_div(sacks, dropbacks)
     f["qb_rush_rate"] = _safe_div(rush_att, dropbacks + rush_att)
     f["qb_yards_per_rush"] = _safe_div(rush_yards, rush_att)
     f["qb_rush_td_rate"] = _safe_div(rush_tds, rush_att)
 
-    # Situational
+    # --- situational (kept) ---
     f["qb_epa_per_db_3rd_down"] = _safe_div(float(sum_["ppa_3rd"][0]), int(sum_["dropbacks_3rd"][0]))
     f["qb_epa_per_db_red_zone"] = _safe_div(float(sum_["ppa_rz"][0]), int(sum_["dropbacks_rz"][0]))
-    f["qb_epa_per_db_late_close"] = _safe_div(float(sum_["ppa_late_close"][0]), int(sum_["dropbacks_late_close"][0]))
-    f["qb_epa_per_db_trailing"] = _safe_div(float(sum_["ppa_trailing"][0]), int(sum_["dropbacks_trailing"][0]))
-    f["qb_epa_per_db_leading"] = _safe_div(float(sum_["ppa_leading"][0]), int(sum_["dropbacks_leading"][0]))
-    f["qb_epa_per_db_tied"] = _safe_div(float(sum_["ppa_tied"][0]), int(sum_["dropbacks_tied"][0]))
-    f["qb_third_down_conversion_rate"] = _safe_div(int(sum_["third_down_conversions"][0]), int(sum_["dropbacks_3rd"][0]))
     f["qb_redzone_td_rate"] = _safe_div(int(sum_["rz_tds"][0]), int(sum_["dropbacks_rz"][0]))
-    f["qb_garbage_time_share"] = _safe_div(int(sum_["dropbacks_garbage"][0]), dropbacks)
 
-    # Trajectory
+    # --- trajectory ---
     if n >= 2:
         per_season_epa = []
         for row in s.iter_rows(named=True):
@@ -176,8 +216,6 @@ def _career_features(seasons_df: pl.DataFrame) -> dict[str, float]:
                 prior_mean = statistics.mean(ys[:-1])
                 prior_std = statistics.pstdev(ys[:-1])
                 z = (ys[-1] - prior_mean) / prior_std
-                # Clip to ±5 — final-year-z explodes with near-zero prior_std
-                # for transfer QBs and true-frosh breakouts.
                 f["qb_final_year_epa_z"] = round(max(-5.0, min(5.0, z)), 2)
 
     return {k: v for k, v in f.items() if v is not None}
@@ -188,15 +226,18 @@ def _career_features(seasons_df: pl.DataFrame) -> dict[str, float]:
 
 @dataclass
 class QBContext:
-    plays: pl.DataFrame   # QB-attributed plays (filtered from shared frame)
-    seasons: pl.DataFrame  # per-(qb_id, season) aggregates
+    plays: pl.DataFrame
+    seasons: pl.DataFrame
 
 
 def build_qb_context(
     attributed_plays: pl.DataFrame,
     qb_canon_ids: set[int],
+    *,
+    defense_pass_epa: pl.DataFrame,
 ) -> QBContext:
-    """Filter the shared cohort plays to QB-relevant rows and aggregate."""
+    """Filter the shared cohort plays to QB-relevant rows, join opponent
+    pass-defense EPA, and aggregate."""
     if attributed_plays.height == 0 or not qb_canon_ids:
         return QBContext(plays=pl.DataFrame(), seasons=pl.DataFrame())
 
@@ -205,14 +246,24 @@ def build_qb_context(
         pl.col("passer_id").is_in(qb_id_list)
         | pl.col("rusher_id").is_in(qb_id_list)
     ).with_columns(
-        # The QB's id is the passer for pass plays / sacks, the rusher for QB
-        # rushes. Coalesce works because a play doesn't have both roles set on
-        # the QB simultaneously.
         pl.coalesce([
             pl.when(pl.col("passer_id").is_in(qb_id_list)).then(pl.col("passer_id")),
             pl.when(pl.col("rusher_id").is_in(qb_id_list)).then(pl.col("rusher_id")),
         ]).alias("qb_id")
     )
+
+    # Join opponent pass-defense EPA (mean_ppa per defense+season).
+    if defense_pass_epa.height > 0:
+        plays = plays.join(
+            defense_pass_epa.select(["defense", "season", "mean_ppa"]).rename(
+                {"mean_ppa": "opp_mean_ppa"}
+            ),
+            on=["defense", "season"],
+            how="left",
+        )
+    else:
+        plays = plays.with_columns(pl.lit(None, dtype=pl.Float64).alias("opp_mean_ppa"))
+
     seasons = _aggregate_per_season(plays) if plays.height > 0 else pl.DataFrame()
     return QBContext(plays=plays, seasons=seasons)
 

@@ -137,6 +137,10 @@ class CohortAttribution:
     # team_pass_dist columns: team, season, pass_attempts, third_down_pass_attempts,
     # red_zone_pass_attempts. Excludes sacks and 2-pts. Used as denominators for
     # *_target_share features without re-parsing the corpus.
+    defense_pass_epa: pl.DataFrame  # per-(defense, season) pass-defense EPA stats
+    # defense_pass_epa columns: defense, season, pass_plays, sum_ppa, mean_ppa.
+    # Counts EVERY pass play (not cohort-filtered) — unbiased opponent baseline
+    # for qb_opponent_adj_epa_per_db.
 
 
 def build_attributed_plays(
@@ -175,6 +179,8 @@ def build_attributed_plays(
     rows: list[dict] = []
     # team-level pass distribution (counted alongside attribution — same loop)
     team_pass: dict[tuple[str, int], list[int]] = {}  # (team, season) → [total, 3rd_dn, rz]
+    # opponent-side pass-defense EPA (every pass play, not cohort-filtered)
+    def_pass: dict[tuple[str, int], list[float]] = {}  # (defense, season) → [n, sum_ppa]
     started = time.monotonic()
 
     for i, k in enumerate(keys, 1):
@@ -187,6 +193,7 @@ def build_attributed_plays(
         for row in df.iter_rows(named=True):
             play_type = row.get("playType")
             offense = row.get("offense")
+            defense = row.get("defense")
             # Team-level pass-attempt distribution. Counted regardless of
             # whether a cohort player was involved. Excludes sacks (no target)
             # and 2-pts (separate game state) — matches conventional "pass
@@ -203,6 +210,12 @@ def build_attributed_plays(
                     tp[1] += 1
                 if (row.get("yardsToGoal") or 100) <= 20:
                     tp[2] += 1
+                # Opponent pass-defense EPA — every pass play counted (not
+                # cohort-filtered) so the baseline is unbiased.
+                if defense and row.get("ppa") is not None:
+                    de = def_pass.setdefault((defense, season), [0, 0.0])
+                    de[0] += 1
+                    de[1] += float(row["ppa"])
 
             pp = parse_play(play_type, row.get("playText"))
             if pp.parsed_type in ("other", "kneel"):
@@ -236,6 +249,7 @@ def build_attributed_plays(
                 "week": week,
                 "season_type": season_type,
                 "offense": offense,
+                "defense": defense,
                 "parsed_type": pp.parsed_type,
                 "ppa": row.get("ppa"),
                 "yards_gained": row.get("yardsGained"),
@@ -277,9 +291,32 @@ def build_attributed_plays(
         },
     ) if team_pass else pl.DataFrame()
 
+    defense_pass_epa = pl.from_dicts(
+        [
+            {
+                "defense": defense,
+                "season": season,
+                "pass_plays": counts[0],
+                "sum_ppa": counts[1],
+                "mean_ppa": counts[1] / counts[0] if counts[0] > 0 else 0.0,
+            }
+            for (defense, season), counts in def_pass.items()
+        ],
+        schema={
+            "defense": pl.Utf8,
+            "season": pl.Int64,
+            "pass_plays": pl.Int64,
+            "sum_ppa": pl.Float64,
+            "mean_ppa": pl.Float64,
+        },
+    ) if def_pass else pl.DataFrame()
+
     if not rows:
         return CohortAttribution(
-            plays=pl.DataFrame(), pfr_to_canon_id={}, team_pass_dist=team_pass_dist
+            plays=pl.DataFrame(),
+            pfr_to_canon_id={},
+            team_pass_dist=team_pass_dist,
+            defense_pass_epa=defense_pass_epa,
         )
 
     # Explicit schema — polars' default schema-inference samples the first 100
@@ -294,6 +331,7 @@ def build_attributed_plays(
         "week": pl.Int64,
         "season_type": pl.Utf8,
         "offense": pl.Utf8,
+        "defense": pl.Utf8,
         "parsed_type": pl.Utf8,
         "ppa": pl.Float64,
         "yards_gained": pl.Int64,
@@ -324,5 +362,8 @@ def build_attributed_plays(
     ])
 
     return CohortAttribution(
-        plays=plays, pfr_to_canon_id=canonical, team_pass_dist=team_pass_dist
+        plays=plays,
+        pfr_to_canon_id=canonical,
+        team_pass_dist=team_pass_dist,
+        defense_pass_epa=defense_pass_epa,
     )

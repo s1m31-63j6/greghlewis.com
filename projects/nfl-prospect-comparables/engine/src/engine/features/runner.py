@@ -89,7 +89,10 @@ def run(
     wr_ctx = None
     if include_qb and any(p.position == Position.QB for p in pooled):
         qb_canon = _canon_ids_for_position(pooled, pfr_to_canon_id, Position.QB)
-        qb_ctx = qb_features.build_qb_context(cohort_attr.plays, qb_canon)
+        qb_ctx = qb_features.build_qb_context(
+            cohort_attr.plays, qb_canon,
+            defense_pass_epa=cohort_attr.defense_pass_epa,
+        )
         if qb_ctx.seasons.height > 0:
             print(f"    qb attributed plays: {qb_ctx.plays.height:,}")
             print(f"    qb (qb_id, season) pairs: {qb_ctx.seasons.height}")
