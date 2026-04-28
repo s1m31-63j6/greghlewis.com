@@ -229,7 +229,31 @@ def build_attributed_plays(
     if not rows:
         return CohortAttribution(plays=pl.DataFrame(), pfr_to_canon_id={})
 
-    plays = pl.from_dicts(rows)
+    # Explicit schema — polars' default schema-inference samples the first 100
+    # rows, which fails when early partitions emit only one role's id (e.g. a
+    # cohort with no pre-2017 college plays leaves passer_id null for the
+    # first batch and then can't widen to i64 when a later row has a value).
+    plays = pl.from_dicts(rows, schema={
+        "passer_id": pl.Int64,
+        "rusher_id": pl.Int64,
+        "receiver_id": pl.Int64,
+        "season": pl.Int64,
+        "week": pl.Int64,
+        "season_type": pl.Utf8,
+        "offense": pl.Utf8,
+        "parsed_type": pl.Utf8,
+        "ppa": pl.Float64,
+        "yards_gained": pl.Int64,
+        "down": pl.Int64,
+        "distance": pl.Int64,
+        "yards_to_goal": pl.Int64,
+        "period": pl.Int64,
+        "score_diff": pl.Int64,
+        "is_first_down": pl.Boolean,
+        "is_touchdown": pl.Boolean,
+        "is_two_point": pl.Boolean,
+        "game_id": pl.Int64,
+    })
 
     # Canonical-id remap: smallest id wins per pfr_id, applied to all three role
     # columns. `replace_strict` with a column-default leaves nulls and unmapped
