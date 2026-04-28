@@ -73,7 +73,6 @@ UNIVERSAL: list[FeatureSpec] = [
     FeatureSpec("college_seasons", ALL, "background", "Number of seasons played in college", "count of distinct seasons with snap > 0", ("cfbd_box",)),
     FeatureSpec("transferred", ALL, "background", "Whether player transferred during college", "1 if multiple schools in record, else 0", ("cfbd_box",)),
     FeatureSpec("conference_p5", ALL, "background", "Played most career snaps in a Power-5 conference", "1/0 indicator", ("cfbd_box",)),
-    FeatureSpec("age_at_draft", ALL, "background", "Age in decimal years at draft date", "draft_date - birth_date", ("nflverse_player",)),
     FeatureSpec("age_at_draft_pct", ALL, "background", "Age-at-draft percentile within position cohort (lower = younger = better)", "1 - ECDF(age_at_draft) within position", ("nflverse_player",)),
     FeatureSpec("days_since_birthday_at_draft", ALL, "background", "Refines age_at_draft with within-year fraction", "draft_date.day_of_year - birth_date.day_of_year (mod 365)", ("nflverse_player",)),
     FeatureSpec("draft_capital_pct", ALL, "background", "Inverse draft pick percentile (higher = earlier)", "1 - (pick / 256)", ("nflverse_player",)),
@@ -93,7 +92,6 @@ UNIVERSAL: list[FeatureSpec] = [
     FeatureSpec("breakout_age", ALL, "trajectory", "Age at first season with elite production (top-quartile in pos cohort)", "min age where season percentile > 75 in cohort", ("cfbd_pbp",)),
     FeatureSpec("dominator_rating", (Position.WR, Position.TE, Position.RB), "trajectory", "Share of team production captured at peak", "max season share of team's relevant production", ("cfbd_box",)),
     FeatureSpec("late_career_growth", ALL, "trajectory", "Final-year minus rookie-year production rate", "production_rate(final) - production_rate(first)", ("cfbd_pbp",)),
-    FeatureSpec("age_adjusted_dominator", (Position.WR, Position.TE, Position.RB), "trajectory", "Dominator weighted by youth at breakout (Hayden Winks-style)", "dominator_rating * (1 + 0.05 * (22 - breakout_age))", ("cfbd_box",)),
     FeatureSpec("production_variance_ratio", ALL, "trajectory", "Coefficient of variation of season-to-season production (boom/bust separator)", "stdev(season_production) / mean(season_production), clipped 0..3", ("cfbd_box",)),
 ]
 
@@ -113,7 +111,6 @@ QB_ONLY = (Position.QB,)
 QB_FEATURES: list[FeatureSpec] = [
     # --- volume ---
     FeatureSpec("qb_total_attempts", QB_ONLY, "volume", "Career pass attempts", "sum(attempts)", ("cfbd_pbp",)),
-    FeatureSpec("qb_attempts_per_game", QB_ONLY, "volume", "Pass attempts per game", "attempts / games_played", ("cfbd_pbp",)),
     FeatureSpec("qb_dropbacks_per_game", QB_ONLY, "volume", "Dropbacks per game", "dropbacks / games_played", ("cfbd_pbp",)),
     # --- efficiency ---
     FeatureSpec("qb_epa_per_db", QB_ONLY, "efficiency", "EPA per dropback (career) — foundational", "sum(ppa where pass_or_sack) / dropbacks", ("cfbd_pbp",)),
@@ -195,7 +192,6 @@ RB_FEATURES: list[FeatureSpec] = [
     FeatureSpec("rb_receiving_yards_per_game", RB_ONLY, "receiving", "Receiving yards per game — Cole: 3× the predictive coefficient of rushing yards/game", "rec_yards / games_played", ("cfbd_pbp",)),
     FeatureSpec("rb_receiving_yards_share", RB_ONLY, "receiving", "Share of team's receiving yards", "rec_yards / team_rec_yards", ("cfbd_pbp",)),
     # --- workload ---
-    FeatureSpec("rb_touches_per_game", RB_ONLY, "volume", "Touches (rush + receptions) per game", "(rush_att + receptions) / games_played", ("cfbd_pbp",)),
     FeatureSpec("rb_weighted_opportunity_per_game", RB_ONLY, "volume", "Weighted opportunity per game (Mike Clay) — gold-standard RB workload", "(rush_att + 2 × targets) / games_played", ("cfbd_pbp",)),
     FeatureSpec("rb_workload_concentration", RB_ONLY, "volume", "Average season share of team rushing yards — bell-cow vs committee proxy", "mean over seasons of player_rush_yds / team_rush_yds", ("cfbd_pbp",)),
     FeatureSpec("rb_yards_per_team_play", RB_ONLY, "volume", "Career scrimmage yards per team play — Zachariason's #1 single predictor", "career (rush_yds + rec_yds) / team plays during team-seasons", ("cfbd_pbp",)),

@@ -317,15 +317,14 @@ def _age_draft_features(p: PlayerProfile, ctx: CohortContext) -> dict[str, float
     bio = p.bio
     draft = p.draft
 
-    # age_at_draft (years, decimal)
+    # age_at_draft (intermediate; dropped as a feature — redundant with
+    # age_at_draft_pct which is normalized within position cohort)
     age = None
     if bio.birth_date:
         d = _draft_date(draft.draft_year)
         age = (d - bio.birth_date).days / 365.25
-        f["age_at_draft"] = round(age, 3)
 
         # days_since_birthday_at_draft (0..364)
-        # birthday in draft_year, possibly already passed — use modular distance
         bday_this_year = bio.birth_date.replace(year=draft.draft_year)
         diff = (d - bday_this_year).days % 365
         f["days_since_birthday_at_draft"] = float(diff)
@@ -341,9 +340,10 @@ def _age_draft_features(p: PlayerProfile, ctx: CohortContext) -> dict[str, float
         # younger = better → inverse percentile
         f["age_at_draft_pct"] = _inverse_percentile(age, ctx.age_dists[pos])
 
-    # draft_capital_pct: 1 - (pick / 256). UDFAs (no pick) → 0.
+    # draft_capital_pct: 1 - (pick / 256), clipped to [0, 1]. UDFAs and
+    # very-late-round picks (pick > 256) → 0.
     if draft.draft_pick is not None:
-        f["draft_capital_pct"] = round(1.0 - (draft.draft_pick / 256.0), 3)
+        f["draft_capital_pct"] = round(max(0.0, 1.0 - (draft.draft_pick / 256.0)), 3)
     else:
         f["draft_capital_pct"] = 0.0
 
@@ -519,10 +519,10 @@ def _trajectory_features(p: PlayerProfile, ctx: CohortContext) -> dict[str, floa
         if shares:
             peak_share = max(shares)
             f["dominator_rating"] = round(peak_share, 3)
-            # Age-adjusted: penalize late breakouts. Reference age = 22.
-            if "breakout_age" in f:
-                age_factor = 1.0 + 0.05 * (22.0 - f["breakout_age"])
-                f["age_adjusted_dominator"] = round(peak_share * age_factor, 3)
+            # age_adjusted_dominator (Winks) dropped — r=0.99 redundant with
+            # dominator_rating (the multiplier was nearly constant). The
+            # embedding can learn the dominator × breakout_age interaction
+            # itself since both are in the feature set.
 
     return {k: v for k, v in f.items() if v is not None}
 

@@ -153,7 +153,8 @@ def _career_features(seasons_df: pl.DataFrame) -> dict[str, float]:
 
     # --- volume ---
     f["qb_total_attempts"] = float(pass_att)
-    f["qb_attempts_per_game"] = _safe_div(pass_att, games)
+    # qb_attempts_per_game dropped — r=0.997 redundant with qb_dropbacks_per_game
+    # (sacks are ~6-7% of dropbacks). dropbacks is the unified denominator.
     f["qb_dropbacks_per_game"] = _safe_div(dropbacks, games)
 
     # --- efficiency ---

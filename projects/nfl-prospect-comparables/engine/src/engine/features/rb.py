@@ -260,7 +260,8 @@ def _career_features(
         f["rb_receiving_yards_share"] = _safe_div(num, den, ndigits=4)
 
     # --- workload ---
-    f["rb_touches_per_game"] = _safe_div(rush_att + receptions, games)
+    # rb_touches_per_game dropped — r=0.975 redundant with weighted_opportunity
+    # (weighted_opp = touches + targets; targets is already a separate feature).
     f["rb_weighted_opportunity_per_game"] = _safe_div(rush_att + 2 * targets, games, ndigits=2)
 
     # workload_concentration: avg over seasons of (player rush yds / team rush yds).
