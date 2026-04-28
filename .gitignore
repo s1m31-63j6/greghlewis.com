@@ -53,6 +53,7 @@ __pycache__/
 cdk.out/
 cdk.context.json
 
-# scouting corpus — licensed material (Brugler "The Beast") + scrapeable
-# free sources. Per-project; never committed.
-corpus/
+# scouting corpus staging dir — licensed material (Brugler "The Beast") +
+# scrapeable free sources. Per-project; never committed. Path-specific
+# rule so it doesn't match the engine.corpus Python module under src/.
+projects/nfl-prospect-comparables/engine/corpus/
