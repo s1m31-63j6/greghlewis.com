@@ -33,6 +33,8 @@ ARMS = (
     "feature",
     "measurables",
     "engineered",
+    "feature_v2",          # v2 layered (engineered only)
+    "feature_v2_traits",   # v2 layered + Sonnet structured archetype traits
     "text",          # = text_clean (Brugler + Walter Football)
     "hybrid",        # = hybrid_clean
     "text_legacy",   # Brugler + Wikipedia

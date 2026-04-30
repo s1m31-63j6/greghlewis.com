@@ -23,6 +23,7 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "requests>=2.33.1",
     "scikit-learn>=1.8.0",
+    "umap-learn>=0.5.12",
 ]
 
 [build-system]

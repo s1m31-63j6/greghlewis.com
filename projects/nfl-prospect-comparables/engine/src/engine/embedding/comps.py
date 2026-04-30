@@ -116,6 +116,10 @@ class Comp:
     cohort: str
     similarity: float
     player_id: str
+    # Per-layer cosine breakdown (BODY/VOLUME/EFFICIENCY/TRAITS) — populated
+    # when the layered path is taken, used by the UI for the "axes of
+    # similarity" display in the slide-out panel.
+    per_layer: dict[str, float] | None = None
 
 
 @dataclass
@@ -491,27 +495,63 @@ def _load_pool_layered(
         # layered arm find_comps uses layer_matrices/layer_masks instead. We
         # still populate by_position with the union slice (concat of all sim
         # layers, L2-normed) so that callers that don't take the layered path
-        # still get something sensible (e.g., quick sanity ablation).
+        # still get something sensible — e.g., the classifier eval which fits
+        # sklearn models per-arm. For feature_v2_traits this concatenates the
+        # engineered union slice with the trait vector so the classifier sees
+        # the same feature space the layered cosine ranks over.
         union_idxs: list[int] = []
         for layer in sim_layers:
+            if layer == LAYER_TRAITS:
+                continue
             union_idxs.extend(layer_idx_map.get(layer, []))
         union_idxs = sorted(set(union_idxs))
         d_union = len(union_idxs)
-        if d_union == 0:
+        # Optional trait extension
+        trait_M_for_pos = (
+            layer_matrices.get(LAYER_TRAITS, {}).get(pos)
+            if include_traits and LAYER_TRAITS in layer_matrices
+            else None
+        )
+        d_traits = trait_M_for_pos.shape[1] if trait_M_for_pos is not None else 0
+        d_total = d_union + d_traits
+        if d_total == 0:
             by_position[pos] = np.zeros((len(idxs), 1), dtype=np.float64)
         else:
-            U = np.zeros((len(idxs), d_union), dtype=np.float64)
+            U = np.zeros((len(idxs), d_total), dtype=np.float64)
             for row_i, df_i in enumerate(idxs):
                 full_vec = np.asarray(df["vector"][df_i], dtype=np.float64)
-                U[row_i] = full_vec[union_idxs]
+                if d_union > 0:
+                    U[row_i, :d_union] = full_vec[union_idxs]
+                if d_traits > 0 and trait_M_for_pos is not None:
+                    U[row_i, d_union:] = trait_M_for_pos[row_i]
             U = U / np.linalg.norm(U, axis=1, keepdims=True).clip(min=1e-12)
             by_position[pos] = U
+        # Write the sliced vector back to df so vec_col-based callers
+        # (classifier eval) read the v2 feature space, not the full 168-dim
+        # original engineered vector.
+        # (This requires us to assemble a per-row list aligned with df's row
+        # order, which is `idxs` order — same as by_position rows.)
+
+    # Assemble per-row v2 sliced vector aligned with df row order, so vec_col
+    # consumers (classifier eval, which iterates df.iter_rows) read the v2
+    # feature space rather than the full 168-dim engineered vector.
+    n_rows = df.height
+    sliced_vecs: list[list[float]] = [None] * n_rows  # type: ignore[list-item]
+    for pos, idxs in pos_index.items():
+        M = by_position[pos]
+        for local_i, df_i in enumerate(idxs):
+            sliced_vecs[df_i] = M[local_i].tolist()
+    # Fill any positions not covered (shouldn't happen, but defensive)
+    for i in range(n_rows):
+        if sliced_vecs[i] is None:
+            sliced_vecs[i] = [0.0]
+    df = df.with_columns(pl.Series(name="v2_sliced_vec", values=sliced_vecs))
 
     return CompPool(
         df=df,
         by_position=by_position,
         pos_index=pos_index,
-        vec_col="vector",
+        vec_col="v2_sliced_vec",
         mask_by_position=None,
         feature_by_position=None,
         text_by_position=None,
@@ -696,6 +736,9 @@ def find_comps(
         and pool.text_by_position is not None
     )
     is_layered = pool.layer_matrices is not None
+    # Per-layer cosines kept for the UI per_layer breakdown. Stays empty
+    # for non-layered paths; safe to read after the if/elif chain.
+    per_layer_cos_by_layer: dict[str, np.ndarray] = {}
 
     if is_layered:
         # v2 layered path — masked cosine per archetype layer combined via
@@ -754,6 +797,7 @@ def find_comps(
                 weighted_sum = weighted_sum + contribution
                 applied_weight_sum = applied_weight_sum + applied
             per_layer_shared.append(shared)
+            per_layer_cos_by_layer[layer] = layer_cos
         if weighted_sum is None or applied_weight_sum is None:
             raise ValueError(f"no layer matrices materialized for position {q_pos!r}")
         # Raw weighted sum — NO renormalization by applied weights. A candidate
@@ -827,6 +871,15 @@ def find_comps(
             if cohort_col[df_i] in exclude_cohorts:
                 sims[local_i] = -np.inf
     top_local = np.argsort(-sims)[:top_k]
+
+    def _per_layer_for(local_i: int) -> dict[str, float] | None:
+        if not is_layered or not per_layer_cos_by_layer:
+            return None
+        return {
+            layer: float(arr[local_i])
+            for layer, arr in per_layer_cos_by_layer.items()
+        }
+
     return [
         Comp(
             name=pool.df["name"][idxs[int(i)]],
@@ -834,6 +887,7 @@ def find_comps(
             cohort=pool.df["cohort"][idxs[int(i)]],
             similarity=float(sims[int(i)]),
             player_id=pool.df["player_id"][idxs[int(i)]],
+            per_layer=_per_layer_for(int(i)),
         )
         for i in top_local
     ]

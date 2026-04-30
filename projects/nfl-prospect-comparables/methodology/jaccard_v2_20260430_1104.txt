@@ -1,0 +1,91 @@
+=== HYBRID (baseline) ===
+==============================================================================
+Phase 3.3 — engine vs expert agreement  (arm=hybrid, top_k=5)
+  expert sources: ('brugler', 'walter_football')
+==============================================================================
+
+118 cohort players evaluated (have ≥1 expert comp resolvable to engine pool)
+
+--- Overall ---
+  n:                          118
+  hit-rate (any expert in top-5):  6.8%
+  mean overlap:               0.07
+  mean Jaccard:               0.013
+  mean expert-set size:       1.1
+
+--- By position ---
+  QB: n= 24  hit-any= 20.8%  overlap=0.21  Jaccard=0.042
+  RB: n= 33  hit-any=  3.0%  overlap=0.03  Jaccard=0.005
+  TE: n= 21  hit-any=  4.8%  overlap=0.05  Jaccard=0.010
+  WR: n= 40  hit-any=  2.5%  overlap=0.03  Jaccard=0.005
+
+--- By cohort ---
+  training_2014_2020: n= 39  hit-any= 10.3%  overlap=0.10  Jaccard=0.021
+  validation_2021_2025: n= 79  hit-any=  5.1%  overlap=0.05  Jaccard=0.010
+
+--- By expert source (separate runs) ---
+  brugler: n= 54  hit-any=  0.0%  overlap=0.00  Jaccard=0.000  (mean expert-set size: 1.0)
+  walter_football: n= 64  hit-any= 12.5%  overlap=0.12  Jaccard=0.024  (mean expert-set size: 1.1)
+
+--- 5 example rows (highest-overlap first) ---
+  Bryce Young (QB, validation) — overlap=1  Jaccard=0.20
+    expert comps: ['Kyler Murray']
+    engine top-5: ['Kyler Murray', 'Justin Fields', 'C.J. Stroud', 'Caleb Williams', 'Mitchell Trubisky']
+  Carson Wentz (QB, training) — overlap=1  Jaccard=0.20
+    expert comps: ['Blake Bortles']
+    engine top-5: ['Logan Thomas', 'Blake Bortles', 'Christian Hackenberg', 'Derek Carr', 'Jimmy Garoppolo']
+  John Ross (WR, training) — overlap=1  Jaccard=0.20
+    expert comps: ['Brandin Cooks']
+    engine top-5: ['DJ Chark', 'Brandin Cooks', 'D.J. Moore', 'Donte Moncrief', 'Corey Coleman']
+  Malik Willis (QB, validation) — overlap=1  Jaccard=0.20
+    expert comps: ['Jalen Hurts']
+    engine top-5: ['Will Levis', 'Jalen Milroe', 'Jalen Hurts', 'Anthony Richardson', 'Josh Allen']
+  Mark Andrews (TE, training) — overlap=1  Jaccard=0.20
+    expert comps: ['Hunter Henry']
+    engine top-5: ['Clive Walford', 'Hunter Henry', 'Maxx Williams', 'Troy Niklas', 'Charlie Kolar']
+
+=== FEATURE_V2_TRAITS (v2 candidate) ===
+==============================================================================
+Phase 3.3 — engine vs expert agreement  (arm=feature_v2_traits, top_k=5)
+  expert sources: ('brugler', 'walter_football')
+==============================================================================
+
+118 cohort players evaluated (have ≥1 expert comp resolvable to engine pool)
+
+--- Overall ---
+  n:                          118
+  hit-rate (any expert in top-5):  9.3%
+  mean overlap:               0.09
+  mean Jaccard:               0.018
+  mean expert-set size:       1.1
+
+--- By position ---
+  QB: n= 24  hit-any= 12.5%  overlap=0.12  Jaccard=0.024
+  RB: n= 33  hit-any=  9.1%  overlap=0.09  Jaccard=0.017
+  TE: n= 21  hit-any=  4.8%  overlap=0.05  Jaccard=0.010
+  WR: n= 40  hit-any= 10.0%  overlap=0.10  Jaccard=0.020
+
+--- By cohort ---
+  training_2014_2020: n= 39  hit-any= 10.3%  overlap=0.10  Jaccard=0.021
+  validation_2021_2025: n= 79  hit-any=  8.9%  overlap=0.09  Jaccard=0.017
+
+--- By expert source (separate runs) ---
+  brugler: n= 54  hit-any=  3.7%  overlap=0.04  Jaccard=0.007  (mean expert-set size: 1.0)
+  walter_football: n= 64  hit-any= 14.1%  overlap=0.14  Jaccard=0.027  (mean expert-set size: 1.1)
+
+--- 5 example rows (highest-overlap first) ---
+  Bryce Young (QB, validation) — overlap=1  Jaccard=0.20
+    expert comps: ['Kyler Murray']
+    engine top-5: ['Kyler Murray', 'Tua Tagovailoa', 'C.J. Stroud', 'Caleb Williams', 'Trevor Lawrence']
+  Cade Otton (TE, validation) — overlap=1  Jaccard=0.20
+    expert comps: ['Adam Trautman']
+    engine top-5: ['Luke Lachey', 'Trey McBride', 'Jelani Woods', 'Dallas Goedert', 'Adam Trautman']
+  Calvin Ridley (WR, training) — overlap=1  Jaccard=0.20
+    expert comps: ['Amari Cooper']
+    engine top-5: ['Jerry Jeudy', 'Amari Cooper', 'Garrett Wilson', "Wan'Dale Robinson", 'Christian Kirk']
+  Ja'Marr Chase (WR, validation) — overlap=1  Jaccard=0.20
+    expert comps: ['Amari Cooper']
+    engine top-5: ['Malik Nabers', 'Amari Cooper', 'Marvin Harrison Jr.', 'Garrett Wilson', 'Phillip Dorsett']
+  Jahmyr Gibbs (RB, validation) — overlap=1  Jaccard=0.20
+    expert comps: ['Alvin Kamara']
+    engine top-5: ['Alvin Kamara', 'Joe Mixon', 'Kenneth Gainwell', 'Christian McCaffrey', 'Darwin Thompson']

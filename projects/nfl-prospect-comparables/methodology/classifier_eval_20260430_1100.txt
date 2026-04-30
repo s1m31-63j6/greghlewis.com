@@ -1,0 +1,37 @@
+==============================================================================
+Phase 3.2 — fitted-classifier eval (5 arms × 4 models)
+==============================================================================
+        feature_v2  logreg  n=398  exact= 49.2%  ±1= 89.4%  F1=0.266
+        feature_v2  logreg_balanced  n=398  exact= 29.6%  ±1= 67.1%  F1=0.206
+        feature_v2     gbm  n=398  exact= 47.5%  ±1= 87.4%  F1=0.257
+  feature_v2_traits  logreg  n=398  exact= 50.5%  ±1= 89.2%  F1=0.271
+  feature_v2_traits  logreg_balanced  n=398  exact= 30.7%  ±1= 69.1%  F1=0.216
+  feature_v2_traits     gbm  n=398  exact= 46.0%  ±1= 86.2%  F1=0.271
+            hybrid  logreg  n=398  exact= 52.8%  ±1= 90.2%  F1=0.264
+            hybrid  logreg_balanced  n=398  exact= 34.9%  ±1= 70.4%  F1=0.238
+            hybrid     gbm  n=398  exact= 48.0%  ±1= 81.9%  F1=0.282
+           feature  logreg  n=398  exact= 51.0%  ±1= 90.2%  F1=0.278
+           feature  logreg_balanced  n=398  exact= 34.4%  ±1= 69.8%  F1=0.236
+           feature     gbm  n=398  exact= 46.5%  ±1= 85.7%  F1=0.252
+       measurables  logreg  n=398  exact= 52.8%  ±1= 89.2%  F1=0.308
+       measurables  logreg_balanced  n=398  exact= 37.2%  ±1= 68.8%  F1=0.238
+       measurables     gbm  n=398  exact= 48.7%  ±1= 84.4%  F1=0.287
+
+============================================================================================
+SUMMARY — exact accuracy / macro F1 per (arm × model)
+============================================================================================
+               arm                 kNN k=5                  logreg         logreg_balanced                     gbm
+        feature_v2   43.0% / F1=0.277        49.2% / F1=0.266        29.6% / F1=0.206        47.5% / F1=0.257   
+  feature_v2_traits   45.0% / F1=0.267        50.5% / F1=0.271        30.7% / F1=0.216        46.0% / F1=0.271   
+            hybrid   39.7% / F1=0.228        52.8% / F1=0.264        34.9% / F1=0.238        48.0% / F1=0.282   
+           feature   40.5% / F1=0.232        51.0% / F1=0.278        34.4% / F1=0.236        46.5% / F1=0.252   
+       measurables   47.7% / F1=0.261        52.8% / F1=0.308        37.2% / F1=0.238        48.7% / F1=0.287   
+
+==============================================================================
+BEST MODEL PER ARM (by exact accuracy)
+==============================================================================
+        feature_v2  best=  logreg  exact= 49.2%  F1=0.266
+  feature_v2_traits  best=  logreg  exact= 50.5%  F1=0.271
+            hybrid  best=  logreg  exact= 52.8%  F1=0.264
+           feature  best=  logreg  exact= 51.0%  F1=0.278
+       measurables  best=  logreg  exact= 52.8%  F1=0.308
