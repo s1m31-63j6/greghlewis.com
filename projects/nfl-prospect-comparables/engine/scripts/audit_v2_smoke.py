@@ -166,6 +166,8 @@ _WEIGHT_ALIASES = {
     "BODY": "BODY",
     "E": "EFFICIENCY",
     "EFFICIENCY": "EFFICIENCY",
+    "D": "DRAFT",
+    "DRAFT": "DRAFT",
 }
 
 
@@ -240,7 +242,7 @@ def main() -> int:
         weights = _parse_weights(spec)
         # Pretty label: T:0.6/V:0.25/B:0.15
         parts = []
-        for layer in ("EFFICIENCY", "TRAITS", "VOLUME", "BODY"):
+        for layer in ("EFFICIENCY", "TRAITS", "VOLUME", "BODY", "DRAFT"):
             if layer in weights:
                 parts.append(f"{layer[0]}{weights[layer]:.2f}")
         label = "v2_traits[" + "/".join(parts) + "]"

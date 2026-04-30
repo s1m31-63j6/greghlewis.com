@@ -1,0 +1,39 @@
+# Grid-search results — V2_LAYER_WEIGHTS sensitivity
+# Generated 2026-04-30 PM. Increment=0.05, weights summing to 1.0.
+# Score formula = exact_plus_half_adj (composite eval objective).
+# Per position: top-N configurations, sorted by score desc.
+
+
+=== QB: SKIPPED (no pool) ===
+
+=== RB: SKIPPED (no pool) ===
+
+=== WR (top 25 of 560) ===
+  score=0.9753 exact=0.531 adj=0.889 n=162 | BODY=0.30 DRAFT=0.00 TRAITS=0.30 VOLUME=0.40
+  score=0.9660 exact=0.525 adj=0.883 n=162 | BODY=0.15 DRAFT=0.00 TRAITS=0.50 VOLUME=0.35
+  score=0.9660 exact=0.519 adj=0.895 n=162 | BODY=0.30 DRAFT=0.00 TRAITS=0.35 VOLUME=0.35
+  score=0.9630 exact=0.519 adj=0.889 n=162 | BODY=0.15 DRAFT=0.05 TRAITS=0.45 VOLUME=0.35
+  score=0.9599 exact=0.512 adj=0.895 n=162 | BODY=0.65 DRAFT=0.00 TRAITS=0.30 VOLUME=0.05
+  score=0.9568 exact=0.525 adj=0.864 n=162 | BODY=0.10 DRAFT=0.05 TRAITS=0.60 VOLUME=0.25
+  score=0.9568 exact=0.512 adj=0.889 n=162 | BODY=0.20 DRAFT=0.00 TRAITS=0.40 VOLUME=0.40
+  score=0.9568 exact=0.506 adj=0.901 n=162 | BODY=0.25 DRAFT=0.00 TRAITS=0.35 VOLUME=0.40
+  score=0.9568 exact=0.512 adj=0.889 n=162 | BODY=0.50 DRAFT=0.00 TRAITS=0.35 VOLUME=0.15
+  score=0.9537 exact=0.506 adj=0.895 n=162 | BODY=0.15 DRAFT=0.05 TRAITS=0.35 VOLUME=0.45
+  score=0.9537 exact=0.506 adj=0.895 n=162 | BODY=0.20 DRAFT=0.00 TRAITS=0.50 VOLUME=0.30
+  score=0.9537 exact=0.506 adj=0.895 n=162 | BODY=0.20 DRAFT=0.00 TRAITS=0.45 VOLUME=0.35
+  score=0.9537 exact=0.500 adj=0.907 n=162 | BODY=0.60 DRAFT=0.00 TRAITS=0.30 VOLUME=0.10
+  score=0.9506 exact=0.512 adj=0.877 n=162 | BODY=0.15 DRAFT=0.00 TRAITS=0.55 VOLUME=0.30
+  score=0.9506 exact=0.500 adj=0.901 n=162 | BODY=0.25 DRAFT=0.00 TRAITS=0.40 VOLUME=0.35
+  score=0.9444 exact=0.506 adj=0.877 n=162 | BODY=0.05 DRAFT=0.00 TRAITS=0.45 VOLUME=0.50
+  score=0.9444 exact=0.494 adj=0.901 n=162 | BODY=0.10 DRAFT=0.05 TRAITS=0.35 VOLUME=0.50
+  score=0.9444 exact=0.506 adj=0.877 n=162 | BODY=0.65 DRAFT=0.05 TRAITS=0.30 VOLUME=0.00
+  score=0.9414 exact=0.500 adj=0.883 n=162 | BODY=0.10 DRAFT=0.05 TRAITS=0.50 VOLUME=0.35
+  score=0.9414 exact=0.500 adj=0.883 n=162 | BODY=0.15 DRAFT=0.05 TRAITS=0.40 VOLUME=0.40
+  score=0.9414 exact=0.494 adj=0.895 n=162 | BODY=0.15 DRAFT=0.05 TRAITS=0.30 VOLUME=0.50
+  score=0.9414 exact=0.488 adj=0.907 n=162 | BODY=0.20 DRAFT=0.05 TRAITS=0.35 VOLUME=0.40
+  score=0.9414 exact=0.500 adj=0.883 n=162 | BODY=0.50 DRAFT=0.10 TRAITS=0.30 VOLUME=0.10
+  score=0.9414 exact=0.494 adj=0.895 n=162 | BODY=0.65 DRAFT=0.00 TRAITS=0.35 VOLUME=0.00
+  score=0.9383 exact=0.488 adj=0.901 n=162 | BODY=0.05 DRAFT=0.05 TRAITS=0.45 VOLUME=0.45
+  ... (worst: score=0.7099 | BODY=0.00 DRAFT=0.00 TRAITS=1.00 VOLUME=0.00)
+
+=== TE: SKIPPED (no pool) ===

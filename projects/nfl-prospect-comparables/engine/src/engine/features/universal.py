@@ -340,12 +340,24 @@ def _age_draft_features(p: PlayerProfile, ctx: CohortContext) -> dict[str, float
         # younger = better → inverse percentile
         f["age_at_draft_pct"] = _inverse_percentile(age, ctx.age_dists[pos])
 
-    # draft_capital_pct: 1 - (pick / 256), clipped to [0, 1]. UDFAs and
-    # very-late-round picks (pick > 256) → 0.
+    # DRAFT layer features. Single-dim cosine is sign-based (binary above/below
+    # mean), so the DRAFT layer carries 3 complementary dims: continuous capital,
+    # ordinal round identity, and a binary day-one flag (5th-year option +
+    # rookie-contract structure are qualitatively different for round 1).
+    #   draft_capital_pct: 1 - (pick / 256), clipped to [0, 1]. UDFAs → 0.
+    #   draft_round_normalized: round 1-7 with UDFA=8 (z-scored downstream).
+    #   day_one_indicator: 1 if round=1 (top 32 picks), else 0.
     if draft.draft_pick is not None:
         f["draft_capital_pct"] = round(max(0.0, 1.0 - (draft.draft_pick / 256.0)), 3)
     else:
         f["draft_capital_pct"] = 0.0
+    if draft.draft_round is not None:
+        f["draft_round_normalized"] = float(draft.draft_round)
+        f["day_one_indicator"] = 1.0 if draft.draft_round == 1 else 0.0
+    else:
+        # UDFA: round=8 sentinel (one tier past round 7), not day-one.
+        f["draft_round_normalized"] = 8.0
+        f["day_one_indicator"] = 0.0
 
     # college_seasons + transferred + conference_p5
     seasons = p.college_counting.seasons

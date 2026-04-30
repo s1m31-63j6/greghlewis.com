@@ -1,0 +1,339 @@
+======================================================================
+Phase 3 v1.2 — outcome ablation (k=5, weighted=True)
+======================================================================
+
+--- Baseline (per-position modal class) ---
+  QB: modal='Bust' → 30/58 = 53.4%
+  RB: modal='Role Player' → 45/104 = 43.3%
+  WR: modal='Role Player' → 80/162 = 49.4%
+  TE: modal='Role Player' → 44/73 = 60.3%
+  overall: 199/397 = 50.1%
+
+
+>>> NATIVE EVAL — each arm over its full source-having population
+
+--- feature  (train pool: all, val pool: all) ---
+
+=== arm=feature, k=5 ===
+  exact:           175/398 = 44.0%
+  within ±1 tier:  339/398 = 85.2%
+  macro F1:        0.280
+  precision@5:      38.2% (exact)  /  79.6% (±1)
+  by position (exact):
+    QB: 27/58 = 46.6%
+    RB: 45/105 = 42.9%
+    TE: 28/73 = 38.4%
+    WR: 75/162 = 46.3%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  65          84           8           8           1  (n=166)
+    Role Player           46          96          21          21           4  (n=188)
+    Starter                0           7           3           1           1  (n=12)
+    Pro Bowl               5           9           2          11           3  (n=30)
+    HOF-track              0           2           0           0           0  (n=2)
+
+--- measurables  (train pool: all, val pool: all) ---
+
+=== arm=measurables, k=5 ===
+  exact:           197/398 = 49.5%
+  within ±1 tier:  343/398 = 86.2%
+  macro F1:        0.321
+  precision@5:      41.0% (exact)  /  80.9% (±1)
+  by position (exact):
+    QB: 35/58 = 60.3%
+    RB: 50/105 = 47.6%
+    TE: 27/73 = 37.0%
+    WR: 85/162 = 52.5%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  93          62           6           5           0  (n=166)
+    Role Player           45          88          30          20           5  (n=188)
+    Starter                1           3           6           2           0  (n=12)
+    Pro Bowl               3          13           3          10           1  (n=30)
+    HOF-track              0           2           0           0           0  (n=2)
+
+--- engineered  (train pool: all, val pool: all) ---
+
+=== arm=engineered, k=5 ===
+  exact:           169/398 = 42.5%
+  within ±1 tier:  336/398 = 84.4%
+  macro F1:        0.242
+  precision@5:      35.8% (exact)  /  77.2% (±1)
+  by position (exact):
+    QB: 23/58 = 39.7%
+    RB: 50/105 = 47.6%
+    TE: 26/73 = 35.6%
+    WR: 70/162 = 43.2%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  55          86          12          11           2  (n=166)
+    Role Player           47         105          21          15           0  (n=188)
+    Starter                1           7           1           2           1  (n=12)
+    Pro Bowl               5          13           4           8           0  (n=30)
+    HOF-track              0           2           0           0           0  (n=2)
+
+--- feature_v2  (train pool: all, val pool: all) ---
+
+=== arm=feature_v2, k=5 ===
+  exact:           192/398 = 48.2%
+  within ±1 tier:  349/398 = 87.7%
+  macro F1:        0.286
+  precision@5:      42.8% (exact)  /  81.1% (±1)
+  by position (exact):
+    QB: 31/58 = 53.4%
+    RB: 55/105 = 52.4%
+    TE: 31/73 = 42.5%
+    WR: 75/162 = 46.3%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  79          78           3           5           1  (n=166)
+    Role Player           37         102          27          21           1  (n=188)
+    Starter                1           7           2           2           0  (n=12)
+    Pro Bowl               4          11           3           9           3  (n=30)
+    HOF-track              0           2           0           0           0  (n=2)
+
+--- feature_v2_traits  (train pool: all, val pool: all) ---
+
+=== arm=feature_v2_traits, k=5 ===
+  exact:           229/398 = 57.5%
+  within ±1 tier:  359/398 = 90.2%
+  macro F1:        0.415
+  precision@5:      44.9% (exact)  /  81.8% (±1)
+  by position (exact):
+    QB: 37/58 = 63.8%
+    RB: 63/105 = 60.0%
+    TE: 39/73 = 53.4%
+    WR: 90/162 = 55.6%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  92          66           3           4           1  (n=166)
+    Role Player           37         119          14          16           2  (n=188)
+    Starter                1           5           4           2           0  (n=12)
+    Pro Bowl               4           7           3          13           3  (n=30)
+    HOF-track              0           1           0           0           1  (n=2)
+
+--- text  (train pool: 284, val pool: 364) ---
+
+=== arm=text, k=5 ===
+  exact:           163/364 = 44.8%
+  within ±1 tier:  306/364 = 84.1%
+  macro F1:        0.236
+  precision@5:      35.5% (exact)  /  72.8% (±1)
+  by position (exact):
+    QB: 27/57 = 47.4%
+    RB: 46/98 = 46.9%
+    TE: 28/69 = 40.6%
+    WR: 62/140 = 44.3%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  42          82          14           7           0  (n=145)
+    Role Player           31         115          17          14           0  (n=177)
+    Starter                1           7           2           1           0  (n=11)
+    Pro Bowl               3          18           4           4           0  (n=29)
+    HOF-track              0           1           0           1           0  (n=2)
+
+--- hybrid  (train pool: all, val pool: all) ---
+
+=== arm=hybrid, k=5 ===
+  exact:           177/398 = 44.5%
+  within ±1 tier:  323/398 = 81.2%
+  macro F1:        0.270
+  precision@5:      37.8% (exact)  /  75.6% (±1)
+  by position (exact):
+    QB: 30/58 = 51.7%
+    RB: 51/105 = 48.6%
+    TE: 22/73 = 30.1%
+    WR: 74/162 = 45.7%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  72          68          11          14           1  (n=166)
+    Role Player           43          92          22          27           4  (n=188)
+    Starter                1           4           2           2           3  (n=12)
+    Pro Bowl               5           8           3          11           3  (n=30)
+    HOF-track              0           1           0           1           0  (n=2)
+
+--- text_legacy  (train pool: 563, val pool: 398) ---
+
+=== arm=text_legacy, k=5 ===
+  exact:           156/398 = 39.2%
+  within ±1 tier:  324/398 = 81.4%
+  macro F1:        0.219
+  precision@5:      32.8% (exact)  /  72.1% (±1)
+  by position (exact):
+    QB: 23/58 = 39.7%
+    RB: 55/105 = 52.4%
+    TE: 4/73 = 5.5%
+    WR: 74/162 = 45.7%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  43          89          18          16           0  (n=166)
+    Role Player           21         105          42          20           0  (n=188)
+    Starter                2           6           2           2           0  (n=12)
+    Pro Bowl               2          15           7           6           0  (n=30)
+    HOF-track              0           0           1           1           0  (n=2)
+
+--- hybrid_legacy  (train pool: all, val pool: all) ---
+
+=== arm=hybrid_legacy, k=5 ===
+  exact:           166/398 = 41.7%
+  within ±1 tier:  324/398 = 81.4%
+  macro F1:        0.250
+  precision@5:      37.5% (exact)  /  76.4% (±1)
+  by position (exact):
+    QB: 27/58 = 46.6%
+    RB: 45/105 = 42.9%
+    TE: 24/73 = 32.9%
+    WR: 70/162 = 43.2%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  67          76          10          12           1  (n=166)
+    Role Player           47          87          21          28           5  (n=188)
+    Starter                0           6           1           2           3  (n=12)
+    Pro Bowl               6           8           2          11           3  (n=30)
+    HOF-track              0           1           0           1           0  (n=2)
+
+--- text_brugler  (train pool: 152, val pool: 359) ---
+
+=== arm=text_brugler, k=5 ===
+  exact:           151/359 = 42.1%
+  within ±1 tier:  306/359 = 85.2%
+  macro F1:        0.357
+  precision@5:      34.1% (exact)  /  71.5% (±1)
+  by position (exact):
+    QB: 26/57 = 45.6%
+    RB: 42/96 = 43.8%
+    TE: 24/68 = 35.3%
+    WR: 59/138 = 42.8%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  37          87          14           5           0  (n=143)
+    Role Player           37         107          19          11           0  (n=174)
+    Starter                1           6           2           2           0  (n=11)
+    Pro Bowl               5          16           4           4           0  (n=29)
+    HOF-track              0           1           0           0           1  (n=2)
+
+--- text_walter_football  (train pool: 181, val pool: 139) ---
+
+=== arm=text_walter_football, k=5 ===
+  exact:           47/139 = 33.8%
+  within ±1 tier:  89/139 = 64.0%
+  macro F1:        0.240
+  precision@5:      29.9% (exact)  /  63.6% (±1)
+  by position (exact):
+    QB: 10/30 = 33.3%
+    RB: 14/34 = 41.2%
+    TE: 9/21 = 42.9%
+    WR: 14/54 = 25.9%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                   6          11           2           6           1  (n=26)
+    Role Player            5          29          16          29           3  (n=82)
+    Starter                0           4           3           3           0  (n=10)
+    Pro Bowl               1           7           1           9           2  (n=20)
+    HOF-track              0           0           1           0           0  (n=1)
+
+--- hybrid_brugler  (train pool: 152, val pool: 359) ---
+
+=== arm=hybrid_brugler, k=5 ===
+  exact:           153/359 = 42.6%
+  within ±1 tier:  282/359 = 78.6%
+  macro F1:        0.230
+  precision@5:      37.8% (exact)  /  74.4% (±1)
+  by position (exact):
+    QB: 25/57 = 43.9%
+    RB: 45/96 = 46.9%
+    TE: 18/68 = 26.5%
+    WR: 65/138 = 47.1%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                  58          59          11          15           0  (n=143)
+    Role Player           42          89          17          21           5  (n=174)
+    Starter                1           4           0           2           4  (n=11)
+    Pro Bowl               6          13           2           6           2  (n=29)
+    HOF-track              0           1           0           1           0  (n=2)
+
+--- hybrid_walter_football  (train pool: 181, val pool: 139) ---
+
+=== arm=hybrid_walter_football, k=5 ===
+  exact:           56/139 = 40.3%
+  within ±1 tier:  94/139 = 67.6%
+  macro F1:        0.266
+  precision@5:      35.1% (exact)  /  65.0% (±1)
+  by position (exact):
+    QB: 10/30 = 33.3%
+    RB: 17/34 = 50.0%
+    TE: 9/21 = 42.9%
+    WR: 20/54 = 37.0%
+  confusion (actual → predicted):
+                        Bust  Role Playe     Starter    Pro Bowl   HOF-track
+    Bust                   7          11           0           8           0  (n=26)
+    Role Player            4          39          12          23           4  (n=82)
+    Starter                0           5           2           1           2  (n=10)
+    Pro Bowl               1           6           2           8           3  (n=20)
+    HOF-track              0           0           1           0           0  (n=1)
+
+======================================================================================
+NATIVE-POP SUMMARY (each arm over its source-having population)
+======================================================================================
+                         arm     n    exact   ±1 tier      F1     P@5   P@5±1
+                     feature   398    44.0%     85.2%   0.280   38.2%   79.6%
+                 measurables   398    49.5%     86.2%   0.321   41.0%   80.9%
+                  engineered   398    42.5%     84.4%   0.242   35.8%   77.2%
+                  feature_v2   398    48.2%     87.7%   0.286   42.8%   81.1%
+           feature_v2_traits   398    57.5%     90.2%   0.415   44.9%   81.8%
+                        text   364    44.8%     84.1%   0.236   35.5%   72.8%
+                      hybrid   398    44.5%     81.2%   0.270   37.8%   75.6%
+                 text_legacy   398    39.2%     81.4%   0.219   32.8%   72.1%
+               hybrid_legacy   398    41.7%     81.4%   0.250   37.5%   76.4%
+                text_brugler   359    42.1%     85.2%   0.357   34.1%   71.5%
+        text_walter_football   139    33.8%     64.0%   0.240   29.9%   63.6%
+              hybrid_brugler   359    42.6%     78.6%   0.230   37.8%   74.4%
+      hybrid_walter_football   139    40.3%     67.6%   0.266   35.1%   65.0%
+
+
+>>> SUBSET EVAL — apples-to-apples: only players with Brugler AND Walter AND Wikipedia
+  train pool: 49  |  val pool: 134
+
+  feature: exact=42.5%  ±1=65.7%  F1=0.258  P@5=32.2%  P@5±1=61.0%
+
+  measurables: exact=46.3%  ±1=72.4%  F1=0.343  P@5=34.6%  P@5±1=63.9%
+
+  engineered: exact=38.1%  ±1=63.4%  F1=0.203  P@5=29.3%  P@5±1=59.1%
+
+  feature_v2: exact=38.8%  ±1=61.9%  F1=0.270  P@5=32.7%  P@5±1=62.2%
+
+  feature_v2_traits: exact=41.8%  ±1=65.7%  F1=0.283  P@5=33.0%  P@5±1=61.6%
+
+  text: exact=45.5%  ±1=78.4%  F1=0.213  P@5=33.4%  P@5±1=62.4%
+
+  hybrid: exact=39.6%  ±1=65.7%  F1=0.222  P@5=32.7%  P@5±1=61.8%
+
+  text_legacy: exact=46.3%  ±1=75.4%  F1=0.248  P@5=35.7%  P@5±1=64.3%
+
+  hybrid_legacy: exact=38.8%  ±1=65.7%  F1=0.217  P@5=32.7%  P@5±1=61.3%
+
+  text_brugler: exact=38.8%  ±1=72.4%  F1=0.208  P@5=33.6%  P@5±1=63.0%
+
+  text_walter_football: exact=45.5%  ±1=72.4%  F1=0.257  P@5=35.1%  P@5±1=63.6%
+
+  hybrid_brugler: exact=36.6%  ±1=65.7%  F1=0.200  P@5=32.4%  P@5±1=62.1%
+
+  hybrid_walter_football: exact=41.0%  ±1=66.4%  F1=0.222  P@5=32.7%  P@5±1=60.1%
+
+======================================================================================
+SUBSET SUMMARY (all-sources apples-to-apples — clean comparison)
+======================================================================================
+                         arm     n    exact   ±1 tier      F1     P@5   P@5±1
+                     feature   134    42.5%     65.7%   0.258   32.2%   61.0%
+                 measurables   134    46.3%     72.4%   0.343   34.6%   63.9%
+                  engineered   134    38.1%     63.4%   0.203   29.3%   59.1%
+                  feature_v2   134    38.8%     61.9%   0.270   32.7%   62.2%
+           feature_v2_traits   134    41.8%     65.7%   0.283   33.0%   61.6%
+                        text   134    45.5%     78.4%   0.213   33.4%   62.4%
+                      hybrid   134    39.6%     65.7%   0.222   32.7%   61.8%
+                 text_legacy   134    46.3%     75.4%   0.248   35.7%   64.3%
+               hybrid_legacy   134    38.8%     65.7%   0.217   32.7%   61.3%
+                text_brugler   134    38.8%     72.4%   0.208   33.6%   63.0%
+        text_walter_football   134    45.5%     72.4%   0.257   35.1%   63.6%
+              hybrid_brugler   134    36.6%     65.7%   0.200   32.4%   62.1%
+      hybrid_walter_football   134    41.0%     66.4%   0.222   32.7%   60.1%

@@ -106,6 +106,8 @@ MEASURABLE_FEATURE_NAMES = frozenset({
     "recruiting_to_draft_delta", "weight_change_recruit_to_draft",
     # draft signal (post-draft but non-college-production)
     "draft_capital_pct",
+    "draft_round_normalized",
+    "day_one_indicator",
 })
 
 

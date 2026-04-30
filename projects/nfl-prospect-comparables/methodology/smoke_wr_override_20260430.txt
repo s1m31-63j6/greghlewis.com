@@ -1,0 +1,70 @@
+Loading outcomes for ('training_2014_2020', 'validation_2021_2025', 'prediction_2026')...
+  training_2014_2020: 569 outcomes
+  validation_2021_2025: 398 outcomes
+  prediction_2026: 0 outcomes
+
+Loading 2 pool(s) (cohorts: training_2014_2020, validation_2021_2025, prediction_2026)...
+  loading hybrid...
+    1048 vectors across 4 positions
+  loading feature_v2_traits...
+    1048 vectors across 4 positions
+
+========================================================================
+  ELITE: Carnell Tate (WR) — expected: high-end pro WR (McConkey / Waddle / JSN)
+========================================================================
+
+  arm=hybrid
+    +0.840  Jaylen Waddle              (WR/validation) -> Starter      AV=--    PB=0
+    +0.802  Kadarius Toney             (WR/validation) -> Role Player  AV=--    PB=0
+    +0.799  Henry Ruggs III            (WR/training) -> Role Player  AV=--    PB=0
+    +0.793  Ladd McConkey              (WR/validation) -> Role Player  AV=--    PB=0
+    +0.793  Brian Thomas               (WR/validation) -> Pro Bowl     AV=--    PB=1
+    +0.775  Jaxon Smith-Njigba         (WR/validation) -> Pro Bowl     AV=--    PB=2
+    +0.755  Matthew Golden             (WR/validation) -> Role Player  AV=--    PB=0
+    +0.755  Emeka Egbuka               (WR/validation) -> Role Player  AV=--    PB=0
+    +0.741  Chris Olave                (WR/validation) -> Role Player  AV=--    PB=0
+    +0.731  Anthony Gould              (WR/validation) -> Bust         AV=--    PB=0
+    distribution: Bust=1, Role Player=6, Starter=1, Pro Bowl=2
+
+  arm=feature_v2_traits
+    +0.681  Miles Boykin               (WR/training) -> Role Player  AV=--    PB=0
+    +0.669  George Pickens             (WR/validation) -> Pro Bowl     AV=--    PB=1
+    +0.644  Riley Ridley               (WR/training) -> Bust         AV=--    PB=0
+    +0.622  Jalen Hurd                 (WR/training) -> Bust         AV=--    PB=0
+    +0.619  Jaxon Smith-Njigba         (WR/validation) -> Pro Bowl     AV=--    PB=2
+    +0.565  Kaden Prather              (WR/validation) -> Bust         AV=--    PB=0
+    +0.541  Tee Higgins                (WR/training) -> Pro Bowl     AV=--    PB=1
+    +0.524  D.K. Metcalf               (WR/training) -> Pro Bowl     AV=--    PB=2
+    +0.518  Nico Collins               (WR/validation) -> Pro Bowl     AV=--    PB=2
+    +0.512  Jaylen Waddle              (WR/validation) -> Starter      AV=--    PB=0
+    distribution: Bust=3, Role Player=1, Starter=1, Pro Bowl=5
+
+========================================================================
+  SPOT: Justin Jefferson (WR) — expected: HOF elite separator (expect: Diggs / Cooper Kupp / Hopkins)
+========================================================================
+
+  arm=hybrid
+    +0.772  Malik Nabers               (WR/validation) -> Pro Bowl     AV=--    PB=1
+    +0.737  Rome Odunze                (WR/validation) -> Role Player  AV=--    PB=0
+    +0.730  Nelson Agholor             (WR/training) -> Starter      AV=--    PB=0
+    +0.721  Marvin Harrison Jr.        (WR/validation) -> Role Player  AV=--    PB=0
+    +0.700  Jordyn Tyson               (WR/prediction) -> (no outcome)
+    +0.699  Amari Cooper               (WR/training) -> Pro Bowl     AV=--    PB=5
+    +0.684  Brandin Cooks              (WR/training) -> Starter      AV=--    PB=0
+    +0.683  Corey Davis                (WR/training) -> Starter      AV=--    PB=0
+    +0.681  DeVonta Smith              (WR/validation) -> Starter      AV=--    PB=0
+    +0.670  Ja'Marr Chase              (WR/validation) -> HOF-track    AV=--    PB=5
+    distribution: Role Player=2, Starter=4, Pro Bowl=2, HOF-track=1
+
+  arm=feature_v2_traits
+    +0.729  Amari Cooper               (WR/training) -> Pro Bowl     AV=--    PB=5
+    +0.696  JuJu Smith-Schuster        (WR/training) -> Pro Bowl     AV=--    PB=1
+    +0.630  Jaelen Strong              (WR/training) -> Role Player  AV=--    PB=0
+    +0.622  CeeDee Lamb                (WR/training) -> HOF-track    AV=--    PB=5
+    +0.606  Drake London               (WR/validation) -> Starter      AV=--    PB=0
+    +0.600  Corey Davis                (WR/training) -> Starter      AV=--    PB=0
+    +0.580  Zay Jones                  (WR/training) -> Starter      AV=--    PB=0
+    +0.564  Malik Nabers               (WR/validation) -> Pro Bowl     AV=--    PB=1
+    +0.560  Ja'Marr Chase              (WR/validation) -> HOF-track    AV=--    PB=5
+    +0.557  A.J. Brown                 (WR/training) -> Pro Bowl     AV=--    PB=3
+    distribution: Role Player=1, Starter=3, Pro Bowl=4, HOF-track=2

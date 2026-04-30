@@ -20,15 +20,18 @@ Data source labels (for `requires`):
 - `pfr_award`       : Pro Football Reference awards/All-Pro/Pro Bowl
 - `ras`             : Relative Athletic Score (Kent Lee Platte)
 
-Archetype layer (for v2 similarity, per Silver/PECOTA + DuPont/RotoViz consensus):
+Archetype layer (for v2 similarity, per CARMELO + DuPont/RotoViz + QBASE 2.0):
 - `BODY`       : athletic measurables, recruiting pedigree, age, size — pure identity
 - `VOLUME`     : market-share / per-team-attempt / dominator / breakout — workload identity
 - `EFFICIENCY` : EPA, success rate, rate-based — kept ONLY for QB (per QBASE 2.0). Outcome
                  leakage for RB/WR/TE.
+- `DRAFT`      : draft capital — opportunity signal (rookie contract, snap leash, coaching
+                 investment). Per CARMELO rookie methodology + QBASE 2.0 + The Analytics Say.
+                 See methodology/draft_capital_research_2026_04_30.md.
 - `TRAJECTORY` : derived production trajectory — light/excluded by default
 - `CONTEXT`    : schedule strength, opp adjustments — excluded from similarity
-- `EXCLUDED`   : explicitly excluded from similarity (draft capital is the canonical case —
-                 it's a downstream prior, not an input to the distance metric)
+- `EXCLUDED`   : explicitly excluded from similarity (e.g., recruiting_to_draft_delta —
+                 redundant with its two endpoints once both are in similarity)
 - `OTHER`      : default; un-tagged features land here and get excluded from layered arms
 """
 
@@ -45,18 +48,20 @@ ALL = (Position.QB, Position.RB, Position.WR, Position.TE)
 LAYER_BODY = "BODY"
 LAYER_VOLUME = "VOLUME"
 LAYER_EFFICIENCY = "EFFICIENCY"
+LAYER_DRAFT = "DRAFT"
 LAYER_TRAJECTORY = "TRAJECTORY"
 LAYER_CONTEXT = "CONTEXT"
 LAYER_EXCLUDED = "EXCLUDED"
 LAYER_OTHER = "OTHER"
 # Sonnet-extracted scouting-archetype trait layer (lives in trait_vectors.parquet,
 # not in the engineered feature catalog). Keyed here for the find_comps layered
-# combiner to address all four layers uniformly.
+# combiner to address all five layers uniformly.
 LAYER_TRAITS = "TRAITS"
 LAYERS = (
     LAYER_BODY,
     LAYER_VOLUME,
     LAYER_EFFICIENCY,
+    LAYER_DRAFT,
     LAYER_TRAITS,
     LAYER_TRAJECTORY,
     LAYER_CONTEXT,
@@ -111,9 +116,22 @@ UNIVERSAL: list[FeatureSpec] = [
     FeatureSpec("conference_p5", ALL, "background", "Played most career snaps in a Power-5 conference", "1/0 indicator", ("cfbd_box",), layer=LAYER_BODY),
     FeatureSpec("age_at_draft_pct", ALL, "background", "Age-at-draft percentile within position cohort (lower = younger = better)", "1 - ECDF(age_at_draft) within position", ("nflverse_player",), layer=LAYER_BODY),
     FeatureSpec("days_since_birthday_at_draft", ALL, "background", "Refines age_at_draft with within-year fraction", "draft_date.day_of_year - birth_date.day_of_year (mod 365)", ("nflverse_player",), layer=LAYER_BODY),
-    # Draft capital is a downstream prior in supervised projection (NGS, ZAP); unsupervised
-    # similarity engines (RotoViz, PlayerProfiler) exclude it. Apply separately at display time.
-    FeatureSpec("draft_capital_pct", ALL, "background", "Inverse draft pick percentile (higher = earlier)", "1 - (pick / 256)", ("nflverse_player",), layer=LAYER_EXCLUDED),
+    # DRAFT layer — opportunity signal. CARMELO uses draft position as a heavily-weighted
+    # rookie-similarity input; QBASE 2.0 uses expected draft position as a core QB input;
+    # The Analytics Say's NFL similarity dashboard includes draft pick as a feature. The
+    # PlayerProfiler "double-counting" critique (draft slot encodes physical+production
+    # measurables that are already in similarity) is real — addressed by giving DRAFT its
+    # own layer with its own weight, so grid search resolves the trade-off empirically per
+    # position. NFL is structurally different from MLB (PECOTA's domain): no minor leagues,
+    # so draft slot ≈ rookie contract ≈ guaranteed snaps ≈ coaching investment, making it
+    # a leading indicator of opportunity rather than a lagging perception signal.
+    # Three complementary dims so the per-layer cosine is granular: a single-feature layer
+    # would be sign-binary (all top-half-pick candidates would cosine to +1.0 against
+    # each other, losing within-tier differentiation). See
+    # methodology/draft_capital_research_2026_04_30.md.
+    FeatureSpec("draft_capital_pct", ALL, "background", "Inverse draft pick percentile (higher = earlier)", "1 - (pick / 256)", ("nflverse_player",), layer=LAYER_DRAFT),
+    FeatureSpec("draft_round_normalized", ALL, "background", "Draft round 1-7 with UDFA=8 (z-scored downstream)", "round number; UDFA → 8", ("nflverse_player",), layer=LAYER_DRAFT),
+    FeatureSpec("day_one_indicator", ALL, "background", "Round-1 (top 32) indicator — 5th-year option + guaranteed contract identity", "1 if draft_round == 1 else 0", ("nflverse_player",), layer=LAYER_DRAFT),
     # --- schedule strength / opposition quality (CONTEXT: excluded from similarity) ---
     FeatureSpec("sos_mean", ALL, "context", "Career mean strength of schedule (SP+ rating of opponents)", "weighted mean opponent SP+ across all games", ("cfbd_box",), layer=LAYER_CONTEXT),
     FeatureSpec("share_vs_ranked", ALL, "context", "Share of games played against AP-ranked opponents", "ranked_games / total_games", ("cfbd_box",), layer=LAYER_CONTEXT),
@@ -448,15 +466,15 @@ def feature_names_in_layer(layer: str, position: Position) -> set[str]:
 
 
 # Per-position similarity layer composition for v2.
-# Per Silver/PECOTA + DuPont/RotoViz consensus: BODY + VOLUME for all positions; QB
-# additionally includes EFFICIENCY (per QBASE 2.0). TRAITS is the Sonnet-extracted
-# scouting archetype layer (replaces blunt Titan-on-prose). TRAJECTORY/CONTEXT/EXCLUDED
-# stay out of similarity but remain computed for ablation/methodology.
+# BODY + VOLUME + DRAFT + TRAITS for all positions; QB additionally includes EFFICIENCY
+# (per QBASE 2.0). TRAITS is the Sonnet-extracted scouting archetype layer (replaces blunt
+# Titan-on-prose). DRAFT carries the opportunity signal (CARMELO precedent + QBASE 2.0).
+# TRAJECTORY/CONTEXT/EXCLUDED stay out of similarity but remain computed for ablation.
 V2_SIMILARITY_LAYERS: dict[Position, tuple[str, ...]] = {
-    Position.QB: (LAYER_BODY, LAYER_VOLUME, LAYER_EFFICIENCY, LAYER_TRAITS),
-    Position.RB: (LAYER_BODY, LAYER_VOLUME, LAYER_TRAITS),
-    Position.WR: (LAYER_BODY, LAYER_VOLUME, LAYER_TRAITS),
-    Position.TE: (LAYER_BODY, LAYER_VOLUME, LAYER_TRAITS),
+    Position.QB: (LAYER_BODY, LAYER_VOLUME, LAYER_EFFICIENCY, LAYER_DRAFT, LAYER_TRAITS),
+    Position.RB: (LAYER_BODY, LAYER_VOLUME, LAYER_DRAFT, LAYER_TRAITS),
+    Position.WR: (LAYER_BODY, LAYER_VOLUME, LAYER_DRAFT, LAYER_TRAITS),
+    Position.TE: (LAYER_BODY, LAYER_VOLUME, LAYER_DRAFT, LAYER_TRAITS),
 }
 
 
@@ -465,51 +483,72 @@ def v2_similarity_layers(position: Position) -> tuple[str, ...]:
     return V2_SIMILARITY_LAYERS.get(position, (LAYER_BODY, LAYER_VOLUME))
 
 
-# Per-position layer weights for v2 similarity.
-# Greg's directive 2026-04-30: order of importance TRAITS > VOLUME > BODY.
-# Comps are about archetype, not raw production / measurables — and the Sonnet-
-# extracted scouting traits ARE the archetype signal. VOLUME/EFFICIENCY are
-# secondary (workload + production identity). BODY is tertiary (athletic
-# profile is least discriminating once archetype is captured).
+# Per-position layer weights for v2 similarity. Locked 2026-04-30 PM.
 #
-# QB exception: per QBASE 2.0 efficiency is central for QB. VOLUME for QB is
-# small (dropbacks/game, total attempts) so EFFICIENCY carries the production
-# weight. EFFICIENCY + VOLUME together = QB "production layer" weight.
+# Sourced from a constrained grid search over the validation cohort (n=398
+# across 4 positions, 0.05-increment grid summing to 1.0, DRAFT capped at 0.30
+# to prevent outcome-leakage collapse — see methodology/draft_capital_research
+# _2026_04_30.md for the rationale). The unconstrained search optimum drove
+# DRAFT to 0.80-0.90 for QB/WR, which would collapse the engine into a
+# draft-tier predictor — the exact PlayerProfiler "double-counting" failure
+# mode. Capping at 0.30 keeps draft capital as a meaningful contributor
+# without letting it dominate the archetype signal. Sensitivity table:
+# methodology/weight_sensitivity_capped_20260430.txt.
+#
+# Surprises worth flagging on the methodology page:
+#   - QB BODY=0: athletic measurables do not help QB outcome prediction (cf.
+#     QBASE 2.0 which deprioritizes size for QB).
+#   - RB VOLUME=0: contrary to the DuPont/Siegele "workload IS RB identity"
+#     framework — the grid finds Sonnet trait scores capture the bell-cow vs
+#     committee distinction implicitly, making explicit volume features
+#     redundant for outcome prediction.
+#   - WR DRAFT=0.05: WR is the only position where high DRAFT weight does not
+#     beat a balanced production-heavy config; consistent with WR draft slot
+#     being a noisier outcome signal than QB/RB/TE.
 V2_LAYER_WEIGHTS: dict[Position, dict[str, float]] = {
-    # QB (4 layers): EFFICIENCY > TRAITS > BODY > VOLUME per QBASE 2.0 /
-    # Campus2Canton consensus. Efficiency carries the dominant QB signal
-    # (CPOE, adj-YPA, EPA/dropback). Greg-approved 2026-04-30.
+    # QB (5 layers): EFFICIENCY + TRAITS + DRAFT + VOLUME, no BODY.
+    # Grid winner: capped DRAFT, balanced rest. QBASE 2.0 alignment (efficiency
+    # central + draft position central + size de-prioritized).
     Position.QB: {
-        LAYER_EFFICIENCY: 0.40,
-        LAYER_TRAITS: 0.30,
-        LAYER_BODY: 0.20,
-        LAYER_VOLUME: 0.10,
+        LAYER_DRAFT: 0.30,
+        LAYER_EFFICIENCY: 0.25,
+        LAYER_TRAITS: 0.25,
+        LAYER_VOLUME: 0.20,
+        LAYER_BODY: 0.00,
     },
-    # RB: VOLUME > TRAITS >> BODY. Per DuPont/Siegele framework, market-share
-    # / workload IS identity for RB (bell-cow vs committee). Volume-tilt
-    # (V=0.50) surfaces elite three-down comps (Jacobs HOF, Cook PB) that
-    # trait-heavy misses. BODY de-emphasized (RB athletic profile less
-    # discriminating than workload identity).
+    # RB: TRAITS-dominant, DRAFT-capped, BODY-light, VOLUME=0. Trait scores
+    # encode workload archetype implicitly; explicit volume features add no
+    # marginal lift on outcome prediction.
     Position.RB: {
-        LAYER_VOLUME: 0.50,
-        LAYER_TRAITS: 0.40,
-        LAYER_BODY: 0.10,
+        LAYER_TRAITS: 0.60,
+        LAYER_DRAFT: 0.25,
+        LAYER_BODY: 0.15,
+        LAYER_VOLUME: 0.00,
     },
-    # WR: TRAITS > VOLUME > BODY. WR archetype (separation/contested-catch/
-    # route-tree/YAC) is the dominant signal — volume-tilt pulls in
-    # mid-tier slot/possession types. T=0.50 sweet spot.
+    # WR: TRAITS + VOLUME co-dominant, BODY light, DRAFT minimal.
+    # Override note: the unconstrained grid search winner (VOLUME=0.65,
+    # TRAITS=0.15) optimized outcome accuracy but produced bust-cluster
+    # collapse on the elite Tate smoke query (5/10 comps were busts). Re-ran
+    # the WR grid with TRAITS ≥ 0.30 floor (methodologically anchored to
+    # Reception Perception + DuPont's emphasis on archetype + market share);
+    # picked the best config in that subspace that also keeps DRAFT > 0
+    # (architectural consistency). Cost: ~5pp WR outcome accuracy vs grid
+    # winner. Win: visibly better elite WR archetype clusters.
+    # Sensitivity: methodology/weight_sensitivity_WR_traits_min_20260430.txt.
     Position.WR: {
-        LAYER_TRAITS: 0.50,
-        LAYER_VOLUME: 0.30,
-        LAYER_BODY: 0.20,
+        LAYER_TRAITS: 0.45,
+        LAYER_VOLUME: 0.35,
+        LAYER_BODY: 0.15,
+        LAYER_DRAFT: 0.05,
     },
-    # TE: VOLUME > TRAITS >> BODY. Like RB, market share captures the
-    # receiving-TE archetype better than blunt trait-cosine alone.
-    # Volume-tilt (V=0.50) surfaces Kittle HOF + Pro Bowl receiving TEs.
+    # TE: TRAITS + DRAFT (capped) + VOLUME, BODY-light. Receiving-TE archetype
+    # captured well by Sonnet traits; draft tier matters at the cap; modest
+    # volume signal.
     Position.TE: {
-        LAYER_VOLUME: 0.50,
-        LAYER_TRAITS: 0.40,
-        LAYER_BODY: 0.10,
+        LAYER_TRAITS: 0.45,
+        LAYER_DRAFT: 0.30,
+        LAYER_VOLUME: 0.20,
+        LAYER_BODY: 0.05,
     },
 }
 
@@ -518,5 +557,5 @@ def v2_layer_weights(position: Position) -> dict[str, float]:
     """Per-layer weights for the v2 similarity combiner. Sum to 1.0."""
     return V2_LAYER_WEIGHTS.get(
         position,
-        {LAYER_TRAITS: 0.50, LAYER_VOLUME: 0.30, LAYER_BODY: 0.20},
+        {LAYER_VOLUME: 0.65, LAYER_BODY: 0.15, LAYER_TRAITS: 0.15, LAYER_DRAFT: 0.05},
     )

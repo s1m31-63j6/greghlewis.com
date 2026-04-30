@@ -1,0 +1,62 @@
+==============================================================================
+Phase 3.2 — fitted-classifier eval (10 arms × 4 models)
+==============================================================================
+           feature  logreg  n=398  exact= 51.0%  ±1= 89.9%  F1=0.288
+           feature  logreg_balanced  n=398  exact= 37.2%  ±1= 73.1%  F1=0.252
+           feature     gbm  n=398  exact= 51.0%  ±1= 87.9%  F1=0.286
+       measurables  logreg  n=398  exact= 53.0%  ±1= 91.0%  F1=0.320
+       measurables  logreg_balanced  n=398  exact= 40.2%  ±1= 71.9%  F1=0.276
+       measurables     gbm  n=398  exact= 52.0%  ±1= 85.9%  F1=0.321
+        engineered  logreg  n=398  exact= 47.5%  ±1= 89.4%  F1=0.226
+        engineered  logreg_balanced  n=398  exact= 27.1%  ±1= 60.8%  F1=0.203
+        engineered     gbm  n=398  exact= 42.7%  ±1= 82.4%  F1=0.215
+        feature_v2  logreg  n=398  exact= 54.0%  ±1= 90.7%  F1=0.322
+        feature_v2  logreg_balanced  n=398  exact= 38.7%  ±1= 74.9%  F1=0.274
+        feature_v2     gbm  n=398  exact= 52.3%  ±1= 89.9%  F1=0.306
+  feature_v2_traits  logreg  n=398  exact= 54.5%  ±1= 90.5%  F1=0.326
+  feature_v2_traits  logreg_balanced  n=398  exact= 37.9%  ±1= 75.1%  F1=0.267
+  feature_v2_traits     gbm  n=398  exact= 49.0%  ±1= 88.7%  F1=0.291
+              text  logreg  n=398  exact= 50.3%  ±1= 91.7%  F1=0.183
+              text  logreg_balanced  n=398  exact= 24.1%  ±1= 42.0%  F1=0.162
+              text     gbm  n=398  exact= 44.0%  ±1= 84.4%  F1=0.213
+            hybrid  logreg  n=398  exact= 54.5%  ±1= 90.5%  F1=0.287
+            hybrid  logreg_balanced  n=398  exact= 38.9%  ±1= 74.1%  F1=0.265
+            hybrid     gbm  n=398  exact= 48.0%  ±1= 82.4%  F1=0.264
+       text_legacy  logreg  n=398  exact= 52.0%  ±1= 91.7%  F1=0.201
+       text_legacy  logreg_balanced  n=398  exact= 37.7%  ±1= 59.5%  F1=0.229
+       text_legacy     gbm  n=398  exact= 50.0%  ±1= 88.2%  F1=0.225
+     hybrid_legacy  logreg  n=398  exact= 55.5%  ±1= 90.5%  F1=0.294
+     hybrid_legacy  logreg_balanced  n=398  exact= 41.2%  ±1= 77.6%  F1=0.282
+     hybrid_legacy     gbm  n=398  exact= 54.3%  ±1= 88.2%  F1=0.312
+      text_brugler  logreg  n=398  exact= 50.5%  ±1= 91.7%  F1=0.185
+      text_brugler  logreg_balanced  n=398  exact= 25.9%  ±1= 44.0%  F1=0.167
+      text_brugler     gbm  n=398  exact= 44.7%  ±1= 84.4%  F1=0.220
+
+============================================================================================
+SUMMARY — exact accuracy / macro F1 per (arm × model)
+============================================================================================
+               arm                 kNN k=5                  logreg         logreg_balanced                     gbm
+           feature   44.0% / F1=0.280        51.0% / F1=0.288        37.2% / F1=0.252        51.0% / F1=0.286   
+       measurables   49.5% / F1=0.321        53.0% / F1=0.320        40.2% / F1=0.276        52.0% / F1=0.321   
+        engineered   42.5% / F1=0.242        47.5% / F1=0.226        27.1% / F1=0.203        42.7% / F1=0.215   
+        feature_v2   50.0% / F1=0.319        54.0% / F1=0.322        38.7% / F1=0.274        52.3% / F1=0.306   
+  feature_v2_traits   47.5% / F1=0.287        54.5% / F1=0.326        37.9% / F1=0.267        49.0% / F1=0.291   
+              text   41.7% / F1=0.219        50.3% / F1=0.183        24.1% / F1=0.162        44.0% / F1=0.213   
+            hybrid   44.5% / F1=0.270        54.5% / F1=0.287        38.9% / F1=0.265        48.0% / F1=0.264   
+       text_legacy   39.2% / F1=0.219        52.0% / F1=0.201        37.7% / F1=0.229        50.0% / F1=0.225   
+     hybrid_legacy   41.7% / F1=0.250        55.5% / F1=0.294        41.2% / F1=0.282        54.3% / F1=0.312   
+      text_brugler   38.9% / F1=0.339        50.5% / F1=0.185        25.9% / F1=0.167        44.7% / F1=0.220   
+
+==============================================================================
+BEST MODEL PER ARM (by exact accuracy)
+==============================================================================
+           feature  best=  logreg  exact= 51.0%  F1=0.288
+       measurables  best=  logreg  exact= 53.0%  F1=0.320
+        engineered  best=  logreg  exact= 47.5%  F1=0.226
+        feature_v2  best=  logreg  exact= 54.0%  F1=0.322
+  feature_v2_traits  best=  logreg  exact= 54.5%  F1=0.326
+              text  best=  logreg  exact= 50.3%  F1=0.183
+            hybrid  best=  logreg  exact= 54.5%  F1=0.287
+       text_legacy  best=  logreg  exact= 52.0%  F1=0.201
+     hybrid_legacy  best=  logreg  exact= 55.5%  F1=0.294
+      text_brugler  best=  logreg  exact= 50.5%  F1=0.185

@@ -1,0 +1,288 @@
+Loading outcomes for ('training_2014_2020', 'validation_2021_2025', 'prediction_2026')...
+  training_2014_2020: 569 outcomes
+  validation_2021_2025: 398 outcomes
+  prediction_2026: 0 outcomes
+
+Loading 2 pool(s) (cohorts: training_2014_2020, validation_2021_2025, prediction_2026)...
+  loading hybrid...
+    1048 vectors across 4 positions
+  loading feature_v2_traits...
+    1048 vectors across 4 positions
+
+========================================================================
+  ELITE: Fernando Mendoza (QB) — expected: pocket processor (McCarthy / Cousins / Stroud)
+========================================================================
+
+  arm=hybrid
+    +0.728  Dwayne Haskins             (QB/training) -> Role Player  AV=--    PB=0
+    +0.708  Justin Fields              (QB/validation) -> Starter      AV=--    PB=0
+    +0.707  Zach Wilson                (QB/validation) -> Role Player  AV=--    PB=0
+    +0.696  Trevor Lawrence            (QB/validation) -> Pro Bowl     AV=--    PB=1
+    +0.696  J.J. McCarthy              (QB/validation) -> Role Player  AV=--    PB=0
+    +0.688  Justin Herbert             (QB/training) -> Pro Bowl     AV=--    PB=2
+    +0.683  Paxton Lynch               (QB/training) -> Bust         AV=--    PB=0
+    +0.673  Drake Maye                 (QB/validation) -> Pro Bowl     AV=--    PB=2
+    +0.669  Sam Darnold                (QB/training) -> Pro Bowl     AV=--    PB=2
+    +0.662  Jameis Winston             (QB/training) -> Pro Bowl     AV=--    PB=1
+    distribution: Bust=1, Role Player=3, Starter=1, Pro Bowl=5
+
+  arm=feature_v2_traits
+    +0.753  Justin Fields              (QB/validation) -> Starter      AV=--    PB=0
+    +0.736  Zach Wilson                (QB/validation) -> Role Player  AV=--    PB=0
+    +0.710  J.J. McCarthy              (QB/validation) -> Role Player  AV=--    PB=0
+    +0.704  Mitchell Trubisky          (QB/training) -> Pro Bowl     AV=--    PB=1
+    +0.675  Dwayne Haskins             (QB/training) -> Role Player  AV=--    PB=0
+    +0.673  Mac Jones                  (QB/validation) -> Pro Bowl     AV=--    PB=1
+    +0.628  Jameis Winston             (QB/training) -> Pro Bowl     AV=--    PB=1
+    +0.625  Sam Darnold                (QB/training) -> Pro Bowl     AV=--    PB=2
+    +0.612  Marcus Mariota             (QB/training) -> Starter      AV=--    PB=0
+    +0.610  C.J. Stroud                (QB/validation) -> Pro Bowl     AV=--    PB=1
+    distribution: Role Player=3, Starter=2, Pro Bowl=5
+
+========================================================================
+  ELITE: Jeremiyah Love (RB) — expected: elite three-down bell-cow (Bijan / Walker / Jeanty)
+========================================================================
+
+  arm=hybrid
+    +0.740  Omarion Hampton            (RB/validation) -> Bust         AV=--    PB=0
+    +0.724  Bijan Robinson             (RB/validation) -> Pro Bowl     AV=--    PB=2
+    +0.711  Todd Gurley                (RB/training) -> HOF-track    AV=--    PB=3
+    +0.707  Josh Jacobs                (RB/training) -> HOF-track    AV=--    PB=3
+    +0.689  Najee Harris               (RB/validation) -> Pro Bowl     AV=--    PB=1
+    +0.679  Ashton Jeanty              (RB/validation) -> Role Player  AV=--    PB=0
+    +0.670  Ezekiel Elliott            (RB/training) -> HOF-track    AV=--    PB=3
+    +0.668  Sony Michel                (RB/training) -> Role Player  AV=--    PB=0
+    +0.666  Travis Etienne             (RB/validation) -> Role Player  AV=--    PB=0
+    +0.637  Rashaad Penny              (RB/training) -> Role Player  AV=--    PB=0
+    distribution: Bust=1, Role Player=4, Pro Bowl=2, HOF-track=3
+
+  arm=feature_v2_traits
+    +0.857  Melvin Gordon              (RB/training) -> Pro Bowl     AV=--    PB=2
+    +0.843  Bijan Robinson             (RB/validation) -> Pro Bowl     AV=--    PB=2
+    +0.814  Saquon Barkley             (RB/training) -> HOF-track    AV=--    PB=3
+    +0.725  Travis Etienne             (RB/validation) -> Role Player  AV=--    PB=0
+    +0.723  Todd Gurley                (RB/training) -> HOF-track    AV=--    PB=3
+    +0.714  Leonard Fournette          (RB/training) -> Starter      AV=--    PB=0
+    +0.689  Breece Hall                (RB/validation) -> Role Player  AV=--    PB=0
+    +0.681  Cam Akers                  (RB/training) -> Role Player  AV=--    PB=0
+    +0.664  Jahmyr Gibbs               (RB/validation) -> Pro Bowl     AV=--    PB=3
+    +0.664  Derrius Guice              (RB/training) -> Bust         AV=--    PB=0
+    distribution: Bust=1, Role Player=3, Starter=1, Pro Bowl=3, HOF-track=2
+
+========================================================================
+  ELITE: Kenyon Sadiq (TE) — expected: elite receiving TE (Kittle / Bowers / McBride)
+========================================================================
+
+  arm=hybrid
+    +0.810  Evan Engram                (TE/training) -> Pro Bowl     AV=--    PB=2
+    +0.753  Noah Fant                  (TE/training) -> Starter      AV=--    PB=0
+    +0.692  Eric Ebron                 (TE/training) -> Pro Bowl     AV=--    PB=1
+    +0.673  Terrance Ferguson          (TE/validation) -> Bust         AV=--    PB=0
+    +0.664  David Njoku                (TE/training) -> Pro Bowl     AV=--    PB=1
+    +0.662  Luke Schoonmaker           (TE/validation) -> Role Player  AV=--    PB=0
+    +0.661  Elijah Arroyo              (TE/validation) -> Bust         AV=--    PB=0
+    +0.653  Tyler Warren               (TE/validation) -> Pro Bowl     AV=--    PB=1
+    +0.650  Luke Musgrave              (TE/validation) -> Role Player  AV=--    PB=0
+    +0.650  Jelani Woods               (TE/validation) -> Bust         AV=--    PB=0
+    distribution: Bust=3, Role Player=2, Starter=1, Pro Bowl=4
+
+  arm=feature_v2_traits
+    +0.689  Eric Ebron                 (TE/training) -> Pro Bowl     AV=--    PB=1
+    +0.610  O.J. Howard                (TE/training) -> Role Player  AV=--    PB=0
+    +0.585  Tucker Kraft               (TE/validation) -> Role Player  AV=--    PB=0
+    +0.579  Evan Engram                (TE/training) -> Pro Bowl     AV=--    PB=2
+    +0.577  Noah Fant                  (TE/training) -> Starter      AV=--    PB=0
+    +0.565  Elijah Arroyo              (TE/validation) -> Bust         AV=--    PB=0
+    +0.554  Luke Musgrave              (TE/validation) -> Role Player  AV=--    PB=0
+    +0.539  Colston Loveland           (TE/validation) -> Role Player  AV=--    PB=0
+    +0.519  David Njoku                (TE/training) -> Pro Bowl     AV=--    PB=1
+    +0.509  Brock Bowers               (TE/validation) -> Pro Bowl     AV=--    PB=2
+    distribution: Bust=1, Role Player=4, Starter=1, Pro Bowl=4
+
+========================================================================
+  ELITE: Carnell Tate (WR) — expected: high-end pro WR (McConkey / Waddle / JSN)
+========================================================================
+
+  arm=hybrid
+    +0.840  Jaylen Waddle              (WR/validation) -> Starter      AV=--    PB=0
+    +0.802  Kadarius Toney             (WR/validation) -> Role Player  AV=--    PB=0
+    +0.799  Henry Ruggs III            (WR/training) -> Role Player  AV=--    PB=0
+    +0.793  Ladd McConkey              (WR/validation) -> Role Player  AV=--    PB=0
+    +0.793  Brian Thomas               (WR/validation) -> Pro Bowl     AV=--    PB=1
+    +0.775  Jaxon Smith-Njigba         (WR/validation) -> Pro Bowl     AV=--    PB=2
+    +0.755  Matthew Golden             (WR/validation) -> Role Player  AV=--    PB=0
+    +0.755  Emeka Egbuka               (WR/validation) -> Role Player  AV=--    PB=0
+    +0.741  Chris Olave                (WR/validation) -> Role Player  AV=--    PB=0
+    +0.731  Anthony Gould              (WR/validation) -> Bust         AV=--    PB=0
+    distribution: Bust=1, Role Player=6, Starter=1, Pro Bowl=2
+
+  arm=feature_v2_traits
+    +0.798  Jalen Hurd                 (WR/training) -> Bust         AV=--    PB=0
+    +0.780  Jaylen Waddle              (WR/validation) -> Starter      AV=--    PB=0
+    +0.768  Kaden Prather              (WR/validation) -> Bust         AV=--    PB=0
+    +0.764  Braxton Miller             (WR/training) -> Role Player  AV=--    PB=0
+    +0.760  Riley Ridley               (WR/training) -> Bust         AV=--    PB=0
+    +0.759  Ladd McConkey              (WR/validation) -> Role Player  AV=--    PB=0
+    +0.744  Racey McMath               (WR/validation) -> Bust         AV=--    PB=0
+    +0.731  Keith Mumphery             (WR/training) -> Role Player  AV=--    PB=0
+    +0.730  Andre Debose               (WR/training) -> Bust         AV=--    PB=0
+    +0.729  Nico Collins               (WR/validation) -> Pro Bowl     AV=--    PB=2
+    distribution: Bust=5, Role Player=3, Starter=1, Pro Bowl=1
+
+========================================================================
+  SPOT: Drew Allar (QB) — expected: 2026 big-body pocket passer (Penn State)
+========================================================================
+
+  arm=hybrid
+    +0.612  Carson Wentz               (QB/training) -> Pro Bowl     AV=--    PB=1
+    +0.609  Desmond Ridder             (QB/validation) -> Role Player  AV=--    PB=0
+    +0.566  Tanner McKee               (QB/validation) -> Bust         AV=--    PB=0
+    +0.561  Ian Book                   (QB/validation) -> Bust         AV=--    PB=0
+    +0.535  Jacob Eason                (QB/training) -> Bust         AV=--    PB=0
+    +0.525  Kellen Mond                (QB/validation) -> Bust         AV=--    PB=0
+    +0.519  Trace McSorley             (QB/training) -> Bust         AV=--    PB=0
+    +0.509  James Morgan               (QB/training) -> Bust         AV=--    PB=0
+    +0.508  Jake Fromm                 (QB/training) -> Bust         AV=--    PB=0
+    +0.505  Riley Leonard              (QB/validation) -> Bust         AV=--    PB=0
+    distribution: Bust=8, Role Player=1, Pro Bowl=1
+
+  arm=feature_v2_traits
+    +0.553  Kellen Mond                (QB/validation) -> Bust         AV=--    PB=0
+    +0.552  Desmond Ridder             (QB/validation) -> Role Player  AV=--    PB=0
+    +0.520  Malik Willis               (QB/validation) -> Role Player  AV=--    PB=0
+    +0.516  Jalen Hurts                (QB/training) -> Pro Bowl     AV=--    PB=3
+    +0.513  Will Levis                 (QB/validation) -> Role Player  AV=--    PB=0
+    +0.513  C.J. Beathard              (QB/training) -> Role Player  AV=--    PB=0
+    +0.506  Tyler Shough               (QB/validation) -> Role Player  AV=--    PB=0
+    +0.493  Hendon Hooker              (QB/validation) -> Bust         AV=--    PB=0
+    +0.478  Jalen Milroe               (QB/validation) -> Bust         AV=--    PB=0
+    +0.476  Matt Corral                (QB/validation) -> Bust         AV=--    PB=0
+    distribution: Bust=4, Role Player=5, Pro Bowl=1
+
+========================================================================
+  SPOT: LaNorris Sellers (QB) — expected: 2026 mobile gunslinger (South Carolina)
+========================================================================
+
+  arm=hybrid: not found
+
+  arm=feature_v2_traits: not found
+
+========================================================================
+  SPOT: Patrick Mahomes (QB) — expected: HOF gunslinger (expect: Roethlisberger / Favre / Allen)
+========================================================================
+
+  arm=hybrid
+    +0.774  Johnny Manziel             (QB/training) -> Role Player  AV=--    PB=0
+    +0.730  Mitchell Trubisky          (QB/training) -> Pro Bowl     AV=--    PB=1
+    +0.710  Deshaun Watson             (QB/training) -> Pro Bowl     AV=--    PB=3
+    +0.691  Trey Lance                 (QB/validation) -> Bust         AV=--    PB=0
+    +0.685  Drake Maye                 (QB/validation) -> Pro Bowl     AV=--    PB=2
+    +0.678  Mason Rudolph              (QB/training) -> Role Player  AV=--    PB=0
+    +0.643  Blake Bortles              (QB/training) -> Starter      AV=--    PB=0
+    +0.636  Sam Darnold                (QB/training) -> Pro Bowl     AV=--    PB=2
+    +0.633  Baker Mayfield             (QB/training) -> Pro Bowl     AV=--    PB=2
+    +0.619  Teddy Bridgewater          (QB/training) -> Pro Bowl     AV=--    PB=1
+    distribution: Bust=1, Role Player=2, Starter=1, Pro Bowl=6
+
+  arm=feature_v2_traits
+    +0.792  Deshaun Watson             (QB/training) -> Pro Bowl     AV=--    PB=3
+    +0.689  Drake Maye                 (QB/validation) -> Pro Bowl     AV=--    PB=2
+    +0.665  Caleb Williams             (QB/validation) -> Role Player  AV=--    PB=0
+    +0.634  Baker Mayfield             (QB/training) -> Pro Bowl     AV=--    PB=2
+    +0.619  Michael Penix              (QB/validation) -> Role Player  AV=--    PB=0
+    +0.595  Justin Herbert             (QB/training) -> Pro Bowl     AV=--    PB=2
+    +0.575  Jaxson Dart                (QB/validation) -> Role Player  AV=--    PB=0
+    +0.546  Jared Goff                 (QB/training) -> Pro Bowl     AV=--    PB=5
+    +0.541  Lamar Jackson              (QB/training) -> HOF-track    AV=--    PB=4
+    +0.537  Cam Ward                   (QB/validation) -> Role Player  AV=--    PB=0
+    distribution: Role Player=4, Pro Bowl=5, HOF-track=1
+
+========================================================================
+  SPOT: Saquon Barkley (RB) — expected: HOF elite bell-cow (expect: Gurley / Bell / McCaffrey)
+========================================================================
+
+  arm=hybrid
+    +0.797  Leonard Fournette          (RB/training) -> Starter      AV=--    PB=0
+    +0.787  Melvin Gordon              (RB/training) -> Pro Bowl     AV=--    PB=2
+    +0.747  Ezekiel Elliott            (RB/training) -> HOF-track    AV=--    PB=3
+    +0.736  Joe Mixon                  (RB/training) -> Pro Bowl     AV=--    PB=2
+    +0.728  Bijan Robinson             (RB/validation) -> Pro Bowl     AV=--    PB=2
+    +0.726  Christian McCaffrey        (RB/training) -> HOF-track    AV=--    PB=4
+    +0.703  Nick Chubb                 (RB/training) -> Pro Bowl     AV=--    PB=4
+    +0.702  Todd Gurley                (RB/training) -> HOF-track    AV=--    PB=3
+    +0.700  Breece Hall                (RB/validation) -> Role Player  AV=--    PB=0
+    +0.681  Kenneth Dixon              (RB/training) -> Bust         AV=--    PB=0
+    distribution: Bust=1, Role Player=1, Starter=1, Pro Bowl=4, HOF-track=3
+
+  arm=feature_v2_traits
+    +0.954  Bijan Robinson             (RB/validation) -> Pro Bowl     AV=--    PB=2
+    +0.834  Ezekiel Elliott            (RB/training) -> HOF-track    AV=--    PB=3
+    +0.827  Melvin Gordon              (RB/training) -> Pro Bowl     AV=--    PB=2
+    +0.824  Todd Gurley                (RB/training) -> HOF-track    AV=--    PB=3
+    +0.820  Sony Michel                (RB/training) -> Role Player  AV=--    PB=0
+    +0.814  Jeremiyah Love             (RB/prediction) -> (no outcome)
+    +0.802  Leonard Fournette          (RB/training) -> Starter      AV=--    PB=0
+    +0.754  Breece Hall                (RB/validation) -> Role Player  AV=--    PB=0
+    +0.753  Joe Mixon                  (RB/training) -> Pro Bowl     AV=--    PB=2
+    +0.736  Ashton Jeanty              (RB/validation) -> Role Player  AV=--    PB=0
+    distribution: Role Player=3, Starter=1, Pro Bowl=3, HOF-track=2
+
+========================================================================
+  SPOT: Justin Jefferson (WR) — expected: HOF elite separator (expect: Diggs / Cooper Kupp / Hopkins)
+========================================================================
+
+  arm=hybrid
+    +0.772  Malik Nabers               (WR/validation) -> Pro Bowl     AV=--    PB=1
+    +0.737  Rome Odunze                (WR/validation) -> Role Player  AV=--    PB=0
+    +0.730  Nelson Agholor             (WR/training) -> Starter      AV=--    PB=0
+    +0.721  Marvin Harrison Jr.        (WR/validation) -> Role Player  AV=--    PB=0
+    +0.700  Jordyn Tyson               (WR/prediction) -> (no outcome)
+    +0.699  Amari Cooper               (WR/training) -> Pro Bowl     AV=--    PB=5
+    +0.684  Brandin Cooks              (WR/training) -> Starter      AV=--    PB=0
+    +0.683  Corey Davis                (WR/training) -> Starter      AV=--    PB=0
+    +0.681  DeVonta Smith              (WR/validation) -> Starter      AV=--    PB=0
+    +0.670  Ja'Marr Chase              (WR/validation) -> HOF-track    AV=--    PB=5
+    distribution: Role Player=2, Starter=4, Pro Bowl=2, HOF-track=1
+
+  arm=feature_v2_traits
+    +0.808  Amari Cooper               (WR/training) -> Pro Bowl     AV=--    PB=5
+    +0.745  Corey Coleman              (WR/training) -> Role Player  AV=--    PB=0
+    +0.736  JuJu Smith-Schuster        (WR/training) -> Pro Bowl     AV=--    PB=1
+    +0.731  Nelson Agholor             (WR/training) -> Starter      AV=--    PB=0
+    +0.718  Jaelen Strong              (WR/training) -> Role Player  AV=--    PB=0
+    +0.713  Malik Nabers               (WR/validation) -> Pro Bowl     AV=--    PB=1
+    +0.712  Rashod Bateman             (WR/validation) -> Role Player  AV=--    PB=0
+    +0.710  CeeDee Lamb                (WR/training) -> HOF-track    AV=--    PB=5
+    +0.707  Corey Davis                (WR/training) -> Starter      AV=--    PB=0
+    +0.693  Garrett Wilson             (WR/validation) -> Starter      AV=--    PB=0
+    distribution: Role Player=3, Starter=3, Pro Bowl=3, HOF-track=1
+
+========================================================================
+  SPOT: George Kittle (TE) — expected: HOF receiving+blocking TE (expect: Gronk-tier / Kelce-tier)
+========================================================================
+
+  arm=hybrid
+    +0.310  Luke Schoonmaker           (TE/validation) -> Role Player  AV=--    PB=0
+    +0.285  Will Mallory               (TE/validation) -> Bust         AV=--    PB=0
+    +0.275  Kenyon Sadiq               (TE/prediction) -> (no outcome)
+    +0.268  Caleb Lohner               (TE/validation) -> Bust         AV=--    PB=0
+    +0.267  Ko Kieft                   (TE/validation) -> Role Player  AV=--    PB=0
+    +0.256  Matthew Hibner             (TE/prediction) -> (no outcome)
+    +0.240  C.J. Uzomah                (TE/training) -> Starter      AV=--    PB=0
+    +0.234  Evan Engram                (TE/training) -> Pro Bowl     AV=--    PB=2
+    +0.231  Theo Johnson               (TE/validation) -> Role Player  AV=--    PB=0
+    +0.230  Carsen Ryan                (TE/prediction) -> (no outcome)
+    distribution: Bust=2, Role Player=3, Starter=1, Pro Bowl=1
+
+  arm=feature_v2_traits
+    +0.446  C.J. Uzomah                (TE/training) -> Starter      AV=--    PB=0
+    +0.441  Carsen Ryan                (TE/prediction) -> (no outcome)
+    +0.437  Davis Allen                (TE/validation) -> Role Player  AV=--    PB=0
+    +0.432  Josh Whyle                 (TE/validation) -> Role Player  AV=--    PB=0
+    +0.430  Brayden Willis             (TE/validation) -> Role Player  AV=--    PB=0
+    +0.430  Ko Kieft                   (TE/validation) -> Role Player  AV=--    PB=0
+    +0.429  Caleb Lohner               (TE/validation) -> Bust         AV=--    PB=0
+    +0.427  Grant Calcaterra           (TE/validation) -> Role Player  AV=--    PB=0
+    +0.425  Tyler Davis                (TE/training) -> Role Player  AV=--    PB=0
+    +0.422  Luke Farrell               (TE/validation) -> Role Player  AV=--    PB=0
+    distribution: Bust=1, Role Player=7, Starter=1
