@@ -1,0 +1,70 @@
+======================================================================
+Phase 3 v1.2 — outcome ablation (k=5, weighted=True)
+======================================================================
+
+--- Baseline (per-position modal class) ---
+  QB: modal='Bust' → 30/58 = 53.4%
+  RB: modal='Role Player' → 45/104 = 43.3%
+  WR: modal='Role Player' → 80/162 = 49.4%
+  TE: modal='Role Player' → 44/73 = 60.3%
+  overall: 199/397 = 50.1%
+
+
+>>> NATIVE EVAL — each arm over its full source-having population
+
+--- feature  (train pool: all, val pool: all) ---
+  exact=40.5%  ±1=82.9%  F1=0.232  P@5=36.5%  P@5±1=77.6%
+
+--- measurables  (train pool: all, val pool: all) ---
+  exact=47.7%  ±1=83.7%  F1=0.261  P@5=39.5%  P@5±1=78.0%
+
+--- engineered  (train pool: all, val pool: all) ---
+  exact=42.5%  ±1=84.4%  F1=0.242  P@5=35.8%  P@5±1=77.2%
+
+--- feature_v2  (train pool: all, val pool: all) ---
+  exact=43.0%  ±1=84.7%  F1=0.277  P@5=37.9%  P@5±1=78.1%
+
+--- feature_v2_traits  (train pool: all, val pool: all) ---
+  exact=45.0%  ±1=85.4%  F1=0.267  P@5=36.6%  P@5±1=75.8%
+
+--- text  (train pool: 284, val pool: 364) ---
+  exact=44.8%  ±1=84.1%  F1=0.236  P@5=35.5%  P@5±1=72.8%
+
+--- hybrid  (train pool: all, val pool: all) ---
+  exact=39.7%  ±1=78.9%  F1=0.228  P@5=35.9%  P@5±1=73.6%
+
+--- text_legacy  (train pool: 563, val pool: 398) ---
+  exact=39.2%  ±1=81.4%  F1=0.219  P@5=32.8%  P@5±1=72.1%
+
+--- hybrid_legacy  (train pool: all, val pool: all) ---
+  exact=39.4%  ±1=80.2%  F1=0.235  P@5=36.0%  P@5±1=74.4%
+
+--- text_brugler  (train pool: 152, val pool: 359) ---
+  exact=42.1%  ±1=85.2%  F1=0.357  P@5=34.1%  P@5±1=71.5%
+
+--- text_walter_football  (train pool: 181, val pool: 139) ---
+  exact=33.8%  ±1=64.0%  F1=0.240  P@5=29.9%  P@5±1=63.6%
+
+--- hybrid_brugler  (train pool: 152, val pool: 359) ---
+  exact=40.1%  ±1=76.9%  F1=0.213  P@5=36.1%  P@5±1=73.0%
+
+--- hybrid_walter_football  (train pool: 181, val pool: 139) ---
+  exact=37.4%  ±1=65.5%  F1=0.225  P@5=32.9%  P@5±1=61.7%
+
+======================================================================================
+NATIVE-POP SUMMARY (each arm over its source-having population)
+======================================================================================
+                         arm     n    exact   ±1 tier      F1     P@5   P@5±1
+                     feature   398    40.5%     82.9%   0.232   36.5%   77.6%
+                 measurables   398    47.7%     83.7%   0.261   39.5%   78.0%
+                  engineered   398    42.5%     84.4%   0.242   35.8%   77.2%
+                  feature_v2   398    43.0%     84.7%   0.277   37.9%   78.1%
+           feature_v2_traits   398    45.0%     85.4%   0.267   36.6%   75.8%
+                        text   364    44.8%     84.1%   0.236   35.5%   72.8%
+                      hybrid   398    39.7%     78.9%   0.228   35.9%   73.6%
+                 text_legacy   398    39.2%     81.4%   0.219   32.8%   72.1%
+               hybrid_legacy   398    39.4%     80.2%   0.235   36.0%   74.4%
+                text_brugler   359    42.1%     85.2%   0.357   34.1%   71.5%
+        text_walter_football   139    33.8%     64.0%   0.240   29.9%   63.6%
+              hybrid_brugler   359    40.1%     76.9%   0.213   36.1%   73.0%
+      hybrid_walter_football   139    37.4%     65.5%   0.225   32.9%   61.7%

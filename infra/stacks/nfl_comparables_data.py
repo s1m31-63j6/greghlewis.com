@@ -36,6 +36,11 @@ class DataStack(cdk.Stack):
             removal_policy=cdk.RemovalPolicy.RETAIN,
         )
 
+        # Expose for cross-stack consumption (NflComparablesKb uses the
+        # curated bucket as its data source).
+        self.raw_bucket = raw_bucket
+        self.curated_bucket = curated_bucket
+
         engine_policy = iam.ManagedPolicy(
             self,
             "EngineDataAccessPolicy",

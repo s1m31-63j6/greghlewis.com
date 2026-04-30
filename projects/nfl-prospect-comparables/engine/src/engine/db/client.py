@@ -1,4 +1,9 @@
-"""DB connection helper — fetches credentials from Secrets Manager."""
+"""DB connection helper — fetches credentials from Secrets Manager.
+
+Default flow targets the comp-engine RDS micro (NflComparablesDb stack).
+Pass `secret_arn=` and `database_name=` to target the Aurora SV2 cluster
+(NflComparablesKb stack) — used by the KB schema bootstrap script.
+"""
 
 from __future__ import annotations
 
@@ -10,51 +15,69 @@ import boto3
 import psycopg
 
 
-# Cache the resolved secret to avoid Secrets Manager calls on every connection.
-_secret_cache: dict | None = None
+_DEFAULT_STACK = "NflComparablesDb"
+_DEFAULT_OUTPUT_KEY = "DbSecretArn"
+_DEFAULT_ENV_VAR = "NFLCOMPARABLES_DB_SECRET_ARN"
+
+# Cache resolved secrets by ARN so callers can hit two DBs without conflicts.
+_secret_cache: dict[str, dict] = {}
+
+
+def _region() -> str:
+    return os.environ.get("AWS_REGION", "us-east-1")
 
 
 def _resolve_secret_arn() -> str:
-    """Find the DB secret ARN. Prefers env var; falls back to CloudFormation
-    output of the NflComparablesDb stack."""
-    arn = os.environ.get("NFLCOMPARABLES_DB_SECRET_ARN")
+    """Find the comp-engine DB secret ARN from env or stack outputs."""
+    arn = os.environ.get(_DEFAULT_ENV_VAR)
     if arn:
         return arn
-    region = os.environ.get("AWS_REGION", "us-east-1")
-    cfn = boto3.client("cloudformation", region_name=region)
-    outs = cfn.describe_stacks(StackName="NflComparablesDb")["Stacks"][0]["Outputs"]
+    cfn = boto3.client("cloudformation", region_name=_region())
+    outs = cfn.describe_stacks(StackName=_DEFAULT_STACK)["Stacks"][0]["Outputs"]
     for o in outs:
-        if o["OutputKey"] == "DbSecretArn":
+        if o["OutputKey"] == _DEFAULT_OUTPUT_KEY:
             return o["OutputValue"]
     raise RuntimeError(
-        "Could not resolve DB secret ARN. Either set NFLCOMPARABLES_DB_SECRET_ARN "
-        "or ensure the NflComparablesDb stack is deployed."
+        f"Could not resolve DB secret ARN. Either set {_DEFAULT_ENV_VAR} "
+        f"or ensure the {_DEFAULT_STACK} stack is deployed."
     )
 
 
-def _secret() -> dict:
-    """Resolve DB credentials. Caches in-process."""
-    global _secret_cache
-    if _secret_cache is not None:
-        return _secret_cache
-    arn = _resolve_secret_arn()
-    sm = boto3.client("secretsmanager", region_name=os.environ.get("AWS_REGION", "us-east-1"))
+def _secret(secret_arn: str | None) -> dict:
+    arn = secret_arn or _resolve_secret_arn()
+    if arn in _secret_cache:
+        return _secret_cache[arn]
+    sm = boto3.client("secretsmanager", region_name=_region())
     raw = sm.get_secret_value(SecretId=arn)["SecretString"]
-    _secret_cache = json.loads(raw)
-    return _secret_cache
+    _secret_cache[arn] = json.loads(raw)
+    return _secret_cache[arn]
 
 
-def conninfo() -> str:
-    s = _secret()
+def conninfo(*, secret_arn: str | None = None, database_name: str | None = None) -> str:
+    """Build a libpq connection string from a Secrets Manager-attached secret.
+
+    `database_name` overrides whatever `dbname` is in the secret. Required
+    for Aurora clusters where the auto-attached secret may not include
+    `dbname` (only `host` / `port` / `username` / `password` / `engine`).
+    """
+    s = _secret(secret_arn)
+    dbname = database_name or s.get("dbname")
+    if not dbname:
+        raise RuntimeError(
+            "No database name resolved. Pass database_name=... or ensure "
+            "the secret has a 'dbname' field."
+        )
     return (
-        f"host={s['host']} port={s['port']} dbname={s['dbname']} "
+        f"host={s['host']} port={s['port']} dbname={dbname} "
         f"user={s['username']} password={s['password']} "
         f"sslmode=require"
     )
 
 
 @contextmanager
-def connect():
+def connect(*, secret_arn: str | None = None, database_name: str | None = None):
     """Yield a psycopg connection. Use as `with connect() as conn:`."""
-    with psycopg.connect(conninfo()) as conn:
+    with psycopg.connect(
+        conninfo(secret_arn=secret_arn, database_name=database_name)
+    ) as conn:
         yield conn

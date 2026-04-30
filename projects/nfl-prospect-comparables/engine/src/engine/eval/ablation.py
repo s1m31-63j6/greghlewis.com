@@ -129,20 +129,101 @@ def _knn_predict_with_precision(
     return prediction, p_exact, p_adj
 
 
+def _layered_knn_predict_with_precision(
+    val_pid: str,
+    pos: str,
+    train_pool,
+    val_pool,
+    train_outcomes_in_pos: list[str],
+    actual: str,
+    *,
+    k: int,
+    weighted: bool = True,
+) -> tuple[str, float, float]:
+    """Layered weighted-cosine kNN matching production find_comps semantics.
+    Combines per-layer (BODY/VOLUME/EFFICIENCY/TRAITS) masked cosines with
+    per-position weights, mirroring `find_comps` for the v2 layered arms.
+    """
+    from engine.features.catalog import v2_layer_weights
+    from engine.schema import Position as _Position
+
+    weights = v2_layer_weights(_Position[pos])
+    sim_layers = (val_pool.layer_set_by_position or {}).get(pos, ())
+    # Find val row index for this player
+    val_idxs = val_pool.pos_index[pos]
+    val_row_local = None
+    for local_i, df_i in enumerate(val_idxs):
+        if val_pool.df["player_id"][df_i] == val_pid:
+            val_row_local = local_i
+            break
+    if val_row_local is None:
+        return "Bust", 0.0, 0.0
+
+    weighted_sum: np.ndarray | None = None
+    for layer in sim_layers:
+        train_M = (train_pool.layer_matrices or {}).get(layer, {}).get(pos)
+        train_mask = (train_pool.layer_masks or {}).get(layer, {}).get(pos)
+        val_M = (val_pool.layer_matrices or {}).get(layer, {}).get(pos)
+        val_mask = (val_pool.layer_masks or {}).get(layer, {}).get(pos)
+        w = float(weights.get(layer, 0.0))
+        if train_M is None or val_M is None or w == 0.0:
+            continue
+        q_vec = val_M[val_row_local]
+        q_mask = val_mask[val_row_local] if val_mask is not None else np.ones_like(q_vec)
+        both = (train_mask if train_mask is not None else 1.0) * q_mask
+        a = q_vec[None, :] * both
+        b = train_M * both
+        num = (a * b).sum(axis=1)
+        denom = np.linalg.norm(a, axis=1) * np.linalg.norm(b, axis=1) + 1e-12
+        layer_cos = num / denom
+        shared = both.sum(axis=1) if isinstance(both, np.ndarray) else np.full(train_M.shape[0], train_M.shape[1])
+        layer_cos = np.where(shared > 0, layer_cos, 0.0)
+        contribution = w * layer_cos
+        weighted_sum = contribution if weighted_sum is None else weighted_sum + contribution
+
+    if weighted_sum is None:
+        return "Bust", 0.0, 0.0
+    sims = weighted_sum
+    top = np.argsort(-sims)[:k]
+    labels = [train_outcomes_in_pos[int(i)] for i in top]
+    if not weighted:
+        prediction = Counter(labels).most_common(1)[0][0]
+    else:
+        label_score: dict[str, float] = {}
+        for i in top:
+            lab = train_outcomes_in_pos[int(i)]
+            label_score[lab] = label_score.get(lab, 0.0) + float(sims[int(i)])
+        prediction = max(label_score.items(), key=lambda kv: kv[1])[0]
+    p_exact = sum(1 for lab in labels if lab == actual) / k
+    p_adj = sum(1 for lab in labels if _is_adjacent(actual, lab)) / k
+    return prediction, p_exact, p_adj
+
+
 def evaluate_arm(
     curated_bucket: str,
     *,
     arm: str,
     k: int = 5,
     weighted: bool = True,
+    train_player_ids: set[str] | None = None,
+    val_player_ids: set[str] | None = None,
 ) -> ArmResult:
-    """Run kNN classification on validation using training as the reference set."""
+    """Run kNN classification on validation using training as the reference set.
+
+    Optional `train_player_ids` / `val_player_ids` restrict the pools to
+    the given player_id sets — used for apples-to-apples subset eval (e.g.,
+    only players with both Brugler and Wikipedia text).
+    """
     train_pool = comps_mod.load_pool(
         curated_bucket, cohorts=("training_2014_2020",), arm=arm
     )
     val_pool = comps_mod.load_pool(
         curated_bucket, cohorts=("validation_2021_2025",), arm=arm
     )
+    if train_player_ids is not None:
+        train_pool = comps_mod.filter_pool(train_pool, train_player_ids)
+    if val_player_ids is not None:
+        val_pool = comps_mod.filter_pool(val_pool, val_player_ids)
     train_outcomes = load_outcomes(curated_bucket, "training_2014_2020")
     val_outcomes = load_outcomes(curated_bucket, "validation_2021_2025")
 
@@ -167,9 +248,12 @@ def evaluate_arm(
     confusion: dict[str, dict[str, int]] = {t: {} for t in OUTCOME_TIERS}
     by_position: dict[str, list[int]] = {p: [0, 0] for p in train_pool.by_position}
 
-    # vec_col selects the column in val_pool.df that holds the query vector.
-    # sliced arms use a synthetic "sliced_vec" column built at load time.
-    vec_col = comps_mod.VEC_COLS.get(arm, "sliced_vec")
+    # If the pool has per-layer matrices (v2 layered arms), use the layered
+    # weighted-cosine path so the formal eval matches production comp scoring.
+    # Otherwise fall back to the concatenated-vector cosine.
+    is_layered = train_pool.layer_matrices is not None and val_pool.layer_matrices is not None
+
+    vec_col = val_pool.vec_col
     for row in val_pool.df.iter_rows(named=True):
         pid = row["player_id"]
         actual = val_outcomes.get(pid)
@@ -178,12 +262,18 @@ def evaluate_arm(
         pos = row["position"]
         if pos not in train_pool.by_position:
             continue
-        q_vec = np.asarray(row[vec_col], dtype=np.float64)
-        train_M = train_pool.by_position[pos]
-        pred, p_exact, p_adj = _knn_predict_with_precision(
-            q_vec, train_M, train_outcomes_by_pos[pos], actual,
-            k=k, weighted=weighted,
-        )
+        if is_layered:
+            pred, p_exact, p_adj = _layered_knn_predict_with_precision(
+                pid, pos, train_pool, val_pool, train_outcomes_by_pos[pos],
+                actual, k=k, weighted=weighted,
+            )
+        else:
+            q_vec = np.asarray(row[vec_col], dtype=np.float64)
+            train_M = train_pool.by_position[pos]
+            pred, p_exact, p_adj = _knn_predict_with_precision(
+                q_vec, train_M, train_outcomes_by_pos[pos], actual,
+                k=k, weighted=weighted,
+            )
         p_exact_sum += p_exact
         p_adj_sum += p_adj
         confusion.setdefault(actual, {})

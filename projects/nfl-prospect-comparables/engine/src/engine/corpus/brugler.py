@@ -64,36 +64,138 @@ class BruglerProfile:
 
 
 _STARTER_RE = re.compile(
-    r"A\s+(?:\w+|\w+-year)\s+(?:starter|backup|reserve)\s+at\s+([^,]+?),\s+(\w+(?:\s+(?:Jr\.?|Sr\.?|II|III|IV))?)\s",
+    # Last-name capture group accepts hyphens (Smith-Njigba), straight
+    # apostrophes (O'Connell), and curly apostrophe U+2019 (O’Connell —
+    # what pdfplumber actually emits from Brugler PDFs).
+    r"A\s+(?:\w+|\w+-year)\s+(?:starter|backup|reserve)\s+at\s+([^,]+?),\s+([\w\-’']+(?:\s+(?:Jr\.?|Sr\.?|II|III|IV))?)\s",
     re.IGNORECASE,
 )
 
 
-def split_profiles(full_text: str) -> list[BruglerProfile]:
-    """Split the full PDF text into prospect profiles by SUMMARY: markers.
+_STRENGTHS_RE = re.compile(r"STRENGTHS:?\s+", re.IGNORECASE)
+_WEAKNESSES_RE = re.compile(r"WEAKNESSES:?\s+", re.IGNORECASE)
+# Stat-table chapter breaks Brugler inserts between prospect groups —
+# always belong to NEITHER the prospect before nor the prospect after.
+_CHAPTER_BREAK_RE = re.compile(
+    r"\b(BEST\s+(?:OF\s+THE\s+)?REST|TIER\s+\d+\s+(?:QUARTERBACK|RUNNING|RECEIVER|TIGHT|OFFENSIVE|DEFENSIVE|EDGE)|BACK\s+TO\s+TABLE\s+OF\s+CONTENTS)\b",
+    re.IGNORECASE,
+)
+# Cap on prospect's deep-dive content (stats + STRENGTHS + WEAKNESSES +
+# SUMMARY paragraph). Empirically ~3500 chars is the typical prospect
+# block; 5000 is a safe upper bound that still excludes adjacent prospects.
+_MAX_BLOCK_CHARS = 5000
+# SUMMARY paragraph soft cap.
+_SUMMARY_PARAGRAPH_MAX = 2500
 
-    Each profile is the chunk of text from the previous "SUMMARY:" (or
-    document start for the first) to the next "SUMMARY:" — so the SUMMARY
-    paragraph itself is the END of its block, with stats + STRENGTHS +
-    WEAKNESSES preceding it. The last profile extends to the next major
-    section header or end of doc.
+
+def split_profiles(full_text: str) -> list[BruglerProfile]:
+    """Split the full PDF text into prospect profiles, anchored on each
+    prospect's own STRENGTHS marker rather than the previous prospect's
+    SUMMARY end.
+
+    Why this matters: between two adjacent SUMMARY: keywords, the PDF
+    flow is `[prev SUMMARY paragraph] + [transition stat tables / "BEST
+    OF THE REST"] + [stats] + [STRENGTHS:] + [WEAKNESSES:] + [SUMMARY:]
+    + [this SUMMARY paragraph]`. The naive prev-SUMMARY-to-next-SUMMARY
+    block bleeds in adjacent prospects' content (worst case: 25k chars
+    of bleed for Carnell Tate, where a position-leader stat table sat
+    between him and the previous prospect).
+
+    Anchored layout (this version): for each SUMMARY: marker
+        - back-anchor: the most recent STRENGTHS: marker before SUMMARY
+          (this prospect's own deep-dive section start). Falls back to a
+          small window if STRENGTHS isn't found.
+        - forward-anchor: the SUMMARY paragraph end (next paragraph
+          break, capped at _SUMMARY_PARAGRAPH_MAX, hard-stopped before
+          a chapter-break marker).
+        - reject the profile if the back-anchor isn't on the same
+          chapter side as the SUMMARY (a chapter-break between
+          STRENGTHS and SUMMARY means we crossed prospects).
     """
     profiles: list[BruglerProfile] = []
-    # 2018-2024 use "SUMMARY: " (colon + space). 2026 dropped the colon and
-    # switched to bullet-point STRENGTHS / WEAKNESSES sections — SUMMARY in
-    # 2026 is followed by a newline. Accept either format.
-    matches = list(re.finditer(r"SUMMARY:?\s+", full_text))
-    for i, m in enumerate(matches):
-        # Block content runs from the previous SUMMARY-end (or doc start) up
-        # to the END of this SUMMARY paragraph (next "SUMMARY:" or +5000 chars
-        # for the very last profile).
-        start = matches[i - 1].end() if i > 0 else 0
-        end = matches[i + 1].start() if i + 1 < len(matches) else min(m.end() + 5000, len(full_text))
-        block = full_text[start:end]
-        # SUMMARY paragraph: the text right after the "SUMMARY: " marker.
-        # ~2000 chars covers the typical 1-2 paragraph summary; bounded above
-        # by the next profile's start.
-        summary_text = full_text[m.end(): min(m.end() + 2000, end)]
+    summary_marks = list(re.finditer(r"SUMMARY:?\s+", full_text))
+    strengths_marks = list(_STRENGTHS_RE.finditer(full_text))
+    weaknesses_marks = list(_WEAKNESSES_RE.finditer(full_text))
+    chapter_breaks = list(_CHAPTER_BREAK_RE.finditer(full_text))
+
+    def _last_before(marks: list[re.Match], pos: int) -> re.Match | None:
+        prev: re.Match | None = None
+        for m in marks:
+            if m.start() < pos:
+                prev = m
+            else:
+                break
+        return prev
+
+    def _first_after(marks: list[re.Match], pos: int) -> re.Match | None:
+        for m in marks:
+            if m.start() > pos:
+                return m
+        return None
+
+    def _is_crossed(start: int, end: int) -> bool:
+        """True if a chapter-break marker sits between start and end —
+        means we'd be stitching across a prospect-group boundary."""
+        return any(start < cb.start() < end for cb in chapter_breaks)
+
+    for i, m in enumerate(summary_marks):
+        sp_start = m.end()
+
+        # Forward: SUMMARY paragraph end. Cap at next prospect signal
+        # (next STRENGTHS, next chapter break, or next SUMMARY).
+        sp_end_cap = sp_start + _SUMMARY_PARAGRAPH_MAX
+        next_strengths = _first_after(strengths_marks, sp_start)
+        if next_strengths:
+            sp_end_cap = min(sp_end_cap, next_strengths.start())
+        next_break = _first_after(chapter_breaks, sp_start)
+        if next_break:
+            sp_end_cap = min(sp_end_cap, next_break.start())
+        if i + 1 < len(summary_marks):
+            sp_end_cap = min(sp_end_cap, summary_marks[i + 1].start())
+        sp_end = min(sp_start + _SUMMARY_PARAGRAPH_MAX, sp_end_cap, len(full_text))
+        # Prefer a clean paragraph break terminator if present.
+        para_break = re.search(r"\n\s*\n", full_text[sp_start:sp_end])
+        if para_break:
+            sp_end = sp_start + para_break.start()
+        summary_text = full_text[sp_start:sp_end]
+
+        # Back-anchor: this prospect's own STRENGTHS (or fallback).
+        my_strengths = _last_before(strengths_marks, m.start())
+        # The most recent SUMMARY-end marks the absolute earliest start
+        # any prospect's own content can begin (anything earlier is
+        # someone else's territory).
+        prev_summary_floor = (
+            summary_marks[i - 1].end() if i > 0 else 0
+        )
+
+        if (
+            my_strengths
+            and my_strengths.start() > prev_summary_floor
+            and (m.start() - my_strengths.start()) < _MAX_BLOCK_CHARS
+            and not _is_crossed(my_strengths.start(), m.start())
+        ):
+            # Anchor on STRENGTHS; back up further to capture stats /
+            # measurables that precede it (typically 1.5-3k chars).
+            content_start = max(
+                prev_summary_floor,
+                my_strengths.start() - 3000,
+            )
+        else:
+            # Best-of-the-rest quick takes have no STRENGTHS section.
+            # Use a small fixed window so we don't drag in neighbors.
+            content_start = max(prev_summary_floor, m.start() - 1500)
+
+        # If a chapter-break sits between content_start and SUMMARY,
+        # advance content_start past it (the chapter-break belongs to
+        # the previous chapter).
+        crossing = [
+            cb for cb in chapter_breaks
+            if content_start < cb.start() < m.start()
+        ]
+        if crossing:
+            content_start = max(content_start, crossing[-1].end())
+
+        block = full_text[content_start:sp_end]
         last_name = None
         school_text = None
         starter_m = _STARTER_RE.search(summary_text)

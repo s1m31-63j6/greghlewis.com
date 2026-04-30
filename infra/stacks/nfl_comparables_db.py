@@ -151,6 +151,16 @@ class DbStack(cdk.Stack):
             ],
         )
 
+        # Expose for cross-stack consumption. NflComparablesKb co-locates
+        # an Aurora SV2 cluster in this VPC (Bedrock KB requires a cluster
+        # ARN, not an instance ARN — two-tier storage right-sized per
+        # workload).
+        self.vpc = vpc
+        self.db_instance = db
+        self.db_secret = db_secret
+        self.db_security_group = db_sg
+        self.database_name = "nflcomparables"
+
         # --- outputs ---
         cdk.CfnOutput(self, "DbEndpoint", value=db.db_instance_endpoint_address)
         cdk.CfnOutput(self, "DbPort", value=db.db_instance_endpoint_port)

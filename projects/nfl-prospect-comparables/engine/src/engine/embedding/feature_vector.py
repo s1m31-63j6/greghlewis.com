@@ -19,9 +19,33 @@ from dataclasses import dataclass, field
 import numpy as np
 import polars as pl
 
-from engine.features.catalog import feature_names_for
+from engine.features.catalog import (
+    CATALOG,
+    LAYER_OTHER,
+    feature_names_for,
+)
 from engine.io import s3 as s3io
 from engine.schema import PlayerProfile, Position
+
+
+# Catalog lookup: feature name -> layer. Built once at import time. Source of truth
+# for slicing feature vectors by archetype layer downstream (e.g., per-layer cosine
+# in find_comps). The catalog is authoritative — persisted feature_order is kept
+# stable across runs, but layer membership is recomputed from the catalog.
+_FEATURE_LAYER: dict[str, str] = {f.name: f.layer for f in CATALOG}
+
+
+def _layers_for_order(feature_order: list[str]) -> dict[str, list[int]]:
+    """Map layer name -> indices into `feature_order` for that layer.
+
+    Vectors are alphabetically ordered per position; this function partitions
+    the indices by archetype layer so callers can slice the vector cheaply.
+    """
+    layers: dict[str, list[int]] = {}
+    for idx, name in enumerate(feature_order):
+        layer = _FEATURE_LAYER.get(name, LAYER_OTHER)
+        layers.setdefault(layer, []).append(idx)
+    return layers
 
 
 # ---------- per-position normalization stats ----------
@@ -35,11 +59,24 @@ class PositionStats:
     apply to this position. `means`, `stds`, `medians` are keyed by feature
     name; values for features with zero or one observed sample default to
     (mean=0.0, std=1.0, median=0.0) which is a no-op transform.
+
+    `layers` partitions `feature_order` indices by archetype layer (BODY,
+    VOLUME, EFFICIENCY, TRAJECTORY, CONTEXT, EXCLUDED, OTHER) per the v2
+    similarity design. Recomputed from the catalog at load time, not persisted.
     """
     feature_order: list[str]
     means: dict[str, float] = field(default_factory=dict)
     stds: dict[str, float] = field(default_factory=dict)
     medians: dict[str, float] = field(default_factory=dict)
+    layers: dict[str, list[int]] = field(default_factory=dict)
+
+    def indices_for_layers(self, layer_names: tuple[str, ...]) -> list[int]:
+        """Concatenated, sorted indices of the given layers in feature_order."""
+        out: list[int] = []
+        for layer in layer_names:
+            out.extend(self.layers.get(layer, []))
+        out.sort()
+        return out
 
 
 def compute_position_stats(
@@ -71,7 +108,11 @@ def compute_position_stats(
         else:
             stds[name] = 1.0
     return PositionStats(
-        feature_order=feature_order, means=means, stds=stds, medians=medians
+        feature_order=feature_order,
+        means=means,
+        stds=stds,
+        medians=medians,
+        layers=_layers_for_order(feature_order),
     )
 
 
@@ -87,38 +128,50 @@ def build_all_stats(profiles: list[PlayerProfile]) -> dict[str, PositionStats]:
 # ---------- vectorization ----------
 
 
-def vectorize_profile(profile: PlayerProfile, stats: PositionStats) -> np.ndarray:
-    """Build a fixed-size z-scored vector. Missing values → cohort median,
-    then z-score by cohort mean/std."""
+def vectorize_profile(
+    profile: PlayerProfile, stats: PositionStats
+) -> tuple[np.ndarray, np.ndarray]:
+    """Build a fixed-size z-scored vector + observation mask.
+
+    Returns (vec, mask). `mask[i]` is 1.0 if the feature was observed for
+    this profile (raw value not None) and 0.0 if the value was imputed
+    (missing → cohort median). Downstream comp similarity uses the mask
+    to compute completeness-weighted cosine, which prevents the 2026
+    cohort from clustering on its shared missing-data signature.
+    """
     features = profile.features or {}
-    vec = np.zeros(len(stats.feature_order), dtype=np.float64)
+    n = len(stats.feature_order)
+    vec = np.zeros(n, dtype=np.float64)
+    mask = np.zeros(n, dtype=np.float64)
     for i, name in enumerate(stats.feature_order):
         raw = features.get(name)
         if raw is None:
             raw = stats.medians[name]
+        else:
+            mask[i] = 1.0
         vec[i] = (float(raw) - stats.means[name]) / stats.stds[name]
-    return vec
+    return vec, mask
 
 
 def vectorize_cohort(
     profiles: list[PlayerProfile],
     stats_by_position: dict[str, PositionStats],
 ) -> pl.DataFrame:
-    """One row per profile with the full vector. Profiles whose position has
-    no stats (impossible if `stats_by_position` was built from same pooled
-    cohort) are skipped."""
+    """One row per profile with the full vector + mask. Profiles whose
+    position has no stats are skipped."""
     rows: list[dict] = []
     for p in profiles:
         pos_name = p.position.name
         stats = stats_by_position.get(pos_name)
         if stats is None:
             continue
-        vec = vectorize_profile(p, stats)
+        vec, mask = vectorize_profile(p, stats)
         rows.append({
             "player_id": p.player_id,
             "name": p.name,
             "position": pos_name,
             "vector": vec.tolist(),
+            "mask": mask.tolist(),
         })
     return pl.DataFrame(rows)
 
@@ -157,6 +210,7 @@ def load_stats(curated_bucket: str) -> dict[str, PositionStats]:
             means=v["means"],
             stds=v["stds"],
             medians=v["medians"],
+            layers=_layers_for_order(v["feature_order"]),
         )
         for pos, v in payload.items()
     }
