@@ -27,7 +27,7 @@ from engine.features import runner as feat_runner
 load_dotenv()
 
 
-DEFAULT_COHORTS = ["training_2014_2020", "validation_2021_2025"]
+DEFAULT_COHORTS = ["training_2014_2020", "validation_2021_2025", "prediction_2026"]
 
 
 def _exists(s3, bucket: str, key: str) -> bool:

@@ -48,6 +48,7 @@ from __future__ import annotations
 import argparse
 import io
 import json
+import math
 import os
 import sys
 import time
@@ -359,6 +360,14 @@ def main() -> int:
             exclude_cohorts=exclude,
         )
         for c in results:
+            # Skip edges with non-finite similarity. Happens when a prospect's
+            # feature vector is degenerate (e.g. late-round 2026 picks pulled
+            # from the Wikipedia draft scrape with no scouting / measurables —
+            # only draft slot is populated, so cosine across other layers is
+            # divide-by-zero). These nodes legitimately appear in the graph,
+            # they just don't have meaningful outgoing comps.
+            if not math.isfinite(c.similarity):
+                continue
             edges.append({
                 "source": pid,
                 "target": c.player_id,
@@ -366,6 +375,7 @@ def main() -> int:
                 "per_layer": {
                     layer: round(val, 4)
                     for layer, val in (c.per_layer or {}).items()
+                    if math.isfinite(val)
                 },
                 # in_graph: source is always visible (we iterate visible_pids);
                 # in_graph requires the target to be visible too — frontend
@@ -394,7 +404,7 @@ def main() -> int:
         "edges": edges,
     }
 
-    body = json.dumps(payload, separators=(",", ":")).encode("utf-8")
+    body = json.dumps(payload, separators=(",", ":"), allow_nan=False).encode("utf-8")
     if args.no_publish:
         print(f"\n--no-publish set; skipping S3 upload")
     else:

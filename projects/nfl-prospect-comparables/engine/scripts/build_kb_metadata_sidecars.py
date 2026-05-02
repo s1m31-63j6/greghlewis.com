@@ -20,8 +20,10 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import sys
 from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Any
 
 import boto3
@@ -71,7 +73,20 @@ def _load_player_index() -> dict[str, dict[str, Any]]:
 
 
 def _list_corpus_files() -> list[tuple[str, str, str | None, str]]:
-    """Return [(s3_key, source, year, player_id)] for KB-eligible files."""
+    """Return [(s3_key, source, year, player_id)] for KB-eligible files.
+
+    Wikipedia is included for ALL cohorts (training + validation + 2026)
+    per the 2026-05-02 policy: RAG retrieval and similarity embeddings are
+    separate pipes. The "no Wikipedia for clustering" rule still holds —
+    that pipeline lives in run_text_embeddings.py and is unchanged. This
+    script only governs KB ingestion (chat-time retrieval).
+
+    Layout conventions:
+      corpus/brugler/<year>/<player_id>.txt          (year-stratified)
+      corpus/walter_football/<player_id>.txt         (flat, legacy)
+      corpus/wikipedia/<player_id>.txt               (flat, legacy)
+      corpus/recency/<source>/<player_id>.txt        (umbrella for new sources)
+    """
     s3 = boto3.client("s3", region_name="us-east-1")
     paginator = s3.get_paginator("list_objects_v2")
     rows: list[tuple[str, str, str | None, str]] = []
@@ -81,17 +96,33 @@ def _list_corpus_files() -> list[tuple[str, str, str | None, str]]:
             if not key.endswith(".txt"):
                 continue
             parts = key.split("/")
-            source = parts[1]
-            if source == "wikipedia":
-                continue  # excluded from KB
-            if source == "brugler":
+            if len(parts) < 3:
+                continue
+            top = parts[1]
+            if top == "brugler":
+                if len(parts) < 4:
+                    continue
+                source = "brugler"
                 year = parts[2]
                 player_id = parts[3].replace(".txt", "")
-            elif source == "walter_football":
+            elif top == "recency":
+                # corpus/recency/<source>/<player_id>[.<n>].txt
+                # or         /<source>/<player_id>__<article_slug>[.<n>].txt
+                # The `__<slug>` suffix lets a single prospect have
+                # multiple chunks per source (e.g., LZ 4.0 + 3.0 mocks).
+                if len(parts) < 4:
+                    continue
+                source = parts[2]
+                year = None
+                stem = parts[3].replace(".txt", "")
+                # Strip optional `.<n>` dedup counter and `__<slug>`.
+                stem = re.sub(r"\.\d+$", "", stem)
+                player_id = stem.split("__", 1)[0]
+            else:
+                # Legacy flat: corpus/<source>/<player_id>.txt
+                source = top
                 year = None
                 player_id = parts[2].replace(".txt", "")
-            else:
-                continue
             rows.append((key, source, year, player_id))
     return rows
 
@@ -142,6 +173,15 @@ def _build_sidecar(
     return {"metadataAttributes": attrs}
 
 
+def _put_one(s3, key: str, body: bytes) -> None:
+    s3.put_object(
+        Bucket=CURATED_BUCKET,
+        Key=key,
+        Body=body,
+        ContentType="application/json",
+    )
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description="Generate Bedrock KB metadata sidecars.")
     p.add_argument(
@@ -149,20 +189,38 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Compute sidecars but don't upload",
     )
+    p.add_argument(
+        "--source",
+        action="append",
+        help="Only emit sidecars for this source (repeatable). "
+             "Useful when adding a new corpus without rewriting all sidecars.",
+    )
+    p.add_argument(
+        "--workers",
+        type=int,
+        default=32,
+        help="Parallel S3 upload workers (default 32)",
+    )
     args = p.parse_args(argv)
 
-    print("[1/3] loading player index from profiles JSONL...")
+    print("[1/3] loading player index from profiles JSONL...", flush=True)
     index = _load_player_index()
-    print(f"      indexed {len(index)} players across 3 cohorts")
+    print(f"      indexed {len(index)} players across 3 cohorts", flush=True)
 
-    print("[2/3] walking corpus...")
+    print("[2/3] walking corpus...", flush=True)
     files = _list_corpus_files()
-    print(f"      found {len(files)} KB-eligible corpus files")
+    if args.source:
+        wanted = set(args.source)
+        files = [r for r in files if r[1] in wanted]
+        print(f"      filtered to sources {sorted(wanted)}", flush=True)
+    print(f"      found {len(files)} KB-eligible corpus files", flush=True)
 
     s3 = boto3.client("s3", region_name="us-east-1")
     counts: dict[str, int] = defaultdict(int)
     missing: list[str] = []
-    written = 0
+
+    # Pre-compute all sidecar uploads up-front, then fan out via threads.
+    uploads: list[tuple[str, bytes, str]] = []
     for key, source, year, pid in files:
         info = index.get(pid)
         if not info:
@@ -171,27 +229,36 @@ def main(argv: list[str] | None = None) -> int:
         sidecar = _build_sidecar(source, year, pid, info)
         sidecar_key = f"{key}.metadata.json"
         body = json.dumps(sidecar, separators=(",", ":")).encode("utf-8")
-        if not args.dry_run:
-            s3.put_object(
-                Bucket=CURATED_BUCKET,
-                Key=sidecar_key,
-                Body=body,
-                ContentType="application/json",
-            )
-            written += 1
+        uploads.append((sidecar_key, body, source))
         counts[source] += 1
 
-    print(f"[3/3] {'(dry run) ' if args.dry_run else ''}sidecars by source:")
+    print(f"      {len(uploads)} sidecars to upload", flush=True)
+
+    written = 0
+    if not args.dry_run and uploads:
+        # boto3 clients are thread-safe; share one across workers.
+        with ThreadPoolExecutor(max_workers=args.workers) as pool:
+            futures = {
+                pool.submit(_put_one, s3, key, body): key
+                for key, body, _src in uploads
+            }
+            for i, fut in enumerate(as_completed(futures), 1):
+                fut.result()  # propagate exceptions
+                written += 1
+                if i % 200 == 0 or i == len(uploads):
+                    print(f"      uploaded {i}/{len(uploads)}", flush=True)
+
+    print(f"[3/3] {'(dry run) ' if args.dry_run else ''}sidecars by source:", flush=True)
     for s, n in sorted(counts.items()):
-        print(f"      {s}: {n}")
+        print(f"      {s}: {n}", flush=True)
     if missing:
-        print(f"\n  WARNING: {len(missing)} corpus files had no profile match:")
+        print(f"\n  WARNING: {len(missing)} corpus files had no profile match:", flush=True)
         for k in missing[:10]:
-            print(f"    - {k}")
+            print(f"    - {k}", flush=True)
     if not args.dry_run:
-        print(f"\n  wrote {written} sidecars to s3://{CURATED_BUCKET}/")
-        print("\nNext: re-trigger ingestion via")
-        print("      uv run python scripts/run_kb_ingestion.py --all")
+        print(f"\n  wrote {written} sidecars to s3://{CURATED_BUCKET}/", flush=True)
+        print("\nNext: re-trigger ingestion via", flush=True)
+        print("      uv run python scripts/run_kb_ingestion.py --all", flush=True)
     return 0
 
 

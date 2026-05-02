@@ -89,14 +89,23 @@ class KbStack(cdk.Stack):
                     actions=["bedrock:InvokeModel"],
                     resources=[titan_model_arn],
                 ),
-                # Scouting corpus on S3 — only Brugler + Walter Football
-                # prefixes. Wikipedia is NOT exposed.
+                # Scouting corpus on S3. Wikipedia included for chat-time
+                # retrieval (per resolved 2026-05-02 policy: RAG and
+                # similarity are separate pipes — Wikipedia stays out of
+                # embeddings, but is allowed for chat retrieval). The
+                # `corpus/recency/` umbrella holds the post-2026-05-02
+                # ingestion sources (Daniel Jeremiah, Rotoworld, Bleacher
+                # Report, ESPN, PFN, …). They share one Bedrock data
+                # source because Bedrock caps at 5 data sources per KB and
+                # only supports one S3 inclusion prefix per source.
                 iam.PolicyStatement(
                     effect=iam.Effect.ALLOW,
                     actions=["s3:GetObject"],
                     resources=[
                         f"{curated_bucket.bucket_arn}/corpus/brugler/*",
                         f"{curated_bucket.bucket_arn}/corpus/walter_football/*",
+                        f"{curated_bucket.bucket_arn}/corpus/wikipedia/*",
+                        f"{curated_bucket.bucket_arn}/corpus/recency/*",
                     ],
                 ),
                 iam.PolicyStatement(
@@ -105,7 +114,12 @@ class KbStack(cdk.Stack):
                     resources=[curated_bucket.bucket_arn],
                     conditions={
                         "StringLike": {
-                            "s3:prefix": ["corpus/brugler/*", "corpus/walter_football/*"]
+                            "s3:prefix": [
+                                "corpus/brugler/*",
+                                "corpus/walter_football/*",
+                                "corpus/wikipedia/*",
+                                "corpus/recency/*",
+                            ]
                         }
                     },
                 ),
@@ -248,9 +262,92 @@ class KbStack(cdk.Stack):
             data_deletion_policy="RETAIN",
         )
 
+        # ---------- Data Source: Wikipedia ----------
+        # Per 2026-05-02 policy, Wikipedia is allowed in the chat-retrieval
+        # corpus across all cohorts. (Still excluded from similarity
+        # embeddings — that pipeline lives in run_text_embeddings.py and
+        # is unaffected.) Sidecar metadata tags chunks by source/player_id/
+        # position/cohort for filterable retrieval.
+        wikipedia_ds = bedrock.CfnDataSource(
+            self,
+            "WikipediaDataSource",
+            knowledge_base_id=kb.attr_knowledge_base_id,
+            name="wikipedia",
+            description="Wikipedia per-player extracts (chat retrieval only — excluded from similarity embeddings).",
+            data_source_configuration=bedrock.CfnDataSource.DataSourceConfigurationProperty(
+                type="S3",
+                s3_configuration=bedrock.CfnDataSource.S3DataSourceConfigurationProperty(
+                    bucket_arn=curated_bucket.bucket_arn,
+                    inclusion_prefixes=["corpus/wikipedia/"],
+                ),
+            ),
+            vector_ingestion_configuration=bedrock.CfnDataSource.VectorIngestionConfigurationProperty(
+                chunking_configuration=bedrock.CfnDataSource.ChunkingConfigurationProperty(
+                    chunking_strategy="HIERARCHICAL",
+                    hierarchical_chunking_configuration=bedrock.CfnDataSource.HierarchicalChunkingConfigurationProperty(
+                        level_configurations=[
+                            bedrock.CfnDataSource.HierarchicalChunkingLevelConfigurationProperty(
+                                max_tokens=1500,
+                            ),
+                            bedrock.CfnDataSource.HierarchicalChunkingLevelConfigurationProperty(
+                                max_tokens=300,
+                            ),
+                        ],
+                        overlap_tokens=60,
+                    ),
+                ),
+            ),
+            data_deletion_policy="RETAIN",
+        )
+
+        # ---------- Data Source: recency layer (added 2026-05-02) ----------
+        # Bedrock caps at 5 data sources per KB and only supports ONE S3
+        # inclusion prefix per source — so all recency-layer scouting
+        # sources share a single bucket prefix `corpus/recency/<source>/`
+        # and one Bedrock data source. Sidecar metadata tags each chunk
+        # with its `source` value (daniel_jeremiah / rotoworld / etc.) so
+        # the rag.ts retrieval path can filter per-source for fan-out.
+        recency_ds = bedrock.CfnDataSource(
+            self,
+            "RecencyDataSource",
+            knowledge_base_id=kb.attr_knowledge_base_id,
+            name="recency",
+            description=(
+                "Bundled recency-layer scouting sources for the chat KB: "
+                "Daniel Jeremiah / Rotoworld / Bleacher Report / ESPN / PFN. "
+                "Sidecar metadata distinguishes individual sources at retrieval time."
+            ),
+            data_source_configuration=bedrock.CfnDataSource.DataSourceConfigurationProperty(
+                type="S3",
+                s3_configuration=bedrock.CfnDataSource.S3DataSourceConfigurationProperty(
+                    bucket_arn=curated_bucket.bucket_arn,
+                    inclusion_prefixes=["corpus/recency/"],
+                ),
+            ),
+            vector_ingestion_configuration=bedrock.CfnDataSource.VectorIngestionConfigurationProperty(
+                chunking_configuration=bedrock.CfnDataSource.ChunkingConfigurationProperty(
+                    chunking_strategy="HIERARCHICAL",
+                    hierarchical_chunking_configuration=bedrock.CfnDataSource.HierarchicalChunkingConfigurationProperty(
+                        level_configurations=[
+                            bedrock.CfnDataSource.HierarchicalChunkingLevelConfigurationProperty(
+                                max_tokens=1500,
+                            ),
+                            bedrock.CfnDataSource.HierarchicalChunkingLevelConfigurationProperty(
+                                max_tokens=300,
+                            ),
+                        ],
+                        overlap_tokens=60,
+                    ),
+                ),
+            ),
+            data_deletion_policy="RETAIN",
+        )
+
         # ---------- Outputs ----------
         cdk.CfnOutput(self, "KnowledgeBaseId", value=kb.attr_knowledge_base_id)
         cdk.CfnOutput(self, "KnowledgeBaseArn", value=kb.attr_knowledge_base_arn)
         cdk.CfnOutput(self, "BruglerDataSourceId", value=brugler_ds.attr_data_source_id)
         cdk.CfnOutput(self, "WalterFootballDataSourceId", value=walter_ds.attr_data_source_id)
+        cdk.CfnOutput(self, "WikipediaDataSourceId", value=wikipedia_ds.attr_data_source_id)
+        cdk.CfnOutput(self, "RecencyDataSourceId", value=recency_ds.attr_data_source_id)
         cdk.CfnOutput(self, "KbExecutionRoleArn", value=kb_role.role_arn)
