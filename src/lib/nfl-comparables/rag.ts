@@ -472,19 +472,27 @@ function detectIntent(
   query: string,
   resolvedHistoricalPlayer: { name: string; cohort: string } | null,
 ): DetectedIntent {
-  if (!resolvedHistoricalPlayer && CLASS_KEYWORDS.test(query)) {
-    // Pull every 4-digit draft year mentioned in the query. When the
-    // user writes "2026 WR class compared to 2025" we want both years.
-    const yearMatches = Array.from(
-      query.matchAll(/\b(20(?:1[4-9]|2[0-9]))\b/g),
-    ).map((m) => parseInt(m[1], 10));
-    // Default to 2026 if no explicit year (e.g., "tell me about this WR class").
+  const position = detectPosition(query);
+  const yearMatches = Array.from(
+    query.matchAll(/\b(20(?:1[4-9]|2[0-9]))\b/g),
+  ).map((m) => parseInt(m[1], 10));
+
+  // Class intent: explicit class keyword OR implicit year+position pattern.
+  // Implicit form catches "most physical RB in 2026" or "best WR this draft"
+  // without forcing the user to literally say "class".
+  const explicitClass = CLASS_KEYWORDS.test(query);
+  const implicitClass =
+    !resolvedHistoricalPlayer &&
+    position !== null &&
+    (yearMatches.length > 0 ||
+      /\b(this|the)\s+(draft|class|cohort|year)\b/i.test(query));
+  if (!resolvedHistoricalPlayer && (explicitClass || implicitClass)) {
     const years = yearMatches.length > 0
       ? Array.from(new Set(yearMatches)).sort((a, b) => b - a)
       : [2026];
     return {
       type: "class",
-      classScope: { years, position: detectPosition(query) },
+      classScope: { years, position },
     };
   }
   if (
@@ -567,8 +575,12 @@ async function prepareChat(
   // Intent detection on the resolved-but-uncommitted state. If find-style
   // fires, we replace subjectIds with the 2026 matches BEFORE retrieval —
   // so the chunks that come back describe the prospects we actually want
-  // to talk about (not the historical reference player).
-  const intent = detectIntent(query, referencePlayer);
+  // to talk about (not the historical reference player). Per-player chat
+  // (explicit playerId from the side panel) never re-intents — the panel
+  // pinned the subject and the user expects answers about that prospect.
+  const intent: DetectedIntent = playerId
+    ? { type: "regular" }
+    : detectIntent(query, referencePlayer);
   console.log(`[chat][intent] type=${intent.type}${intent.classScope ? ` scope=${JSON.stringify(intent.classScope)}` : ""}${referencePlayer ? ` ref=${referencePlayer.name}` : ""}`);
 
   let preEngineBlock = "";
