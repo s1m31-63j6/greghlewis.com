@@ -5,6 +5,7 @@ import aws_cdk as cdk
 
 from stacks.nfl_comparables_data import DataStack
 from stacks.nfl_comparables_db import DbStack
+from stacks.nfl_comparables_hosting import HostingStack
 from stacks.nfl_comparables_kb import KbStack
 from stacks.nfl_comparables_kb_db import KbDbStack
 
@@ -55,5 +56,23 @@ kb_stack = KbStack(
     database_name=kb_db_stack.database_name,
 )
 kb_stack.add_dependency(kb_db_stack)
+
+# NflComparablesHosting wires the Amplify SSR runtime to call Bedrock.
+# The Amplify app itself was created via the console; this stack just
+# manages its compute role + environment variables. The KB id is read
+# from the KbStack output to avoid drift if the KB ever gets re-created.
+hosting_stack = HostingStack(
+    app,
+    "NflComparablesHosting",
+    env=env,
+    description=(
+        "Amplify SSR compute role + environment variables for "
+        "greghlewis.com (chat API access to Bedrock)"
+    ),
+    app_id="dhpo309lbx6w7",
+    kb_id="XQVEIGOLBO",
+    account=env.account,
+)
+hosting_stack.add_dependency(kb_stack)
 
 app.synth()
