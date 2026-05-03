@@ -125,6 +125,14 @@ export interface ResolvedPlayers {
   groups: { primary: PlayerEntry; candidates: PlayerEntry[]; tier: string }[];
 }
 
+// Words/punctuation that signal the user is naming MULTIPLE prospects in
+// one query ("Compare Stroud and Mendoza", "Stroud vs Mendoza", "Stroud,
+// Mendoza"). When this signal is absent and the user typed a 2+ cap-token
+// phrase, we treat it as a single full-name reference and apply strict
+// matching — the difference between "Caleb Downs" (one name, no match in
+// pool, should fall through) and "Caleb and Downs" (two players).
+const MULTI_PROSPECT_SEPARATORS = /\b(and|vs\.?|versus|or|compare|comparing|between)\b|[,&\/]/i;
+
 // Resolve ALL distinct players named in the query (Python's resolve_name only
 // returned the first hit). For "compare Stroud and Mendoza" we need both
 // players surfaced so the chat path can do per-player retrieval.
@@ -133,6 +141,7 @@ export async function resolveNames(query: string): Promise<ResolvedPlayers> {
   const q = query.toLowerCase();
   const groups: ResolvedPlayers["groups"] = [];
   const seen = new Set<string>();
+  const isMultiProspectQuery = MULTI_PROSPECT_SEPARATORS.test(query);
 
   // Tier 1: full-name substring. Greedy longest-first so "Marvin Harrison Jr"
   // doesn't get shadowed by "Marvin Harrison".
@@ -160,6 +169,12 @@ export async function resolveNames(query: string): Promise<ResolvedPlayers> {
   // Tier 2: last-name token match (only if no full-name hit at all — this
   // tier is noisier, e.g. "Williams" matches dozens of players).
   const tokens = queryTokens(query);
+  // Set of surnames in the pool — used by the first-name-consistency check
+  // below to distinguish "user typed a first name we should honor" from
+  // "user typed another player's last name (e.g. multi-prospect compare)".
+  const surnameSet = new Set(
+    index.map((e) => lastName(e.name).toLowerCase()).filter((s) => s.length >= 3),
+  );
   if (tokens.size > 0) {
     const lastHits = index.filter((e) => {
       const ln = lastName(e.name).toLowerCase();
@@ -172,7 +187,53 @@ export async function resolveNames(query: string): Promise<ResolvedPlayers> {
     // Pair last+first when same player matches both tokens.
     const firstIds = new Set(firstHits.map((e) => e.playerId));
     const both = lastHits.filter((e) => firstIds.has(e.playerId));
-    const hits = both.length > 0 ? both : lastHits.length > 0 ? lastHits : firstHits;
+    // Reject wrong-first-name fallback: if the user wrote a clearly-name-shaped
+    // token alongside the matched surname (e.g. "Caleb" in "Caleb Downs") and
+    // it doesn't match the candidate's first name, drop the hit — otherwise
+    // we'd confidently route a different prospect's profile to the wrong
+    // question. We exclude tokens that ARE another player's surname (so
+    // "Compare Stroud and Mendoza" doesn't treat "Mendoza" as Stroud's
+    // would-be first name).
+    const queryCapTokens = capitalizedTokens(query);
+    const filteredLastHits =
+      both.length > 0
+        ? lastHits  // both first+last matched; trust the pairing
+        : lastHits.filter((e) => {
+            const fn = firstName(e.name).toLowerCase();
+            const ln = lastName(e.name).toLowerCase();
+            // First-name candidates: tokens we'd expect to match the player's
+            // first name. Exclude their own surname; in multi-prospect queries
+            // also exclude any token that's another player's surname (so
+            // "Compare Stroud and Mendoza" doesn't treat "Mendoza" as Stroud's
+            // would-be first name). In single-name queries we DO require all
+            // other cap tokens to match — that's how we catch "Caleb Downs"
+            // wrong-routing to Josh Downs.
+            const firstNameCandidates = queryCapTokens.filter((t) => {
+              if (t === ln) return false;
+              if (isMultiProspectQuery && surnameSet.has(t)) return false;
+              return true;
+            });
+            if (firstNameCandidates.length === 0) return true;
+            return firstNameCandidates.every(
+              (t) =>
+                fn.startsWith(t) ||
+                t.startsWith(fn) ||
+                levenshteinAtMost(t, fn, 1),
+            );
+          });
+    // Single-name query that found no validated last-name match → don't fall
+    // back to first-name-only hits; that just trades one misroute for another
+    // ("Caleb Downs" routing to Caleb Williams). Return empty so the chat
+    // falls through to unfiltered retrieval.
+    const singleNameTyped = !isMultiProspectQuery && queryCapTokens.length >= 2;
+    const hits =
+      both.length > 0
+        ? both
+        : filteredLastHits.length > 0
+          ? filteredLastHits
+          : singleNameTyped
+            ? []
+            : firstHits;
     if (hits.length > 0) {
       // Group hits by last-name (one group per surname). For a query like
       // "Stroud" with one Stroud in the index, that's one group of one.
@@ -196,20 +257,29 @@ export async function resolveNames(query: string): Promise<ResolvedPlayers> {
   }
 
   // Tier 3: fuzzy. Lev≤1 against capitalized tokens that LOOK like names.
+  // For single-name queries (e.g. "Caleb Downs", no multi-prospect cue),
+  // require ALL tokens to fuzzy-match the same candidate — otherwise a
+  // partial Caleb-only or Downs-only fuzzy hit pulls the wrong player.
+  // For multi-prospect queries, a token can also be excused if it's
+  // another player's known surname.
   const capTokens = capitalizedTokens(query);
+  const requireAllTokens = capTokens.length >= 2;
   if (capTokens.length > 0) {
     const fuzzy = new Map<string, PlayerEntry>();
     for (const e of index) {
       const ln = lastName(e.name).toLowerCase();
       const fn = firstName(e.name).toLowerCase();
-      for (const tok of capTokens) {
-        if (
-          (ln.length >= 4 && levenshteinAtMost(tok, ln, 1)) ||
-          (fn.length >= 4 && levenshteinAtMost(tok, fn, 1))
-        ) {
-          fuzzy.set(e.playerId, e);
-          break;
-        }
+      const matchesMe = (tok: string) =>
+        (ln.length >= 4 && levenshteinAtMost(tok, ln, 1)) ||
+        (fn.length >= 4 && levenshteinAtMost(tok, fn, 1));
+      const tokenOk = (tok: string) =>
+        matchesMe(tok) ||
+        (isMultiProspectQuery && surnameSet.has(tok) && tok !== ln);
+      const passes = requireAllTokens
+        ? capTokens.every(tokenOk) && capTokens.some(matchesMe)
+        : capTokens.some(matchesMe);
+      if (passes) {
+        fuzzy.set(e.playerId, e);
       }
     }
     if (fuzzy.size > 0) {

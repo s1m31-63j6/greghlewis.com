@@ -13,10 +13,22 @@ import {
 
 interface Props {
   node: CompNode | null;
+  // Compare partner pinned via cmd/shift-click. When set, the panel renders
+  // a 2-up layout (dual hero + radar overlay + trait diff) instead of the
+  // single-prospect overview/stats/ask tabs.
+  compareWith: CompNode | null;
+  // Engine edge between the two pinned prospects, when available. Null when
+  // the pair isn't in either side's top-K=5 — panel surfaces a "below top-5"
+  // tier instead of fabricating a similarity number.
+  pairEdge: CompEdge | null;
   comps: { node: CompNode; edge: CompEdge }[];
   traitAverages: PositionTraitAverages;
   onClose: () => void;
   onSelectComp: (node: CompNode) => void;
+  // Cmd/shift-click handler on comp list items; mirrors the graph-level
+  // compare toggle so the panel can drive compare without a graph click.
+  onCompareToggle: (node: CompNode) => void;
+  onClearCompare: () => void;
   onChatFocus?: (playerIds: string[]) => void;
 }
 
@@ -28,9 +40,59 @@ const SUMMARY_TRAIT_KEYS = new Set(["ceiling", "floor"]);
 // otherwise collapse and the panel feel half-empty.
 const DEFINING_TRAITS_COUNT = 5;
 
-export default function SidePanel({ node, comps, traitAverages, onClose, onSelectComp, onChatFocus }: Props) {
+// Sonnet trait extraction anonymized the prospect/school in quotes
+// (`<PROSPECT>`, `<SCHOOL>`) so the model couldn't bias on the name. The
+// bundle preserves those tokens; we substitute back at render so the quote
+// reads as natural English. First name reads less stilted than full name in
+// a panel that already has the headshot + heading right above.
+function fillQuoteTokens(quote: string, firstName: string, college: string | null): string {
+  return quote
+    .replaceAll("<PROSPECT>", firstName)
+    .replaceAll("<SCHOOL>", college ?? "his school");
+}
+
+// Discrete tiers derived from the edge-similarity distribution (p25 0.60,
+// p75 0.75, p90 0.81 across visible edges). 3-dot strength reads
+// instantly, doesn't surface raw decimals, and stays within the editorial
+// palette — see the "no intermediate scores in UI" project rule.
+function similarityTier(sim: number): { dots: number; label: string } {
+  if (sim >= 0.75) return { dots: 3, label: "Strong match" };
+  if (sim >= 0.60) return { dots: 2, label: "Solid match" };
+  return { dots: 1, label: "Loose match" };
+}
+
+function StrengthDots({ filled, color }: { filled: number; color: string }) {
+  return (
+    <span className="inline-flex items-center gap-0.5" aria-hidden>
+      {[0, 1, 2].map((i) => (
+        <span
+          key={i}
+          className="w-1.5 h-1.5 rounded-full transition-colors"
+          style={{ backgroundColor: i < filled ? color : "rgba(20,20,20,0.12)" }}
+        />
+      ))}
+    </span>
+  );
+}
+
+export default function SidePanel({
+  node,
+  compareWith,
+  pairEdge,
+  comps,
+  traitAverages,
+  onClose,
+  onSelectComp,
+  onCompareToggle,
+  onClearCompare,
+  onChatFocus,
+}: Props) {
   const open = node !== null;
   const [tab, setTab] = useState<Tab>("overview");
+  // Compare mode supersedes the standard tab UI — the 2-up layout has its
+  // own sections (overview + radar overlay) and the per-player chat doesn't
+  // make sense with two subjects.
+  const compareMode = node !== null && compareWith !== null;
 
   // Canonical axis set per position so every WR's (or QB's, etc.) radar
   // shape is comparable. Missing scores stay null — RadarChart breaks the
@@ -71,6 +133,71 @@ export default function SidePanel({ node, comps, traitAverages, onClose, onSelec
       })
       .sort((a, b) => b.absDev - a.absDev)
       .slice(0, DEFINING_TRAITS_COUNT);
+  })();
+
+  // Compare-mode derived data. Computed lazily — only when both prospects
+  // are pinned. Aligned on the union of canonical trait keys across both
+  // positions so cross-position compares (e.g., RB vs WR) still render.
+  const compareData = (() => {
+    if (!node || !compareWith) return null;
+    const aTraits = node.traits ?? {};
+    const bTraits = compareWith.traits ?? {};
+    const allKeys = Array.from(
+      new Set([...Object.keys(aTraits), ...Object.keys(bTraits)]),
+    )
+      .filter((k) => !SUMMARY_TRAIT_KEYS.has(k))
+      .sort();
+    const aAxes = allKeys.map((k) => ({
+      label: prettyTraitLabel(k),
+      value: aTraits[k]?.score ?? null,
+    }));
+    const bAxes = allKeys.map((k) => ({
+      label: prettyTraitLabel(k),
+      value: bTraits[k]?.score ?? null,
+    }));
+    // Where they DIVERGE: both have a score, sorted by absolute delta.
+    type Divergence = {
+      key: string;
+      aScore: number;
+      bScore: number;
+      delta: number;
+      aQuote: string | null;
+      bQuote: string | null;
+    };
+    const diverges: Divergence[] = allKeys
+      .map((k) => {
+        const a = aTraits[k]?.score;
+        const b = bTraits[k]?.score;
+        if (a == null || b == null) return null;
+        return {
+          key: k,
+          aScore: a,
+          bScore: b,
+          delta: a - b,
+          aQuote: aTraits[k]?.quote ?? null,
+          bQuote: bTraits[k]?.quote ?? null,
+        } as Divergence;
+      })
+      .filter((d): d is Divergence => d !== null && Math.abs(d.delta) >= 1)
+      .sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))
+      .slice(0, 4);
+    // Where they OVERLAP: both score >= 3.5 AND delta < 1 (both real
+    // strengths AND aligned). Surfaces what they share, not just what's
+    // average for both.
+    type Overlap = { key: string; minScore: number };
+    const overlaps: Overlap[] = allKeys
+      .map((k) => {
+        const a = aTraits[k]?.score;
+        const b = bTraits[k]?.score;
+        if (a == null || b == null) return null;
+        if (Math.abs(a - b) >= 1) return null;
+        if (Math.min(a, b) < 3.5) return null;
+        return { key: k, minScore: Math.min(a, b) };
+      })
+      .filter((d): d is Overlap => d !== null)
+      .sort((a, b) => b.minScore - a.minScore)
+      .slice(0, 4);
+    return { aAxes, bAxes, diverges, overlaps };
   })();
 
   const physicalRows: { label: string; value: string | number | null }[] = node
@@ -120,6 +247,216 @@ export default function SidePanel({ node, comps, traitAverages, onClose, onSelec
           >
             ✕
           </button>
+
+          {compareMode && compareWith && compareData && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xs uppercase tracking-wider text-stone-500">
+                  Comparing
+                </h2>
+                <button
+                  onClick={onClearCompare}
+                  className="text-[11px] text-stone-500 hover:text-stone-900 transition-colors"
+                  title="Clear compare partner"
+                >
+                  ← back to {node.name.split(" ")[0]}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-3 mb-4">
+                {[node, compareWith].map((p, idx) => (
+                  <div
+                    key={p.id}
+                    className={`flex flex-col items-center text-center ${idx === 1 ? "col-start-3" : ""}`}
+                  >
+                    {p.headshot_candidates[0] ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={p.headshot_candidates[0]}
+                        alt={p.name}
+                        className="w-16 h-16 rounded-full object-cover bg-stone-100"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                    ) : (
+                      <div
+                        className="w-16 h-16 rounded-full flex items-center justify-center text-lg font-semibold text-stone-700"
+                        style={{ backgroundColor: POSITION_COLORS[p.position] + "20" }}
+                      >
+                        {p.name
+                          .split(" ")
+                          .map((s) => s[0])
+                          .join("")
+                          .slice(0, 2)}
+                      </div>
+                    )}
+                    <div className="mt-2 text-sm font-semibold leading-tight">
+                      {p.name}
+                    </div>
+                    <div
+                      className="text-[11px] mt-0.5"
+                      style={{ color: POSITION_COLORS[p.position] }}
+                    >
+                      {p.position}
+                      {p.bio.college && (
+                        <span className="text-stone-500"> · {p.bio.college}</span>
+                      )}
+                    </div>
+                    {p.outcome_class && (
+                      <span className="mt-1 text-[10px] px-1.5 py-0.5 rounded bg-stone-100 text-stone-600">
+                        {p.outcome_class}
+                      </span>
+                    )}
+                  </div>
+                ))}
+                <span className="col-start-2 text-stone-400 text-xs font-medium tracking-wider">
+                  vs
+                </span>
+              </div>
+
+              <div className="flex items-center justify-center gap-2 py-2 border-y border-stone-100 mb-5">
+                <span className="text-[10px] uppercase tracking-wider text-stone-500">
+                  Engine match
+                </span>
+                {pairEdge ? (() => {
+                  const tier = similarityTier(pairEdge.similarity);
+                  return (
+                    <>
+                      <StrengthDots
+                        filled={tier.dots}
+                        color={POSITION_COLORS[node.position]}
+                      />
+                      <span className="text-xs text-stone-700">{tier.label}</span>
+                    </>
+                  );
+                })() : (
+                  <>
+                    <StrengthDots filled={0} color={POSITION_COLORS[node.position]} />
+                    <span className="text-xs text-stone-500 italic">
+                      Outside top-5 comp set
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {(compareData.aAxes.some((a) => a.value !== null) ||
+                compareData.bAxes.some((a) => a.value !== null)) && (
+                <section className="mb-6">
+                  <h3 className="text-xs uppercase tracking-wider text-stone-500 mb-2">
+                    Trait shape
+                  </h3>
+                  <RadarChart
+                    series={[
+                      {
+                        axes: compareData.aAxes,
+                        color: POSITION_COLORS[node.position],
+                      },
+                      {
+                        axes: compareData.bAxes,
+                        color: POSITION_COLORS[compareWith.position],
+                      },
+                    ]}
+                    max={5}
+                  />
+                  <div className="mt-2 flex justify-center gap-4 text-[11px]">
+                    {[node, compareWith].map((p) => (
+                      <span
+                        key={p.id}
+                        className="flex items-center gap-1.5 text-stone-600"
+                      >
+                        <span
+                          className="w-2.5 h-2.5 rounded-sm"
+                          style={{ backgroundColor: POSITION_COLORS[p.position] }}
+                        />
+                        {p.name.split(" ")[0]}
+                      </span>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {compareData.diverges.length > 0 && (
+                <section className="mb-6">
+                  <h3 className="text-xs uppercase tracking-wider text-stone-500 mb-3">
+                    Where they diverge
+                  </h3>
+                  <ul className="space-y-2.5">
+                    {compareData.diverges.map((d) => {
+                      const aWins = d.delta > 0;
+                      const stronger = aWins ? node : compareWith;
+                      const weaker = aWins ? compareWith : node;
+                      const strongerQuote = aWins ? d.aQuote : d.bQuote;
+                      return (
+                        <li key={d.key} className="text-sm">
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="text-stone-800">
+                              {prettyTraitLabel(d.key)}
+                            </span>
+                            <span className="flex items-center gap-1.5 text-[11px] text-stone-500 shrink-0">
+                              <span
+                                className="font-medium"
+                                style={{ color: POSITION_COLORS[stronger.position] }}
+                              >
+                                {stronger.name.split(" ")[0]}
+                              </span>
+                              <span aria-hidden>›</span>
+                              <span>{weaker.name.split(" ")[0]}</span>
+                            </span>
+                          </div>
+                          {strongerQuote && (
+                            <p className="text-xs text-stone-500 mt-1 italic leading-snug">
+                              “{fillQuoteTokens(
+                                strongerQuote,
+                                stronger.name.split(" ")[0],
+                                stronger.bio.college,
+                              )}”
+                            </p>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </section>
+              )}
+
+              {compareData.overlaps.length > 0 && (
+                <section className="mb-6">
+                  <h3 className="text-xs uppercase tracking-wider text-stone-500 mb-3">
+                    Where they overlap
+                  </h3>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {compareData.overlaps.map((o) => (
+                      <li
+                        key={o.key}
+                        className="text-xs px-2.5 py-1 rounded-full bg-stone-100 text-stone-700"
+                      >
+                        {prettyTraitLabel(o.key)}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+
+              <div className="flex gap-2 pt-3 border-t border-stone-100">
+                <button
+                  onClick={() => onSelectComp(compareWith)}
+                  className="flex-1 text-xs px-3 py-2 rounded-md bg-stone-900 hover:bg-stone-700 text-white transition-colors"
+                >
+                  Open {compareWith.name.split(" ")[0]} →
+                </button>
+                <button
+                  onClick={onClearCompare}
+                  className="text-xs px-3 py-2 rounded-md text-stone-500 hover:text-stone-900 hover:bg-stone-100 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
+
+          {!compareMode && (
+            <>
 
           <div className="flex items-start gap-4">
             {node.headshot_candidates[0] ? (
@@ -208,30 +545,53 @@ export default function SidePanel({ node, comps, traitAverages, onClose, onSelec
                     Top comparisons
                   </h3>
                   <ul className="space-y-1.5">
-                    {comps.map(({ node: c, edge }) => (
-                      <li key={c.id}>
-                        <button
-                          onClick={() => onSelectComp(c)}
-                          className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded hover:bg-stone-100 text-left transition-colors"
-                        >
-                          <span className="flex items-center gap-2 min-w-0">
+                    {comps.map(({ node: c, edge }) => {
+                      const tier = similarityTier(edge.similarity);
+                      // Cmd/ctrl/shift-click pins as compare partner instead
+                      // of swapping the primary — keeps the user "anchored"
+                      // on the prospect they were exploring.
+                      const handleClick = (
+                        e: React.MouseEvent<HTMLButtonElement>,
+                      ) => {
+                        if (e.metaKey || e.ctrlKey || e.shiftKey) {
+                          onCompareToggle(c);
+                        } else {
+                          onSelectComp(c);
+                        }
+                      };
+                      return (
+                        <li key={c.id}>
+                          <button
+                            onClick={handleClick}
+                            title="Click to open · ⌘-click to compare"
+                            className="w-full flex items-center justify-between gap-3 px-3 py-2 rounded hover:bg-stone-100 text-left transition-colors"
+                          >
+                            <span className="flex items-center gap-2 min-w-0">
+                              <span
+                                className="w-2 h-2 rounded-full shrink-0"
+                                style={{ backgroundColor: POSITION_COLORS[c.position] }}
+                              />
+                              <span className="truncate">{c.name}</span>
+                              {c.outcome_class && (
+                                <span className="text-xs text-stone-500 shrink-0">
+                                  · {c.outcome_class}
+                                </span>
+                              )}
+                            </span>
                             <span
-                              className="w-2 h-2 rounded-full shrink-0"
-                              style={{ backgroundColor: POSITION_COLORS[c.position] }}
-                            />
-                            <span className="truncate">{c.name}</span>
-                            {c.outcome_class && (
-                              <span className="text-xs text-stone-500 shrink-0">
-                                · {c.outcome_class}
-                              </span>
-                            )}
-                          </span>
-                          <span className="text-sm font-mono text-stone-500 shrink-0">
-                            {edge.similarity.toFixed(2)}
-                          </span>
-                        </button>
-                      </li>
-                    ))}
+                              className="shrink-0"
+                              title={tier.label}
+                              aria-label={tier.label}
+                            >
+                              <StrengthDots
+                                filled={tier.dots}
+                                color={POSITION_COLORS[c.position]}
+                              />
+                            </span>
+                          </button>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </section>
               )}
@@ -259,7 +619,11 @@ export default function SidePanel({ node, comps, traitAverages, onClose, onSelec
                           </span>
                         </div>
                         <p className="text-xs text-stone-500 mt-1 italic leading-snug">
-                          “{t.quote}”
+                          “{fillQuoteTokens(
+                            t.quote,
+                            node.name.split(" ")[0],
+                            node.bio.college,
+                          )}”
                         </p>
                       </li>
                     ))}
@@ -324,6 +688,12 @@ export default function SidePanel({ node, comps, traitAverages, onClose, onSelec
                 onFocus={onChatFocus}
               />
             </div>
+          )}
+
+          <p className="mt-6 text-[11px] text-stone-400 italic">
+            Hold ⌘ (Mac) or Ctrl and click another node to compare.
+          </p>
+            </>
           )}
         </div>
       )}

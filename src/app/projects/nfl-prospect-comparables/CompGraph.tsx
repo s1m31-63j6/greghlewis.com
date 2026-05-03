@@ -36,7 +36,14 @@ type GraphLink = {
 interface Props {
   data: CompGraphData;
   selectedId: string | null;
+  // Second pinned prospect for compare mode. Renders as a position-colored
+  // ring (vs. the primary's solid black fill) so the user can read which
+  // node is the "anchor" vs. the "compare partner" at a glance.
+  compareWithId: string | null;
   onSelect: (node: CompNode | null) => void;
+  // Cmd/shift click handler for pinning a compare partner without
+  // displacing the primary selection.
+  onCompareToggle: (node: CompNode) => void;
   filter: FilterMode;
   // Players that the chat answer mentioned. When non-empty, the camera
   // flies to fit them and they read as full-chroma against a paled rest.
@@ -217,7 +224,9 @@ function makeTextSprite(opts: {
 export default function CompGraph({
   data,
   selectedId,
+  compareWithId,
   onSelect,
+  onCompareToggle,
   filter,
   chatFocusedIds,
   archetypes,
@@ -239,6 +248,24 @@ export default function CompGraph({
   // re-firing when only the focus changes. The dedicated focus effect
   // handles the camera; this ref lets the recolor read it on demand.
   const chatFocusedRef = useRef<Set<string>>(new Set());
+  // Compare partner id, mirrored for the recolor callback (same pattern as
+  // chatFocusedRef — node color closure reads it on demand without
+  // recreating the ForceGraph3D instance).
+  const compareWithRef = useRef<string | null>(null);
+  // Same pattern for selectedId: the nodeVal closure (set up at construct
+  // time) needs to size up the active node, but we don't want React to
+  // rebuild the entire graph just because selection changed.
+  const selectedIdRef = useRef<string | null>(null);
+  // eslint-disable-next-line react-hooks/refs
+  selectedIdRef.current = selectedId;
+  // Click handlers updated via ref so we can swap them without rebuilding
+  // the ForceGraph instance when the parent re-renders with new closures.
+  const onSelectRef = useRef(onSelect);
+  const onCompareToggleRef = useRef(onCompareToggle);
+  // eslint-disable-next-line react-hooks/refs -- render-time handler mirror
+  onSelectRef.current = onSelect;
+  // eslint-disable-next-line react-hooks/refs
+  onCompareToggleRef.current = onCompareToggle;
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -329,8 +356,14 @@ export default function CompGraph({
         return n.highlight ? base : paleMix(base, 0.7);
       })
       // Pen-drawn aesthetic: tiny, smooth dots. Resolution 16 kills the
-      // polygonal facets we had at res 10.
-      .nodeVal((raw) => ((raw as GraphNode).highlight ? 0.22 : 0.05))
+      // polygonal facets we had at res 10. Selected + compare partner are
+      // sized up so the pair reads as the active subject from any angle.
+      .nodeVal((raw) => {
+        const n = raw as GraphNode;
+        if (n.id === selectedIdRef.current || n.id === compareWithRef.current)
+          return 0.45;
+        return n.highlight ? 0.22 : 0.05;
+      })
       .nodeOpacity(1.0)
       .nodeResolution(16)
       .nodeThreeObjectExtend(true)
@@ -345,13 +378,21 @@ export default function CompGraph({
       // Nodes are fixed via fx/fy/fz, so there's nothing for the simulation
       // to do. Skip ticks entirely to avoid the camera-yank on engine stop.
       .cooldownTicks(0)
-      .onNodeClick((raw) => {
+      .onNodeClick((raw, event) => {
         const n = raw as GraphNode;
-        onSelect(n as unknown as CompNode);
+        // Cmd/ctrl/shift modifier → pin as compare partner instead of
+        // displacing the primary selection. ForceGraph3D forwards the
+        // native MouseEvent as the second arg.
+        const ev = event as MouseEvent | undefined;
+        if (ev && (ev.metaKey || ev.ctrlKey || ev.shiftKey)) {
+          onCompareToggleRef.current(n as unknown as CompNode);
+          return;
+        }
+        onSelectRef.current(n as unknown as CompNode);
         // Camera fly is handled by the selection useEffect below so manual
         // clicks and chat-driven selections behave identically.
       })
-      .onBackgroundClick(() => onSelect(null));
+      .onBackgroundClick(() => onSelectRef.current(null));
 
     graphRef.current = graph;
 
@@ -492,6 +533,10 @@ export default function CompGraph({
       // Single-selection takes precedence — solid black against cream pops
       // best for the active panel subject.
       if (n.id === selectedId) return "#1a1a1a";
+      // Compare partner: full position chroma + sized up. Reads as a peer
+      // of the primary without looking selected (different fill, different
+      // size from the primary's solid black).
+      if (n.id === compareWithRef.current) return base;
       // Multi-mention chat focus (no selection): focus nodes get full chroma,
       // everything else extra-paled so the answer's subjects read clearly.
       if (chatFocusedRef.current.size > 0) {
@@ -501,6 +546,8 @@ export default function CompGraph({
       if (selectedId === null) return isHighlight ? base : paleMix(base, 0.7);
       return paleMix(base, isHighlight ? 0.55 : 0.82);
     });
+    // Refresh nodeVal too so the compare partner picks up the size bump.
+    graph.nodeVal(graph.nodeVal());
     if (selectedId === null && previousSelectedRef.current !== null && chatFocusedRef.current.size === 0) {
       const activeFilter = filterRef.current;
       const targetNodes =
@@ -514,6 +561,17 @@ export default function CompGraph({
     }
     previousSelectedRef.current = selectedId;
   }, [selectedId]);
+
+  // Compare-partner pin/unpin: just mirror to the ref + retrigger color/size.
+  // No camera fly here — the user already has the primary framed and we
+  // don't want a second jolt when they cmd-click a peer.
+  useEffect(() => {
+    const graph = graphRef.current;
+    if (!graph) return;
+    compareWithRef.current = compareWithId;
+    graph.nodeColor(graph.nodeColor());
+    graph.nodeVal(graph.nodeVal());
+  }, [compareWithId]);
 
   // Chat-focus driven camera fly + recolor.
   // - 1 mentioned player: handled by selectedId via CompExplorer (auto-select),

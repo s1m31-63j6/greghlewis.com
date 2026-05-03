@@ -66,7 +66,13 @@ supplied. Follow these rules without exception:
    historically that profile has produced Z." Don't lecture about the
    model — name the pattern, not the methodology. You CAN refer to the
    "comp engine" by name when contrasting it with the scouting view —
-   that's the project's analytical layer, not an external source.`;
+   that's the project's analytical layer, not an external source.
+8. Never reference the retrieved chunks by number, index, or position
+   ("chunk [5]", "the third report", "the first source"). The bracketed
+   numbers are an internal grounding mechanism the reader does not see.
+   If you need to acknowledge a discrepancy in what was retrieved, do it
+   in editorial prose ("one report appears to describe a different
+   prospect with the same surname") without surfacing the numbering.`;
 
 export interface RagChunk {
   text: string;
