@@ -691,9 +691,16 @@ export default function CompGraph({
     const scene = graph.scene() as Scene;
 
     // Hide any previous label for this slot — track via a per-slot ref
-    // outside the cache so we know which sprite to flip off.
+    // outside the cache so we know which sprite to flip off. Important
+    // guard: skip cleanup if the prev node is currently the OTHER slot's
+    // active aura too (e.g. user single-clicks the compare partner to
+    // promote it; the compare effect would otherwise hide the label the
+    // selection effect just showed for the same node).
     const prevId = previousAuraRef.current[slot];
-    if (prevId && prevId !== nodeId) {
+    const stillInOtherSlot =
+      prevId !== null &&
+      (prevId === selectedIdRef.current || prevId === compareWithRef.current);
+    if (prevId && prevId !== nodeId && !stillInOtherSlot) {
       const prevLabel = sceneCache.get(prevId);
       if (prevLabel) prevLabel.visible = false;
       // Re-show the in-node-child label if this prospect is in the
