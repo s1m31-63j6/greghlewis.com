@@ -121,7 +121,10 @@ export async function find2026CompsFor(
   const bundle = await loadBundle();
   if (!_byId) return [];
 
-  const matches: CrossCohortMatch[] = [];
+  // The bundle stores BOTH directions of an edge (A→B and B→A) when both
+  // sides have each other in their top-K. Dedupe by the other-player id,
+  // keeping the higher similarity per pair.
+  const bestByOther = new Map<string, BundleEdge>();
   for (const e of bundle.edges) {
     let otherId: string | null = null;
     if (e.source === referencePlayerId) otherId = e.target;
@@ -129,6 +132,15 @@ export async function find2026CompsFor(
     if (!otherId) continue;
     const other = _byId.get(otherId);
     if (!other || other.cohort !== "prediction_2026") continue;
+    const existing = bestByOther.get(otherId);
+    if (!existing || e.similarity > existing.similarity) {
+      bestByOther.set(otherId, e);
+    }
+  }
+
+  const matches: CrossCohortMatch[] = [];
+  for (const [otherId, e] of bestByOther) {
+    const other = _byId.get(otherId)!;
     matches.push({
       id: other.id,
       name: other.name,

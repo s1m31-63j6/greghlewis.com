@@ -427,7 +427,7 @@ const FIND_STYLE_KEYWORDS =
   /\b(find|who'?s|who is|next|comparable|comp(s)? (in|for|to)|most like|closest to|resembl|similar to|like (a |an )?[A-Z]|-style|-like|in this draft|in the 2026)\b/i;
 
 const CLASS_KEYWORDS =
-  /\b(class|cohort|crop|group|wave)\b|\b(this|the|2026|2025|2024) (draft|class|cohort|year)\b/i;
+  /\b(class(es)?|cohorts?|crops?|groups?|waves?|wideouts?|quarterbacks?|tight ends?|running backs?)\b|\b(this|the|202[0-9]) (draft|class(es)?|cohorts?|year)\b/i;
 
 const POSITION_KEYWORDS: Record<string, string> = {
   qb: "QB", quarterback: "QB", quarterbacks: "QB", qbs: "QB",
