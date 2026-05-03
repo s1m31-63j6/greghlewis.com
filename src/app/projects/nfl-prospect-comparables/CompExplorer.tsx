@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { deriveArchetypes } from "./archetypes";
 import ChatBar from "./ChatBar";
+import { HEADSHOT_OVERRIDES } from "./headshot-overrides";
 import Header, { type FilterMode } from "./Header";
 import SidePanel from "./SidePanel";
 import type {
@@ -83,6 +84,15 @@ export default function CompExplorer() {
         return r.json();
       })
       .then((json: CompGraphData) => {
+        // Prepend any manually-verified headshot URLs from the override
+        // map. The Python pipeline can't resolve URLs for prospects not
+        // yet in the nflverse crosswalk; this file fills the gap.
+        for (const node of json.nodes) {
+          const extra = HEADSHOT_OVERRIDES[node.id];
+          if (extra && extra.length > 0) {
+            node.headshot_candidates = [...extra, ...node.headshot_candidates];
+          }
+        }
         if (!cancelled) setData(json);
       })
       .catch((e: Error) => {
@@ -131,18 +141,30 @@ export default function CompExplorer() {
     return out;
   }, [data]);
 
-  // Per the UI vision spec: single mention → zoom + auto-select that node;
-  // multiple mentions → fit-camera fly without opening the side panel
-  // (the panel can only show one prospect at a time, and forcing one would
-  // bias which player feels like the "answer").
+  // Single mention → zoom + auto-select that node; exactly two → open the
+  // side-by-side compare view (mirrors the cmd-click compare gesture but
+  // driven by chat); 3+ → fit-camera fly without opening the side panel
+  // (the panel only renders one prospect or one pair).
   const handleChatFocus = useCallback(
     (ids: string[]) => {
       setChatFocusedIds(ids);
-      if (ids.length === 1 && data) {
+      if (!data) return;
+      if (ids.length === 1) {
         const target = data.nodes.find((n) => n.id === ids[0]);
-        if (target) setSelected(target);
-      } else if (ids.length > 1) {
+        if (target) {
+          setSelected(target);
+          setCompareWith(null);
+        }
+      } else if (ids.length === 2) {
+        const a = data.nodes.find((n) => n.id === ids[0]);
+        const b = data.nodes.find((n) => n.id === ids[1]);
+        if (a && b) {
+          setSelected(a);
+          setCompareWith(b);
+        }
+      } else if (ids.length > 2) {
         setSelected(null);
+        setCompareWith(null);
       }
     },
     [data],

@@ -2,6 +2,8 @@
 
 import { useCallback, useState } from "react";
 
+export type AnswerLength = "short" | "long";
+
 export interface ChatMessage {
   role: "user" | "assistant";
   content: string;
@@ -35,7 +37,7 @@ export function useChatThread({ playerId, playerName, onFocus }: Options) {
   const [contextPlayerIds, setContextPlayerIds] = useState<string[]>([]);
 
   const ask = useCallback(
-    async (query: string) => {
+    async (query: string, length: AnswerLength = "short") => {
       const trimmed = query.trim();
       if (!trimmed || busy) return;
       setBusy(true);
@@ -62,6 +64,7 @@ export function useChatThread({ playerId, playerName, onFocus }: Options) {
             // sees the full conversation when synthesizing.
             history: messages.map((m) => ({ role: m.role, content: m.content })),
             contextPlayerIds,
+            length,
           }),
         });
         if (!res.ok || !res.body) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Avatar from "./Avatar";
 import PlayerChat from "./PlayerChat";
 import RadarChart from "./RadarChart";
 import {
@@ -200,22 +201,57 @@ export default function SidePanel({
     return { aAxes, bAxes, diverges, overlaps };
   })();
 
-  const physicalRows: { label: string; value: string | number | null }[] = node
-    ? [
+  // Three sections, each rendered only if at least one row has a value.
+  // No more "—" rows for unpopulated fields — pre-NFL prospects don't have
+  // outcomes, late-college prospects haven't combined yet, etc. The panel
+  // adapts to whatever data exists rather than advertising what's missing.
+  const formatHeight = (h: number) => {
+    const ft = Math.floor(h / 12);
+    const inch = Math.round((h - ft * 12) * 10) / 10;
+    return `${ft}'${inch.toString().replace(/\.0$/, "")}"`;
+  };
+  const formatBroadJump = (inches: number) => {
+    const ft = Math.floor(inches / 12);
+    const inch = Math.round((inches - ft * 12) * 10) / 10;
+    return `${ft}'${inch.toString().replace(/\.0$/, "")}"`;
+  };
+
+  type StatRow = { label: string; value: string | number };
+  const profileRows: StatRow[] = node
+    ? ([
         { label: "Position", value: node.position },
         { label: "College", value: node.bio.college },
         {
           label: "Height",
-          value:
-            node.bio.height_in != null
-              ? `${Math.floor(node.bio.height_in / 12)}'${node.bio.height_in % 12}"`
-              : null,
+          value: node.bio.height_in != null ? formatHeight(node.bio.height_in) : null,
         },
         {
           label: "Weight",
-          value: node.bio.weight_lb != null ? `${node.bio.weight_lb} lb` : null,
+          value: node.bio.weight_lb != null ? `${Math.round(node.bio.weight_lb)} lb` : null,
         },
-        { label: "Age at draft", value: node.bio.age_at_draft },
+        {
+          label: "Hand size",
+          value: node.bio.hand_size_in != null ? `${node.bio.hand_size_in}"` : null,
+        },
+        {
+          label: "Arm length",
+          value: node.bio.arm_length_in != null ? `${node.bio.arm_length_in}"` : null,
+        },
+        { label: "Hometown", value: node.bio.hometown_state },
+        {
+          label: "Age at draft",
+          value:
+            node.bio.age_at_draft != null
+              ? Number(node.bio.age_at_draft).toFixed(1)
+              : null,
+        },
+      ] as Array<{ label: string; value: string | number | null }>).filter(
+        (r): r is StatRow => r.value != null && r.value !== "",
+      )
+    : [];
+
+  const draftRows: StatRow[] = node
+    ? ([
         { label: "Draft year", value: node.draft.year },
         {
           label: "Draft slot",
@@ -225,10 +261,65 @@ export default function SidePanel({
               : null,
         },
         { label: "Drafted by", value: node.draft.team },
+      ] as Array<{ label: string; value: string | number | null }>).filter(
+        (r): r is StatRow => r.value != null && r.value !== "",
+      )
+    : [];
+
+  const combineRows: StatRow[] = node
+    ? ([
+        {
+          label: "40-yard",
+          value:
+            node.athletic.forty_yard != null
+              ? `${node.athletic.forty_yard.toFixed(2)}s`
+              : null,
+        },
+        {
+          label: "Vertical",
+          value:
+            node.athletic.vertical_in != null
+              ? `${node.athletic.vertical_in}"`
+              : null,
+        },
+        {
+          label: "Broad jump",
+          value:
+            node.athletic.broad_jump_in != null
+              ? formatBroadJump(node.athletic.broad_jump_in)
+              : null,
+        },
+        {
+          label: "3-cone",
+          value:
+            node.athletic.three_cone != null
+              ? `${node.athletic.three_cone.toFixed(2)}s`
+              : null,
+        },
+        {
+          label: "Shuttle",
+          value:
+            node.athletic.shuttle != null
+              ? `${node.athletic.shuttle.toFixed(2)}s`
+              : null,
+        },
+        {
+          label: "Bench (225)",
+          value: node.athletic.bench_reps != null ? `${node.athletic.bench_reps} reps` : null,
+        },
+      ] as Array<{ label: string; value: string | number | null }>).filter(
+        (r): r is StatRow => r.value != null && r.value !== "",
+      )
+    : [];
+
+  const outcomeRows: StatRow[] = node
+    ? ([
         { label: "Outcome", value: node.outcome_class },
         { label: "Career AV", value: node.career_av },
         { label: "Pro Bowls", value: node.pro_bowls },
-      ]
+      ] as Array<{ label: string; value: string | number | null }>).filter(
+        (r): r is StatRow => r.value != null && r.value !== "",
+      )
     : [];
 
   return (
@@ -269,28 +360,12 @@ export default function SidePanel({
                     key={p.id}
                     className={`flex flex-col items-center text-center ${idx === 1 ? "col-start-3" : ""}`}
                   >
-                    {p.headshot_candidates[0] ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={p.headshot_candidates[0]}
-                        alt={p.name}
-                        className="w-16 h-16 rounded-full object-cover bg-stone-100"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).style.display = "none";
-                        }}
-                      />
-                    ) : (
-                      <div
-                        className="w-16 h-16 rounded-full flex items-center justify-center text-lg font-semibold text-stone-700"
-                        style={{ backgroundColor: POSITION_COLORS[p.position] + "20" }}
-                      >
-                        {p.name
-                          .split(" ")
-                          .map((s) => s[0])
-                          .join("")
-                          .slice(0, 2)}
-                      </div>
-                    )}
+                    <Avatar
+                      candidates={p.headshot_candidates}
+                      name={p.name}
+                      position={p.position}
+                      size={16}
+                    />
                     <div className="mt-2 text-sm font-semibold leading-tight">
                       {p.name}
                     </div>
@@ -353,23 +428,46 @@ export default function SidePanel({
                         color: POSITION_COLORS[node.position],
                       },
                       {
+                        // Partner renders dashed so it reads as the secondary
+                        // line — disambiguates same-position pairs (RB+RB)
+                        // where position color alone can't tell them apart.
                         axes: compareData.bAxes,
                         color: POSITION_COLORS[compareWith.position],
+                        dashed: true,
                       },
                     ]}
                     max={5}
                   />
-                  <div className="mt-2 flex justify-center gap-4 text-[11px]">
-                    {[node, compareWith].map((p) => (
+                  <div className="mt-2 flex justify-center gap-5 text-[11px]">
+                    {[
+                      { p: node, dashed: false },
+                      { p: compareWith, dashed: true },
+                    ].map(({ p, dashed }) => (
                       <span
                         key={p.id}
-                        className="flex items-center gap-1.5 text-stone-600"
+                        className="flex items-center gap-1.5 text-stone-700"
                       >
-                        <span
-                          className="w-2.5 h-2.5 rounded-sm"
-                          style={{ backgroundColor: POSITION_COLORS[p.position] }}
-                        />
-                        {p.name.split(" ")[0]}
+                        <svg
+                          width="22"
+                          height="8"
+                          viewBox="0 0 22 8"
+                          className="shrink-0"
+                          aria-hidden
+                        >
+                          <line
+                            x1="1"
+                            y1="4"
+                            x2="21"
+                            y2="4"
+                            stroke={POSITION_COLORS[p.position]}
+                            strokeWidth="2"
+                            strokeDasharray={dashed ? "4 3" : undefined}
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                        <span className="font-medium">
+                          {p.name.split(" ")[0]}
+                        </span>
                       </span>
                     ))}
                   </div>
@@ -459,28 +557,12 @@ export default function SidePanel({
             <>
 
           <div className="flex items-start gap-4">
-            {node.headshot_candidates[0] ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={node.headshot_candidates[0]}
-                alt={node.name}
-                className="w-20 h-20 rounded-full object-cover bg-stone-100"
-                onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.display = "none";
-                }}
-              />
-            ) : (
-              <div
-                className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-semibold text-stone-700"
-                style={{ backgroundColor: POSITION_COLORS[node.position] + "20" }}
-              >
-                {node.name
-                  .split(" ")
-                  .map((s) => s[0])
-                  .join("")
-                  .slice(0, 2)}
-              </div>
-            )}
+            <Avatar
+              candidates={node.headshot_candidates}
+              name={node.name}
+              position={node.position}
+              size={20}
+            />
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-semibold tracking-tight">{node.name}</h2>
               <div className="text-sm text-stone-600 mt-0.5">
@@ -657,30 +739,31 @@ export default function SidePanel({
                 </p>
               )}
 
-              <section className="mt-6">
-                <h3 className="text-xs uppercase tracking-wider text-stone-500 mb-3">
-                  Profile
-                </h3>
-                <dl className="text-sm divide-y divide-stone-200">
-                  {physicalRows.map((r) => (
-                    <div
-                      key={r.label}
-                      className="flex justify-between gap-4 py-1.5"
-                    >
-                      <dt className="text-stone-500">{r.label}</dt>
-                      <dd className="text-stone-800 text-right">
-                        {r.value !== null && r.value !== undefined && r.value !== ""
-                          ? r.value
-                          : "—"}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-                <p className="text-xs text-stone-500 mt-4 italic">
-                  Combine measurables (40-yard, vertical, etc.) coming in next
-                  data refresh.
-                </p>
-              </section>
+              {[
+                { title: "Profile", rows: profileRows },
+                { title: "Draft", rows: draftRows },
+                { title: "Combine measurables", rows: combineRows },
+                { title: "NFL career", rows: outcomeRows },
+              ]
+                .filter((s) => s.rows.length > 0)
+                .map((s) => (
+                  <section key={s.title} className="mt-6">
+                    <h3 className="text-xs uppercase tracking-wider text-stone-500 mb-3">
+                      {s.title}
+                    </h3>
+                    <dl className="text-sm divide-y divide-stone-200">
+                      {s.rows.map((r) => (
+                        <div
+                          key={r.label}
+                          className="flex justify-between gap-4 py-1.5"
+                        >
+                          <dt className="text-stone-500">{r.label}</dt>
+                          <dd className="text-stone-800 text-right">{r.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </section>
+                ))}
             </div>
           )}
 

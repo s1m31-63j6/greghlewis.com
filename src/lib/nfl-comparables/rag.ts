@@ -60,14 +60,12 @@ supplied. Follow these rules without exception:
    teammate of someone else), say "I don't have a scouting report on
    that prospect" and stop. Do not synthesize a profile from incidental
    mentions in other reports.
-5. Keep answers SHORT. Hard targets:
-   - Single-prospect question: 2-3 sentences. ~50 words.
-   - Comparison: 4-5 sentences. ~80 words.
-   - Class-level / aggregate question: ~80 words.
-   The user gets a chat box, not an essay. They can ask a follow-up if
-   they want more depth — every word past the target erodes the answer.
-   Do not list bullet points, do not enumerate every retrieved chunk,
-   do not restate the question, do not include throat-clearing intros.
+5. Length is set by the caller (see the LENGTH directive in the user
+   message). Always honor whichever target it specifies. Default targets
+   if no LENGTH directive is present: single-prospect ~50 words,
+   comparison ~80 words, class-level ~80 words. Do not list bullet
+   points, do not enumerate every retrieved chunk, do not restate the
+   question, do not include throat-clearing intros.
 6. Lead with the answer, not the framing. "Mendoza profiles as a
    mid-level NFL starter…" beats "Based on the scouting reports,
    Mendoza profiles as…".
@@ -84,7 +82,18 @@ supplied. Follow these rules without exception:
    numbers are an internal grounding mechanism the reader does not see.
    If you need to acknowledge a discrepancy in what was retrieved, do it
    in editorial prose ("one report appears to describe a different
-   prospect with the same surname") without surfacing the numbering.`;
+   prospect with the same surname") without surfacing the numbering.
+9. Never surface internal numerics in your answer. The engine context
+   block uses qualitative tier labels (thin / modest / average / strong /
+   elite) and prevalence-ordered lists — those are safe. But do NOT
+   emit raw 1-5 trait scores, ceiling/floor decimals, similarity
+   decimals, prospect counts ("26 prospects", "3 of 5"), or any
+   grade-style numeric the chunks or context block might contain. The
+   reader has no methodology document; numbers without context read as
+   unexplained. Translate any quantitative signal into qualitative
+   English. If a retrieved chunk quotes a Pro Football Focus / scout
+   grade, paraphrase the assessment ("graded as a high-end starter")
+   rather than the number.`;
 
 export interface RagChunk {
   text: string;
@@ -269,11 +278,30 @@ function inferenceProfileArn(): string {
   return `arn:aws:bedrock:${REGION}:${ACCOUNT}:inference-profile/${MODEL_ID}`;
 }
 
+export type AnswerLength = "short" | "long";
+
 interface GenerateOpts {
   history?: ChatTurn[];
   subjectNames?: string[];
   engineContext?: string;
+  length?: AnswerLength;
 }
+
+// Length-conditioned word targets. The system prompt's rule #5 defers to
+// these — short keeps the chat-box-friendly default, long lets the user
+// pull a longer paragraph when they explicitly want depth.
+const LENGTH_DIRECTIVES: Record<AnswerLength, { directive: string; maxTokens: number }> = {
+  short: {
+    directive:
+      "LENGTH: short. Single-prospect ~50 words, comparison ~80 words, class-level ~80 words. One tight paragraph; lead with the answer.",
+    maxTokens: 220,
+  },
+  long: {
+    directive:
+      "LENGTH: long. Single-prospect ~150 words, comparison ~220 words, class-level ~220 words. Up to two paragraphs. Still lead with the answer; do not pad with throat-clearing or bullets.",
+    maxTokens: 600,
+  },
+};
 
 // Build the InvokeModel body. Shared between non-streaming `generate` and
 // streaming `generateStream` so the prompt structure stays in lockstep.
@@ -282,21 +310,19 @@ function buildInvokeBody(
   chunks: RagChunk[],
   opts: GenerateOpts,
 ): string {
-  const { history = [], subjectNames = [], engineContext = "" } = opts;
+  const { history = [], subjectNames = [], engineContext = "", length = "short" } = opts;
+  const lengthCfg = LENGTH_DIRECTIVES[length];
   const subjectLine =
     subjectNames.length > 0
       ? `Subject prospect${subjectNames.length > 1 ? "s" : ""}: ${subjectNames.join(", ")}\n\n`
       : "";
   const engineBlock = engineContext ? `${engineContext}\n\n` : "";
-  // The chunks block is omitted entirely when there are none (class-level
-  // queries answer from structured engine context only). Otherwise the
-  // bot would see "Retrieved scouting reports:\n\n" and start hedging
-  // about empty material.
   const chunksBlock =
     chunks.length > 0
       ? `Retrieved scouting reports:\n${formatChunks(chunks)}\n\n`
       : "";
   const finalUserMsg =
+    `${lengthCfg.directive}\n\n` +
     `${subjectLine}${engineBlock}Question: ${query}\n\n` +
     `${chunksBlock}` +
     `Answer:`;
@@ -308,10 +334,7 @@ function buildInvokeBody(
 
   return JSON.stringify({
     anthropic_version: "bedrock-2023-05-31",
-    // Hard cap on answer length. Belt-and-suspenders backstop for the
-    // prompt rule (#5). 220 tokens ≈ 140 words, enough for a tight
-    // single-paragraph answer; the prompt's word targets are stricter.
-    max_tokens: 220,
+    max_tokens: lengthCfg.maxTokens,
     system: SYSTEM_PROMPT,
     messages,
   });
@@ -388,6 +411,10 @@ export interface ChatOpts {
   // nothing in the latest query.
   contextPlayerIds?: string[];
   numResults?: number;
+  // Answer-length preference. "short" (default) targets ~50-80 words for a
+  // chat-box-friendly response. "long" lets the user pull ~150-220 words
+  // when they explicitly want depth.
+  length?: AnswerLength;
 }
 
 // Detect "he / his / him / she / her / they / their" — when the user uses a
@@ -689,6 +716,7 @@ export function chatStreamResponse(query: string, opts: ChatOpts = {}): Response
             history: opts.history ?? [],
             subjectNames,
             engineContext,
+            length: opts.length,
           },
           (delta) => send({ type: "text", content: delta }),
         );
@@ -744,6 +772,7 @@ export async function chat(query: string, opts: ChatOpts = {}): Promise<RagRespo
     history: opts.history ?? [],
     subjectNames,
     engineContext,
+    length: opts.length,
   });
   logTiming(`generate (${answer.length} chars)`, tEngine);
 

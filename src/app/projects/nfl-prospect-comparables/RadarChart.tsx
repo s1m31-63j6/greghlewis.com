@@ -13,9 +13,16 @@ interface Axis {
 // Overlay support: compare mode renders two prospects on the same canonical
 // axis set with distinct colors. Single-prospect mode passes a one-element
 // array (or the legacy axes/color props, kept for backwards compatibility).
+//
+// `dashed` is the disambiguation lever for compare mode: when both prospects
+// share a position they get the same color, so the partner series flips to
+// a dashed stroke + hollow vertex markers so it reads as the secondary line
+// at a glance. Combined with the matching legend swatch in SidePanel, the
+// "whose line is which" question answers itself.
 interface Series {
   axes: Axis[];
   color: string;
+  dashed?: boolean;
 }
 
 interface Props {
@@ -146,9 +153,11 @@ export default function RadarChart({
             key={`poly-${sIdx}`}
             d={path}
             fill={s.color}
-            fillOpacity={fillOpacity}
+            fillOpacity={s.dashed ? fillOpacity * 0.5 : fillOpacity}
             stroke={s.color}
             strokeWidth={strokeWidth}
+            strokeDasharray={s.dashed ? "4 3" : undefined}
+            strokeLinejoin="round"
           />
         );
       })}
@@ -178,7 +187,19 @@ export default function RadarChart({
           }
           const v = Math.max(0, Math.min(max, a.value));
           const p = point(i, (v / max) * radius);
-          return (
+          // Hollow markers on the dashed series add a second redundant cue
+          // (alongside the dashed stroke) for whose line is which.
+          return s.dashed ? (
+            <circle
+              key={`pt-${sIdx}-${i}`}
+              cx={p.x}
+              cy={p.y}
+              r={2.2}
+              fill="white"
+              stroke={s.color}
+              strokeWidth={1.25}
+            />
+          ) : (
             <circle
               key={`pt-${sIdx}-${i}`}
               cx={p.x}

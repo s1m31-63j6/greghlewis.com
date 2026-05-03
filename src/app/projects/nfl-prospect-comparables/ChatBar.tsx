@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useChatThread } from "./useChatThread";
+import { useChatThread, type AnswerLength } from "./useChatThread";
 
 const STARTERS = [
   "How does the 2026 WR class compare to 2025?",
@@ -19,6 +19,9 @@ export default function ChatBar({ onFocus }: Props) {
   // in the hook). Re-expanding restores the conversation. Clicking outside
   // also collapses — same idea, just discovered via another gesture.
   const [collapsed, setCollapsed] = useState(false);
+  // Per-conversation answer length. Default short (chat-box-friendly).
+  // The setting is sticky across turns until the user flips it.
+  const [length, setLength] = useState<AnswerLength>("short");
   const { messages, busy, error, ask, reset } = useChatThread({ onFocus });
   const threadRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -54,7 +57,7 @@ export default function ChatBar({ onFocus }: Props) {
     if (!q || busy) return;
     setValue("");
     setCollapsed(false); // sending always opens the thread
-    void ask(q);
+    void ask(q, length);
   };
 
   const onChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,6 +68,31 @@ export default function ChatBar({ onFocus }: Props) {
   };
 
   const empty = !hasContent;
+
+  const lengthToggle = (
+    <div className="inline-flex items-center rounded-full border border-stone-200 bg-white/70 backdrop-blur-sm overflow-hidden shrink-0">
+      {(["short", "long"] as AnswerLength[]).map((opt) => (
+        <button
+          key={opt}
+          type="button"
+          onClick={() => setLength(opt)}
+          aria-pressed={length === opt}
+          title={
+            opt === "short"
+              ? "Concise answer (default)"
+              : "Longer, more detailed answer"
+          }
+          className={`text-[10px] uppercase tracking-wider px-2 py-1 transition ${
+            length === opt
+              ? "bg-stone-900 text-white"
+              : "text-stone-500 hover:text-stone-900"
+          }`}
+        >
+          {opt}
+        </button>
+      ))}
+    </div>
+  );
 
   // Empty state: lone input + starter chips.
   if (empty) {
@@ -93,12 +121,13 @@ export default function ChatBar({ onFocus }: Props) {
           {STARTERS.map((s) => (
             <button
               key={s}
-              onClick={() => void ask(s)}
+              onClick={() => void ask(s, length)}
               className="text-[11px] px-2.5 py-1 rounded-full bg-white/70 hover:bg-white text-stone-600 hover:text-stone-900 border border-stone-200 backdrop-blur-sm transition"
             >
               {s}
             </button>
           ))}
+          {lengthToggle}
         </div>
       </div>
     );
@@ -152,7 +181,8 @@ export default function ChatBar({ onFocus }: Props) {
       className="absolute top-16 left-1/2 -translate-x-1/2 z-10 w-[min(640px,calc(100vw-32px))] pointer-events-auto"
     >
       <div className="bg-white/95 backdrop-blur-md border border-stone-200 rounded-2xl shadow-md flex flex-col max-h-[75vh]">
-        <div className="flex items-center justify-end px-3 py-1.5 border-b border-stone-100">
+        <div className="flex items-center justify-between px-3 py-1.5 border-b border-stone-100">
+          {lengthToggle}
           <button
             type="button"
             onClick={() => setCollapsed(true)}

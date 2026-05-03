@@ -17,6 +17,22 @@ export interface Bio {
   height_in: number | null;
   weight_lb: number | null;
   age_at_draft: number | null;
+  hand_size_in: number | null;
+  arm_length_in: number | null;
+  hometown_state: string | null;
+}
+
+// Combine + pro-day measurables. Populated from nflverse/combine for
+// historical players and (partial) 2026 prospects. The Stats panel
+// renders this block alongside or in place of NFL outcome stats — for
+// prospects who haven't played a snap, combine results stand in.
+export interface Athletic {
+  forty_yard: number | null;
+  vertical_in: number | null;
+  broad_jump_in: number | null;
+  three_cone: number | null;
+  shuttle: number | null;
+  bench_reps: number | null;
 }
 
 export interface DraftInfo {
@@ -50,6 +66,7 @@ export interface CompNode {
   pro_bowls: number | null;
   bio: Bio;
   draft: DraftInfo;
+  athletic: Athletic;
   headshot_candidates: string[];
   traits: TraitMap | null;
 }

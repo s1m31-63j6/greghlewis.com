@@ -195,17 +195,38 @@ export async function loadClassByYear(
     });
 }
 
-// Compose a class summary block for the synthesis prompt. Position scope
-// + draft year drives a "who's headline" + ceiling/floor avg + dominant
-// archetype-trait counts. One block per year — the caller stitches them
-// together for year-over-year comparisons.
+// Bucket the average of a 1-5 trait score into qualitative tiers. Anchored
+// against the population mean (~3.0). Used to keep raw decimals out of the
+// prompt context — the bot would otherwise quote them verbatim, and the
+// reader has no methodology document to interpret "2.81/5".
+function tierFromScale(avg: number): string {
+  if (avg >= 3.4) return "elite";
+  if (avg >= 3.15) return "strong";
+  if (avg >= 2.9) return "average";
+  if (avg >= 2.65) return "modest";
+  return "thin";
+}
+
+function breadthLabel(n: number): string {
+  if (n >= 60) return "deep";
+  if (n >= 35) return "average-depth";
+  if (n >= 18) return "narrow";
+  return "very narrow";
+}
+
+// Compose a class summary block for the synthesis prompt. Strictly
+// qualitative — no decimals, no prospect counts, no "X scored 4+" rubric
+// numbers. The bot answers in plain editorial prose, so the prompt feeds
+// it tier labels (thin/modest/average/strong/elite) rather than raw 1-5
+// averages it would otherwise repeat verbatim.
 export async function summarizeClassByYear(
   year: number,
   position: string | null,
 ): Promise<string> {
   const members = await loadClassByYear(year, position);
+  const posLabel = position ?? "all-position";
   if (members.length === 0) {
-    return `${year} ${position ?? "all-position"} class — no prospects in pool (data not available for this year/position).`;
+    return `${year} ${posLabel} class — no prospects in pool (data not available for this year/position).`;
   }
   const ceilingMembers = members.filter((m) => m.ceiling != null);
   const floorMembers = members.filter((m) => m.floor != null);
@@ -216,8 +237,9 @@ export async function summarizeClassByYear(
       return c !== 0 ? c : (b.floor ?? 0) - (a.floor ?? 0);
     })
     .slice(0, 5);
-  // Dominant traits: count of prospects scoring 4+ on each trait. Tells
-  // the model what archetype is well-represented in this class.
+  // Standout traits: prevalence-ordered list of traits where 4+ scores
+  // appear in the class. No counts — the order alone tells the model
+  // what archetype is well-represented.
   const traitCounts = new Map<string, number>();
   for (const m of members) {
     for (const t of m.topTraits) {
@@ -227,7 +249,7 @@ export async function summarizeClassByYear(
   const dominantTraits = Array.from(traitCounts.entries())
     .sort((a, b) => b[1] - a[1])
     .slice(0, 4)
-    .map(([k, n]) => `${k.replace(/_/g, " ")} (${n})`);
+    .map(([k]) => k.replace(/_/g, " "));
 
   const avgCeiling = ceilingMembers.length > 0
     ? ceilingMembers.reduce((s, m) => s + (m.ceiling ?? 0), 0) / ceilingMembers.length
@@ -235,22 +257,33 @@ export async function summarizeClassByYear(
   const avgFloor = floorMembers.length > 0
     ? floorMembers.reduce((s, m) => s + (m.floor ?? 0), 0) / floorMembers.length
     : null;
-  // Position split is helpful when the query doesn't pin a position.
-  const posCounts = new Map<string, number>();
-  for (const m of members) posCounts.set(m.position, (posCounts.get(m.position) ?? 0) + 1);
-  const posMix = Array.from(posCounts.entries())
-    .sort((a, b) => b[1] - a[1])
-    .map(([p, n]) => `${p}:${n}`)
-    .join(", ");
+  const posMix = position
+    ? null
+    : Array.from(
+        members
+          .reduce((acc, m) => acc.set(m.position, (acc.get(m.position) ?? 0) + 1), new Map<string, number>())
+          .entries(),
+      )
+        .sort((a, b) => b[1] - a[1])
+        .map(([p]) => p)
+        .join(", ");
 
-  const posLabel = position ?? "all-position";
-  return [
-    `${year} ${posLabel} class — ${members.length} prospects in pool (${posMix})`,
-    `Headline (top ceiling): ${headline.map((m) => `${m.name} (${m.position}, ${m.college ?? "—"})`).join(", ")}`,
-    `Dominant trait strengths (count of prospects scored 4+): ${dominantTraits.join(", ")}`,
-    `Average ceiling grade: ${avgCeiling !== null ? avgCeiling.toFixed(2) + "/5" : "n/a"}`,
-    `Average floor grade: ${avgFloor !== null ? avgFloor.toFixed(2) + "/5" : "n/a"}`,
-  ].join("\n");
+  const lines = [
+    `${year} ${posLabel} class`,
+    `Class breadth: ${breadthLabel(members.length)}`,
+  ];
+  if (posMix) lines.push(`Positions represented (most common first): ${posMix}`);
+  lines.push(
+    `Headline (top upside): ${headline.map((m) => `${m.name} (${m.position}, ${m.college ?? "—"})`).join(", ")}`,
+  );
+  if (dominantTraits.length > 0) {
+    lines.push(`Most prevalent class-level strengths: ${dominantTraits.join(", ")}`);
+  }
+  lines.push(
+    `Top-end upside profile: ${avgCeiling !== null ? tierFromScale(avgCeiling) : "unknown"}`,
+    `Floor / safety profile: ${avgFloor !== null ? tierFromScale(avgFloor) : "unknown"}`,
+  );
+  return lines.join("\n");
 }
 
 // Multi-year wrapper — composes one block per year and concatenates with

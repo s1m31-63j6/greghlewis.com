@@ -228,6 +228,7 @@ def build_node(profile: dict, cohort: str,
                traits: dict | None) -> dict:
     bio = profile.get("bio") or {}
     draft = profile.get("draft") or {}
+    athletic = profile.get("athletic") or {}
     x, y, z = (coords if coords is not None and visible_in_graph else (None, None, None))
     return {
         "id": profile["player_id"],
@@ -241,11 +242,19 @@ def build_node(profile: dict, cohort: str,
         "career_av": (outcome_row or {}).get("career_av"),
         "peak_av": (outcome_row or {}).get("peak_av"),
         "pro_bowls": (outcome_row or {}).get("pro_bowls"),
+        # Schema-aligned key reads. Earlier versions used "height_in" /
+        # "weight_lb" on the bio dict, which silently dropped real data —
+        # the profile schema uses "height_inches" / "weight_lbs". The
+        # bundle still emits "height_in" / "weight_lb" because the FE
+        # types are stable around those names.
         "bio": {
             "college": bio.get("college"),
-            "height_in": bio.get("height_in"),
-            "weight_lb": bio.get("weight_lb"),
-            "age_at_draft": bio.get("age_at_draft"),
+            "height_in": bio.get("height_inches"),
+            "weight_lb": bio.get("weight_lbs"),
+            "age_at_draft": draft.get("age_at_draft"),
+            "hand_size_in": bio.get("hand_size_inches"),
+            "arm_length_in": bio.get("arm_length_inches"),
+            "hometown_state": bio.get("hometown_state"),
         },
         "draft": {
             "year": draft.get("draft_year"),
@@ -253,6 +262,18 @@ def build_node(profile: dict, cohort: str,
             "pick": draft.get("draft_pick"),
             "team": draft.get("draft_team"),
             "team_logo_url": nfl_team_logo_url(draft.get("draft_team")),
+        },
+        # Combine / pro-day measurables. Pre-NFL prospects have these in
+        # place of career outcomes; the FE Stats panel renders whichever
+        # block is populated for the cohort. Nulls are preserved so the
+        # FE can hide rows without faking values.
+        "athletic": {
+            "forty_yard": athletic.get("forty_yard"),
+            "vertical_in": athletic.get("vertical_inches"),
+            "broad_jump_in": athletic.get("broad_jump_inches"),
+            "three_cone": athletic.get("three_cone"),
+            "shuttle": athletic.get("shuttle"),
+            "bench_reps": athletic.get("bench_press_reps"),
         },
         "headshot_candidates": headshot_url_candidates(profile, pfr_to_espn),
         # Sonnet-extracted trait scores (1-5) + supporting quotes from
