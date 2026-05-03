@@ -79,11 +79,22 @@ function firstName(name: string): string {
 }
 
 function queryTokens(query: string): Set<string> {
-  return new Set(
-    (query.toLowerCase().match(/[a-z][a-z'\-]+/g) ?? []).filter(
-      (t) => t.length >= 3 && !STOPWORDS.has(t),
-    ),
-  );
+  // Match hyphenated runs as single tokens so hyphenated player names
+  // (Smith-Schuster, Amon-Ra) survive as a unit, but ALSO split each
+  // hyphenated token into its parts and keep both — otherwise queries
+  // like "Saquon-style runner" produce only "saquon-style" and the
+  // bare "saquon" never matches Saquon Barkley's first name.
+  const out = new Set<string>();
+  const matches = query.toLowerCase().match(/[a-z][a-z'\-]+/g) ?? [];
+  for (const tok of matches) {
+    if (tok.length >= 3 && !STOPWORDS.has(tok)) out.add(tok);
+    if (tok.includes("-")) {
+      for (const part of tok.split("-")) {
+        if (part.length >= 3 && !STOPWORDS.has(part)) out.add(part);
+      }
+    }
+  }
+  return out;
 }
 
 function capitalizedTokens(query: string): string[] {

@@ -17,7 +17,14 @@ import {
   InvokeModelWithResponseStreamCommand,
 } from "@aws-sdk/client-bedrock-runtime";
 import { fromIni, fromNodeProviderChain } from "@aws-sdk/credential-providers";
-import { formatComps, topCompsForPlayer, type EngineComp } from "./engine-context";
+import {
+  find2026CompsFor,
+  formatComps,
+  formatCrossCohortMatches,
+  summarizeClassMulti,
+  topCompsForPlayer,
+  type EngineComp,
+} from "./engine-context";
 import { extractMentions, lookupPlayer, resolveNames } from "./name-index";
 
 const REGION = process.env.AWS_REGION ?? "us-east-1";
@@ -284,11 +291,17 @@ function buildInvokeBody(
       ? `Subject prospect${subjectNames.length > 1 ? "s" : ""}: ${subjectNames.join(", ")}\n\n`
       : "";
   const engineBlock = engineContext ? `${engineContext}\n\n` : "";
-  // Retrieved chunks change every turn (we re-retrieve on each user message),
-  // so they live in the latest user message rather than as a system suffix.
+  // The chunks block is omitted entirely when there are none (class-level
+  // queries answer from structured engine context only). Otherwise the
+  // bot would see "Retrieved scouting reports:\n\n" and start hedging
+  // about empty material.
+  const chunksBlock =
+    chunks.length > 0
+      ? `Retrieved scouting reports:\n${formatChunks(chunks)}\n\n`
+      : "";
   const finalUserMsg =
     `${subjectLine}${engineBlock}Question: ${query}\n\n` +
-    `Retrieved scouting reports:\n${formatChunks(chunks)}\n\n` +
+    `${chunksBlock}` +
     `Answer:`;
 
   const messages = [
@@ -391,6 +404,88 @@ function logTiming(label: string, t0: number): void {
   console.log(`[chat][timing] ${label}: ${ms}ms`);
 }
 
+// ----- Query intent detection -----
+//
+// Two non-default intents short-circuit the standard RAG-by-player path:
+//
+//  1. "find-style": user names a HISTORICAL player and wants the closest
+//     2026 prospect ("find a Saquon-style runner", "who is the next X").
+//     Default RAG-by-name routes to the historical player and answers
+//     ABOUT them — wrong direction. We need to flip to their 2026 comps.
+//
+//  2. "class": user asks about a position group, draft year, or class as
+//     an aggregate ("how does the 2026 WR class compare to 2025?", "tell
+//     me about this draft's QBs"). Default unfiltered-RAG returns one
+//     random scouting chunk; we need to compose a structured summary.
+//
+// Detection is intentionally conservative: false positives push a regular
+// query into a fancy path that returns less detail. False negatives just
+// fall back to the existing RAG flow, which still produces a reasonable
+// answer for most named-player questions.
+
+const FIND_STYLE_KEYWORDS =
+  /\b(find|who'?s|who is|next|comparable|comp(s)? (in|for|to)|most like|closest to|resembl|similar to|like (a |an )?[A-Z]|-style|-like|in this draft|in the 2026)\b/i;
+
+const CLASS_KEYWORDS =
+  /\b(class|cohort|crop|group|wave)\b|\b(this|the|2026|2025|2024) (draft|class|cohort|year)\b/i;
+
+const POSITION_KEYWORDS: Record<string, string> = {
+  qb: "QB", quarterback: "QB", quarterbacks: "QB", qbs: "QB",
+  rb: "RB", "running back": "RB", "running backs": "RB", runner: "RB", runners: "RB", rbs: "RB",
+  wr: "WR", "wide receiver": "WR", "wide receivers": "WR", wideout: "WR", wideouts: "WR", receiver: "WR", receivers: "WR", wrs: "WR",
+  te: "TE", "tight end": "TE", "tight ends": "TE", tes: "TE",
+};
+
+function detectPosition(query: string): string | null {
+  const lc = query.toLowerCase();
+  // Check multi-word phrases first so "running back" doesn't lose to "back"
+  const sortedKeys = Object.keys(POSITION_KEYWORDS).sort((a, b) => b.length - a.length);
+  for (const k of sortedKeys) {
+    if (new RegExp(`\\b${k.replace(/\s+/g, "\\s+")}\\b`).test(lc)) {
+      return POSITION_KEYWORDS[k];
+    }
+  }
+  return null;
+}
+
+interface DetectedIntent {
+  type: "regular" | "find_style" | "class";
+  // For class queries: which classes to summarize. Plural to support
+  // year-over-year comparisons ("2026 WR class vs 2025"). Position is
+  // shared across years — we don't currently support comparing 2026 WR
+  // class to 2025 QB class (would need pair-of-scopes).
+  classScope?: { years: number[]; position: string | null };
+}
+
+function detectIntent(
+  query: string,
+  resolvedHistoricalPlayer: { name: string; cohort: string } | null,
+): DetectedIntent {
+  if (!resolvedHistoricalPlayer && CLASS_KEYWORDS.test(query)) {
+    // Pull every 4-digit draft year mentioned in the query. When the
+    // user writes "2026 WR class compared to 2025" we want both years.
+    const yearMatches = Array.from(
+      query.matchAll(/\b(20(?:1[4-9]|2[0-9]))\b/g),
+    ).map((m) => parseInt(m[1], 10));
+    // Default to 2026 if no explicit year (e.g., "tell me about this WR class").
+    const years = yearMatches.length > 0
+      ? Array.from(new Set(yearMatches)).sort((a, b) => b - a)
+      : [2026];
+    return {
+      type: "class",
+      classScope: { years, position: detectPosition(query) },
+    };
+  }
+  if (
+    resolvedHistoricalPlayer &&
+    resolvedHistoricalPlayer.cohort !== "prediction_2026" &&
+    FIND_STYLE_KEYWORDS.test(query)
+  ) {
+    return { type: "find_style" };
+  }
+  return { type: "regular" };
+}
+
 // Shared prep work for the chat path: subject resolution, retrieval, and
 // engine-comp context block. Both `chat` (non-streaming) and `chatStream`
 // call this; only the LLM-generation step differs between them.
@@ -412,6 +507,9 @@ async function prepareChat(
 
   let subjectIds: string[] = [];
   let subjectNames: string[] = [];
+  // Reference player for find-style intent: stash the originally-resolved
+  // historical player so we can flip subjectIds to their 2026 comps.
+  let referencePlayer: { id: string; name: string; cohort: string } | null = null;
 
   if (playerId) {
     subjectIds = [playerId];
@@ -427,6 +525,12 @@ async function prepareChat(
     );
     const newNames = resolved.groups.map((g) => g.primary.name);
     const hasPronoun = PRONOUN_REGEX.test(query);
+
+    // Stash the FIRST resolved player + cohort for intent detection.
+    if (resolved.groups.length > 0) {
+      const first = resolved.groups[0].primary;
+      referencePlayer = { id: first.playerId, name: first.name, cohort: first.cohort };
+    }
 
     if (newIds.length > 0 && hasPronoun && contextPlayerIds.length > 0) {
       subjectIds = Array.from(new Set([...newIds, ...contextPlayerIds])).slice(0, MAX_SUBJECTS);
@@ -450,22 +554,68 @@ async function prepareChat(
   const tResolve = performance.now();
   logTiming("resolve", tStart);
 
+  // Intent detection on the resolved-but-uncommitted state. If find-style
+  // fires, we replace subjectIds with the 2026 matches BEFORE retrieval —
+  // so the chunks that come back describe the prospects we actually want
+  // to talk about (not the historical reference player).
+  const intent = detectIntent(query, referencePlayer);
+  console.log(`[chat][intent] type=${intent.type}${intent.classScope ? ` scope=${JSON.stringify(intent.classScope)}` : ""}${referencePlayer ? ` ref=${referencePlayer.name}` : ""}`);
+
+  let preEngineBlock = "";
+  if (intent.type === "find_style" && referencePlayer) {
+    const matches = await find2026CompsFor(referencePlayer.id, 4);
+    preEngineBlock = formatCrossCohortMatches(referencePlayer.name, matches);
+    if (matches.length > 0) {
+      // Re-anchor RAG retrieval on the 2026 matches so the chunks we
+      // bring back describe THEM, not the historical reference player.
+      subjectIds = matches.map((m) => m.id).slice(0, MAX_SUBJECTS);
+      subjectNames = matches.map((m) => m.name).slice(0, MAX_SUBJECTS);
+    } else {
+      // No comps found in the engine — keep the reference as subject
+      // so the bot can at least describe their archetype, then explain
+      // nothing in 2026 matches via the engine context block.
+      subjectIds = [referencePlayer.id];
+      subjectNames = [referencePlayer.name];
+    }
+  } else if (intent.type === "class") {
+    // Class queries don't anchor on any player; we replace the chunk
+    // payload with a structured class summary in the engine context.
+    // Multi-year detected from the query so "2026 WR vs 2025" gets both
+    // class blocks side by side.
+    subjectIds = [];
+    subjectNames = [];
+    const years = intent.classScope?.years ?? [2026];
+    const position = intent.classScope?.position ?? null;
+    preEngineBlock = await summarizeClassMulti(years, position);
+  }
+
   let chunks: RagChunk[];
   if (subjectIds.length > 0) {
     chunks = await retrieveForPlayers(query, subjectIds, perSourceResults);
+  } else if (intent.type === "class") {
+    // Skip RAG entirely for class queries — the structured summary is
+    // the answer. A retrieval at this point would just pull one random
+    // player's chunks and bias the synthesis toward them.
+    chunks = [];
   } else {
     const resp = await retrieveWithResumeRetry(query, undefined, unfilteredResults);
     chunks = chunksFromResponse(resp);
   }
-  logTiming(`retrieve (${chunks.length} chunks, ${subjectIds.length} subjects)`, tResolve);
+  logTiming(`retrieve (${chunks.length} chunks, ${subjectIds.length} subjects, intent=${intent.type})`, tResolve);
   const tRetrieve = performance.now();
 
   const engineCompBlocks: string[] = [];
-  for (const [i, sid] of subjectIds.slice(0, 2).entries()) {
-    const comps: EngineComp[] = await topCompsForPlayer(sid, 5);
-    const name = subjectNames[i] ?? sid;
-    const block = formatComps(name, comps);
-    if (block) engineCompBlocks.push(block);
+  if (preEngineBlock) engineCompBlocks.push(preEngineBlock);
+  // Skip the per-subject "top comparables" block for find-style — the
+  // cross-cohort block already covers what the bot needs to know, and
+  // adding 4 subjects' worth of comp lists would blow up the prompt.
+  if (intent.type !== "find_style" && intent.type !== "class") {
+    for (const [i, sid] of subjectIds.slice(0, 2).entries()) {
+      const comps: EngineComp[] = await topCompsForPlayer(sid, 5);
+      const name = subjectNames[i] ?? sid;
+      const block = formatComps(name, comps);
+      if (block) engineCompBlocks.push(block);
+    }
   }
   const engineContext = engineCompBlocks.join("\n\n");
   logTiming("engine-comps", tRetrieve);
@@ -502,7 +652,7 @@ export function chatStreamResponse(query: string, opts: ChatOpts = {}): Response
         const sources = Array.from(new Set(chunks.map((c) => c.sourceName)));
         send({ type: "meta", sources, subjectPlayerIds: subjectIds });
 
-        if (chunks.length === 0) {
+        if (chunks.length === 0 && !engineContext) {
           send({ type: "text", content: "I don't have a scouting report on that prospect." });
           send({ type: "done", mentionedPlayerIds: [] });
           controller.close();
@@ -555,7 +705,10 @@ export async function chat(query: string, opts: ChatOpts = {}): Promise<RagRespo
   const tStart = performance.now();
   const { subjectIds, subjectNames, chunks, engineContext } = await prepareChat(query, opts, tStart);
 
-  if (chunks.length === 0) {
+  // Class-level queries legitimately have zero chunks — they synthesize
+  // from the engine context summary instead. Only short-circuit when we
+  // also have no engine context (genuinely empty retrieval).
+  if (chunks.length === 0 && !engineContext) {
     return {
       answer: "I don't have a scouting report on that prospect.",
       chunks: [],
