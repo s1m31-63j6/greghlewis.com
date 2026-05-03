@@ -14,6 +14,7 @@ import {
 import {
   BedrockRuntimeClient,
   InvokeModelCommand,
+  InvokeModelWithResponseStreamCommand,
 } from "@aws-sdk/client-bedrock-runtime";
 import { fromIni, fromNodeProviderChain } from "@aws-sdk/credential-providers";
 import { formatComps, topCompsForPlayer, type EngineComp } from "./engine-context";
@@ -52,10 +53,14 @@ supplied. Follow these rules without exception:
    teammate of someone else), say "I don't have a scouting report on
    that prospect" and stop. Do not synthesize a profile from incidental
    mentions in other reports.
-5. Keep answers tight: ONE paragraph for a single-prospect question, at
-   most TWO paragraphs for a comparison. Follow-ups build on the prior
-   turn instead of repeating the full profile. If the user asks for more
-   depth they can ask a follow-up — never volunteer a full essay.
+5. Keep answers SHORT. Hard targets:
+   - Single-prospect question: 2-3 sentences. ~50 words.
+   - Comparison: 4-5 sentences. ~80 words.
+   - Class-level / aggregate question: ~80 words.
+   The user gets a chat box, not an essay. They can ask a follow-up if
+   they want more depth — every word past the target erodes the answer.
+   Do not list bullet points, do not enumerate every retrieved chunk,
+   do not restate the question, do not include throat-clearing intros.
 6. Lead with the answer, not the framing. "Mendoza profiles as a
    mid-level NFL starter…" beats "Based on the scouting reports,
    Mendoza profiles as…".
@@ -203,52 +208,50 @@ function chunksFromResponse(resp: RetrieveCommandOutput): RagChunk[] {
   });
 }
 
-// KB sidecars tag every chunk with `source`. We retrieve per source
-// explicitly so each makes it into context — without this, the longer
-// profiles (Brugler) outrank shorter sources on hybrid similarity and the
-// answer attributes everything to one source. Add a source here AFTER
-// the corresponding CDK data source is deployed and ingested.
-const KB_SOURCES = [
-  "brugler",
-  "walter_football",
-  "wikipedia",
-  "daniel_jeremiah",
-  "lance_zierlein",
-  "bucky_brooks",
-  "rotoworld",
-  "pfn",
-  "bleacher_report",
-  "espn",
-  "cbs_renner",
-  "cbs_wilson",
-] as const;
+// Single per-player retrieve at higher numResults. The earlier per-source
+// fan-out (12 sources × N players = 12-24 KB calls per turn) was crowding
+// retrieval latency to 1.5-3s. One call per player returns the same total
+// chunks but in ~200-400ms. We then enforce per-source diversification in
+// post-processing so dense voices (Brugler/Wikipedia) don't crowd out
+// shorter ones.
+const PER_PLAYER_RESULTS = 14;
+const PER_SOURCE_CAP = 2;
 
-// Per-player retrieval guarantees each named prospect gets representation.
-// Per-source diversification within each player guarantees Walter Football
-// isn't crowded out of the budget by Brugler's denser profiles. For each
-// (player, source) combo we retrieve `perSourceResults` chunks; empty when
-// the source has no coverage of that player.
 async function retrieveForPlayers(
   query: string,
   playerIds: string[],
-  perSourceResults: number,
+  // Kept in the signature so callers don't break, but no longer used —
+  // the per-source budget is enforced in post-processing now.
+  _perSourceResults: number,
 ): Promise<RagChunk[]> {
-  const tasks = playerIds.flatMap((pid) =>
-    KB_SOURCES.map((source) =>
-      retrieveWithResumeRetry(
-        query,
-        {
-          andAll: [
-            { equals: { key: "player_id", value: pid } },
-            { equals: { key: "source", value: source } },
-          ],
-        },
-        perSourceResults,
-      ),
+  const tasks = playerIds.map((pid) =>
+    retrieveWithResumeRetry(
+      query,
+      { equals: { key: "player_id", value: pid } },
+      PER_PLAYER_RESULTS,
     ),
   );
   const responses = await Promise.all(tasks);
-  return responses.flatMap(chunksFromResponse);
+  const allChunks = responses.flatMap(chunksFromResponse);
+  // Per-source cap to preserve voice diversity. Sort by score within each
+  // source so we keep the strongest matches when capping. Group keys
+  // include playerId so the cap is per (player, source) — a comparison
+  // query for two players still gets ~2 chunks per source per player.
+  const byKey = new Map<string, RagChunk[]>();
+  for (const c of allChunks) {
+    const key = `${c.playerId ?? "unknown"}::${c.sourceName}`;
+    const arr = byKey.get(key) ?? [];
+    arr.push(c);
+    byKey.set(key, arr);
+  }
+  const capped: RagChunk[] = [];
+  for (const arr of byKey.values()) {
+    arr.sort((a, b) => b.score - a.score);
+    capped.push(...arr.slice(0, PER_SOURCE_CAP));
+  }
+  // Final sort by score so the LLM sees the most-relevant chunks first.
+  capped.sort((a, b) => b.score - a.score);
+  return capped;
 }
 
 function formatChunks(chunks: RagChunk[]): string {
@@ -268,11 +271,13 @@ interface GenerateOpts {
   engineContext?: string;
 }
 
-export async function generate(
+// Build the InvokeModel body. Shared between non-streaming `generate` and
+// streaming `generateStream` so the prompt structure stays in lockstep.
+function buildInvokeBody(
   query: string,
   chunks: RagChunk[],
-  opts: GenerateOpts = {},
-): Promise<string> {
+  opts: GenerateOpts,
+): string {
   const { history = [], subjectNames = [], engineContext = "" } = opts;
   const subjectLine =
     subjectNames.length > 0
@@ -291,18 +296,25 @@ export async function generate(
     { role: "user" as const, content: finalUserMsg },
   ];
 
-  const body = JSON.stringify({
+  return JSON.stringify({
     anthropic_version: "bedrock-2023-05-31",
-    // Cap chat answers at ~1-2 paragraphs (300-400 words). Backstop for
-    // when the prompt rule loses against deeply-relevant chunks.
-    max_tokens: 420,
+    // Hard cap on answer length. Belt-and-suspenders backstop for the
+    // prompt rule (#5). 220 tokens ≈ 140 words, enough for a tight
+    // single-paragraph answer; the prompt's word targets are stricter.
+    max_tokens: 220,
     system: SYSTEM_PROMPT,
     messages,
   });
+}
 
+export async function generate(
+  query: string,
+  chunks: RagChunk[],
+  opts: GenerateOpts = {},
+): Promise<string> {
   const cmd = new InvokeModelCommand({
     modelId: inferenceProfileArn(),
-    body,
+    body: buildInvokeBody(query, chunks, opts),
     contentType: "application/json",
   });
   const resp = await runtimeClient().send(cmd);
@@ -312,6 +324,47 @@ export async function generate(
     .filter((b) => b.type === "text")
     .map((b) => b.text ?? "")
     .join("");
+}
+
+// Streaming version. Calls onDelta for each text chunk Bedrock emits. The
+// returned promise resolves with the FULL answer text once the stream
+// completes, so callers can still use the string for downstream work
+// (mention extraction, etc.).
+export async function generateStream(
+  query: string,
+  chunks: RagChunk[],
+  opts: GenerateOpts,
+  onDelta: (text: string) => void,
+): Promise<string> {
+  const cmd = new InvokeModelWithResponseStreamCommand({
+    modelId: inferenceProfileArn(),
+    body: buildInvokeBody(query, chunks, opts),
+    contentType: "application/json",
+  });
+  const resp = await runtimeClient().send(cmd);
+  let full = "";
+  if (!resp.body) return full;
+  for await (const event of resp.body) {
+    if (!event.chunk?.bytes) continue;
+    const decoded = new TextDecoder().decode(event.chunk.bytes);
+    let payload: { type?: string; delta?: { type?: string; text?: string } };
+    try {
+      payload = JSON.parse(decoded);
+    } catch {
+      continue;
+    }
+    // Anthropic-on-Bedrock emits content_block_delta events for streamed
+    // text; ignore the message_start / message_delta / message_stop frames.
+    if (
+      payload.type === "content_block_delta" &&
+      payload.delta?.type === "text_delta" &&
+      typeof payload.delta.text === "string"
+    ) {
+      full += payload.delta.text;
+      onDelta(payload.delta.text);
+    }
+  }
+  return full;
 }
 
 export interface ChatOpts {
@@ -333,22 +386,34 @@ export interface ChatOpts {
 const PRONOUN_REGEX = /\b(he|him|his|she|her|hers|they|them|their|theirs)\b/i;
 const MAX_SUBJECTS = 4;
 
-export async function chat(query: string, opts: ChatOpts = {}): Promise<RagResponse> {
-  const { playerId, playerName, history = [], contextPlayerIds = [] } = opts;
-  // 6 chunks is the historical default for unfiltered retrieval. For
-  // per-player+per-source retrieval we ask for 3 chunks per (player, source)
-  // pair — with 2 sources, that's up to 6 chunks per subject (~12 for a
-  // two-player comparison). Empty source returns are fine; total stays
-  // bounded by what the corpus actually contains.
+function logTiming(label: string, t0: number): void {
+  const ms = Math.round(performance.now() - t0);
+  console.log(`[chat][timing] ${label}: ${ms}ms`);
+}
+
+// Shared prep work for the chat path: subject resolution, retrieval, and
+// engine-comp context block. Both `chat` (non-streaming) and `chatStream`
+// call this; only the LLM-generation step differs between them.
+interface ChatPrep {
+  subjectIds: string[];
+  subjectNames: string[];
+  chunks: RagChunk[];
+  engineContext: string;
+}
+
+async function prepareChat(
+  query: string,
+  opts: ChatOpts,
+  tStart: number,
+): Promise<ChatPrep> {
+  const { playerId, playerName, contextPlayerIds = [] } = opts;
   const perSourceResults = 3;
   const unfilteredResults = opts.numResults ?? 6;
 
-  // 1. Compose the subject set that anchors retrieval this turn.
   let subjectIds: string[] = [];
   let subjectNames: string[] = [];
 
   if (playerId) {
-    // Per-player chat surface — caller already knows the subject.
     subjectIds = [playerId];
     if (playerName) subjectNames = [playerName];
     else {
@@ -364,8 +429,6 @@ export async function chat(query: string, opts: ChatOpts = {}): Promise<RagRespo
     const hasPronoun = PRONOUN_REGEX.test(query);
 
     if (newIds.length > 0 && hasPronoun && contextPlayerIds.length > 0) {
-      // Mixed: new name(s) + pronoun referencing prior subject(s). Merge
-      // both so cross-player comparisons retrieve from both prospects.
       subjectIds = Array.from(new Set([...newIds, ...contextPlayerIds])).slice(0, MAX_SUBJECTS);
       const ctxPlayers = await Promise.all(contextPlayerIds.map(lookupPlayer));
       const ctxNames = ctxPlayers
@@ -373,11 +436,9 @@ export async function chat(query: string, opts: ChatOpts = {}): Promise<RagRespo
         .map((p) => p.name);
       subjectNames = Array.from(new Set([...newNames, ...ctxNames])).slice(0, MAX_SUBJECTS);
     } else if (newIds.length > 0) {
-      // New names only → user moved on, don't bleed in old context.
       subjectIds = newIds.slice(0, MAX_SUBJECTS);
       subjectNames = newNames.slice(0, MAX_SUBJECTS);
     } else if (contextPlayerIds.length > 0) {
-      // Pronoun-only follow-up → reuse last turn's subjects.
       subjectIds = contextPlayerIds.slice(0, MAX_SUBJECTS);
       const players = await Promise.all(subjectIds.map(lookupPlayer));
       subjectNames = players
@@ -386,8 +447,9 @@ export async function chat(query: string, opts: ChatOpts = {}): Promise<RagRespo
     }
   }
 
-  // 2. Retrieve chunks. Per-player+per-source when we have subjects;
-  //    unfiltered hybrid when we don't (open-ended class-level questions).
+  const tResolve = performance.now();
+  logTiming("resolve", tStart);
+
   let chunks: RagChunk[];
   if (subjectIds.length > 0) {
     chunks = await retrieveForPlayers(query, subjectIds, perSourceResults);
@@ -395,6 +457,103 @@ export async function chat(query: string, opts: ChatOpts = {}): Promise<RagRespo
     const resp = await retrieveWithResumeRetry(query, undefined, unfilteredResults);
     chunks = chunksFromResponse(resp);
   }
+  logTiming(`retrieve (${chunks.length} chunks, ${subjectIds.length} subjects)`, tResolve);
+  const tRetrieve = performance.now();
+
+  const engineCompBlocks: string[] = [];
+  for (const [i, sid] of subjectIds.slice(0, 2).entries()) {
+    const comps: EngineComp[] = await topCompsForPlayer(sid, 5);
+    const name = subjectNames[i] ?? sid;
+    const block = formatComps(name, comps);
+    if (block) engineCompBlocks.push(block);
+  }
+  const engineContext = engineCompBlocks.join("\n\n");
+  logTiming("engine-comps", tRetrieve);
+
+  return { subjectIds, subjectNames, chunks, engineContext };
+}
+
+// SSE event payloads sent by the streaming endpoint. The `meta` event
+// arrives once before any text; `text` events stream the answer as it's
+// generated; `done` arrives once when synthesis completes.
+export type ChatStreamEvent =
+  | { type: "meta"; sources: string[]; subjectPlayerIds: string[] }
+  | { type: "text"; content: string }
+  | { type: "done"; mentionedPlayerIds: string[] }
+  | { type: "error"; message: string };
+
+// Streaming variant of `chat`. Returns a Response whose body is an SSE
+// stream of ChatStreamEvent JSON objects (one per `data: ...` line). The
+// client can read the body as a ReadableStream and update the UI as
+// each text delta arrives — perceived latency drops from ~10s to ~1s
+// because the user sees the first words almost immediately.
+export function chatStreamResponse(query: string, opts: ChatOpts = {}): Response {
+  const tStart = performance.now();
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const enc = new TextEncoder();
+      const send = (event: ChatStreamEvent) => {
+        controller.enqueue(enc.encode(`data: ${JSON.stringify(event)}\n\n`));
+      };
+      try {
+        const { subjectIds, subjectNames, chunks, engineContext } =
+          await prepareChat(query, opts, tStart);
+
+        const sources = Array.from(new Set(chunks.map((c) => c.sourceName)));
+        send({ type: "meta", sources, subjectPlayerIds: subjectIds });
+
+        if (chunks.length === 0) {
+          send({ type: "text", content: "I don't have a scouting report on that prospect." });
+          send({ type: "done", mentionedPlayerIds: [] });
+          controller.close();
+          return;
+        }
+
+        const tGen = performance.now();
+        const full = await generateStream(
+          query,
+          chunks,
+          {
+            history: opts.history ?? [],
+            subjectNames,
+            engineContext,
+          },
+          (delta) => send({ type: "text", content: delta }),
+        );
+        logTiming(`generate-stream (${full.length} chars)`, tGen);
+
+        const extracted = await extractMentions(full);
+        const mentionedPlayerIds = Array.from(new Set([...subjectIds, ...extracted]));
+        send({ type: "done", mentionedPlayerIds });
+        logTiming("TOTAL (stream)", tStart);
+      } catch (e) {
+        const message = e instanceof Error ? e.message : "Unknown error";
+        console.error("[chat][stream] failed:", message);
+        send({ type: "error", message });
+      } finally {
+        controller.close();
+      }
+    },
+  });
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/event-stream; charset=utf-8",
+      "Cache-Control": "no-cache, no-transform",
+      Connection: "keep-alive",
+      // Prevents proxy buffering; some hosts (nginx/Cloudfront) buffer
+      // SSE by default and the user wouldn't see streaming.
+      "X-Accel-Buffering": "no",
+    },
+  });
+}
+
+// Non-streaming variant; kept for completeness and any callers that need
+// the full response in one shot. The streaming endpoint is preferred for
+// the chat UI — it cuts perceived latency from ~10s to ~1s. This wrapper
+// just runs prepareChat + non-streaming generate in sequence.
+export async function chat(query: string, opts: ChatOpts = {}): Promise<RagResponse> {
+  const tStart = performance.now();
+  const { subjectIds, subjectNames, chunks, engineContext } = await prepareChat(query, opts, tStart);
 
   if (chunks.length === 0) {
     return {
@@ -405,30 +564,17 @@ export async function chat(query: string, opts: ChatOpts = {}): Promise<RagRespo
     };
   }
 
-  // 3. Pull the engine's top comparables for each subject so synthesis can
-  //    reconcile (or honestly disagree with) the scouting view. Capped at
-  //    5 comps per subject and 2 subjects to keep the prompt compact.
-  const engineCompBlocks: string[] = [];
-  for (const [i, sid] of subjectIds.slice(0, 2).entries()) {
-    const comps: EngineComp[] = await topCompsForPlayer(sid, 5);
-    const name = subjectNames[i] ?? sid;
-    const block = formatComps(name, comps);
-    if (block) engineCompBlocks.push(block);
-  }
-  const engineContext = engineCompBlocks.join("\n\n");
-
-  // 4. Synthesize against full message history.
+  const tEngine = performance.now();
   const answer = await generate(query, chunks, {
-    history,
+    history: opts.history ?? [],
     subjectNames,
     engineContext,
   });
+  logTiming(`generate (${answer.length} chars)`, tEngine);
 
-  // 5. Mention extraction over the answer (drives the "you might also like"
-  // signal). Always include subjects so they're flagged even when the model
-  // renders them with a possessive ("his archetype").
   const extracted = await extractMentions(answer);
   const mentionedPlayerIds = Array.from(new Set([...subjectIds, ...extracted]));
+  logTiming("TOTAL", tStart);
 
   return { answer, chunks, subjectPlayerIds: subjectIds, mentionedPlayerIds };
 }

@@ -1,4 +1,4 @@
-import { chat, type ChatTurn } from "@/lib/nfl-comparables/rag";
+import { chat, chatStreamResponse, type ChatTurn } from "@/lib/nfl-comparables/rag";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -10,6 +10,10 @@ interface ChatRequest {
   history?: ChatTurn[];
   contextPlayerIds?: string[];
   numResults?: number;
+  // Defaults to true. Send false (or pass ?stream=false in the query
+  // string) for the legacy JSON-blob response — useful for cURL
+  // smoke-testing where SSE parsing adds noise.
+  stream?: boolean;
 }
 
 export async function POST(request: Request) {
@@ -23,6 +27,20 @@ export async function POST(request: Request) {
   const query = body.query?.trim();
   if (!query) {
     return Response.json({ error: "query is required" }, { status: 400 });
+  }
+
+  const url = new URL(request.url);
+  const streamParam = url.searchParams.get("stream");
+  const wantStream = streamParam === null ? body.stream !== false : streamParam !== "false";
+
+  if (wantStream) {
+    return chatStreamResponse(query, {
+      playerId: body.playerId,
+      playerName: body.playerName,
+      history: body.history,
+      contextPlayerIds: body.contextPlayerIds,
+      numResults: body.numResults,
+    });
   }
 
   try {
