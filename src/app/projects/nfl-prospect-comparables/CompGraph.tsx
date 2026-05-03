@@ -120,11 +120,62 @@ function frameFor(
 
 const CAM_OBLIQUE = { x: 0.25, y: -0.55, z: 0.85 };
 
+// Side panel is 420px wide on sm+ screens. When the panel is open the
+// visual center of the viewport shifts left, so framing the target at
+// the canvas center actually parks it under the panel. We pan both the
+// camera and the lookAt rightward in world space so the target rides
+// the visible-area center instead. Threshold: only do this when the
+// panel actually pushes the visible area meaningfully (sm+ breakpoint).
+const PANEL_OFFSET_RATIO = 0.18; // ~ camDist * this in the camera-right direction
+
 function cameraPosFor(frame: SceneFrame) {
   return {
     x: frame.center.x + frame.camDist * CAM_OBLIQUE.x,
     y: frame.center.y + frame.camDist * CAM_OBLIQUE.y,
     z: frame.center.z + frame.camDist * CAM_OBLIQUE.z,
+  };
+}
+
+// Right vector for a camera at `cam` looking at `target`, in the world
+// XZ plane (y stays fixed). Used to pan the view sideways without
+// changing the camera's pitch/distance.
+function cameraRightVecXZ(
+  cam: { x: number; y: number; z: number },
+  target: { x: number; y: number; z: number },
+): { x: number; z: number } {
+  // forward = target - cam; right = cross(forward, worldUp=(0,1,0)) = (fz, 0, -fx)
+  const fx = target.x - cam.x;
+  const fz = target.z - cam.z;
+  const rx = fz, rz = -fx;
+  const rmag = Math.hypot(rx, rz) || 1;
+  return { x: rx / rmag, z: rz / rmag };
+}
+
+// True when the page-level side panel covers the right portion of the
+// canvas — i.e., on sm+ breakpoints. Server-render guard so SSR doesn't
+// throw; we'll also re-evaluate on the client at fly time.
+function panelIsOverlay(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth >= 640;
+}
+
+// Apply the side-panel rightward shift to a (camPos, lookAt) pair when
+// the panel is open. Mutates copies and returns them so callers can pass
+// the result straight to `graph.cameraPosition`.
+function offsetForPanel(
+  camPos: { x: number; y: number; z: number },
+  lookAt: { x: number; y: number; z: number },
+  camDist: number,
+  panelOpen: boolean,
+): { cam: { x: number; y: number; z: number }; lookAt: { x: number; y: number; z: number } } {
+  if (!panelOpen || !panelIsOverlay()) {
+    return { cam: { ...camPos }, lookAt: { ...lookAt } };
+  }
+  const rv = cameraRightVecXZ(camPos, lookAt);
+  const offset = camDist * PANEL_OFFSET_RATIO;
+  return {
+    cam: { x: camPos.x + rv.x * offset, y: camPos.y, z: camPos.z + rv.z * offset },
+    lookAt: { x: lookAt.x + rv.x * offset, y: lookAt.y, z: lookAt.z + rv.z * offset },
   };
 }
 
@@ -140,6 +191,47 @@ function paleMix(hex: string, t: number): string {
   return `#${((mix(r) << 16) | (mix(g) << 8) | mix(b))
     .toString(16)
     .padStart(6, "0")}`;
+}
+
+// Donut/ring sprite drawn to canvas. Used as a halo around the selected
+// or compare-pinned prospect so the active subjects pop out of the cloud.
+// Stays as a sprite (always faces camera) so the ring reads as a flat
+// outline regardless of camera angle — feels editorial, not gamey.
+function makeRingSprite(opts: {
+  color: string;
+  size?: number;
+  thickness?: number;
+  opacity?: number;
+}): Sprite {
+  const { color, size = 4.5, thickness = 1.5, opacity = 0.85 } = opts;
+  const dpr = typeof window !== "undefined" ? Math.min(window.devicePixelRatio, 2) : 1;
+  const canvasSize = 64;
+  const canvas = document.createElement("canvas");
+  canvas.width = canvas.height = canvasSize * dpr;
+  const ctx = canvas.getContext("2d")!;
+  ctx.scale(dpr, dpr);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = thickness;
+  ctx.beginPath();
+  ctx.arc(canvasSize / 2, canvasSize / 2, canvasSize / 2 - thickness, 0, Math.PI * 2);
+  ctx.stroke();
+  const tex = new CanvasTexture(canvas);
+  tex.minFilter = tex.magFilter = 1006;
+  const mat = new SpriteMaterial({
+    map: tex,
+    transparent: true,
+    depthWrite: false,
+    // depthTest=false so the ring renders through any nodes that happen
+    // to overlap it from the current camera angle (otherwise the cluster
+    // can occlude the very thing the ring is supposed to highlight).
+    depthTest: false,
+    opacity,
+  });
+  const s = new Sprite(mat);
+  s.scale.set(size, size, 1);
+  s.raycast = () => {};
+  s.renderOrder = 998;
+  return s;
 }
 
 function makeTextSprite(opts: {
@@ -233,6 +325,25 @@ export default function CompGraph({
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const graphRef = useRef<ForceGraphInstance | null>(null);
+  // Scene-level halo + label sprites for the active subject(s). Created
+  // once at mount; repositioned on selection change. Keeping them off the
+  // ForceGraph node-object pipeline lets us swap text/visibility cheaply
+  // without rebuilding the graph instance.
+  const selectedHaloRef = useRef<Sprite | null>(null);
+  const compareHaloRef = useRef<Sprite | null>(null);
+  // Node-child label cache (in-graph, fixed labels for the highlight
+  // cohort) and scene-level label cache (built lazily for any node that
+  // becomes selected or compared). Two separate caches because a single
+  // Sprite can only have one parent — the highlight node-child label and
+  // the selection-aura scene label have to be distinct instances.
+  const labelCacheRef = useRef<Map<string, Sprite>>(new Map());
+  const sceneLabelCacheRef = useRef<Map<string, Sprite>>(new Map());
+  // Tracks which node id each aura slot is currently showing so the
+  // updater knows what to hide when the slot changes.
+  const previousAuraRef = useRef<{
+    selected: string | null;
+    compare: string | null;
+  }>({ selected: null, compare: null });
   const ambientLabelsRef = useRef<{ pos: Position; sprite: Sprite }[]>([]);
   // Sub-cluster archetype sprites — one per (position, archetype). More
   // prominent than the ambient position labels because users actually need
@@ -320,7 +431,7 @@ export default function CompGraph({
     initialFrameRef.current = initialFrame;
     nodesByPositionRef.current = visibleNodes;
 
-    const labelCache = new Map<string, Sprite>();
+    const labelCache = labelCacheRef.current;
     const emptyObject = new Group();
     const getLabel = (n: GraphNode): Object3D => {
       if (!n.highlight) return emptyObject;
@@ -368,10 +479,54 @@ export default function CompGraph({
       .nodeResolution(16)
       .nodeThreeObjectExtend(true)
       .nodeThreeObject((raw): Object3D => getLabel(raw as GraphNode))
-      // Hairline edges in muted graphite — reads as pen, not marker.
-      .linkColor(() => "rgba(40,40,50,0.28)")
-      .linkOpacity(0.55)
-      .linkWidth((raw) => Math.max(0.04, (raw as GraphLink).similarity * 0.18))
+      // Edges react to selection. With 1500+ comp edges, an even hairline
+      // wash hides the actual comp web that the selected node sits in. When
+      // a node is selected, edges connected to it pop (chroma + width); the
+      // rest fade toward the background. The pair edge between selected +
+      // compare partner gets the strongest treatment so the comparison reads
+      // as a literal connection, not just two pinned points.
+      .linkColor((raw) => {
+        const link = raw as Omit<GraphLink, "source" | "target"> & {
+          source: string | GraphNode;
+          target: string | GraphNode;
+        };
+        const sId = typeof link.source === "object" ? link.source.id : link.source;
+        const tId = typeof link.target === "object" ? link.target.id : link.target;
+        const sel = selectedIdRef.current;
+        const cmp = compareWithRef.current;
+        const touchesSel = sel !== null && (sId === sel || tId === sel);
+        const touchesCmp = cmp !== null && (sId === cmp || tId === cmp);
+        // Pair edge: both endpoints pinned. Strongest possible treatment.
+        if (touchesSel && touchesCmp) return "rgba(20,20,20,0.95)";
+        // Default state (nothing selected): muted hairline wash.
+        if (sel === null && cmp === null) return "rgba(40,40,50,0.30)";
+        // Connected to the active subject(s): legible graphite.
+        if (touchesSel) return "rgba(20,20,30,0.70)";
+        if (touchesCmp) return "rgba(20,20,30,0.45)";
+        // Disconnected: ghost. Stays in scene so viewer feels the cloud,
+        // but doesn't compete with the focused web.
+        return "rgba(40,40,50,0.05)";
+      })
+      // Opacity baked into the rgba above; 1.0 here so the multiplier doesn't
+      // pull our deliberately-strong selection edges back down.
+      .linkOpacity(1.0)
+      .linkWidth((raw) => {
+        const link = raw as Omit<GraphLink, "source" | "target"> & {
+          source: string | GraphNode;
+          target: string | GraphNode;
+        };
+        const sId = typeof link.source === "object" ? link.source.id : link.source;
+        const tId = typeof link.target === "object" ? link.target.id : link.target;
+        const sel = selectedIdRef.current;
+        const cmp = compareWithRef.current;
+        const touchesSel = sel !== null && (sId === sel || tId === sel);
+        const touchesCmp = cmp !== null && (sId === cmp || tId === cmp);
+        const base = Math.max(0.04, link.similarity * 0.18);
+        if (touchesSel && touchesCmp) return base * 4;
+        if (touchesSel) return base * 2.4;
+        if (touchesCmp) return base * 1.6;
+        return base;
+      })
       // Lock down node dragging — positions are precomputed/frozen, dragging
       // would only ever desync the visual from the underlying coords.
       .enableNodeDrag(false)
@@ -402,28 +557,40 @@ export default function CompGraph({
     graph.cameraPosition(cameraPosFor(initialFrame), initialFrame.center, 0);
 
     const scene = graph.scene() as Scene;
+
+    // Halo + label sprites for the active subject(s). Created hidden;
+    // selection/compare effects toggle visibility + reposition.
+    const selectedHalo = makeRingSprite({
+      color: "#1a1a1a",
+      size: 5.0,
+      thickness: 2.0,
+      opacity: 0.95,
+    });
+    selectedHalo.visible = false;
+    scene.add(selectedHalo);
+    selectedHaloRef.current = selectedHalo;
+
+    const compareHalo = makeRingSprite({
+      color: "#1a1a1a",
+      size: 5.0,
+      thickness: 1.5,
+      opacity: 0.7,
+    });
+    compareHalo.visible = false;
+    scene.add(compareHalo);
+    compareHaloRef.current = compareHalo;
+
+    // Scene-level label sprites are built per-node on demand (cached) and
+    // toggled visible here. No fixed selectedLabel/compareLabel sprite —
+    // each prospect has its own canvas-baked sprite the first time it
+    // becomes the active subject, then re-used on subsequent reselects.
+
+    // Position labels were rendered in 3D space above each cluster. They
+    // visually competed with the more-specific archetype labels at the same
+    // centroid, and the position is already encoded by node color + the
+    // colored Header chips that act as the legend. Empty array kept so the
+    // filter effect's iteration is a no-op without a separate code path.
     const ambientLabels: { pos: Position; sprite: Sprite }[] = [];
-    (Object.entries(centroids) as [Position, NonNullable<typeof centroids[Position]>][]).forEach(
-      ([pos, c]) => {
-        if (!c || c.count === 0) return;
-        const cx = c.x / c.count;
-        const cy = c.y / c.count;
-        const cz = c.z / c.count;
-        const sprite = makeTextSprite({
-          text: pos,
-          color: POSITION_COLORS[pos],
-          bg: "",
-          fontSize: 96,
-          fontWeight: 700,
-          scale: 0.13,
-          yOffset: 0,
-          opacity: 0.13,
-        });
-        sprite.position.set(cx, cy + 18, cz);
-        scene.add(sprite);
-        ambientLabels.push({ pos, sprite });
-      },
-    );
     ambientLabelsRef.current = ambientLabels;
 
     // Sub-cluster archetype labels. Compute centroids in DISPLAY space (the
@@ -482,10 +649,23 @@ export default function CompGraph({
     handleResize();
     window.addEventListener("resize", handleResize);
 
+    // Snapshot the scene-label cache for the cleanup closure: lint warns
+    // that `.current` could change between effect-run and cleanup. In our
+    // case it can't (only this effect mutates it on mount/unmount), but
+    // capturing the reference is the cheap correct pattern.
+    const sceneLabelsSnapshot = sceneLabelCacheRef.current;
     return () => {
       window.removeEventListener("resize", handleResize);
       for (const { sprite } of ambientLabels) scene.remove(sprite);
       for (const { sprite } of archetypeLabels) scene.remove(sprite);
+      if (selectedHaloRef.current) scene.remove(selectedHaloRef.current);
+      if (compareHaloRef.current) scene.remove(compareHaloRef.current);
+      for (const sprite of sceneLabelsSnapshot.values()) {
+        scene.remove(sprite);
+      }
+      sceneLabelsSnapshot.clear();
+      selectedHaloRef.current = null;
+      compareHaloRef.current = null;
       ambientLabelsRef.current = [];
       archetypeLabelsRef.current = [];
       graph._destructor();
@@ -493,6 +673,88 @@ export default function CompGraph({
       labelCache.clear();
     };
   }, [data, archetypes, onSelect]);
+
+  // Update the scene-level aura (halo + label) for one of the two slots.
+  // Slot determines which halo sprite to move and how the label looks
+  // (primary uses solid bg, compare uses a position-tinted accent so the
+  // pair reads as related-but-distinct from any camera angle).
+  const updateAura = (
+    slot: "selected" | "compare",
+    nodeId: string | null,
+    graph: ForceGraphInstance,
+  ) => {
+    const halo =
+      slot === "selected" ? selectedHaloRef.current : compareHaloRef.current;
+    if (!halo) return;
+    const sceneCache = sceneLabelCacheRef.current;
+    const childCache = labelCacheRef.current;
+    const scene = graph.scene() as Scene;
+
+    // Hide any previous label for this slot — track via a per-slot ref
+    // outside the cache so we know which sprite to flip off.
+    const prevId = previousAuraRef.current[slot];
+    if (prevId && prevId !== nodeId) {
+      const prevLabel = sceneCache.get(prevId);
+      if (prevLabel) prevLabel.visible = false;
+      // Re-show the in-node-child label if this prospect is in the
+      // highlight cohort (we hid it when promoting to scene-level).
+      const prevChildLabel = childCache.get(prevId);
+      if (prevChildLabel) prevChildLabel.visible = true;
+    }
+
+    if (nodeId === null) {
+      halo.visible = false;
+      previousAuraRef.current[slot] = null;
+      return;
+    }
+
+    const node = nodesByPositionRef.current.find((n) => n.id === nodeId);
+    if (!node) {
+      halo.visible = false;
+      previousAuraRef.current[slot] = null;
+      return;
+    }
+
+    halo.position.set(node.x, node.y, node.z);
+    // Compare halo borrows the partner's position color so it reads as
+    // chromatic-but-secondary against the primary's solid black ring.
+    const haloMat = halo.material as SpriteMaterial;
+    haloMat.color.set(slot === "selected" ? "#1a1a1a" : POSITION_COLORS[node.position]);
+    haloMat.needsUpdate = true;
+    halo.visible = true;
+
+    // Get-or-build a scene-level label for this node and position it.
+    let label = sceneCache.get(nodeId);
+    if (!label) {
+      // yOffset=0 here because we're applying the lift in world coords
+      // below (scene-level sprites can't borrow the relative-position
+      // trick that node-child sprites use).
+      label = makeTextSprite({
+        text: node.name,
+        color: "#1a1a1a",
+        bg:
+          slot === "selected"
+            ? "rgba(252,252,250,0.95)"
+            : "rgba(252,252,250,0.85)",
+        fontSize: 22,
+        fontWeight: 600,
+        scale: 0.04,
+        yOffset: 0,
+      });
+      scene.add(label);
+      sceneCache.set(nodeId, label);
+    }
+    // Lift label above the halo so name + ring don't overlap visually.
+    // 4 units mirrors the in-node-child label's offset for highlight nodes.
+    label.position.set(node.x, node.y + 4, node.z);
+    label.visible = true;
+    // Hide the in-node-child label if this is a highlight node — the
+    // scene-level one stands in for it (with bigger bg + halo).
+    const childLabel = childCache.get(nodeId);
+    if (childLabel) childLabel.visible = false;
+
+    previousAuraRef.current[slot] = nodeId;
+  };
 
   // Selection-driven recolor + camera fly. Fires for both manual clicks
   // and programmatic selection (e.g., chat resolves a single subject), so
@@ -513,15 +775,17 @@ export default function CompGraph({
         const currentDist = Math.hypot(dx, dy, dz) || 1;
         const targetDist = 28;
         const ratio = targetDist / currentDist;
-        graph.cameraPosition(
-          {
-            x: target.x + dx * ratio,
-            y: target.y + dy * ratio,
-            z: target.z + dz * ratio,
-          },
-          { x: target.x, y: target.y, z: target.z },
-          1100,
-        );
+        const camPos = {
+          x: target.x + dx * ratio,
+          y: target.y + dy * ratio,
+          z: target.z + dz * ratio,
+        };
+        const lookAt = { x: target.x, y: target.y, z: target.z };
+        // Pan view rightward so target appears in the left ~60% of the
+        // canvas (the side panel takes the right ~30%). Panel is always
+        // open during a selection-driven fly.
+        const framed = offsetForPanel(camPos, lookAt, targetDist, true);
+        graph.cameraPosition(framed.cam, framed.lookAt, 1100);
       }
     }
 
@@ -546,8 +810,12 @@ export default function CompGraph({
       if (selectedId === null) return isHighlight ? base : paleMix(base, 0.7);
       return paleMix(base, isHighlight ? 0.55 : 0.82);
     });
-    // Refresh nodeVal too so the compare partner picks up the size bump.
+    // Refresh nodeVal + edge styling so selection-driven size + edge focus
+    // pick up the change without rebuilding the graph instance.
     graph.nodeVal(graph.nodeVal());
+    graph.linkColor(graph.linkColor());
+    graph.linkWidth(graph.linkWidth());
+    updateAura("selected", selectedId, graph);
     if (selectedId === null && previousSelectedRef.current !== null && chatFocusedRef.current.size === 0) {
       const activeFilter = filterRef.current;
       const targetNodes =
@@ -571,6 +839,9 @@ export default function CompGraph({
     compareWithRef.current = compareWithId;
     graph.nodeColor(graph.nodeColor());
     graph.nodeVal(graph.nodeVal());
+    graph.linkColor(graph.linkColor());
+    graph.linkWidth(graph.linkWidth());
+    updateAura("compare", compareWithId, graph);
   }, [compareWithId]);
 
   // Chat-focus driven camera fly + recolor.
@@ -648,7 +919,15 @@ export default function CompGraph({
     // For a single-cluster filter view we want breathing room around the
     // cluster, so push the camera further out.
     const frame = frameFor(targetNodes, 22.5, filter === "ALL" ? 0.75 : 1.4);
-    graph.cameraPosition(cameraPosFor(frame), frame.center, 800);
+    // If a selection survives the filter change, the side panel is still
+    // open — pan rightward so the cluster doesn't end up half under it.
+    const framed = offsetForPanel(
+      cameraPosFor(frame),
+      frame.center,
+      frame.camDist,
+      previousSelectedRef.current !== null,
+    );
+    graph.cameraPosition(framed.cam, framed.lookAt, 800);
   }, [filter]);
 
   return <div ref={containerRef} className="absolute inset-0" />;
