@@ -664,6 +664,7 @@ export default function CompGraph({
         scene.remove(sprite);
       }
       sceneLabelsSnapshot.clear();
+      previousAuraRef.current = { selected: null, compare: null };
       selectedHaloRef.current = null;
       compareHaloRef.current = null;
       ambientLabelsRef.current = [];
@@ -735,14 +736,13 @@ export default function CompGraph({
     if (!label) {
       // yOffset=0 here because we're applying the lift in world coords
       // below (scene-level sprites can't borrow the relative-position
-      // trick that node-child sprites use).
+      // trick that node-child sprites use). Styling is slot-agnostic
+      // because the sprite is cached per node, and a node can move
+      // between slots — slot-specific bg would freeze on first creation.
       label = makeTextSprite({
         text: node.name,
         color: "#1a1a1a",
-        bg:
-          slot === "selected"
-            ? "rgba(252,252,250,0.95)"
-            : "rgba(252,252,250,0.85)",
+        bg: "rgba(252,252,250,0.95)",
         fontSize: 22,
         fontWeight: 600,
         scale: 0.04,
