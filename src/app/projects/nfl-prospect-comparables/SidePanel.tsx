@@ -541,9 +541,14 @@ export default function SidePanel({
             <div className="mt-5">
               {comps.length > 0 && (
                 <section>
-                  <h3 className="text-xs uppercase tracking-wider text-stone-500 mb-3">
-                    Top comparisons
-                  </h3>
+                  <div className="flex items-baseline justify-between gap-3 mb-3">
+                    <h3 className="text-xs uppercase tracking-wider text-stone-500">
+                      Top comparisons
+                    </h3>
+                    <span className="text-[10px] text-stone-400 italic">
+                      ⌘-click to compare
+                    </span>
+                  </div>
                   <ul className="space-y-1.5">
                     {comps.map(({ node: c, edge }) => {
                       const tier = similarityTier(edge.similarity);
@@ -689,10 +694,6 @@ export default function SidePanel({
               />
             </div>
           )}
-
-          <p className="mt-6 text-[11px] text-stone-400 italic">
-            Hold ⌘ (Mac) or Ctrl and click another node to compare.
-          </p>
             </>
           )}
         </div>
