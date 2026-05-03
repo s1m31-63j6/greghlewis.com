@@ -27,13 +27,24 @@ const STOPWORDS = new Set([
   "the", "a", "an", "of", "and", "or", "is", "tell", "me", "about",
   "what", "who", "how", "why", "where", "when", "his", "her", "their",
   "show", "give", "can", "you", "from", "for", "as", "to", "with",
-  "qb", "rb", "wr", "te", "quarterback", "running", "back", "wide",
-  "receiver", "tight", "end", "draft", "prospect", "profile", "report",
-  "scouting", "comp", "comps", "comparable", "compare", "comparison",
+  "qb", "rb", "wr", "te", "qbs", "rbs", "wrs", "tes",
+  "quarterback", "quarterbacks", "running", "back", "backs", "wide",
+  "receiver", "receivers", "tight", "end", "ends", "wideout", "wideouts",
+  "draft", "drafts", "prospect", "prospects", "profile", "profiles",
+  "report", "reports", "scouting",
+  "comp", "comps", "comparable", "compare", "comparison", "comparing",
   "best", "top", "find", "list", "good", "bad", "describe", "summary",
   "summarize", "explain", "look", "looks", "looking", "rank", "rate",
   "rated", "year", "years", "season", "seasons", "class", "classes",
   "vs", "versus", "between", "than",
+  // Superlatives + quantifiers — capitalized at sentence start, easily
+  // misroute via fuzzy match ("Most" → Zack Moss, "More" → ?).
+  "most", "least", "more", "less", "much", "many", "next",
+  "physical", "athletic", "explosive", "fastest", "strongest", "biggest",
+  "highest", "lowest", "weakest", "smartest", "tallest", "longest",
+  "tougher", "better", "worse", "older", "younger",
+  // Verb-ish words that aren't names but read as cap tokens.
+  "plays", "playing", "played", "performs", "produces",
 ]);
 
 let _index: PlayerEntry[] | null = null;
@@ -68,13 +79,29 @@ async function loadIndex(): Promise<PlayerEntry[]> {
   return _index;
 }
 
+// Generational suffixes commonly trailing player names. Strip them so
+// `lastName("Marvin Harrison Jr.")` returns "Harrison" not "Jr." — the
+// latter wrecks last-name matching for any junior/senior/numeral player.
+const NAME_SUFFIXES = new Set([
+  "jr", "jr.", "sr", "sr.", "ii", "iii", "iv", "v",
+]);
+
+function nameParts(name: string): string[] {
+  const parts = name.split(/\s+/).filter(Boolean);
+  // Drop trailing suffix(es). "John Smith Jr. III" → ["John", "Smith"].
+  while (parts.length > 1 && NAME_SUFFIXES.has(parts[parts.length - 1].toLowerCase())) {
+    parts.pop();
+  }
+  return parts;
+}
+
 function lastName(name: string): string {
-  const parts = name.split(/\s+/);
+  const parts = nameParts(name);
   return parts[parts.length - 1] ?? "";
 }
 
 function firstName(name: string): string {
-  const parts = name.split(/\s+/);
+  const parts = nameParts(name);
   return parts[0] ?? "";
 }
 
@@ -155,14 +182,17 @@ export async function resolveNames(query: string): Promise<ResolvedPlayers> {
   const isMultiProspectQuery = MULTI_PROSPECT_SEPARATORS.test(query);
 
   // Tier 1: full-name substring. Greedy longest-first so "Marvin Harrison Jr"
-  // doesn't get shadowed by "Marvin Harrison".
+  // doesn't get shadowed by "Marvin Harrison". Trailing punctuation is
+  // stripped from the candidate name so "Marvin Harrison Jr." matches a
+  // user query of "Marvin Harrison Jr" (no period). The matched-span
+  // removal still uses the normalized form for consistency.
   let consumed = q;
   for (const e of index) {
-    const lc = e.name.toLowerCase();
+    const lc = e.name.toLowerCase().replace(/[.,]+$/, "").trim();
     if (consumed.includes(lc) && !seen.has(e.playerId)) {
       // Group with cohort namesakes (same exact name, different cohort).
       const namesakes = index.filter(
-        (x) => x.name.toLowerCase() === lc && !seen.has(x.playerId),
+        (x) => x.name.toLowerCase().replace(/[.,]+$/, "").trim() === lc && !seen.has(x.playerId),
       );
       const ranked = rankByCohort(namesakes);
       for (const x of ranked) seen.add(x.playerId);

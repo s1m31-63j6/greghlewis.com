@@ -227,9 +227,6 @@ const PER_SOURCE_CAP = 2;
 async function retrieveForPlayers(
   query: string,
   playerIds: string[],
-  // Kept in the signature so callers don't break, but no longer used —
-  // the per-source budget is enforced in post-processing now.
-  _perSourceResults: number,
 ): Promise<RagChunk[]> {
   const tasks = playerIds.map((pid) =>
     retrieveWithResumeRetry(
@@ -423,8 +420,22 @@ function logTiming(label: string, t0: number): void {
 // fall back to the existing RAG flow, which still produces a reasonable
 // answer for most named-player questions.
 
-const FIND_STYLE_KEYWORDS =
-  /\b(find|who'?s|who is|next|comparable|comp(s)? (in|for|to)|most like|closest to|resembl|similar to|like (a |an )?[A-Z]|-style|-like|in this draft|in the 2026)\b/i;
+// Multiple alternatives — each tested independently. Avoiding a single
+// big alternation wrapped in \b...\b because some matchers want a trailing
+// \b (whole-word `find`, `next`) and some don't (`like Marvin` ends mid-name,
+// not at a word boundary).
+const FIND_STYLE_PATTERNS: RegExp[] = [
+  /\bfind\b.*\b(in this draft|in the 202[0-9]|prospect)/i,  // explicit search
+  /\b(who'?s|who is|which prospect)\b.*\b(next|like|comparable|similar|closest|resembl)/i,
+  /\b(next|comp(s|arable)?\s+(in|for|to)|most like|closest to|resembl(es|ing)?|similar to)\b/i,
+  /\bplays like\b/i,                       // "who plays like X"
+  /-style\b|-like\b/i,                     // "Saquon-style", "Mahomes-like"
+  /\bin this draft\b|\bin the 202[0-9]\b/i,  // contextual phrases
+];
+
+function matchesFindStyle(query: string): boolean {
+  return FIND_STYLE_PATTERNS.some((re) => re.test(query));
+}
 
 const CLASS_KEYWORDS =
   /\b(class(es)?|cohorts?|crops?|groups?|waves?|wideouts?|quarterbacks?|tight ends?|running backs?)\b|\b(this|the|202[0-9]) (draft|class(es)?|cohorts?|year)\b/i;
@@ -479,7 +490,7 @@ function detectIntent(
   if (
     resolvedHistoricalPlayer &&
     resolvedHistoricalPlayer.cohort !== "prediction_2026" &&
-    FIND_STYLE_KEYWORDS.test(query)
+    matchesFindStyle(query)
   ) {
     return { type: "find_style" };
   }
@@ -502,7 +513,6 @@ async function prepareChat(
   tStart: number,
 ): Promise<ChatPrep> {
   const { playerId, playerName, contextPlayerIds = [] } = opts;
-  const perSourceResults = 3;
   const unfilteredResults = opts.numResults ?? 6;
 
   let subjectIds: string[] = [];
@@ -591,7 +601,7 @@ async function prepareChat(
 
   let chunks: RagChunk[];
   if (subjectIds.length > 0) {
-    chunks = await retrieveForPlayers(query, subjectIds, perSourceResults);
+    chunks = await retrieveForPlayers(query, subjectIds);
   } else if (intent.type === "class") {
     // Skip RAG entirely for class queries — the structured summary is
     // the answer. A retrieval at this point would just pull one random
