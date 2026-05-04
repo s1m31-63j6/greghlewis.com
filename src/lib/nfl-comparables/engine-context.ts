@@ -15,8 +15,22 @@ interface BundleNode {
   outcome_class: string | null;
   career_av: number | null;
   peak_av: number | null;
-  bio: { college: string | null; height_in: number | null; weight_lb: number | null };
+  bio: {
+    college: string | null;
+    height_in: number | null;
+    weight_lb: number | null;
+    age_at_draft?: number | null;
+    hometown_state?: string | null;
+  };
   draft: { year: number | null; round: number | null; pick: number | null };
+  athletic?: {
+    forty_yard: number | null;
+    vertical_in: number | null;
+    broad_jump_in: number | null;
+    three_cone: number | null;
+    shuttle: number | null;
+    bench_reps: number | null;
+  };
   traits: Record<string, { score: number | null; quote: string | null }> | null;
 }
 
@@ -312,4 +326,112 @@ export function formatCrossCohortMatches(
     (m) => `  - ${m.name} (${m.position}, ${m.college ?? "—"})`,
   );
   return `Cross-cohort comp engine — 2026 prospects in ${referenceName}'s comp neighborhood (sorted by similarity):\n${lines.join("\n")}`;
+}
+
+// ----- Superlative queries (fastest QB, tallest WR, biggest TE, etc.) -----
+//
+// These are answered deterministically from the bundle's bio + athletic
+// blocks, not from RAG retrieval. The bot only sees a structured top-N
+// list with a coverage disclaimer ("3 of 10 QBs have a recorded 40").
+// That coverage line is load-bearing — without it the bot would over-
+// claim, since most 2026 prospects don't have full combine data yet.
+
+export type SuperlativeMetric =
+  | "forty_yard"
+  | "vertical_in"
+  | "broad_jump_in"
+  | "three_cone"
+  | "shuttle"
+  | "bench_reps"
+  | "height_in"
+  | "weight_lb";
+
+export interface SuperlativeSpec {
+  metric: SuperlativeMetric;
+  // ASC = lower is better (40 time, three-cone, shuttle).
+  // DESC = higher is better (height, weight, vertical, broad jump, bench).
+  direction: "asc" | "desc";
+  // Display label used in the structured block headline.
+  label: string;
+  // Unit suffix for value formatting; "" if none.
+  unit: string;
+  // Decimal places for the formatted value.
+  decimals: number;
+}
+
+function readMetric(node: BundleNode, m: SuperlativeMetric): number | null {
+  if (m === "height_in") return node.bio.height_in ?? null;
+  if (m === "weight_lb") return node.bio.weight_lb ?? null;
+  return node.athletic?.[m] ?? null;
+}
+
+function formatHeight(inches: number): string {
+  const ft = Math.floor(inches / 12);
+  const inch = Math.round((inches - ft * 12) * 10) / 10;
+  return `${ft}'${inch.toString().replace(/\.0$/, "")}"`;
+}
+
+function formatBroad(inches: number): string {
+  const ft = Math.floor(inches / 12);
+  const inch = Math.round((inches - ft * 12) * 10) / 10;
+  return `${ft}'${inch.toString().replace(/\.0$/, "")}"`;
+}
+
+function formatValue(spec: SuperlativeSpec, v: number): string {
+  if (spec.metric === "height_in") return formatHeight(v);
+  if (spec.metric === "broad_jump_in") return formatBroad(v);
+  return `${v.toFixed(spec.decimals)}${spec.unit}`;
+}
+
+// Compute the structured superlative block. Caller resolves the spec
+// (metric + direction + display label) from the user query upstream.
+export async function summarizeSuperlative(
+  year: number,
+  position: string | null,
+  spec: SuperlativeSpec,
+  topN: number = 3,
+): Promise<string> {
+  const bundle = await loadBundle();
+  const inScope = bundle.nodes.filter(
+    (n) =>
+      n.draft?.year === year &&
+      (position === null || n.position === position),
+  );
+  if (inScope.length === 0) {
+    const posLabel = position ?? "all-position";
+    return `Superlative query — ${spec.label} in ${year} ${posLabel} class: no prospects in pool.`;
+  }
+  const withMetric = inScope
+    .map((n) => ({ node: n, value: readMetric(n, spec.metric) }))
+    .filter((x): x is { node: BundleNode; value: number } => x.value !== null);
+  const posLabel = position ?? "all-position";
+  if (withMetric.length === 0) {
+    return [
+      `Superlative query — ${spec.label} in ${year} ${posLabel} class:`,
+      `  No prospects in this cohort have a recorded ${spec.label}. ${inScope.length} prospects in pool, 0 with the measurable.`,
+    ].join("\n");
+  }
+  withMetric.sort((a, b) =>
+    spec.direction === "asc" ? a.value - b.value : b.value - a.value,
+  );
+  const top = withMetric.slice(0, topN);
+  const lines = [
+    `Superlative query — ${spec.label} in ${year} ${posLabel} class (best to ${topN === 1 ? "next-best" : Math.min(topN, withMetric.length) + "th-best"}):`,
+  ];
+  top.forEach(({ node, value }, i) => {
+    lines.push(
+      `  ${i + 1}. ${node.name} (${node.position}, ${node.bio.college ?? "—"}) — ${formatValue(spec, value)}`,
+    );
+  });
+  // Coverage disclaimer is critical — without it the bot will treat the
+  // top-1 as authoritative. Especially relevant for 2026 where only a
+  // fraction of prospects have combined yet.
+  lines.push(
+    `Coverage: ${withMetric.length} of ${inScope.length} prospects in this cohort have a recorded ${spec.label}. ${
+      withMetric.length < inScope.length
+        ? "Treat this as a partial answer — name the leader but acknowledge the cohort gap."
+        : "Full coverage."
+    }`,
+  );
+  return lines.join("\n");
 }

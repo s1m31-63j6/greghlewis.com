@@ -22,8 +22,10 @@ import {
   formatComps,
   formatCrossCohortMatches,
   summarizeClassMulti,
+  summarizeSuperlative,
   topCompsForPlayer,
   type EngineComp,
+  type SuperlativeSpec,
 } from "./engine-context";
 import { extractMentions, lookupPlayer, resolveNames } from "./name-index";
 
@@ -487,12 +489,72 @@ function detectPosition(query: string): string | null {
 }
 
 interface DetectedIntent {
-  type: "regular" | "find_style" | "class";
+  type: "regular" | "find_style" | "class" | "superlative";
   // For class queries: which classes to summarize. Plural to support
   // year-over-year comparisons ("2026 WR class vs 2025"). Position is
   // shared across years — we don't currently support comparing 2026 WR
   // class to 2025 QB class (would need pair-of-scopes).
   classScope?: { years: number[]; position: string | null };
+  // For superlative queries: which structured query to run.
+  superlativeScope?: {
+    year: number;
+    position: string | null;
+    spec: SuperlativeSpec;
+  };
+}
+
+// Superlative keywords → metric + sort direction. Each entry's `match`
+// regex is tested independently against the query; the first match wins.
+// "biggest" defaults to weight (mass-meaning) rather than height — the
+// follow-up question covers height if the user wants it.
+const SUPERLATIVE_TABLE: { match: RegExp; spec: SuperlativeSpec }[] = [
+  {
+    match: /\b(fastest|quickest|speediest)\b|\bbest\s+(40|forty)\b/i,
+    spec: { metric: "forty_yard", direction: "asc", label: "40-yard time", unit: "s", decimals: 2 },
+  },
+  {
+    match: /\bslowest\b/i,
+    spec: { metric: "forty_yard", direction: "desc", label: "40-yard time (slowest)", unit: "s", decimals: 2 },
+  },
+  {
+    match: /\b(tallest|longest)\b/i,
+    spec: { metric: "height_in", direction: "desc", label: "height", unit: "", decimals: 1 },
+  },
+  {
+    match: /\bshortest\b/i,
+    spec: { metric: "height_in", direction: "asc", label: "height (shortest)", unit: "", decimals: 1 },
+  },
+  {
+    match: /\b(biggest|heaviest|largest)\b/i,
+    spec: { metric: "weight_lb", direction: "desc", label: "weight", unit: " lb", decimals: 0 },
+  },
+  {
+    match: /\b(lightest|smallest)\b/i,
+    spec: { metric: "weight_lb", direction: "asc", label: "weight (lightest)", unit: " lb", decimals: 0 },
+  },
+  {
+    match: /\b(highest\s+jumper|best\s+vertical|most\s+explosive)\b/i,
+    spec: { metric: "vertical_in", direction: "desc", label: "vertical jump", unit: '"', decimals: 1 },
+  },
+  {
+    match: /\b(longest|best)\s+broad(\s+jump)?\b/i,
+    spec: { metric: "broad_jump_in", direction: "desc", label: "broad jump", unit: "", decimals: 1 },
+  },
+  {
+    match: /\b(quickest|best|lowest)\s+(three[\s-]?cone|3[\s-]?cone)\b|\bmost\s+agile\b/i,
+    spec: { metric: "three_cone", direction: "asc", label: "three-cone", unit: "s", decimals: 2 },
+  },
+  {
+    match: /\b(strongest|most\s+(reps|bench)|best\s+bench)\b/i,
+    spec: { metric: "bench_reps", direction: "desc", label: "bench-press reps", unit: " reps", decimals: 0 },
+  },
+];
+
+function matchSuperlative(query: string): SuperlativeSpec | null {
+  for (const entry of SUPERLATIVE_TABLE) {
+    if (entry.match.test(query)) return entry.spec;
+  }
+  return null;
 }
 
 function detectIntent(
@@ -503,6 +565,21 @@ function detectIntent(
   const yearMatches = Array.from(
     query.matchAll(/\b(20(?:1[4-9]|2[0-9]))\b/g),
   ).map((m) => parseInt(m[1], 10));
+
+  // Superlative intent comes BEFORE class. "Fastest QB in 2026" is a
+  // superlative — class intent would otherwise eat it (it has a year + a
+  // position) and return a generic class summary instead of the answer.
+  // Only fires when there's no resolved historical player.
+  if (!resolvedHistoricalPlayer) {
+    const spec = matchSuperlative(query);
+    if (spec) {
+      const year = yearMatches.length > 0 ? Math.max(...yearMatches) : 2026;
+      return {
+        type: "superlative",
+        superlativeScope: { year, position, spec },
+      };
+    }
+  }
 
   // Class intent: explicit class keyword OR implicit year+position pattern.
   // Implicit form catches "most physical RB in 2026" or "best WR this draft"
@@ -636,14 +713,22 @@ async function prepareChat(
     const years = intent.classScope?.years ?? [2026];
     const position = intent.classScope?.position ?? null;
     preEngineBlock = await summarizeClassMulti(years, position);
+  } else if (intent.type === "superlative" && intent.superlativeScope) {
+    // Superlative queries answer deterministically from the bundle —
+    // no RAG retrieval. The structured block carries the top-N + a
+    // coverage disclaimer, which the bot paraphrases.
+    subjectIds = [];
+    subjectNames = [];
+    const { year, position, spec } = intent.superlativeScope;
+    preEngineBlock = await summarizeSuperlative(year, position, spec, 3);
   }
 
   let chunks: RagChunk[];
   if (subjectIds.length > 0) {
     chunks = await retrieveForPlayers(query, subjectIds);
-  } else if (intent.type === "class") {
-    // Skip RAG entirely for class queries — the structured summary is
-    // the answer. A retrieval at this point would just pull one random
+  } else if (intent.type === "class" || intent.type === "superlative") {
+    // Skip RAG entirely for class + superlative — the structured block
+    // is the answer. A retrieval at this point would pull a random
     // player's chunks and bias the synthesis toward them.
     chunks = [];
   } else {
@@ -655,10 +740,14 @@ async function prepareChat(
 
   const engineCompBlocks: string[] = [];
   if (preEngineBlock) engineCompBlocks.push(preEngineBlock);
-  // Skip the per-subject "top comparables" block for find-style — the
-  // cross-cohort block already covers what the bot needs to know, and
-  // adding 4 subjects' worth of comp lists would blow up the prompt.
-  if (intent.type !== "find_style" && intent.type !== "class") {
+  // Skip the per-subject "top comparables" block for find-style /
+  // class / superlative — the structured block already carries what
+  // the bot needs and a fan-out would blow up the prompt.
+  if (
+    intent.type !== "find_style" &&
+    intent.type !== "class" &&
+    intent.type !== "superlative"
+  ) {
     for (const [i, sid] of subjectIds.slice(0, 2).entries()) {
       const comps: EngineComp[] = await topCompsForPlayer(sid, 5);
       const name = subjectNames[i] ?? sid;

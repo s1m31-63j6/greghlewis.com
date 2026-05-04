@@ -19,47 +19,47 @@ export default function MethodologyPage() {
           Methodology
         </h1>
         <p className="mt-2 text-sm text-stone-500">
-          How a 2026 prospect ends up as a vector, where the comparisons come
-          from, and what ScoutBot is allowed to say.
+          Five-layer vector decomposition over 1,048 skill prospects (2014–2026),
+          weighted by constrained grid search on a held-out validation cohort.
         </p>
 
         <div className="mt-12 space-y-12 text-stone-700 leading-relaxed">
           <section>
             <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
-              The shape of the problem
+              Cohort and corpus
             </h2>
             <p>
-              Pre-draft comparables are an old genre. Every analyst has a
-              preferred &ldquo;X reminds me of Y&rdquo; line, and every model
-              has a preferred way of formalizing it. The interesting question
-              isn&rsquo;t whether comps work — it&rsquo;s how to build them
-              from material that doesn&rsquo;t require a $500/year scouting
-              subscription.
+              The pool is 1,048 skill-position prospects (QB / RB / WR / TE)
+              drafted between 2014 and 2026. The cohort is split three ways
+              for evaluation: <strong>2014–2020</strong> as training (settled
+              career outcomes), <strong>2021–2025</strong> as validation
+              (partial outcomes), and <strong>2026</strong> as the live
+              prediction cohort.
             </p>
             <p className="mt-4">
-              The engine here uses 100% public play-by-play (nflverse + CFBD)
-              for engineered features, plus seven free analyst voices and one
-              paywalled one (Brugler&rsquo;s &ldquo;The Beast&rdquo;) for the
-              language layer. The point isn&rsquo;t to beat PFF or Brugler.
-              It&rsquo;s to show what falls out when you take public data
-              seriously, layer it intentionally, and let the eval metrics
-              tell you when an architectural choice is masking a problem.
-            </p>
-            <p className="mt-4">
-              Pool: 1,048 prospects across 2014–2026, skill positions only
-              (QB / RB / WR / TE). 2014–2020 is the training cohort
-              (settled outcomes), 2021–2025 is the validation cohort
-              (partial outcomes), 2026 is the prediction cohort.
+              The corpus combines two strictly separated pipelines.
+              Quantitative features are sourced 100% from public play-by-play
+              and counting data (nflverse, CFBD, nflverse/combine). The
+              language layer — the trait scores and the chat retrieval — uses
+              a curated set of pre-draft scouting voices: Brugler&rsquo;s
+              &ldquo;The Beast&rdquo;, Bleacher Report&rsquo;s scouting
+              department, NFL Network (Daniel Jeremiah, Lance Zierlein, Bucky
+              Brooks), ESPN (Kiper, Miller, Reid, Legwold), CBS Sports
+              (Renner, Wilson), Connor Rogers (Rotoworld), and Walter
+              Football. Wikipedia is admitted to chat retrieval only;
+              retrospective revisionism would leak post-draft signal into a
+              pre-draft embedding, so it is excluded from the similarity
+              pipeline.
             </p>
           </section>
 
           <section>
             <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
-              From play-by-play to a player vector
+              Feature construction
             </h2>
             <p>
-              Each prospect ends up as a vector in five layered subspaces.
-              Three of them are deterministic transforms of public data:
+              Each prospect is represented in five layered subspaces. Three
+              are deterministic transforms of public quantitative data:
             </p>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
@@ -70,31 +70,35 @@ export default function MethodologyPage() {
               <li>
                 <span className="font-medium text-stone-800">VOLUME</span>{" "}
                 — career counting stats (snaps, attempts, targets, yards),
-                normalized to a per-game and a career-arc-velocity form so
-                a five-game freshman season doesn&rsquo;t read as a four-year
-                workload.
+                normalized to a per-game form and a career-arc-velocity form
+                so a five-game freshman season does not register as a
+                four-year workload.
               </li>
               <li>
                 <span className="font-medium text-stone-800">EFFICIENCY</span>{" "}
-                — the heart of the engine. EPA-per-attempt splits, CPOE,
-                success rate by down and distance, schedule-adjusted
-                production, aDOT, pressure-handling rates. ~30–50 features
-                per position computed directly from the play-by-play parquet.
+                — EPA-per-attempt splits, CPOE, success rate by down and
+                distance, schedule-adjusted production, aDOT, and
+                pressure-handling rates. ~30–50 features per position
+                computed directly from the play-by-play parquet.
               </li>
+            </ul>
+            <p className="mt-4">
+              The remaining two layers encode draft capital and a scouting-
+              text-derived trait vector:
+            </p>
+            <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <span className="font-medium text-stone-800">DRAFT</span>{" "}
                 — three features encoding the prospect&rsquo;s actual draft
-                slot: capital percentile, round normalization, and a Day-1
-                indicator. New in v3 (more on the methodology choice below).
+                slot: capital percentile, round normalization, and a
+                Day-1 indicator.
               </li>
               <li>
                 <span className="font-medium text-stone-800">TRAITS</span>{" "}
                 — a 10–14-dimension scouting vector per position
                 (accuracy_short, contact_balance, route_tree_breadth, etc.),
-                each scored 1–5 by Sonnet 4.6 reading every analyst chunk
-                we have for that prospect. The scores are deterministic
-                given the same input chunks; the prompt asks for evidence
-                quotes so each score is auditable in the side panel.
+                each scored 1–5 by an LLM trait-extraction protocol
+                (next section).
               </li>
             </ul>
             <p className="mt-4">
@@ -102,20 +106,48 @@ export default function MethodologyPage() {
               <code className="mx-1 rounded bg-stone-100 px-1 py-0.5 text-xs">
                 engine/features/catalog.py
               </code>
-              (70 QB / 54 RB / 56 WR / 45 TE) plus the trait dimensions.
-              Engineered features are the &ldquo;cake&rdquo; — Brugler-in-RAG
-              is the cherry on top.
+              (70 QB / 54 RB / 56 WR / 45 TE) plus the per-position trait
+              dimensions.
             </p>
           </section>
 
           <section>
             <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
-              Five lenses, weighted into one similarity score
+              Trait extraction protocol
             </h2>
             <p>
-              Each layer is L2-normalized inside its own subspace, then
-              cosine-compared. The five layer similarities are then combined
-              by per-position weights:
+              The TRAITS layer is produced by Sonnet 4.6 reading every
+              analyst chunk in the corpus for a given prospect and emitting
+              a per-trait 1–5 score with a supporting evidence quote. Trait
+              dimensions are fixed per position and the prompt is held
+              constant across runs, so the scores are deterministic given
+              the same input chunks.
+            </p>
+            <p className="mt-4">
+              Two operational choices preserve auditability. First, the
+              prospect&rsquo;s name and school are anonymized to{" "}
+              <code className="rounded bg-stone-100 px-1 py-0.5 text-xs">
+                &lt;PROSPECT&gt;
+              </code>{" "}
+              and{" "}
+              <code className="rounded bg-stone-100 px-1 py-0.5 text-xs">
+                &lt;SCHOOL&gt;
+              </code>{" "}
+              tokens before scoring, removing one channel of name-based
+              bias. Second, every score is stored alongside the analyst
+              quote that supports it, so any rendered trait observation in
+              the side panel is traceable back to the source sentence.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
+              Similarity model and weighting
+            </h2>
+            <p>
+              Each layer is L2-normalized within its subspace and reduced to
+              a per-pair cosine similarity. The five layer similarities are
+              combined into a single score by per-position weights:
             </p>
             <div className="mt-4 overflow-x-auto">
               <table className="text-sm w-full">
@@ -166,84 +198,78 @@ export default function MethodologyPage() {
               </table>
             </div>
             <p className="mt-4">
-              A few weights demand explanation. <strong>QB BODY = 0</strong>{" "}
-              — once a QB clears the broad athletic floor, measurables
-              don&rsquo;t separate professional outcomes. <strong>RB
-              VOLUME = 0</strong> — workload archetype is already encoded
-              in the trait scores (workhorse vs. scatback vs. three-down),
-              so an explicit volume lens double-counts and inflates close
-              comps. <strong>WR DRAFT = 0.05</strong> — receiver draft slot
-              is the noisiest outcome correlate of the four positions, and
-              we want the comp set to read as archetype-similar, not
-              draft-tier-similar.
+              Three of the per-position weights warrant explanation.
+              <strong> QB BODY = 0</strong>: above the broad athletic
+              floor, measurables do not separate professional outcomes at
+              quarterback. <strong>RB VOLUME = 0</strong>: workload
+              archetype is already encoded in the trait vector
+              (workhorse / scatback / three-down), so an explicit volume
+              lens double-counts and inflates close comp similarities.
+              <strong> WR DRAFT = 0.05</strong>: receiver draft slot is
+              the noisiest outcome correlate among the four positions, and
+              the design objective for WR comp sets is archetype similarity
+              rather than draft-tier similarity.
             </p>
           </section>
 
           <section>
             <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
-              The grid search, with two guardrails
+              Weight selection: grid search with two constraints
             </h2>
             <p>
-              An earlier version of the engine used eyeball-tuned weights.
-              v3 replaces them with a grid search across the layer space,
-              evaluated on the validation cohort by exact-tier outcome
-              accuracy. Two constraints were added when the unconstrained
-              search produced winners that scored well on the metric but
-              behaved badly in the smoke test.
+              Per-position weights are selected by grid search across the
+              five-layer simplex, with the validation cohort&rsquo;s
+              exact-tier outcome accuracy as the optimization objective.
+              Two constraints are imposed when the unconstrained search
+              produces winners that score well on the metric but degrade
+              archetype quality in qualitative review.
             </p>
             <div className="mt-4 space-y-4 text-sm">
               <div>
-                <div className="font-medium text-stone-800">DRAFT ≤ 0.30</div>
+                <div className="font-medium text-stone-800">
+                  Constraint 1: DRAFT ≤ 0.30
+                </div>
                 <p className="text-stone-600 mt-1">
-                  Without a cap, the search drove DRAFT to 0.80–0.90 for QB
-                  and WR. The model was no longer a comparables engine —
-                  it had learned that draft slot is a leakage-strong outcome
-                  proxy and was collapsing into a draft-tier predictor.
-                  Capping DRAFT at 0.30 forces the other layers to do the
-                  work. The cap is a methodological choice, not an
-                  empirical optimum.
+                  Without a cap, the search drives DRAFT to 0.80–0.90 for
+                  QB and WR. The model collapses into a draft-tier predictor —
+                  draft slot is a leakage-strong outcome proxy in the
+                  validation cohort. Capping DRAFT at 0.30 forces the
+                  remaining four layers to do the work. The cap is a
+                  methodological choice, not an empirical optimum.
                 </p>
               </div>
               <div>
                 <div className="font-medium text-stone-800">
-                  WR TRAITS ≥ 0.30 (override)
+                  Constraint 2: WR TRAITS ≥ 0.30 (override)
                 </div>
                 <p className="text-stone-600 mt-1">
                   After the DRAFT cap, the unconstrained WR winner had
-                  VOLUME = 0.65 and TRAITS = 0.15. In smoke-testing this
-                  produced Carnell Tate&rsquo;s top-5 comp set as five
-                  busts — the volume lens favored prospects who simply
-                  played a lot, and aged-out college producers crowd out
-                  the top of the WR pool. The TRAITS-floor override fixes
-                  the bust-cluster collapse at a cost of 3.7pp of exact
+                  VOLUME = 0.65 and TRAITS = 0.15. Qualitative review
+                  surfaced a bust-cluster collapse: aged-out college
+                  producers crowded the top of the WR comp space, so
+                  archetype-similar but bust-tier prospects clustered with
+                  headline names. The TRAITS-floor override resolves the
+                  collapse at a cost of 3.7 percentage points of exact
                   outcome accuracy. The trade is deliberate: archetype
-                  quality over outcome accuracy, specifically for WR.
+                  fidelity is prioritized over outcome accuracy at WR
+                  specifically.
                 </p>
               </div>
             </div>
-            <p className="mt-4">
-              On the validation cohort (n=398), the locked v3 weights
-              produce <strong>56.0% exact-tier accuracy</strong> and{" "}
-              <strong>89.7% within ±1 tier</strong>, with F1 = 0.352 and
-              Jaccard agreement against published expert comp sets of 16.1%.
-              That&rsquo;s +11 percentage points on exact-tier and +6.8
-              points on Jaccard over the v2 architecture. By position,
-              feature_v2_traits resolves to QB 63.8% / RB 60.0% / TE 53.4%
-              / WR 51.9%.
-            </p>
           </section>
 
           <section>
             <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
-              Archetypes are k-means clusters in trait space
+              Archetype clustering
             </h2>
             <p>
-              The 3D layout you see in the graph is UMAP over the trait
-              vectors, force-nudged by explicit comp edges. The labeled
-              sub-clusters within each position (&ldquo;Pocket processor&rdquo;,
+              The 3D layout in the graph is UMAP over the trait vectors,
+              force-nudged by the explicit comp edges. Sub-cluster labels
+              within each position (&ldquo;Pocket processor&rdquo;,
               &ldquo;Power back&rdquo;, &ldquo;Vertical threat&rdquo;,
               etc.) come from k-means on the same trait vectors, with k
-              chosen per position by what makes football sense:
+              chosen per position by archetype distinctness in football
+              terms:
             </p>
             <ul className="mt-4 space-y-1 text-sm">
               <li><strong>QB:</strong> k=3 (pocket processor, dual-threat, big-arm)</li>
@@ -252,93 +278,115 @@ export default function MethodologyPage() {
               <li><strong>TE:</strong> k=3 (inline Y, move TE, receiving F)</li>
             </ul>
             <p className="mt-4">
-              Labels are picked from a small heuristic table keyed on which
-              trait the cluster centroid most over-indexes against the
-              position-wide average. The clusters are computed in the
-              browser at page load (~80ms over 1,000 prospects) so changing
-              k or relabeling doesn&rsquo;t require a data rebuild.
+              Cluster labels are assigned from a small heuristic table keyed
+              on which trait the cluster centroid most over-indexes against
+              the position-wide average. Clustering is computed in the
+              browser at page load (~80ms over 1,000 prospects); changing
+              k or relabeling does not require a data rebuild.
             </p>
           </section>
 
           <section>
             <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
-              ScoutBot is a wrapper around discipline, not magic
+              Chat synthesis pipeline
             </h2>
             <p>
-              The chat is a Bedrock Knowledge Base retrieval (Titan v2
-              embeddings, hybrid search) plus a custom Sonnet 4.6 synthesis
-              call. The split is deliberate. Bedrock&rsquo;s managed
+              ScoutBot is a Bedrock Knowledge Base retrieval (Titan v2
+              embeddings, hybrid search) feeding a custom Sonnet 4.6
+              synthesis call. Retrieval and generation are split
+              deliberately. The managed{" "}
               <code className="mx-1 rounded bg-stone-100 px-1 py-0.5 text-xs">
                 RetrieveAndGenerate
               </code>{" "}
-              path lets the model freely quote retrieved chunks verbatim,
-              which would be a Brugler licensing violation. Splitting the
-              calls gives us full control over the synthesis prompt.
+              path permits verbatim quoting of retrieved chunks, which would
+              violate Brugler licensing. Splitting the calls returns full
+              control of the synthesis prompt to the application.
             </p>
             <p className="mt-4">
-              The system prompt enforces eight rules. The two with real
-              teeth are:
+              The system prompt enforces nine rules. The two with the most
+              enforcement weight are:
             </p>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
-                <span className="font-medium text-stone-800">Paraphrase, never quote.</span>{" "}
+                <span className="font-medium text-stone-800">
+                  Paraphrase, never quote.
+                </span>{" "}
                 Never reproduce more than four consecutive words from any
                 retrieved chunk. All scouting text is treated as licensed
                 third-party material.
               </li>
               <li>
-                <span className="font-medium text-stone-800">Ground every claim or stop.</span>{" "}
-                If the retrieved chunks don&rsquo;t describe the prospect
-                being asked about, ScoutBot says so and stops, instead of
+                <span className="font-medium text-stone-800">
+                  Ground every claim or stop.
+                </span>{" "}
+                If the retrieved chunks do not describe the prospect being
+                asked about, the bot says so and stops, instead of
                 synthesizing a profile from incidental mentions in other
-                reports. This is the rule that prevents the &ldquo;made up
-                a school affiliation&rdquo; class of failure.
+                reports. This is the rule that prevents fabricated school
+                affiliations and biographical details.
               </li>
             </ul>
             <p className="mt-4">
-              Three query intents are detected before retrieval: (1) regular
-              by-name questions, (2) <em>find-style</em> queries
-              (&ldquo;find a Saquon-style runner&rdquo;), which look up
-              cross-cohort comp edges from the engine instead of routing
-              to the historical reference player, and (3) <em>class</em>{" "}
-              queries (&ldquo;how does the 2026 WR class compare to
-              2025?&rdquo;), which compose a structured class summary from
-              the bundle (headline prospects, dominant trait counts,
-              average ceiling/floor) and skip RAG retrieval entirely. Per-
-              player chat from the side panel always answers about the
-              pinned subject.
+              Four query intents are detected before retrieval and route to
+              different pipelines: (1) <em>regular</em> by-name questions
+              (RAG over scouting chunks scoped to the resolved player_id);
+              (2) <em>find-style</em> queries (&ldquo;find a Saquon-style
+              runner&rdquo;) which look up cross-cohort comp edges from the
+              engine and re-anchor retrieval on the 2026 matches rather
+              than the historical reference; (3) <em>class</em> queries
+              (&ldquo;how does the 2026 WR class compare to 2025?&rdquo;)
+              which compose a structured class summary from the bundle —
+              qualitative tier labels, prevalence-ordered traits, headline
+              names — and skip RAG retrieval; and (4) <em>superlative</em>{" "}
+              queries (&ldquo;fastest QB in 2026&rdquo;, &ldquo;tallest
+              WR&rdquo;, &ldquo;biggest TE&rdquo;) which run a deterministic
+              top-N query against the bundle&rsquo;s combine + bio fields,
+              with a coverage disclaimer when N-of-M prospects in the
+              cohort have the requested measurable. Per-player chat from
+              the side panel skips intent detection and always answers
+              about the pinned subject.
             </p>
             <p className="mt-4">
               Retrieval fans out to one Bedrock call per pinned subject at
               numResults=14, then enforces a per-source cap of 2 chunks in
               post-processing — voice diversity without 12 round trips.
               Responses stream token-by-token via SSE; perceived latency
-              from typed-question to first-token is 1.5–4 seconds.
+              from typed question to first token is 1.5–4 seconds.
             </p>
           </section>
 
           <section>
             <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
-              Sources
+              Validation
+            </h2>
+            <p>
+              On the validation cohort (n = 398), the locked v3 weights
+              produce <strong>56.0% exact-tier accuracy</strong> against
+              published expert comp sets, <strong>89.7% within ±1
+              tier</strong>, F1 = 0.352, and Jaccard agreement of 16.1%.
+              Versus the v2 architecture, this is +11 percentage points on
+              exact-tier accuracy and +6.8 points on Jaccard.
+            </p>
+            <p className="mt-4">
+              By position, exact-tier accuracy resolves to QB 63.8% / RB
+              60.0% / TE 53.4% / WR 51.9%. The WR tail is consistent with
+              the trait-floor override design choice — archetype fidelity
+              over outcome accuracy at the noisiest position.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
+              Source ledger
             </h2>
             <p className="text-sm text-stone-600 mb-4">
-              ScoutBot answers are grounded in a curated corpus of
-              pre-draft scouting from twelve named analysts and three
-              reference layers. Every claim in an answer is traceable
-              back to one or more of these sources. ScoutBot itself writes
-              as a single editorial voice, but the underlying retrieval is
-              source-tagged and transparent.
-            </p>
-            <p className="text-sm text-stone-600 mb-4">
-              An important distinction: the chat retrieval corpus and the
-              comp-engine&rsquo;s similarity embeddings are{" "}
-              <em>separate pipelines</em>. The similarity engine uses
-              snapshot-only pre-draft sources (Brugler, Walter Football,
-              etc.) — Wikipedia and other living-document sources are
-              excluded there because retrospective revisionism would leak
-              post-draft signal into a &ldquo;pre-draft&rdquo; embedding.
-              Chat retrieval has no such constraint and uses Wikipedia
-              freely as a current-info layer.
+              Every retrieved claim is traceable back to one or more named
+              sources. ScoutBot answers as a single editorial voice; the
+              underlying retrieval is source-tagged and transparent. As
+              noted above, the chat retrieval corpus and the comp-engine
+              similarity embeddings are separate pipelines — the engine
+              uses pre-draft snapshot sources only, while chat retrieval
+              admits Wikipedia as a current-info layer.
             </p>
             <dl className="space-y-4 text-sm">
               <div>
@@ -346,11 +394,11 @@ export default function MethodologyPage() {
                   Dane Brugler — &ldquo;The Beast&rdquo; (The Athletic)
                 </dt>
                 <dd className="text-stone-600 mt-0.5">
-                  Brugler&rsquo;s annual draft guide. Comprehensive
-                  per-prospect profiles covering archetype, strengths,
-                  concerns, and analyst comp. Considered the gold-standard
-                  single source by NFL front offices. Licensed material —
-                  paraphrased, never quoted verbatim.
+                  Annual draft guide. Comprehensive per-prospect profiles
+                  covering archetype, strengths, concerns, and analyst comp.
+                  Considered the gold-standard single source by NFL front
+                  offices. Licensed material — paraphrased, never quoted
+                  verbatim.
                 </dd>
               </div>
               <div>
@@ -358,11 +406,11 @@ export default function MethodologyPage() {
                   B/R Scouting Dept (Bleacher Report)
                 </dt>
                 <dd className="text-stone-600 mt-0.5">
-                  Brandon Thorn, Dame Parson, Daniel Harms and Matt Holder
+                  Brandon Thorn, Dame Parson, Daniel Harms, and Matt Holder
                   spent eight months evaluating the 2026 class. Densest
-                  source in the corpus: dedicated multi-paragraph
-                  scouting articles per prospect plus position-group
-                  rankings, a final big board, and a final mock.
+                  source in the corpus: dedicated multi-paragraph scouting
+                  articles per prospect plus position-group rankings, a
+                  final big board, and a final mock.
                 </dd>
               </div>
               <div>
@@ -372,41 +420,36 @@ export default function MethodologyPage() {
                 <dd className="text-stone-600 mt-0.5">
                   Three analyst voices, distinguished at retrieval time:{" "}
                   <strong>Daniel Jeremiah</strong> (Top 50 + Top 150 big
-                  boards),{" "}
-                  <strong>Lance Zierlein</strong> (mock drafts 2.1 / 3.0
-                  / 4.0 + position-group rankings), and{" "}
-                  <strong>Bucky Brooks</strong> (final mock + top-five
-                  by position).
+                  boards), <strong>Lance Zierlein</strong> (mock drafts
+                  2.1 / 3.0 / 4.0 + position-group rankings), and{" "}
+                  <strong>Bucky Brooks</strong> (final mock + top-five by
+                  position).
                 </dd>
               </div>
               <div>
-                <dt className="font-medium text-stone-800">
-                  ESPN
-                </dt>
+                <dt className="font-medium text-stone-800">ESPN</dt>
                 <dd className="text-stone-600 mt-0.5">
                   Five analyst boards bundled under one source tag:{" "}
                   <strong>Mel Kiper Jr.</strong> (top 150),{" "}
                   <strong>Matt Miller</strong> (top 481),{" "}
                   <strong>Jordan Reid</strong> (top 499), and{" "}
-                  <strong>Jeff Legwold</strong> (top 100). Plus ESPN&rsquo;s
-                  first-round grades-with-comps article and a
+                  <strong>Jeff Legwold</strong> (top 100). Plus
+                  ESPN&rsquo;s first-round grades-with-comps article and a
                   trait-by-trait standouts piece (&ldquo;most accurate
                   passer&rdquo;, &ldquo;best deep-ball thrower&rdquo;,
-                  etc.) that yields per-trait observations the bot can
-                  surface for skill-specific questions.
+                  etc.) yielding per-trait observations the bot can surface
+                  for skill-specific questions.
                 </dd>
               </div>
               <div>
-                <dt className="font-medium text-stone-800">
-                  CBS Sports
-                </dt>
+                <dt className="font-medium text-stone-800">CBS Sports</dt>
                 <dd className="text-stone-600 mt-0.5">
-                  Two analyst voices:{" "}
-                  <strong>Mike Renner</strong> (top 250 + top 150 big
-                  boards) and <strong>Ryan Wilson</strong> (top 125 +
-                  final big board vs. consensus). Renner is positional-
-                  value-aware; Wilson&rsquo;s commentary frames each
-                  ranking against the industry consensus number.
+                  Two analyst voices: <strong>Mike Renner</strong> (top
+                  250 + top 150 big boards) and{" "}
+                  <strong>Ryan Wilson</strong> (top 125 + final big board
+                  vs. consensus). Renner is positional-value-aware;
+                  Wilson&rsquo;s commentary frames each ranking against the
+                  industry consensus number.
                 </dd>
               </div>
               <div>
@@ -421,9 +464,7 @@ export default function MethodologyPage() {
                 </dd>
               </div>
               <div>
-                <dt className="font-medium text-stone-800">
-                  Walter Football
-                </dt>
+                <dt className="font-medium text-stone-800">Walter Football</dt>
                 <dd className="text-stone-600 mt-0.5">
                   Public per-prospect scouting profiles from
                   walterfootball.com. Strengths / Weaknesses / Summary
@@ -440,58 +481,55 @@ export default function MethodologyPage() {
                   Reference layer used to surface current biographical and
                   career-context facts for any prospect (historical or
                   2026). Excluded from the comp engine&rsquo;s similarity
-                  embeddings to prevent retrospective leakage — the policy
-                  split is documented above.
+                  embeddings to prevent retrospective leakage.
                 </dd>
               </div>
             </dl>
             <p className="mt-4 text-xs text-stone-500 italic">
               Two additional outlets (Pro Football Network, The 33rd Team)
-              were attempted but use Cloudflare bot protection that
-              rejects direct scraping. They&rsquo;re queued for a future
-              pass with a stealth fetcher. PFF is paywalled and would
-              require manual ingestion; not currently in scope.
+              were attempted but use Cloudflare bot protection that rejects
+              direct scraping. They are queued for a future ingest pass.
+              PFF is paywalled and is not currently in scope.
             </p>
           </section>
 
           <section>
             <h2 className="text-sm uppercase tracking-wider text-stone-500 mb-3">
-              What this can&rsquo;t do yet
+              Limitations
             </h2>
-            <p>
-              A few honest limitations the eval doesn&rsquo;t paper over:
-            </p>
-            <ul className="mt-4 space-y-3 text-sm">
+            <ul className="mt-2 space-y-3 text-sm">
               <li>
-                <strong>The eval objective doesn&rsquo;t capture archetype
-                quality.</strong> Outcome-tier accuracy is what the grid
-                search optimizes; Jaccard against expert comps is a sanity
-                check. Neither directly measures &ldquo;does this comp set
-                read as football-similar to a human?&rdquo; The WR override
-                exists because outcome accuracy and archetype quality
-                pulled in opposite directions and we picked the latter.
+                <strong>The eval objective does not capture archetype
+                quality directly.</strong> Outcome-tier accuracy is what
+                the grid search optimizes; Jaccard against expert comps is
+                a sanity check. Neither metric measures whether a comp set
+                reads as football-similar to a human reviewer. The WR
+                trait-floor override is the explicit acknowledgment of this
+                gap — accuracy and archetype fidelity diverged, and the
+                latter was prioritized.
               </li>
               <li>
-                <strong>Trait extraction is only as good as the analyst
-                input.</strong> If every analyst hedges on a prospect&rsquo;s
-                pocket presence, Sonnet&rsquo;s score reflects that hedge.
-                Sparse-coverage prospects get noisier trait vectors than
-                Mendoza or Love do.
+                <strong>Trait extraction is bounded by the analyst input.</strong>{" "}
+                When every analyst hedges on a particular trait for a given
+                prospect, the resulting score reflects that hedge.
+                Sparse-coverage prospects produce noisier trait vectors
+                than well-covered headline names.
               </li>
               <li>
-                <strong>The 2026 cohort has uncertain draft slots.</strong>{" "}
-                The DRAFT layer uses projected draft positions where actual
-                outcomes don&rsquo;t exist yet. Once the actual draft happens
-                the prediction-cohort vectors should be rebuilt with
-                resolved slots.
+                <strong>The 2026 cohort has uncertain draft slots at
+                ingest time.</strong> The DRAFT layer uses projected slots
+                where actual outcomes do not exist yet. The
+                prediction-cohort vectors should be rebuilt with resolved
+                slots once the actual draft completes.
               </li>
               <li>
-                <strong>No combine measurables for some 2026
-                prospects.</strong> The BODY layer falls back to
-                position-mean imputation when measurables are missing,
-                which under-differentiates prospects in those rows.
-                Combine-day refresh of the BODY layer is on the post-ship
-                list.
+                <strong>Combine measurables are partial for the 2026
+                cohort.</strong> 32 of 81 2026 prospects have a recorded
+                40, 46 of 81 have height/weight, fewer have three-cone or
+                shuttle. The BODY layer falls back to position-mean
+                imputation when measurables are missing, which under-
+                differentiates prospects in those rows. Refresh of the
+                BODY layer is on the post-ship list.
               </li>
             </ul>
           </section>

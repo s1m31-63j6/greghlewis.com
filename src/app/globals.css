@@ -24,3 +24,11 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
+
+/* ChatBar suggestion carousel — each rotation re-keys the React node so
+   this animation runs fresh on mount. The previous suggestion unmounts
+   without an exit transition; the new one rises into place. */
+@keyframes chatSuggestionEnter {
+  from { opacity: 0; transform: translateY(0.35rem); }
+  to { opacity: 1; transform: translateY(0); }
+}

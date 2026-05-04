@@ -3,11 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useChatThread, type AnswerLength } from "./useChatThread";
 
-const STARTERS = [
-  "How does the 2026 WR class compare to 2025?",
-  "Find a Saquon-style runner in this draft",
-  "Compare Stroud and Mendoza",
+// Rotated through the empty-state input as carousel placeholder text.
+// Slot 0 is the static intro; the others showcase capability ranges
+// (class-level, find-style, comparison) so the user sees what kinds
+// of questions land before typing.
+const SUGGESTIONS = [
+  "Ask ScoutBot about a 2026 prospect, an archetype, a comparison…",
+  "Try: How does the 2026 WR class compare to 2025?",
+  "Try: Find a Saquon-style runner in this draft",
+  "Try: Compare Stroud and Mendoza",
 ];
+const SUGGESTION_INTERVAL_MS = 3500;
 
 interface Props {
   onFocus?: (playerIds: string[]) => void;
@@ -22,6 +28,11 @@ export default function ChatBar({ onFocus }: Props) {
   // Per-conversation answer length. Default short (chat-box-friendly).
   // The setting is sticky across turns until the user flips it.
   const [length, setLength] = useState<AnswerLength>("short");
+  // Carousel index for the empty-state placeholder. Pauses on focus and
+  // when the user has typed anything — keeps the carousel from feeling
+  // like a moving target while the user is composing.
+  const [suggestionIdx, setSuggestionIdx] = useState(0);
+  const [inputFocused, setInputFocused] = useState(false);
   const { messages, busy, error, ask, reset } = useChatThread({ onFocus });
   const threadRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -35,6 +46,16 @@ export default function ChatBar({ onFocus }: Props) {
       threadRef.current.scrollTop = threadRef.current.scrollHeight;
     }
   }, [messages, busy, showThread]);
+
+  // Carousel suggestions. Paused while the user is typing or focused on
+  // the input — a moving placeholder under the cursor would be jarring.
+  useEffect(() => {
+    if (inputFocused || value) return;
+    const id = setInterval(() => {
+      setSuggestionIdx((i) => (i + 1) % SUGGESTIONS.length);
+    }, SUGGESTION_INTERVAL_MS);
+    return () => clearInterval(id);
+  }, [inputFocused, value]);
 
   // Click outside collapses the thread (does NOT reset state). The user
   // explicitly resets via the "New" control.
@@ -69,8 +90,11 @@ export default function ChatBar({ onFocus }: Props) {
 
   const empty = !hasContent;
 
+  // Compact length toggle, sized to live inline inside the chat input
+  // immediately to the left of the Ask button. The same component slots
+  // into all three input states (empty / collapsed / expanded follow-up).
   const lengthToggle = (
-    <div className="inline-flex items-center rounded-full border border-stone-200 bg-white/70 backdrop-blur-sm overflow-hidden shrink-0">
+    <div className="inline-flex items-center rounded-full border border-stone-200 bg-white/95 overflow-hidden shrink-0">
       {(["short", "long"] as AnswerLength[]).map((opt) => (
         <button
           key={opt}
@@ -82,7 +106,7 @@ export default function ChatBar({ onFocus }: Props) {
               ? "Concise answer (default)"
               : "Longer, more detailed answer"
           }
-          className={`text-[10px] uppercase tracking-wider px-2 py-1 transition ${
+          className={`text-[10px] uppercase tracking-wider px-1.5 py-0.5 transition ${
             length === opt
               ? "bg-stone-900 text-white"
               : "text-stone-500 hover:text-stone-900"
@@ -94,21 +118,42 @@ export default function ChatBar({ onFocus }: Props) {
     </div>
   );
 
-  // Empty state: lone input + starter chips.
+  // Empty state: input only, with rotating placeholder suggestions
+  // and the length toggle pinned inside the bar next to Ask. No more
+  // pill row underneath — the suggestions live in the input itself.
   if (empty) {
+    const showCarousel = !value && !inputFocused;
     return (
       <div
         ref={rootRef}
-        className="absolute top-16 left-1/2 -translate-x-1/2 z-10 w-[min(640px,calc(100vw-32px))] pointer-events-auto"
+        className="absolute z-10 pointer-events-auto top-2 inset-x-2 md:top-16 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-[min(640px,calc(100vw-32px))]"
       >
         <form onSubmit={submit} className="relative">
           <input
             type="text"
             value={value}
             onChange={onChangeValue}
-            placeholder="Ask ScoutBot about a 2026 prospect, an archetype, a comparison…"
-            className="w-full bg-white/85 backdrop-blur-md border border-stone-200 rounded-full px-5 py-2.5 pr-24 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:border-stone-400 focus:bg-white shadow-sm transition"
+            onFocus={() => setInputFocused(true)}
+            onBlur={() => setInputFocused(false)}
+            // Empty native placeholder so our carousel overlay has a
+            // clean slot. The browser's placeholder still kicks in if
+            // JS is somehow disabled — graceful enough.
+            placeholder=""
+            aria-label="Ask ScoutBot"
+            className="w-full bg-white/85 backdrop-blur-md border border-stone-200 rounded-full px-5 py-2.5 pr-[148px] text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:border-stone-400 focus:bg-white shadow-sm transition"
           />
+          {showCarousel && (
+            <span
+              key={suggestionIdx}
+              aria-hidden
+              className="absolute inset-y-0 left-5 right-[148px] flex items-center text-sm text-stone-500 pointer-events-none truncate animate-[chatSuggestionEnter_400ms_ease-out]"
+            >
+              {SUGGESTIONS[suggestionIdx]}
+            </span>
+          )}
+          <div className="absolute right-[60px] top-1/2 -translate-y-1/2">
+            {lengthToggle}
+          </div>
           <button
             type="submit"
             disabled={!value.trim()}
@@ -117,18 +162,6 @@ export default function ChatBar({ onFocus }: Props) {
             Ask
           </button>
         </form>
-        <div className="mt-2.5 flex items-center gap-1.5 flex-wrap justify-center">
-          {STARTERS.map((s) => (
-            <button
-              key={s}
-              onClick={() => void ask(s, length)}
-              className="text-[11px] px-2.5 py-1 rounded-full bg-white/70 hover:bg-white text-stone-600 hover:text-stone-900 border border-stone-200 backdrop-blur-sm transition"
-            >
-              {s}
-            </button>
-          ))}
-          {lengthToggle}
-        </div>
       </div>
     );
   }
@@ -141,7 +174,7 @@ export default function ChatBar({ onFocus }: Props) {
     return (
       <div
         ref={rootRef}
-        className="absolute top-16 left-1/2 -translate-x-1/2 z-10 w-[min(640px,calc(100vw-32px))] pointer-events-auto"
+        className="absolute z-10 pointer-events-auto top-2 inset-x-2 md:top-16 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-[min(640px,calc(100vw-32px))]"
       >
         <form onSubmit={submit} className="relative flex items-center gap-2">
           <button
@@ -159,8 +192,11 @@ export default function ChatBar({ onFocus }: Props) {
               value={value}
               onChange={onChangeValue}
               placeholder="Ask a follow-up… (conversation collapsed)"
-              className="w-full bg-white/85 backdrop-blur-md border border-stone-200 rounded-full px-5 py-2.5 pr-16 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:border-stone-400 focus:bg-white shadow-sm transition"
+              className="w-full bg-white/85 backdrop-blur-md border border-stone-200 rounded-full px-5 py-2.5 pr-[148px] text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:border-stone-400 focus:bg-white shadow-sm transition"
             />
+            <div className="absolute right-[60px] top-1/2 -translate-y-1/2">
+              {lengthToggle}
+            </div>
             <button
               type="submit"
               disabled={!value.trim()}
@@ -178,11 +214,10 @@ export default function ChatBar({ onFocus }: Props) {
   return (
     <div
       ref={rootRef}
-      className="absolute top-16 left-1/2 -translate-x-1/2 z-10 w-[min(640px,calc(100vw-32px))] pointer-events-auto"
+      className="absolute z-10 pointer-events-auto top-2 inset-x-2 md:top-16 md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-[min(640px,calc(100vw-32px))]"
     >
       <div className="bg-white/95 backdrop-blur-md border border-stone-200 rounded-2xl shadow-md flex flex-col max-h-[75vh]">
-        <div className="flex items-center justify-between px-3 py-1.5 border-b border-stone-100">
-          {lengthToggle}
+        <div className="flex items-center justify-end px-3 py-1.5 border-b border-stone-100">
           <button
             type="button"
             onClick={() => setCollapsed(true)}
@@ -236,8 +271,11 @@ export default function ChatBar({ onFocus }: Props) {
               placeholder="Ask a follow-up…"
               autoFocus
               disabled={busy}
-              className="w-full bg-white border border-stone-200 rounded-full px-4 py-1.5 pr-16 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:border-stone-400 transition disabled:opacity-60"
+              className="w-full bg-white border border-stone-200 rounded-full px-4 py-1.5 pr-[140px] text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:border-stone-400 transition disabled:opacity-60"
             />
+            <div className="absolute right-[56px] top-1/2 -translate-y-1/2">
+              {lengthToggle}
+            </div>
             <button
               type="submit"
               disabled={busy || !value.trim()}
