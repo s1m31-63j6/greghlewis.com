@@ -1,0 +1,445 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Sell now, or build to sell? — editorial styling.
+
+   Mirrors the EMBA template's FiveThirtyEight / WSJ / Economist frame
+   with a navy accent in place of brick red — the analysis is about
+   exit valuation, not a personal-finance question, so the visual
+   tone leans corporate-restrained.
+   ───────────────────────────────────────────────────────────────────── */
+
+.exit-page {
+  /* Palette */
+  --paper: #fbfaf7;
+  --paper-shade: #f3f0ea;
+  --rule: #1e1e1e;
+  --ink: #171717;
+  --ink-soft: #3b3b3b;
+  --ink-quiet: #6b6b6b;
+  --ink-meta: #999999;
+
+  --accent: #1B4F7A;       /* Deep navy — the build-to-sell path. */
+  --accent-soft: #dbe7f2;
+  --positive: #2c7a5c;
+  --positive-soft: #cfe2d9;
+  --negative: #9b2424;
+  --negative-soft: #e7cbca;
+  --warn: #b77619;
+  --neutral: #5a5a5a;
+
+  --blue-1: #2b6aa3;
+  --blue-2: #7BA8CB;
+  --blue-soft: #dbe7f2;
+  --gold: #b3892c;
+
+  /* Type */
+  --serif: var(--font-source-serif), Georgia, "Times New Roman", serif;
+  --sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  --mono: var(--font-jetbrains-mono), ui-monospace, Menlo, monospace;
+
+  --max-w: 1200px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.exit-page * {
+  box-sizing: border-box;
+}
+
+.exit-container {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── Top return link ────────────────────────────────────────────── */
+.exit-top-nav {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 18px 32px 0;
+}
+.exit-top-nav a {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink-quiet);
+  text-decoration: none;
+  transition: color 120ms;
+}
+.exit-top-nav a:hover {
+  color: var(--ink);
+}
+
+/* ── Masthead ───────────────────────────────────────────────────── */
+.exit-masthead {
+  border-bottom: 3px double var(--rule);
+  padding: 24px 0 32px;
+  margin-top: 8px;
+}
+.exit-masthead-inner {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+.exit-kicker {
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 16px;
+}
+.exit-h1 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(34px, 4.2vw, 54px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin: 0 0 14px;
+  color: var(--ink);
+}
+.exit-dek {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 1.45;
+  max-width: 820px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ── Tabs ───────────────────────────────────────────────────────── */
+.exit-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--paper);
+  border-bottom: 1px solid #d9d5cc;
+  padding: 0 32px;
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.exit-tabs::-webkit-scrollbar {
+  display: none;
+}
+.exit-tab {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 18px 16px 16px;
+  cursor: pointer;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-quiet);
+  border-bottom: 3px solid transparent;
+  letter-spacing: 0.01em;
+  transition: color 150ms, border-color 150ms;
+}
+.exit-tab:hover {
+  color: var(--ink);
+}
+.exit-tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ── Panels ─────────────────────────────────────────────────────── */
+.exit-panel {
+  padding: 40px 0 60px;
+}
+
+.exit-lede {
+  margin-bottom: 32px;
+  max-width: 820px;
+}
+.exit-lede h2 {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0 0 8px;
+}
+.exit-subhead {
+  font-size: 16px;
+  color: var(--ink-quiet);
+  margin: 0;
+  font-family: var(--sans);
+}
+
+/* ── Stat row (KPI cells) ───────────────────────────────────────── */
+.exit-stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1px;
+  background: #d9d5cc;
+  border: 1px solid #d9d5cc;
+  margin: 0 0 32px;
+}
+.exit-stat-cell {
+  background: #fff;
+  padding: 16px 20px;
+}
+.exit-stat-cell .k {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-meta);
+  font-weight: 600;
+}
+.exit-stat-cell .v {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1;
+  margin-top: 8px;
+}
+.exit-stat-cell .v.pos {
+  color: var(--positive);
+}
+.exit-stat-cell .v.neg {
+  color: var(--negative);
+}
+.exit-stat-cell .v.accent {
+  color: var(--accent);
+}
+.exit-stat-cell .sub {
+  font-size: 12px;
+  color: var(--ink-quiet);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+/* ── Layout: simulator (controls left, chart right) ─────────────── */
+.exit-sim-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 40px;
+  margin-top: 16px;
+}
+@media (max-width: 900px) {
+  .exit-sim-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+/* ── Scenario picker pills ──────────────────────────────────────── */
+.exit-pillrow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 24px;
+}
+.exit-pill {
+  padding: 8px 14px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  background: #fff;
+  border: 1px solid #d9d5cc;
+  border-radius: 100px;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: all 120ms;
+}
+.exit-pill:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.exit-pill.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+/* ── Assumption controls ────────────────────────────────────────── */
+.exit-controls {
+  font-family: var(--sans);
+}
+.exit-controls .group {
+  margin-bottom: 24px;
+}
+.exit-controls .group-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-meta);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #e3dfd6;
+}
+.exit-control {
+  margin-bottom: 14px;
+}
+.exit-control-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.exit-control-label .val {
+  font-family: var(--mono);
+  color: var(--ink);
+  font-size: 12px;
+}
+.exit-control input[type="range"] {
+  width: 100%;
+  accent-color: var(--accent);
+  height: 4px;
+}
+
+/* ── Chart block ────────────────────────────────────────────────── */
+.exit-chart-block {
+  margin-bottom: 36px;
+}
+.exit-chart-block h3 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 4px;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+.exit-caption {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink-quiet);
+  font-size: 15px;
+  line-height: 1.45;
+  margin: 0 0 18px;
+  max-width: 720px;
+}
+.exit-plot {
+  min-height: 280px;
+  width: 100%;
+}
+
+/* ── Notebox ────────────────────────────────────────────────────── */
+.exit-notebox {
+  background: #fff;
+  border-left: 3px solid var(--accent);
+  padding: 18px 22px;
+  margin: 24px 0;
+  font-family: var(--serif);
+}
+.exit-notebox h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 10px;
+}
+.exit-notebox p {
+  font-size: 16px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+.exit-notebox p:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Method tab body ────────────────────────────────────────────── */
+.exit-doc {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.65;
+  max-width: 740px;
+  color: var(--ink);
+}
+.exit-doc h2 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 24px;
+  margin: 32px 0 12px;
+  letter-spacing: -0.005em;
+}
+.exit-doc h2:first-child {
+  margin-top: 0;
+}
+.exit-doc h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 19px;
+  margin: 22px 0 8px;
+}
+.exit-doc p {
+  margin: 0 0 14px;
+}
+.exit-doc ul {
+  margin: 0 0 16px;
+  padding-left: 22px;
+}
+.exit-doc li {
+  margin-bottom: 6px;
+}
+.exit-doc code {
+  font-family: var(--mono);
+  font-size: 14px;
+  background: var(--paper-shade);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--ink);
+}
+.exit-doc strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* ── Footer ─────────────────────────────────────────────────────── */
+.exit-footer {
+  border-top: 1px solid #d9d5cc;
+  padding: 24px 0 40px;
+  font-family: var(--sans);
+  font-size: 13px;
+  color: var(--ink-quiet);
+  margin-top: 40px;
+}
+.exit-footer p {
+  margin: 0 0 4px;
+}
+.exit-footer .meta {
+  font-size: 12px;
+  color: var(--ink-meta);
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────── */
+@media (max-width: 700px) {
+  .exit-container,
+  .exit-masthead-inner,
+  .exit-tabs,
+  .exit-top-nav {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .exit-lede h2 {
+    font-size: 24px;
+  }
+  .exit-stat-cell .v {
+    font-size: 24px;
+  }
+}
