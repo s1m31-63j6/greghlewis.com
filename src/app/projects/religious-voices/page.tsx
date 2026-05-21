@@ -57,11 +57,10 @@ export default async function Page() {
           words, but it is not the leader and not an authoritative source.
         </p>
         <p className="mt-2 text-xs text-stone-600">
-          <span className="text-stone-900">Roman text</span> is drawn from
-          the leader&apos;s actual writings (sources linked beneath each
-          answer).{" "}
-          <em className="text-stone-500">Italicized text</em> is the model
-          extrapolating in their style — not the leader&apos;s own words.
+          <span className="text-stone-900 font-medium">Black text</span>
+          {" is drawn from the leader's actual writings — the small superscript number on each sourced sentence links to the specific passage. "}
+          <span className="text-stone-500">Lighter grey text</span>
+          {" is the model extrapolating in their style — not the leader's own words."}
         </p>
       </div>
 

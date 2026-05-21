@@ -137,15 +137,18 @@ export function MessageRenderer({ content, sources = [], streaming = false }: Pr
           );
         }
         if (seg.type === "extrapolation") {
+          // Rendered as a lighter-grey span (NOT italic). The disclaimer
+          // panel describes this color, so don't reintroduce italic without
+          // updating the disclaimer copy in page.tsx to match.
           return (
-            <em
+            <span
               key={i}
-              className="not-italic italic text-stone-500"
+              className="text-stone-500"
               title="Extrapolation in this leader's style — not their own words"
             >
               {seg.text}
               {cursor}
-            </em>
+            </span>
           );
         }
         // Plain segments include the inter-tag whitespace; preserve

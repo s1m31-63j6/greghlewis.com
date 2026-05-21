@@ -131,3 +131,90 @@ sources:
     work_title: "The Reconstruction of Religious Thought in Islam"
     year: 1930
     split_into: 6
+
+  # ----- Syed Ameer Ali (Islam, 1849-1928, "The Spirit of Islam") -----
+  - leader_id: ameer-ali
+    identifier: dli.ernet.4773
+    work_title: "The Spirit of Islam"
+    year: 1922
+    split_into: 10
+
+  # ===== Hindu — additional leaders =====
+  - leader_id: ramakrishna
+    identifier: gospelofrmakri00ramarich
+    work_title: "The Gospel of Sri Ramakrishna"
+    year: 1907
+    split_into: 12
+  - leader_id: rabindranath-tagore
+    identifier: sdhanrealisation0000tago
+    work_title: "Sadhana — The Realisation of Life"
+    year: 1914
+    split_into: 8
+  - leader_id: swami-rama-tirtha
+    identifier: in.ernet.dli.2015.217289
+    work_title: "In Woods of God-Realization, Vol. IV"
+    year: 1913
+    split_into: 8
+
+  # ===== Buddhist — additional leaders =====
+  - leader_id: paul-carus
+    identifier: gospelofbuddha00caruuoft
+    work_title: "The Gospel of Buddha: According to Old Records"
+    year: 1894
+    split_into: 8
+  - leader_id: edwin-arnold
+    identifier: lightofasia0000edwi
+    work_title: "The Light of Asia, or The Great Renunciation"
+    year: 1881
+    split_into: 8
+  - leader_id: dt-suzuki
+    identifier: in.ernet.dli.2015.128317
+    work_title: "Outlines of Mahayana Buddhism"
+    year: 1907
+    split_into: 8
+
+  # ===== Jewish — additional leaders =====
+  - leader_id: kaufmann-kohler
+    identifier: jewishtheology0000drkk
+    work_title: "Jewish Theology, Systematically and Historically Considered"
+    year: 1918
+    split_into: 10
+  - leader_id: israel-abrahams
+    identifier: studiesinpharis00abrauoft
+    work_title: "Studies in Pharisaism and the Gospels"
+    year: 1917
+    split_into: 8
+  - leader_id: israel-abrahams
+    identifier: chaptersonjewis00amergoog
+    work_title: "Chapters on Jewish Literature"
+    year: 1899
+    split_into: 6
+  - leader_id: stephen-wise
+    identifier: childversuspare01wisegoog
+    work_title: "Child versus Parent"
+    year: 1922
+    split_into: 4
+
+  # ===== Methodist — additional sources =====
+  - leader_id: phoebe-palmer
+    identifier: wayofholinesswit01palm
+    work_title: "The Way of Holiness"
+    year: 1845
+    split_into: 6
+  - leader_id: phoebe-palmer
+    identifier: incidentalillust00palmrich
+    work_title: "Incidental Illustrations of the Economy of Salvation"
+    year: 1866
+    split_into: 6
+  - leader_id: matthew-simpson
+    identifier: sermons00simp
+    work_title: "Sermons by Bishop Matthew Simpson"
+    year: 1885
+    split_into: 8
+
+  # ===== Southern Baptist — more Spurgeon (he has 3,000+ sermons; expand) =====
+  - leader_id: charles-spurgeon
+    identifier: in.ernet.dli.2015.44966
+    work_title: "Metropolitan Tabernacle Pulpit Vol. 52"
+    year: 1906
+    split_into: 8

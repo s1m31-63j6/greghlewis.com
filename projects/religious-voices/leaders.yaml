@@ -421,6 +421,21 @@ leaders:
     sources:
       - { url: "https://archive.org/", type: archive, license: "public-domain" }
 
+  - leader_id: phoebe-palmer
+    religion: Methodist
+    full_name: Phoebe Palmer
+    role: Lay theologian; mother of the 19th-c. Holiness movement within Methodism
+    dates: 1807-1874
+    era_start: 1835
+    themes:
+      - The doctrine of entire sanctification (the "second blessing")
+      - '"Altar theology" — laying all on the altar by faith'
+      - Camp-meeting revivalism and Tuesday Meeting for the Promotion of Holiness
+      - Women's spiritual authority and lay ministry
+      - The Way of Holiness as a practical manual of consecration
+    sources:
+      - { url: "https://archive.org/details/wayofholinesswit01palm", type: archive, license: "public-domain" }
+
   - leader_id: francis-asbury
     religion: Methodist
     full_name: Francis Asbury
@@ -571,6 +586,48 @@ leaders:
     sources:
       - { url: "https://archive.org/", type: archive, license: "public-domain" }
 
+  - leader_id: kaufmann-kohler
+    religion: Jewish
+    full_name: Kaufmann Kohler
+    role: Reform rabbi; president of Hebrew Union College
+    dates: 1843-1926
+    era_start: 1879
+    themes:
+      - '"Jewish Theology, Systematically and Historically Considered" — major Reform synthesis'
+      - Pittsburgh Platform of 1885 (chief architect)
+      - Judaism as ethical monotheism in the Reform key
+      - Encyclopedia Judaica (Jewish Encyclopedia editorship)
+    sources:
+      - { url: "https://archive.org/details/jewishtheology0000drkk", type: archive, license: "public-domain" }
+
+  - leader_id: israel-abrahams
+    religion: Jewish
+    full_name: Israel Abrahams
+    role: British rabbi and scholar of Jewish history
+    dates: 1858-1925
+    era_start: 1896
+    themes:
+      - '"Studies in Pharisaism and the Gospels" — Jewish reading of the New Testament era'
+      - '"Jewish Life in the Middle Ages" — popular Anglo-Jewish history'
+      - Recovery of the Pharisees against polemical caricature
+      - Reader in Talmudic and rabbinic literature at Cambridge
+    sources:
+      - { url: "https://archive.org/details/studiesinpharis00abrauoft", type: archive, license: "public-domain" }
+
+  - leader_id: stephen-wise
+    religion: Jewish
+    full_name: Stephen Samuel Wise
+    role: Reform rabbi; civil rights and Zionist leader; founder of the Jewish Institute of Religion
+    dates: 1874-1949
+    era_start: 1907
+    themes:
+      - Social-justice Judaism — labor, civil rights, antifascism
+      - Independent pulpit (Free Synagogue) free from board control
+      - Early American Zionism and the founding of the World Jewish Congress
+      - Prophetic preaching addressed beyond the synagogue to American public life
+    sources:
+      - { url: "https://archive.org/details/childversuspare01wisegoog", type: archive, license: "public-domain" }
+
   - leader_id: solomon-schechter
     religion: Jewish
     full_name: Solomon Schechter
@@ -627,6 +684,34 @@ leaders:
       - { url: "https://www.rabbisacks.org/", type: sacks, license: "fair-use" }
 
   # -------- Buddhist (~5 leaders, English voice) --------
+
+  - leader_id: edwin-arnold
+    religion: Buddhist
+    full_name: Sir Edwin Arnold
+    role: English poet; popularized Buddhism in the West through "The Light of Asia"
+    dates: 1832-1904
+    era_start: 1879
+    themes:
+      - The life of the Buddha rendered as Victorian narrative verse
+      - First major English-language sympathetic portrait of Buddhism
+      - East-West cultural exchange in the late 19th century
+      - The Four Noble Truths as a universal moral vision
+    sources:
+      - { url: "https://archive.org/details/lightofasia0000edwi", type: archive, license: "public-domain" }
+
+  - leader_id: paul-carus
+    religion: Buddhist
+    full_name: Paul Carus
+    role: German-American philosopher; editor and Western interpreter of Buddhism
+    dates: 1852-1919
+    era_start: 1894
+    themes:
+      - '"The Gospel of Buddha" — a curated Buddhist canon for Western readers'
+      - The continuity of religious truth across traditions
+      - Religion of Science — empirical inquiry as compatible with faith
+      - Early 20th-century interfaith and Buddhist-Christian dialogue
+    sources:
+      - { url: "https://archive.org/details/gospelofbuddha00caruuoft", type: archive, license: "public-domain" }
 
   - leader_id: henry-olcott
     religion: Buddhist
@@ -712,6 +797,20 @@ leaders:
     sources:
       - { url: "https://archive.org/", type: archive, license: "public-domain" }
 
+  - leader_id: ameer-ali
+    religion: Islam
+    full_name: Syed Ameer Ali
+    role: Indian Muslim jurist, jurist of the Privy Council; author of "The Spirit of Islam"
+    dates: 1849-1928
+    era_start: 1873
+    themes:
+      - '"The Spirit of Islam" — seminal English-language Muslim apologetic and history'
+      - Islam as the religion of reason and progress against orientalist caricature
+      - The ethical and political genius of early Islamic civilization
+      - Muslim representation in late colonial India
+    sources:
+      - { url: "https://archive.org/details/dli.ernet.4773", type: archive, license: "public-domain" }
+
   - leader_id: muhammad-iqbal
     religion: Islam
     full_name: Muhammad Iqbal
@@ -767,6 +866,50 @@ leaders:
       - { url: "https://yaqeeninstitute.org/", type: yaqeen, license: "fair-use" }
 
   # -------- Hindu (~5 leaders) --------
+
+  - leader_id: ramakrishna
+    religion: Hindu
+    full_name: Sri Ramakrishna Paramahamsa
+    role: Bengali mystic; foundational figure of modern Hindu spirituality
+    dates: 1836-1886
+    era_start: 1870
+    themes:
+      - Direct experience of the Divine across many forms (Kali, Krishna, Christ, Allah)
+      - The unity of all religions tested through personal practice
+      - Renunciation of "lust and gold" as the gateway to God-realization
+      - Devotion (bhakti) as accessible to the householder
+      - Parables and homely metaphors over abstract metaphysics
+    sources:
+      - { url: "https://archive.org/details/gospelofrmakri00ramarich", type: archive, license: "public-domain" }
+
+  - leader_id: rabindranath-tagore
+    religion: Hindu
+    full_name: Rabindranath Tagore
+    role: Bengali poet, philosopher; Nobel laureate
+    dates: 1861-1941
+    era_start: 1910
+    themes:
+      - Sadhana — the realisation of the infinite in everyday life
+      - The harmony of self with the universe
+      - Education as the freedom of the spirit (Visva-Bharati / Santiniketan)
+      - The poet-saint synthesis of Indian and Western thought
+      - Religion as the artist's sense of the wholeness of being
+    sources:
+      - { url: "https://archive.org/details/sdhanrealisation0000tago", type: archive, license: "public-domain" }
+
+  - leader_id: swami-rama-tirtha
+    religion: Hindu
+    full_name: Swami Rama Tirtha
+    role: Vedanta teacher; one of the first Indian swamis to teach in America
+    dates: 1873-1906
+    era_start: 1900
+    themes:
+      - Practical Vedanta in the language of the working modern
+      - The "Real Self" beyond the limited ego
+      - Renunciation joined with engagement in the world
+      - East-West cultural synthesis (he taught at Berkeley & East Coast)
+    sources:
+      - { url: "https://archive.org/details/in.ernet.dli.2015.217289", type: archive, license: "public-domain" }
 
   - leader_id: vivekananda
     religion: Hindu
