@@ -21,6 +21,8 @@ fresh via build.py). Loaded once per process and cached.
 
 from __future__ import annotations
 
+import os
+import shutil
 from pathlib import Path
 from typing import Any
 
@@ -29,8 +31,27 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 # Project root = parent of server/
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CHROMA_DIR = PROJECT_ROOT / "chroma_db"
+CHROMA_DIR_SOURCE = PROJECT_ROOT / "chroma_db"
 COLLECTION = "religious_voices"
+
+
+def _resolve_chroma_dir() -> Path:
+    """Pick a writable location for Chroma to operate on.
+
+    Lambda mounts the image filesystem read-only; Chroma needs to write
+    SQLite journal files even for read-only queries. On Lambda (detected
+    via AWS_LAMBDA_FUNCTION_NAME) we copy the embedded chroma_db to
+    /tmp at first init. Locally the source path stays writable.
+    """
+    if "AWS_LAMBDA_FUNCTION_NAME" not in os.environ:
+        return CHROMA_DIR_SOURCE
+    runtime = Path("/tmp/chroma_db")
+    if not runtime.exists():
+        shutil.copytree(CHROMA_DIR_SOURCE, runtime)
+    return runtime
+
+
+CHROMA_DIR = _resolve_chroma_dir()
 
 EMBED_MODEL = "BAAI/bge-base-en-v1.5"
 # BGE retrieval-search instruction; per the model card, prepending this on

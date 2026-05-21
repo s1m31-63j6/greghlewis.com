@@ -27,6 +27,8 @@ dependencies = [
     "sse-starlette>=2.1",
     "python-dotenv>=1.0",
 ]
+# Note: AWS Lambda Web Adapter (LWA) wraps the FastAPI server in Lambda
+# without any code changes — see Dockerfile. No Python adapter dep needed.
 
 [tool.uv]
 dev-dependencies = [

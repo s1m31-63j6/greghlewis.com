@@ -1,0 +1,24 @@
+# Don't ship dev artifacts into the Lambda container image.
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.env
+.env.local
+
+# Scrapers and corpus pipeline are build-time only — Lambda only needs
+# the server, leaders.yaml, chroma_db, and lambda_handler.
+scrape/
+build.py
+chunk.py
+common.py
+embed.py
+embed_chroma.py
+seed.py
+seed_passages.yaml
+wikisource_sources.yaml
+archive_org_sources.yaml
+vatican_sources.yaml
+uv.lock
+README.md

@@ -9,17 +9,24 @@ export const metadata: Metadata = {
     "An AI chatbot that channels the voice of religious leaders across eight traditions and two centuries — grounded in each leader's published writings.",
 };
 
-// Fetch the leader manifest from the Python FastAPI service at request
-// time (so the dropdown reflects what's actually in the Chroma vector
-// store, not a stale JSON file). RELIGIOUS_VOICES_API is read at SSR
-// time on the Next.js server; defaults to localhost:8000 for dev.
+// Fetch the leader manifest via the same-origin proxy route at SSR
+// time. The proxy handles SigV4-signing the request to the Python
+// Lambda (whose Function URL requires AWS_IAM auth).
 async function safeLoadLeaders(): Promise<Leader[]> {
   try {
-    const apiBase = process.env.RELIGIOUS_VOICES_API || "http://localhost:8000";
-    const res = await fetch(`${apiBase}/leaders`, { cache: "no-store" });
+    // At SSR time on Amplify, relative URLs need a host. Default to the
+    // public origin in production; for local dev the dev server resolves
+    // the relative path itself.
+    const origin =
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      process.env.AMPLIFY_HOSTING_URL ||
+      "http://localhost:3000";
+    const res = await fetch(`${origin}/api/religious-voices/leaders`, {
+      cache: "no-store",
+    });
     if (!res.ok) return [];
-    const data = (await res.json()) as { leaders: Leader[] };
-    return data.leaders;
+    const data = (await res.json()) as { leaders?: Leader[] };
+    return data.leaders ?? [];
   } catch {
     return [];
   }

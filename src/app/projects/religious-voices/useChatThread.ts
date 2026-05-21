@@ -67,13 +67,11 @@ export function useChatThread({ leaderId, getTurnstileToken, resetTurnstile }: O
 
       try {
         const historyForServer = messages.map((m) => ({ role: m.role, content: m.content }));
-        // The frontend now calls the Python FastAPI service directly
-        // (LangChain + sentence-transformers + Chroma + Anthropic SDK).
-        // In dev, both run on localhost; in prod, set this env var to
-        // the deployed Python service URL.
-        const apiBase =
-          process.env.NEXT_PUBLIC_RELIGIOUS_VOICES_API || "http://localhost:8000";
-        const res = await fetch(`${apiBase}/chat`, {
+        // The chat call goes through a same-origin Next.js API route that
+        // SigV4-signs the request and proxies it to the Python Lambda
+        // (the Lambda Function URL uses AuthType=AWS_IAM because org
+        // policy forbids public AuthType=NONE URLs).
+        const res = await fetch("/api/religious-voices/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
