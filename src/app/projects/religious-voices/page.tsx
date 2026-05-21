@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ProjectShell } from "./ProjectShell";
-import { loadMeta } from "@/lib/religious-voices/leaders";
 import type { Leader } from "@/lib/religious-voices/types";
 
 export const metadata: Metadata = {
@@ -10,13 +9,17 @@ export const metadata: Metadata = {
     "An AI chatbot that channels the voice of religious leaders across eight traditions and two centuries — grounded in each leader's published writings.",
 };
 
-// Best-effort meta load. If the corpus hasn't been built yet (e.g., the
-// first deploy before the Python pipeline runs), render the page with no
-// leaders rather than failing the build.
+// Fetch the leader manifest from the Python FastAPI service at request
+// time (so the dropdown reflects what's actually in the Chroma vector
+// store, not a stale JSON file). RELIGIOUS_VOICES_API is read at SSR
+// time on the Next.js server; defaults to localhost:8000 for dev.
 async function safeLoadLeaders(): Promise<Leader[]> {
   try {
-    const meta = await loadMeta();
-    return meta.leaders;
+    const apiBase = process.env.RELIGIOUS_VOICES_API || "http://localhost:8000";
+    const res = await fetch(`${apiBase}/leaders`, { cache: "no-store" });
+    if (!res.ok) return [];
+    const data = (await res.json()) as { leaders: Leader[] };
+    return data.leaders;
   } catch {
     return [];
   }
@@ -66,36 +69,41 @@ export default async function Page() {
 
       <footer className="mt-16 pt-6 border-t border-stone-200 text-xs text-stone-500 leading-relaxed">
         <p>
-          Architecture: a static corpus of {leaders.length} leaders and
-          ~1,800 verbatim excerpts, embedded with Cohere&apos;s English v3
-          model and stored as a single JSON file in the app bundle. Each
-          chat turn runs an in-process cosine similarity to pull the most
-          relevant excerpts for the selected leader, then asks Claude
-          Sonnet 4.6 (via AWS Bedrock) to compose an answer in that
-          leader&apos;s voice. The persona system prompt is cached on
-          Bedrock so follow-up turns in the same session pay only ~10% of
-          the input cost.
+          Architecture: {leaders.length} leaders × ~1,800 verbatim excerpts
+          across eight traditions. Embeddings are computed locally with{" "}
+          <code className="text-[11px] bg-stone-100 px-1 rounded">
+            BAAI/bge-base-en-v1.5
+          </code>{" "}
+          (768-dim sentence-transformer) and stored in a persistent Chroma
+          vector store. At query time, a Python LangChain pipeline runs
+          retrieval against Chroma, fills a persona prompt template, and
+          streams the answer from Claude Sonnet 4.5 via the Anthropic
+          Python SDK with two-breakpoint prompt caching. The Next.js
+          frontend you&apos;re reading calls the Python service directly
+          over SSE.
         </p>
         <p className="mt-2">
           Sources: Wikisource (Journal of Discourses for 19th-c. Mormon
           leaders; Vivekananda&apos;s Complete Works; Gandhi&apos;s Indian
           Home Rule), vatican.va (papal encyclicals from Leo XIII through
-          Francis), and archive.org (Olcott&apos;s Buddhist Catechism;
-          Spurgeon sermons; Asbury&apos;s journal; Schechter&apos;s
-          Studies in Judaism; Iqbal&apos;s Reconstruction). Every chunk
-          links back to its source on hover.
+          Francis), churchofjesuschrist.org (modern LDS General Conference),
+          and archive.org (Olcott&apos;s Buddhist Catechism; Spurgeon
+          sermons; Asbury&apos;s journal; Schechter&apos;s Studies in
+          Judaism; Iqbal&apos;s Reconstruction). The superscript number
+          on each quoted sentence links back to the specific source
+          passage.
         </p>
         <p className="mt-2">
-          No managed vector database, no idle cost. A deliberate
-          architectural contrast to the{" "}
+          A deliberate architectural contrast to the{" "}
           <Link
             href="/projects/nfl-prospect-comparables"
             className="underline decoration-stone-300 underline-offset-2 hover:text-stone-900"
           >
             NFL Comparables chatbot
           </Link>{" "}
-          on this site, which uses Bedrock Knowledge Bases on top of an
-          Aurora vector store — appropriate at scale, overkill here.
+          on this site: that one is a TypeScript-first AWS Bedrock RAG;
+          this one is Python-first with LangChain and a self-managed
+          vector store.
         </p>
       </footer>
     </main>

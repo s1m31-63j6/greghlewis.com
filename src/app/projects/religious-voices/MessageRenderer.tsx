@@ -1,24 +1,30 @@
 "use client";
 
 import { useMemo } from "react";
+import type { SourceAttribution } from "./useChatThread";
 
 // Streaming-aware parser for the model's `<quote>...</quote>` and
 // `<extrapolation>...</extrapolation>` tags.
 //
+// Quotes can carry an optional `n="N"` attribute that references the
+// SOURCE PASSAGE chunk number from the per-turn user message. When
+// present, we render a superscript numeral linking to the source URL.
+//
 // Re-runs from scratch on every accumulated-text update — simpler than a
-// stateful parser, and the cost is negligible (≤ a few hundred characters
-// of scanning per delta). Handles partial tags arriving mid-stream by
-// stopping at the first incomplete tag boundary.
+// stateful parser, and the cost is negligible. Handles partial tags
+// arriving mid-stream by stopping at the first incomplete tag boundary.
 
 type Segment =
-  | { type: "quote"; text: string }
+  | { type: "quote"; text: string; sourceN?: number }
   | { type: "extrapolation"; text: string }
   | { type: "plain"; text: string };
 
-const QUOTE_OPEN = "<quote>";
 const QUOTE_CLOSE = "</quote>";
 const EXTRAP_OPEN = "<extrapolation>";
 const EXTRAP_CLOSE = "</extrapolation>";
+
+// Matches `<quote>` or `<quote n="3">` (single or double quoted, optional spaces).
+const QUOTE_OPEN_RE = /^<quote(?:\s+n=["']?(\d+)["']?)?>/;
 
 function parseStream(text: string): Segment[] {
   const segments: Segment[] = [];
@@ -27,23 +33,30 @@ function parseStream(text: string): Segment[] {
     const openIdx = text.indexOf("<", i);
     if (openIdx === -1) {
       const tail = text.slice(i);
-      if (tail.trim()) segments.push({ type: "plain", text: tail });
+      // Preserve whitespace too — the space between adjacent tags is the
+      // only thing keeping sentences from running together visually.
+      if (tail) segments.push({ type: "plain", text: tail });
       break;
     }
     if (openIdx > i) {
       const plain = text.slice(i, openIdx);
-      if (plain.trim()) segments.push({ type: "plain", text: plain });
+      if (plain) segments.push({ type: "plain", text: plain });
     }
-    if (text.startsWith(QUOTE_OPEN, openIdx)) {
-      const closeIdx = text.indexOf(QUOTE_CLOSE, openIdx + QUOTE_OPEN.length);
+    const rest = text.slice(openIdx);
+    const quoteMatch = rest.match(QUOTE_OPEN_RE);
+    if (quoteMatch) {
+      const openLen = quoteMatch[0].length;
+      const sourceN = quoteMatch[1] ? parseInt(quoteMatch[1], 10) : undefined;
+      const closeIdx = text.indexOf(QUOTE_CLOSE, openIdx + openLen);
       if (closeIdx === -1) {
-        const content = text.slice(openIdx + QUOTE_OPEN.length);
-        if (content) segments.push({ type: "quote", text: content });
+        const content = text.slice(openIdx + openLen);
+        if (content) segments.push({ type: "quote", text: content, sourceN });
         break;
       }
       segments.push({
         type: "quote",
-        text: text.slice(openIdx + QUOTE_OPEN.length, closeIdx),
+        text: text.slice(openIdx + openLen, closeIdx),
+        sourceN,
       });
       i = closeIdx + QUOTE_CLOSE.length;
     } else if (text.startsWith(EXTRAP_OPEN, openIdx)) {
@@ -62,9 +75,9 @@ function parseStream(text: string): Segment[] {
       // Could be a partial tag mid-stream ("<quo", "</extrap…") — if the
       // remainder is a strict prefix of one of our tags, pause and wait
       // for more text. Otherwise treat "<" as literal.
-      const rest = text.slice(openIdx);
       const isPartial =
-        QUOTE_OPEN.startsWith(rest) ||
+        "<quote".startsWith(rest) ||
+        rest.startsWith("<quote") ||
         EXTRAP_OPEN.startsWith(rest) ||
         QUOTE_CLOSE.startsWith(rest) ||
         EXTRAP_CLOSE.startsWith(rest);
@@ -78,26 +91,47 @@ function parseStream(text: string): Segment[] {
 
 interface Props {
   content: string;
+  sources?: SourceAttribution[];
   // True while text is still streaming; renders a soft cursor on the
   // tail-most segment so the user sees something is happening.
   streaming?: boolean;
 }
 
-export function MessageRenderer({ content, streaming = false }: Props) {
+export function MessageRenderer({ content, sources = [], streaming = false }: Props) {
   const segments = useMemo(() => parseStream(content), [content]);
+
+  // Track which sources are actually referenced so we can show the cited
+  // ones inline (as superscripts) AND build a clean "Sources:" footer in
+  // the parent component.
   return (
-    <div className="space-y-3 leading-relaxed text-[15px]">
+    <div className="leading-relaxed text-[15px]">
       {segments.map((seg, i) => {
         const isLast = i === segments.length - 1;
-        const cursor = streaming && isLast ? <span className="inline-block w-[2px] h-[1em] align-[-2px] bg-stone-500 ml-[1px] animate-pulse" /> : null;
+        const cursor =
+          streaming && isLast ? (
+            <span className="inline-block w-[2px] h-[1em] align-[-2px] bg-stone-500 ml-[1px] animate-pulse" />
+          ) : null;
         if (seg.type === "quote") {
+          // 1-based source index → 0-based array index
+          const src = seg.sourceN && sources[seg.sourceN - 1] ? sources[seg.sourceN - 1] : null;
           return (
             <span
               key={i}
-              className="text-stone-900 [&+span]:ml-[0.35em]"
+              className="text-stone-900"
               title="Drawn from this leader's published writings"
             >
               {seg.text}
+              {src ? (
+                <a
+                  href={src.source_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title={`${src.work_title}${src.year ? ` (${src.year})` : ""}`}
+                  className="text-[0.7em] align-super text-stone-500 hover:text-stone-900 underline-offset-2 hover:underline ml-[1px]"
+                >
+                  {seg.sourceN}
+                </a>
+              ) : null}
               {cursor}
             </span>
           );
@@ -106,12 +140,29 @@ export function MessageRenderer({ content, streaming = false }: Props) {
           return (
             <em
               key={i}
-              className="not-italic text-stone-500 italic [&+span]:ml-[0.35em] [&+em]:ml-[0.35em]"
+              className="not-italic italic text-stone-500"
               title="Extrapolation in this leader's style — not their own words"
             >
               {seg.text}
               {cursor}
             </em>
+          );
+        }
+        // Plain segments include the inter-tag whitespace; preserve
+        // newline-style breaks for paragraph spacing.
+        if (seg.text.includes("\n\n")) {
+          // Split into paragraph breaks
+          const parts = seg.text.split(/\n\n+/);
+          return (
+            <span key={i}>
+              {parts.map((p, j) => (
+                <span key={j}>
+                  {p}
+                  {j < parts.length - 1 && <span className="block h-3" />}
+                </span>
+              ))}
+              {cursor}
+            </span>
           );
         }
         return (

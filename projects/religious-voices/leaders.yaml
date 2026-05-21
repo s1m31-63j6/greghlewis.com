@@ -406,6 +406,21 @@ leaders:
 
   # -------- Methodist (~5 leaders) --------
 
+  - leader_id: john-wesley
+    religion: Methodist
+    full_name: John Wesley
+    role: Founder of Methodism
+    dates: 1703-1791
+    era_start: 1738
+    themes:
+      - Sermons on grace, sanctification, and Christian perfection
+      - The General Rules of the Methodist societies
+      - Field preaching to colliers, miners, and the unchurched
+      - Lay leadership and small-group accountability (class meetings)
+      - The Methodist movement as renewal within the Church of England
+    sources:
+      - { url: "https://archive.org/", type: archive, license: "public-domain" }
+
   - leader_id: francis-asbury
     religion: Methodist
     full_name: Francis Asbury

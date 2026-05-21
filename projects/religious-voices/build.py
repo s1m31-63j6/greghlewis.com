@@ -1,32 +1,26 @@
-"""Orchestrator: gather source texts → chunk → embed → emit corpus JSON.
+"""Orchestrator: gather source texts → chunk → embed → write to Chroma.
 
 Two modes:
 
-  --seed     Use seed_passages.yaml only. Fast (no network scrapes),
-             produces a small corpus suitable for local testing of the
-             full stack before the proper scrapers are wired in.
+  --seed     Use seed_passages.yaml only. Fast (no network scrapes).
+  (default)  Run all configured scrapers + seed passages.
 
-  (default)  Run all configured scrapers + seed passages. Produces the
-             full ~2K-chunk corpus committed to the repo for production.
-
-Outputs to /src/lib/religious-voices/:
-  corpus.json       — chunks with embeddings (~5-10 MB gzipped)
-  corpus.meta.json  — leader list for SSR dropdown population
+Output: a persistent Chroma DB at projects/religious-voices/chroma_db/,
+read at query time by the FastAPI server (server/main.py).
 """
 
 from __future__ import annotations
 
 import argparse
-import datetime as dt
-import json
 from collections import Counter
 
 from rich.console import Console
 
 from chunk import SourceText, cap_per_leader, chunk_source
-from common import OUTPUT_DIR, Leader, load_leaders
-from embed import embed_chunks
+from common import Leader, load_leaders
+from embed_chroma import embed_to_chroma
 from scrape.archive_org import scrape_archive_org
+from scrape.church_jesus_christ import scrape_general_conference
 from scrape.journal_of_discourses import scrape_journal_of_discourses
 from scrape.seed import load_seed_passages
 from scrape.vatican_va import scrape_vatican
@@ -57,6 +51,12 @@ def gather_sources(leaders: list[Leader], seed_only: bool) -> list[SourceText]:
     # pass without hand-listing each discourse in wikisource_sources.yaml.
     sources.extend(scrape_journal_of_discourses(leaders))
 
+    # General Conference: extends LDS coverage from 1971 forward —
+    # Spencer W. Kimball through Russell M. Nelson + Dallin H. Oaks.
+    # Decodes the base64 INITIAL_STATE blob each modern LDS page ships
+    # to get the talk body without needing a JS-rendering scraper.
+    sources.extend(scrape_general_conference(leaders))
+
     # archive.org plaintext: covers traditions Wikisource is thin on —
     # Buddhist (Olcott) and Southern Baptist (Spurgeon).
     sources.extend(scrape_archive_org(leaders))
@@ -73,50 +73,6 @@ def gather_sources(leaders: list[Leader], seed_only: bool) -> list[SourceText]:
     # sources.extend(scrape_vatican(leaders))
 
     return sources
-
-
-def write_outputs(leaders: list[Leader], chunks: list, *, embedded: bool) -> None:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    now = dt.datetime.utcnow().isoformat() + "Z"
-
-    # meta — small, no embeddings, safe for SSR import
-    meta_path = OUTPUT_DIR / "corpus.meta.json"
-    meta_path.write_text(
-        json.dumps(
-            {
-                "generated_at": now,
-                "leaders": [
-                    {
-                        "leader_id": l.leader_id,
-                        "religion": l.religion,
-                        "full_name": l.full_name,
-                        "role": l.role,
-                        "dates": l.dates,
-                        "era_start": l.era_start,
-                        "themes": l.themes,
-                    }
-                    for l in leaders
-                ],
-            },
-            indent=2,
-        )
-    )
-    console.log(f"wrote {meta_path}")
-
-    # corpus — full chunks (with embeddings if --no-embed wasn't passed)
-    corpus_path = OUTPUT_DIR / "corpus.json"
-    corpus_path.write_text(
-        json.dumps(
-            {
-                "generated_at": now,
-                "embedded": embedded,
-                "chunks": [c.model_dump() for c in chunks],
-            },
-            indent=None,  # single-line JSON shrinks the file ~25%
-            separators=(",", ":"),
-        )
-    )
-    console.log(f"wrote {corpus_path} ({corpus_path.stat().st_size / 1_000_000:.1f} MB)")
 
 
 def main() -> None:
@@ -152,18 +108,20 @@ def main() -> None:
         console.log(f"  {lid}: {n}")
 
     if args.no_embed:
-        console.log("[yellow]--no-embed set; emitting corpus.json without embeddings[/]")
+        console.log("[yellow]--no-embed set; skipping embedding step[/]")
     else:
-        embed_chunks(chunks)
+        # New path: sentence-transformers + Chroma. The Python LangChain
+        # server (server/main.py) reads from Chroma at query time.
+        embed_to_chroma(chunks)
 
-    # Only emit leaders that actually have chunks — a dropdown entry with
-    # no corpus would just be a dead end for the user.
-    leaders_with_chunks = [l for l in leaders if l.leader_id in by_leader]
+    # Report which leaders made it into the corpus and which were skipped.
+    # The Python server's /leaders endpoint filters dynamically based on
+    # which leader_ids show up in the Chroma collection, so no separate
+    # meta file is needed.
     skipped = [l.leader_id for l in leaders if l.leader_id not in by_leader]
     if skipped:
         console.log(f"[dim]skipping {len(skipped)} leaders with no chunks: {', '.join(skipped)}[/]")
-
-    write_outputs(leaders_with_chunks, chunks, embedded=not args.no_embed)
+    console.log(f"[green]done — {len(by_leader)} leaders in Chroma at projects/religious-voices/chroma_db/[/]")
 
 
 if __name__ == "__main__":

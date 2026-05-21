@@ -67,17 +67,28 @@ export const Turnstile = forwardRef<TurnstileHandle, Props>(function Turnstile(
   const widgetIdRef = useRef<string | null>(null);
   const tokenRef = useRef<string | undefined>(undefined);
 
+  // Keep the latest onTokenChange in a ref so the render effect below does
+  // NOT depend on it. Without this, every parent re-render (every keystroke
+  // in the chat input) re-creates the onTokenChange function identity,
+  // re-runs the effect, and remounts the widget — which Cloudflare renders
+  // as a flicker / re-load on every keystroke.
+  const onTokenChangeRef = useRef(onTokenChange);
+  useEffect(() => {
+    onTokenChangeRef.current = onTokenChange;
+  });
+
   useImperativeHandle(ref, () => ({
     getToken: () => tokenRef.current,
     reset: () => {
       if (window.turnstile && widgetIdRef.current) {
         window.turnstile.reset(widgetIdRef.current);
         tokenRef.current = undefined;
-        onTokenChange?.(undefined);
+        onTokenChangeRef.current?.(undefined);
       }
     },
   }));
 
+  // Only mount/remount when siteKey changes — i.e. essentially never.
   useEffect(() => {
     let cancelled = false;
     loadScript().then(() => {
@@ -86,17 +97,18 @@ export const Turnstile = forwardRef<TurnstileHandle, Props>(function Turnstile(
         sitekey: siteKey,
         callback: (token) => {
           tokenRef.current = token;
-          onTokenChange?.(token);
+          onTokenChangeRef.current?.(token);
         },
         "expired-callback": () => {
           tokenRef.current = undefined;
-          onTokenChange?.(undefined);
+          onTokenChangeRef.current?.(undefined);
         },
         "error-callback": () => {
           tokenRef.current = undefined;
-          onTokenChange?.(undefined);
+          onTokenChangeRef.current?.(undefined);
         },
         theme: "light",
+        appearance: "interaction-only",
       });
     });
     return () => {
@@ -106,7 +118,7 @@ export const Turnstile = forwardRef<TurnstileHandle, Props>(function Turnstile(
         widgetIdRef.current = null;
       }
     };
-  }, [siteKey, onTokenChange]);
+  }, [siteKey]);
 
   return <div ref={containerRef} />;
 });

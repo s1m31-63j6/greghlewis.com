@@ -80,6 +80,49 @@ sources:
     year: 1909
     split_into: 6
 
+  # ----- John Wesley (Methodist founder, public domain) -----
+  # Wesley's standard 44 sermons in their 18th-century original printing
+  # are firmly public domain. We pull a few of the well-attested ones.
+  - leader_id: john-wesley
+    identifier: bim_eighteenth-century_three-sermons-on-the-ori_wesley-john_1776
+    work_title: "Three Sermons on the Original, Nature, Properties, and Use of the Law (1776)"
+    year: 1776
+    split_into: 3
+  - leader_id: john-wesley
+    identifier: bim_eighteenth-century_a-seasonable-address-to-_wesley-john_1776_0
+    work_title: "A Seasonable Address (1776)"
+    year: 1776
+    split_into: 2
+  - leader_id: john-wesley
+    identifier: sermonsonseveral00wesl
+    work_title: "Sermons on Several Occasions"
+    year: 1825
+    split_into: 8
+
+  # ----- Sri Aurobindo (Hindu, 1872-1950, 1918 work public domain) -----
+  - leader_id: sri-aurobindo
+    identifier: in.ernet.dli.2015.200829
+    work_title: "The Renaissance in India"
+    year: 1918
+    split_into: 5
+  - leader_id: sri-aurobindo
+    identifier: in.ernet.dli.2015.146965
+    work_title: "The Foundations of Indian Culture"
+    year: 1918
+    split_into: 6
+
+  # ----- George W. Truett (Southern Baptist, 1867-1944, PD-era works) -----
+  - leader_id: george-w-truett
+    identifier: questforsouls009583mbp
+    work_title: "A Quest for Souls"
+    year: 1917
+    split_into: 5
+  - leader_id: george-w-truett
+    identifier: godscalltoameric0000geor_u0n4
+    work_title: "God's Call to America and Other Addresses"
+    year: 1923
+    split_into: 5
+
   # ----- Muhammad Iqbal (Islam, 1930 Reconstruction of Religious Thought) -----
   # NOTE: copyright is jurisdiction-ambiguous; treating as fair-use for
   # chunked short excerpts with source attribution.

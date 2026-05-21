@@ -1,18 +1,31 @@
 [project]
-name = "religious-voices-corpus"
-version = "0.1.0"
-description = "Corpus pipeline for the Religious Voices chatbot — scrape, chunk, embed, emit JSON for the Next.js site."
+name = "religious-voices"
+version = "0.2.0"
+description = "Religious Voices chatbot — corpus pipeline + LangChain + Chroma + sentence-transformers + Anthropic SDK serving a FastAPI chat backend."
 requires-python = ">=3.11"
 dependencies = [
+    # Corpus pipeline
     "httpx>=0.27",
     "beautifulsoup4>=4.12",
     "lxml>=5.2",
-    "boto3>=1.34",
     "pydantic>=2.7",
     "pyyaml>=6.0",
     "tenacity>=8.3",
     "tiktoken>=0.7",
     "rich>=13.7",
+    # Embeddings + vector store + LLM orchestration
+    "sentence-transformers>=3.0",
+    "chromadb>=0.5",
+    "langchain>=0.3",
+    "langchain-anthropic>=0.3",
+    "langchain-chroma>=0.1.4",
+    "langchain-huggingface>=0.1",
+    "anthropic>=0.40",
+    # FastAPI server
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "sse-starlette>=2.1",
+    "python-dotenv>=1.0",
 ]
 
 [tool.uv]

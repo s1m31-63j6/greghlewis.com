@@ -112,6 +112,7 @@ export function Chat({ leader }: Props) {
                   <>
                     <MessageRenderer
                       content={m.content}
+                      sources={m.sources}
                       streaming={i === streamingIdx && busy}
                     />
                     {m.sources && m.sources.length > 0 && (

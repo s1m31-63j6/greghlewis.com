@@ -67,7 +67,13 @@ export function useChatThread({ leaderId, getTurnstileToken, resetTurnstile }: O
 
       try {
         const historyForServer = messages.map((m) => ({ role: m.role, content: m.content }));
-        const res = await fetch("/api/religious-voices/chat", {
+        // The frontend now calls the Python FastAPI service directly
+        // (LangChain + sentence-transformers + Chroma + Anthropic SDK).
+        // In dev, both run on localhost; in prod, set this env var to
+        // the deployed Python service URL.
+        const apiBase =
+          process.env.NEXT_PUBLIC_RELIGIOUS_VOICES_API || "http://localhost:8000";
+        const res = await fetch(`${apiBase}/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -101,6 +107,18 @@ export function useChatThread({ leaderId, getTurnstileToken, resetTurnstile }: O
             });
           } else if (ev.type === "meta") {
             metaSources = ev.sources;
+            // Attach sources to the assistant placeholder NOW so the
+            // MessageRenderer can render inline superscript references
+            // (e.g. "...the gift of the Sabbath³") as the text streams
+            // in, rather than only after the full answer arrives.
+            setMessages((prev) => {
+              const next = [...prev];
+              const last = next[next.length - 1];
+              if (last && last.role === "assistant") {
+                next[next.length - 1] = { ...last, sources: ev.sources };
+              }
+              return next;
+            });
           } else if (ev.type === "error") {
             throw new Error(ev.message);
           }
