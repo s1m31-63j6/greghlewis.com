@@ -1,8 +1,11 @@
 // Cloudflare Turnstile server-side verification.
 //
-// Fails open in dev (TURNSTILE_SECRET_KEY unset AND NODE_ENV !== production),
-// fails closed in prod. The frontend gates submission on a token, so the
-// only path here without a token is local dev.
+// Treat absent TURNSTILE_SECRET_KEY as "feature not configured" — pass
+// through regardless of NODE_ENV. The frontend's NEXT_PUBLIC_TURNSTILE_REQUIRED
+// flag controls whether the visitor sees a challenge widget, and the
+// per-IP rate limit (rate-limit.ts) carries abuse protection on its own
+// for a low-traffic portfolio site. To enable enforcement: add a real
+// Cloudflare key + set TURNSTILE_SECRET_KEY.
 
 const VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
@@ -11,10 +14,7 @@ export async function verifyTurnstile(
   remoteIp: string | null,
 ): Promise<{ ok: boolean; reason?: string }> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret) {
-    if (process.env.NODE_ENV !== "production") return { ok: true, reason: "dev-skip" };
-    return { ok: false, reason: "server-misconfigured" };
-  }
+  if (!secret) return { ok: true, reason: "turnstile-not-configured" };
   if (!token) return { ok: false, reason: "no-token" };
 
   const form = new URLSearchParams({ secret, response: token });
