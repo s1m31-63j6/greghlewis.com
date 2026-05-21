@@ -5,9 +5,9 @@ each religious leader, then emits two JSON files that the Next.js app
 consumes:
 
 - `../../src/lib/religious-voices/corpus.json` — chunks with 1024-dim Cohere
-  embeddings (~5–10 MB).
-- `../../src/lib/religious-voices/corpus.meta.json` — small leader list
-  for SSR dropdown population.
+  embeddings (~30 MB at 4-decimal precision; 9 MB gzipped).
+- `../../src/lib/religious-voices/leaders.json` — leader manifest (only
+  leaders with chunks), seeds the SSR dropdown.
 
 ## Architecture in one sentence
 
@@ -43,7 +43,7 @@ vector DB that the NFL chat uses — zero infrastructure cost at idle.
    `AWS_PROFILE=portfolio`). Bedrock Cohere `embed-english-v3` runs in
    `us-east-1`.
 
-4. **Commit the output**: `corpus.json` and `corpus.meta.json` are
+4. **Commit the output**: `corpus.json` and `leaders.json` are
    checked into the repo. The Next.js build picks them up automatically.
 
 ## Chunk shape

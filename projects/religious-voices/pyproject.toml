@@ -1,7 +1,7 @@
 [project]
 name = "religious-voices"
-version = "0.2.0"
-description = "Religious Voices chatbot — corpus pipeline + LangChain + Chroma + sentence-transformers + Anthropic SDK serving a FastAPI chat backend."
+version = "0.3.0"
+description = "Religious Voices chatbot — corpus pipeline (scrape → chunk → Bedrock-embed → JSON) for the Next.js SSR runtime."
 requires-python = ">=3.11"
 dependencies = [
     # Corpus pipeline
@@ -13,22 +13,9 @@ dependencies = [
     "tenacity>=8.3",
     "tiktoken>=0.7",
     "rich>=13.7",
-    # Embeddings + vector store + LLM orchestration
-    "sentence-transformers>=3.0",
-    "chromadb>=0.5",
-    "langchain>=0.3",
-    "langchain-anthropic>=0.3",
-    "langchain-chroma>=0.1.4",
-    "langchain-huggingface>=0.1",
-    "anthropic>=0.40",
-    # FastAPI server
-    "fastapi>=0.115",
-    "uvicorn[standard]>=0.30",
-    "sse-starlette>=2.1",
-    "python-dotenv>=1.0",
+    # Bedrock Cohere embeddings
+    "boto3>=1.35",
 ]
-# Note: AWS Lambda Web Adapter (LWA) wraps the FastAPI server in Lambda
-# without any code changes — see Dockerfile. No Python adapter dep needed.
 
 [tool.uv]
 dev-dependencies = [

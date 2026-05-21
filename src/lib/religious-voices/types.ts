@@ -42,3 +42,28 @@ export interface Corpus {
   chunks: Chunk[];
   generated_at: string;
 }
+
+export interface SourceAttribution {
+  work_title: string;
+  year: number | null;
+  source_url: string;
+}
+
+export interface ChatTurn {
+  role: "user" | "assistant";
+  content: string;
+}
+
+export type ChatStreamEvent =
+  | { type: "meta"; sources: SourceAttribution[] }
+  | { type: "text"; content: string }
+  | {
+      type: "done";
+      usage?: {
+        input_tokens?: number;
+        output_tokens?: number;
+        cache_creation_input_tokens?: number;
+        cache_read_input_tokens?: number;
+      };
+    }
+  | { type: "error"; message: string };

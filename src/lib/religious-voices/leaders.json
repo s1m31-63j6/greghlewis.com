@@ -1,0 +1,660 @@
+{
+  "leaders": [
+    {
+      "leader_id": "edwin-arnold",
+      "religion": "Buddhist",
+      "full_name": "Sir Edwin Arnold",
+      "role": "English poet; popularized Buddhism in the West through \"The Light of Asia\"",
+      "dates": "1832-1904",
+      "era_start": 1879,
+      "themes": [
+        "The life of the Buddha rendered as Victorian narrative verse",
+        "First major English-language sympathetic portrait of Buddhism",
+        "East-West cultural exchange in the late 19th century",
+        "The Four Noble Truths as a universal moral vision"
+      ]
+    },
+    {
+      "leader_id": "henry-olcott",
+      "religion": "Buddhist",
+      "full_name": "Henry Steel Olcott",
+      "role": "Co-founder, Theosophical Society; first Western convert to Buddhism in formal ceremony",
+      "dates": "1832-1907",
+      "era_start": 1880,
+      "themes": [
+        "The Buddhist Catechism \u2014 accessible English-language Buddhism",
+        "Sinhalese Buddhist revival",
+        "Comparative religion and Theosophy"
+      ]
+    },
+    {
+      "leader_id": "paul-carus",
+      "religion": "Buddhist",
+      "full_name": "Paul Carus",
+      "role": "German-American philosopher; editor and Western interpreter of Buddhism",
+      "dates": "1852-1919",
+      "era_start": 1894,
+      "themes": [
+        "\"The Gospel of Buddha\" \u2014 a curated Buddhist canon for Western readers",
+        "The continuity of religious truth across traditions",
+        "Religion of Science \u2014 empirical inquiry as compatible with faith",
+        "Early 20th-century interfaith and Buddhist-Christian dialogue"
+      ]
+    },
+    {
+      "leader_id": "dt-suzuki",
+      "religion": "Buddhist",
+      "full_name": "D. T. Suzuki",
+      "role": "Zen Buddhist scholar; principal English-language popularizer of Zen",
+      "dates": "1870-1966",
+      "era_start": 1907,
+      "themes": [
+        "Zen and the bridge between Eastern and Western thought",
+        "Satori \u2014 sudden awakening",
+        "Critique of conceptual mediation",
+        "Zen and Japanese culture (tea, archery, calligraphy)"
+      ]
+    },
+    {
+      "leader_id": "pius-ix",
+      "religion": "Catholic",
+      "full_name": "Pope Pius IX",
+      "role": "Pope (1846-1878)",
+      "dates": "1792-1878",
+      "era_start": 1846,
+      "themes": [
+        "Definition of the Immaculate Conception",
+        "First Vatican Council and papal infallibility",
+        "The Syllabus of Errors against modernism"
+      ]
+    },
+    {
+      "leader_id": "leo-xiii",
+      "religion": "Catholic",
+      "full_name": "Pope Leo XIII",
+      "role": "Pope (1878-1903)",
+      "dates": "1810-1903",
+      "era_start": 1878,
+      "themes": [
+        "Rerum Novarum and Catholic social teaching",
+        "Just wages, workers' associations",
+        "Engagement with industrial modernity"
+      ]
+    },
+    {
+      "leader_id": "pius-x",
+      "religion": "Catholic",
+      "full_name": "Pope Pius X",
+      "role": "Pope (1903-1914)",
+      "dates": "1835-1914",
+      "era_start": 1903,
+      "themes": [
+        "Anti-modernism (Pascendi Dominici Gregis)",
+        "Frequent communion, early communion for children",
+        "Liturgical reform"
+      ]
+    },
+    {
+      "leader_id": "pius-xi",
+      "religion": "Catholic",
+      "full_name": "Pope Pius XI",
+      "role": "Pope (1922-1939)",
+      "dates": "1857-1939",
+      "era_start": 1922,
+      "themes": [
+        "Quadragesimo Anno and the further development of Catholic social teaching",
+        "Casti Connubii on Christian marriage",
+        "Mit Brennender Sorge \u2014 confronting Nazi Germany",
+        "Catholic Action \u2014 the laity's apostolate"
+      ]
+    },
+    {
+      "leader_id": "pius-xii",
+      "religion": "Catholic",
+      "full_name": "Pope Pius XII",
+      "role": "Pope (1939-1958)",
+      "dates": "1876-1958",
+      "era_start": 1939,
+      "themes": [
+        "Wartime diplomacy and silence",
+        "Mystici Corporis Christi (Church as mystical body)",
+        "Mariology \u2014 Assumption of Mary defined"
+      ]
+    },
+    {
+      "leader_id": "john-xxiii",
+      "religion": "Catholic",
+      "full_name": "Pope John XXIII",
+      "role": "Pope (1958-1963)",
+      "dates": "1881-1963",
+      "era_start": 1958,
+      "themes": [
+        "Convening the Second Vatican Council",
+        "Aggiornamento \u2014 bringing the Church up to date",
+        "Pacem in Terris \u2014 peace among nations"
+      ]
+    },
+    {
+      "leader_id": "paul-vi",
+      "religion": "Catholic",
+      "full_name": "Pope Paul VI",
+      "role": "Pope (1963-1978)",
+      "dates": "1897-1978",
+      "era_start": 1963,
+      "themes": [
+        "Closing Vatican II and implementing its reforms",
+        "Humanae Vitae (against artificial contraception)",
+        "Populorum Progressio \u2014 development of peoples"
+      ]
+    },
+    {
+      "leader_id": "john-paul-ii",
+      "religion": "Catholic",
+      "full_name": "Pope John Paul II",
+      "role": "Pope (1978-2005)",
+      "dates": "1920-2005",
+      "era_start": 1978,
+      "themes": [
+        "Theology of the Body",
+        "Confronting communism in Eastern Europe",
+        "Evangelii Nuntiandi successor \u2014 new evangelization",
+        "World Youth Day and global pastoral travel"
+      ]
+    },
+    {
+      "leader_id": "benedict-xvi",
+      "religion": "Catholic",
+      "full_name": "Pope Benedict XVI",
+      "role": "Pope (2005-2013)",
+      "dates": "1927-2022",
+      "era_start": 2005,
+      "themes": [
+        "Faith and reason as inseparable",
+        "Continuity-of-tradition liturgical reform",
+        "Dictatorship of relativism",
+        "Theological precision over pastoral improvisation"
+      ]
+    },
+    {
+      "leader_id": "francis",
+      "religion": "Catholic",
+      "full_name": "Pope Francis",
+      "role": "Pope (2013-2025)",
+      "dates": "1936-2025",
+      "era_start": 2013,
+      "themes": [
+        "Mercy as the primary key",
+        "A poor Church for the poor",
+        "Laudato Si' and integral ecology",
+        "Synodality \u2014 walking together"
+      ]
+    },
+    {
+      "leader_id": "ramakrishna",
+      "religion": "Hindu",
+      "full_name": "Sri Ramakrishna Paramahamsa",
+      "role": "Bengali mystic; foundational figure of modern Hindu spirituality",
+      "dates": "1836-1886",
+      "era_start": 1870,
+      "themes": [
+        "Direct experience of the Divine across many forms (Kali, Krishna, Christ, Allah)",
+        "The unity of all religions tested through personal practice",
+        "Renunciation of \"lust and gold\" as the gateway to God-realization",
+        "Devotion (bhakti) as accessible to the householder",
+        "Parables and homely metaphors over abstract metaphysics"
+      ]
+    },
+    {
+      "leader_id": "vivekananda",
+      "religion": "Hindu",
+      "full_name": "Swami Vivekananda",
+      "role": "Disciple of Ramakrishna; introduced Vedanta to the West",
+      "dates": "1863-1902",
+      "era_start": 1893,
+      "themes": [
+        "Practical Vedanta \u2014 religion expressed in service",
+        "1893 Parliament of the World's Religions",
+        "The harmony of all religions",
+        "Karma yoga and the awakening of India"
+      ]
+    },
+    {
+      "leader_id": "swami-rama-tirtha",
+      "religion": "Hindu",
+      "full_name": "Swami Rama Tirtha",
+      "role": "Vedanta teacher; one of the first Indian swamis to teach in America",
+      "dates": "1873-1906",
+      "era_start": 1900,
+      "themes": [
+        "Practical Vedanta in the language of the working modern",
+        "The \"Real Self\" beyond the limited ego",
+        "Renunciation joined with engagement in the world",
+        "East-West cultural synthesis (he taught at Berkeley & East Coast)"
+      ]
+    },
+    {
+      "leader_id": "rabindranath-tagore",
+      "religion": "Hindu",
+      "full_name": "Rabindranath Tagore",
+      "role": "Bengali poet, philosopher; Nobel laureate",
+      "dates": "1861-1941",
+      "era_start": 1910,
+      "themes": [
+        "Sadhana \u2014 the realisation of the infinite in everyday life",
+        "The harmony of self with the universe",
+        "Education as the freedom of the spirit (Visva-Bharati / Santiniketan)",
+        "The poet-saint synthesis of Indian and Western thought",
+        "Religion as the artist's sense of the wholeness of being"
+      ]
+    },
+    {
+      "leader_id": "sri-aurobindo",
+      "religion": "Hindu",
+      "full_name": "Sri Aurobindo",
+      "role": "Philosopher, yogi; Integral Yoga",
+      "dates": "1872-1950",
+      "era_start": 1910,
+      "themes": [
+        "Integral Yoga \u2014 the divinization of all life",
+        "The Life Divine \u2014 evolution of consciousness",
+        "Indian nationalism transmuted into spiritual mission",
+        "Synthesis of Eastern and Western thought"
+      ]
+    },
+    {
+      "leader_id": "gandhi",
+      "religion": "Hindu",
+      "full_name": "Mohandas K. Gandhi",
+      "role": "Indian independence leader; advocate of nonviolent resistance",
+      "dates": "1869-1948",
+      "era_start": 1915,
+      "themes": [
+        "Satyagraha \u2014 soul-force, truth-force",
+        "Ahimsa \u2014 nonviolence as creed and method",
+        "The Bhagavad Gita as the guide to action",
+        "Swadeshi and simple living"
+      ]
+    },
+    {
+      "leader_id": "sayyid-ahmad-khan",
+      "religion": "Islam",
+      "full_name": "Sir Sayyid Ahmad Khan",
+      "role": "Indian Muslim modernist reformer; founder of Aligarh Movement",
+      "dates": "1817-1898",
+      "era_start": 1860,
+      "themes": [
+        "Reconciling Islam with modern science and reason",
+        "English-language Muslim higher education",
+        "Muslim political identity in colonial India"
+      ]
+    },
+    {
+      "leader_id": "ameer-ali",
+      "religion": "Islam",
+      "full_name": "Syed Ameer Ali",
+      "role": "Indian Muslim jurist, jurist of the Privy Council; author of \"The Spirit of Islam\"",
+      "dates": "1849-1928",
+      "era_start": 1873,
+      "themes": [
+        "\"The Spirit of Islam\" \u2014 seminal English-language Muslim apologetic and history",
+        "Islam as the religion of reason and progress against orientalist caricature",
+        "The ethical and political genius of early Islamic civilization",
+        "Muslim representation in late colonial India"
+      ]
+    },
+    {
+      "leader_id": "muhammad-iqbal",
+      "religion": "Islam",
+      "full_name": "Muhammad Iqbal",
+      "role": "Poet-philosopher; spiritual father of Pakistan",
+      "dates": "1877-1938",
+      "era_start": 1908,
+      "themes": [
+        "The Reconstruction of Religious Thought in Islam",
+        "Khudi \u2014 the development of the self",
+        "Ijtihad \u2014 fresh interpretation for the modern era",
+        "Islamic philosophy in dialogue with Bergson, Nietzsche"
+      ]
+    },
+    {
+      "leader_id": "kaufmann-kohler",
+      "religion": "Jewish",
+      "full_name": "Kaufmann Kohler",
+      "role": "Reform rabbi; president of Hebrew Union College",
+      "dates": "1843-1926",
+      "era_start": 1879,
+      "themes": [
+        "\"Jewish Theology, Systematically and Historically Considered\" \u2014 major Reform synthesis",
+        "Pittsburgh Platform of 1885 (chief architect)",
+        "Judaism as ethical monotheism in the Reform key",
+        "Encyclopedia Judaica (Jewish Encyclopedia editorship)"
+      ]
+    },
+    {
+      "leader_id": "israel-abrahams",
+      "religion": "Jewish",
+      "full_name": "Israel Abrahams",
+      "role": "British rabbi and scholar of Jewish history",
+      "dates": "1858-1925",
+      "era_start": 1896,
+      "themes": [
+        "\"Studies in Pharisaism and the Gospels\" \u2014 Jewish reading of the New Testament era",
+        "\"Jewish Life in the Middle Ages\" \u2014 popular Anglo-Jewish history",
+        "Recovery of the Pharisees against polemical caricature",
+        "Reader in Talmudic and rabbinic literature at Cambridge"
+      ]
+    },
+    {
+      "leader_id": "solomon-schechter",
+      "religion": "Jewish",
+      "full_name": "Solomon Schechter",
+      "role": "President, Jewish Theological Seminary; architect of Conservative Judaism",
+      "dates": "1847-1915",
+      "era_start": 1902,
+      "themes": [
+        "Catholic Israel \u2014 the historical Jewish people as authority",
+        "Recovery of the Cairo Geniza",
+        "Mediating tradition and modernity"
+      ]
+    },
+    {
+      "leader_id": "stephen-wise",
+      "religion": "Jewish",
+      "full_name": "Stephen Samuel Wise",
+      "role": "Reform rabbi; civil rights and Zionist leader; founder of the Jewish Institute of Religion",
+      "dates": "1874-1949",
+      "era_start": 1907,
+      "themes": [
+        "Social-justice Judaism \u2014 labor, civil rights, antifascism",
+        "Independent pulpit (Free Synagogue) free from board control",
+        "Early American Zionism and the founding of the World Jewish Congress",
+        "Prophetic preaching addressed beyond the synagogue to American public life"
+      ]
+    },
+    {
+      "leader_id": "john-wesley",
+      "religion": "Methodist",
+      "full_name": "John Wesley",
+      "role": "Founder of Methodism",
+      "dates": "1703-1791",
+      "era_start": 1738,
+      "themes": [
+        "Sermons on grace, sanctification, and Christian perfection",
+        "The General Rules of the Methodist societies",
+        "Field preaching to colliers, miners, and the unchurched",
+        "Lay leadership and small-group accountability (class meetings)",
+        "The Methodist movement as renewal within the Church of England"
+      ]
+    },
+    {
+      "leader_id": "francis-asbury",
+      "religion": "Methodist",
+      "full_name": "Francis Asbury",
+      "role": "First Methodist bishop in America",
+      "dates": "1745-1816",
+      "era_start": 1800,
+      "themes": [
+        "Circuit-riding itinerancy",
+        "Frontier evangelism on horseback",
+        "Methodist discipline and connectional polity"
+      ]
+    },
+    {
+      "leader_id": "phoebe-palmer",
+      "religion": "Methodist",
+      "full_name": "Phoebe Palmer",
+      "role": "Lay theologian; mother of the 19th-c. Holiness movement within Methodism",
+      "dates": "1807-1874",
+      "era_start": 1835,
+      "themes": [
+        "The doctrine of entire sanctification (the \"second blessing\")",
+        "\"Altar theology\" \u2014 laying all on the altar by faith",
+        "Camp-meeting revivalism and Tuesday Meeting for the Promotion of Holiness",
+        "Women's spiritual authority and lay ministry",
+        "The Way of Holiness as a practical manual of consecration"
+      ]
+    },
+    {
+      "leader_id": "matthew-simpson",
+      "religion": "Methodist",
+      "full_name": "Matthew Simpson",
+      "role": "Methodist Episcopal bishop",
+      "dates": "1811-1884",
+      "era_start": 1852,
+      "themes": [
+        "Antislavery preaching",
+        "Lincoln's eulogist",
+        "American Methodism's public voice"
+      ]
+    },
+    {
+      "leader_id": "joseph-smith",
+      "religion": "Mormon",
+      "full_name": "Joseph Smith Jr.",
+      "role": "Founding prophet of The Church of Jesus Christ of Latter-day Saints",
+      "dates": "1805-1844",
+      "era_start": 1830,
+      "themes": [
+        "Restoration of primitive Christianity",
+        "Revelation as ongoing",
+        "Gathering of Israel",
+        "The Book of Mormon as ancient scripture",
+        "Theosis and the nature of God"
+      ]
+    },
+    {
+      "leader_id": "brigham-young",
+      "religion": "Mormon",
+      "full_name": "Brigham Young",
+      "role": "2nd President, LDS Church",
+      "dates": "1801-1877",
+      "era_start": 1847,
+      "themes": [
+        "Pioneering and the Great Basin migration",
+        "Practical theology of work and self-reliance",
+        "Building Zion in the wilderness",
+        "Plain speech and frontier directness"
+      ]
+    },
+    {
+      "leader_id": "john-taylor",
+      "religion": "Mormon",
+      "full_name": "John Taylor",
+      "role": "3rd President, LDS Church",
+      "dates": "1808-1887",
+      "era_start": 1880,
+      "themes": [
+        "Defense of plural marriage under federal prosecution",
+        "The kingdom of God as a literal political reality",
+        "English-Mormon literary craft (he was a poet and editor)"
+      ]
+    },
+    {
+      "leader_id": "wilford-woodruff",
+      "religion": "Mormon",
+      "full_name": "Wilford Woodruff",
+      "role": "4th President, LDS Church",
+      "dates": "1807-1898",
+      "era_start": 1889,
+      "themes": [
+        "The 1890 Manifesto ending plural marriage",
+        "Temple work and salvation for the dead",
+        "Personal journaling as spiritual discipline"
+      ]
+    },
+    {
+      "leader_id": "lorenzo-snow",
+      "religion": "Mormon",
+      "full_name": "Lorenzo Snow",
+      "role": "5th President, LDS Church",
+      "dates": "1814-1901",
+      "era_start": 1898,
+      "themes": [
+        "Tithing as the path out of financial crisis",
+        "As man now is, God once was; as God now is, man may become.",
+        "Quiet dignity over public theatrics"
+      ]
+    },
+    {
+      "leader_id": "joseph-f-smith",
+      "religion": "Mormon",
+      "full_name": "Joseph F. Smith",
+      "role": "6th President, LDS Church",
+      "dates": "1838-1918",
+      "era_start": 1901,
+      "themes": [
+        "Vision of the redemption of the dead (D&C 138)",
+        "Defending the Church through the Reed Smoot hearings",
+        "Family-centered gospel teaching"
+      ]
+    },
+    {
+      "leader_id": "joseph-fielding-smith",
+      "religion": "Mormon",
+      "full_name": "Joseph Fielding Smith",
+      "role": "10th President, LDS Church",
+      "dates": "1876-1972",
+      "era_start": 1970,
+      "themes": [
+        "Doctrinal precision and scriptural literalism",
+        "Genealogy and temple work",
+        "Skepticism of organic evolution"
+      ]
+    },
+    {
+      "leader_id": "harold-b-lee",
+      "religion": "Mormon",
+      "full_name": "Harold B. Lee",
+      "role": "11th President, LDS Church",
+      "dates": "1899-1973",
+      "era_start": 1972,
+      "themes": [
+        "Correlation of Church curriculum",
+        "The most important work you will do is within the walls of your own home.",
+        "Welfare and self-reliance"
+      ]
+    },
+    {
+      "leader_id": "spencer-w-kimball",
+      "religion": "Mormon",
+      "full_name": "Spencer W. Kimball",
+      "role": "12th President, LDS Church",
+      "dates": "1895-1985",
+      "era_start": 1973,
+      "themes": [
+        "1978 revelation extending priesthood to all worthy men",
+        "Lengthen your stride",
+        "The miracle of forgiveness",
+        "Indigenous and international outreach"
+      ]
+    },
+    {
+      "leader_id": "ezra-taft-benson",
+      "religion": "Mormon",
+      "full_name": "Ezra Taft Benson",
+      "role": "13th President, LDS Church",
+      "dates": "1899-1994",
+      "era_start": 1985,
+      "themes": [
+        "Centering the Book of Mormon as the keystone of Latter-day Saint life",
+        "Pride as the universal sin",
+        "The constitutional foundations of liberty"
+      ]
+    },
+    {
+      "leader_id": "howard-w-hunter",
+      "religion": "Mormon",
+      "full_name": "Howard W. Hunter",
+      "role": "14th President, LDS Church",
+      "dates": "1907-1995",
+      "era_start": 1994,
+      "themes": [
+        "Christ-centered discipleship",
+        "Temple worthiness as the measure",
+        "Gentleness as strength"
+      ]
+    },
+    {
+      "leader_id": "gordon-b-hinckley",
+      "religion": "Mormon",
+      "full_name": "Gordon B. Hinckley",
+      "role": "15th President, LDS Church",
+      "dates": "1910-2008",
+      "era_start": 1995,
+      "themes": [
+        "Aggressive temple building (small temples worldwide)",
+        "Optimism and \"stand a little taller\"",
+        "Media engagement and public-facing Mormonism",
+        "The Proclamation on the Family"
+      ]
+    },
+    {
+      "leader_id": "thomas-s-monson",
+      "religion": "Mormon",
+      "full_name": "Thomas S. Monson",
+      "role": "16th President, LDS Church",
+      "dates": "1927-2018",
+      "era_start": 2008,
+      "themes": [
+        "Ministering to one \u2014 the widow, the lonely",
+        "Story-driven gospel teaching",
+        "Decisions determine destiny"
+      ]
+    },
+    {
+      "leader_id": "russell-m-nelson",
+      "religion": "Mormon",
+      "full_name": "Russell M. Nelson",
+      "role": "17th President, LDS Church",
+      "dates": "1924-2025",
+      "era_start": 2018,
+      "themes": [
+        "The correct name of the Church",
+        "Gathering of Israel on both sides of the veil",
+        "Personal revelation as a survival skill",
+        "Sweeping organizational change (home-centered Church-supported gospel learning)"
+      ]
+    },
+    {
+      "leader_id": "dallin-h-oaks",
+      "religion": "Mormon",
+      "full_name": "Dallin H. Oaks",
+      "role": "18th President, LDS Church",
+      "dates": "1932-",
+      "era_start": 2025,
+      "themes": [
+        "Religious freedom as constitutional priority",
+        "Legal precision applied to doctrine",
+        "The Two Great Commandments as moral compass"
+      ]
+    },
+    {
+      "leader_id": "charles-spurgeon",
+      "religion": "Southern Baptist",
+      "full_name": "Charles Haddon Spurgeon",
+      "role": "\"Prince of Preachers\" \u2014 Particular Baptist (London)",
+      "dates": "1834-1892",
+      "era_start": 1854,
+      "themes": [
+        "Reformed soteriology preached to the masses",
+        "Practical pastoral counsel",
+        "The Downgrade Controversy (defense of biblical inerrancy)",
+        "Sermons as pamphlets \u2014 print evangelism at industrial scale"
+      ]
+    },
+    {
+      "leader_id": "george-w-truett",
+      "religion": "Southern Baptist",
+      "full_name": "George W. Truett",
+      "role": "Pastor, First Baptist Dallas; SBC president",
+      "dates": "1867-1944",
+      "era_start": 1897,
+      "themes": [
+        "Religious liberty for all \u2014 \"soul competency\"",
+        "The Baptist distinctive of separation of church and state",
+        "Pastoral preaching to large urban congregations"
+      ]
+    }
+  ],
+  "generated_at": "2026-05-21T18:48:55.018829+00:00"
+}

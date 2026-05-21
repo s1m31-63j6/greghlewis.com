@@ -1,12 +1,16 @@
-"""Orchestrator: gather source texts → chunk → embed → write to Chroma.
+"""Orchestrator: gather source texts → chunk → embed via Bedrock → write JSON.
 
 Two modes:
 
   --seed     Use seed_passages.yaml only. Fast (no network scrapes).
   (default)  Run all configured scrapers + seed passages.
 
-Output: a persistent Chroma DB at projects/religious-voices/chroma_db/,
-read at query time by the FastAPI server (server/main.py).
+Output:
+  src/lib/religious-voices/corpus.json   — chunks + Bedrock Cohere embeddings
+  src/lib/religious-voices/leaders.json  — leader manifest (chunks-only)
+
+Both are consumed by the Next.js SSR Lambda at request time. No separate
+API service, no Chroma DB, no managed vector store.
 """
 
 from __future__ import annotations
@@ -18,7 +22,7 @@ from rich.console import Console
 
 from chunk import SourceText, cap_per_leader, chunk_source
 from common import Leader, load_leaders
-from embed_chroma import embed_to_chroma
+from embed_bedrock import embed_chunks, write_corpus, write_leaders
 from scrape.archive_org import scrape_archive_org
 from scrape.church_jesus_christ import scrape_general_conference
 from scrape.journal_of_discourses import scrape_journal_of_discourses
@@ -108,20 +112,16 @@ def main() -> None:
         console.log(f"  {lid}: {n}")
 
     if args.no_embed:
-        console.log("[yellow]--no-embed set; skipping embedding step[/]")
+        console.log("[yellow]--no-embed set; skipping embedding step (corpus.json not written)[/]")
     else:
-        # New path: sentence-transformers + Chroma. The Python LangChain
-        # server (server/main.py) reads from Chroma at query time.
-        embed_to_chroma(chunks)
+        embed_chunks(chunks)
+        write_corpus(chunks)
+        write_leaders(set(by_leader))
 
-    # Report which leaders made it into the corpus and which were skipped.
-    # The Python server's /leaders endpoint filters dynamically based on
-    # which leader_ids show up in the Chroma collection, so no separate
-    # meta file is needed.
     skipped = [l.leader_id for l in leaders if l.leader_id not in by_leader]
     if skipped:
         console.log(f"[dim]skipping {len(skipped)} leaders with no chunks: {', '.join(skipped)}[/]")
-    console.log(f"[green]done — {len(by_leader)} leaders in Chroma at projects/religious-voices/chroma_db/[/]")
+    console.log(f"[green]done — {len(by_leader)} leaders, output to src/lib/religious-voices/[/]")
 
 
 if __name__ == "__main__":
