@@ -1,0 +1,90 @@
+# archive.org source mapping — public-domain religious texts not on
+# Wikisource.
+#
+# Each entry specifies a leader_id (must exist in leaders.yaml), an
+# archive.org item identifier, the work title shown in the UI, the
+# publication year, and optionally split_into (how many SourceText
+# pieces to split a long work into; default 1).
+
+sources:
+
+  # ----- Joseph Smith — Teachings compilation (1913, public domain) -----
+  - leader_id: joseph-smith
+    identifier: josephsmithste1913smit
+    work_title: "Joseph Smith's Teachings — a classified arrangement"
+    year: 1913
+    split_into: 10
+
+  # ----- Henry Steel Olcott — The Buddhist Catechism (1881, public domain) -----
+  - leader_id: henry-olcott
+    identifier: buddhistcatechis00olco
+    work_title: The Buddhist Catechism
+    year: 1881
+    split_into: 4
+
+  # ----- Charles Haddon Spurgeon — sermons (1850s-1890s, public domain) -----
+  - leader_id: charles-spurgeon
+    identifier: sermons00spur
+    work_title: "Spurgeon's Sermons (collected volume)"
+    year: 1857
+    split_into: 8
+  - leader_id: charles-spurgeon
+    identifier: sermonsofrevchsp00spur
+    work_title: "Sermons of the Rev. C. H. Spurgeon of London"
+    year: 1860
+    split_into: 8
+  - leader_id: charles-spurgeon
+    identifier: allofgraceearnes00spur_1
+    work_title: "All of Grace"
+    year: 1886
+    split_into: 3
+  - leader_id: charles-spurgeon
+    identifier: johnploughmanspi0000spur
+    work_title: "John Ploughman's Pictures"
+    year: 1880
+    split_into: 4
+  - leader_id: charles-spurgeon
+    identifier: in.ernet.dli.2015.44965
+    work_title: "Metropolitan Tabernacle Pulpit Vol. 51"
+    year: 1905
+    split_into: 8
+
+  # ----- Francis Asbury (Methodist, journal 1771-1816, public domain) -----
+  - leader_id: francis-asbury
+    identifier: journalofrevfran0001asbu
+    work_title: "The Journal of the Rev. Francis Asbury"
+    year: 1800
+    split_into: 12
+
+  # ----- Sayyid Ahmad Khan (Islam, 19th-c. Indian Muslim modernist, PD) -----
+  - leader_id: sayyid-ahmad-khan
+    identifier: reviewondrhunter00ahmauoft
+    work_title: "Review on Dr. Hunter's Indian Musalmans"
+    year: 1872
+    split_into: 4
+  - leader_id: sayyid-ahmad-khan
+    identifier: aseriesessayson00khgoog
+    work_title: "A Series of Essays on the Life of Muhammad"
+    year: 1870
+    split_into: 6
+
+  # ----- Solomon Schechter (Jewish, Conservative Judaism founder, PD) -----
+  - leader_id: solomon-schechter
+    identifier: studiesinjudaism00sche_0
+    work_title: "Studies in Judaism"
+    year: 1896
+    split_into: 8
+  - leader_id: solomon-schechter
+    identifier: someaspectsofrab00sche
+    work_title: "Some Aspects of Rabbinic Theology"
+    year: 1909
+    split_into: 6
+
+  # ----- Muhammad Iqbal (Islam, 1930 Reconstruction of Religious Thought) -----
+  # NOTE: copyright is jurisdiction-ambiguous; treating as fair-use for
+  # chunked short excerpts with source attribution.
+  - leader_id: muhammad-iqbal
+    identifier: the-reconstruction-of-religious-thought-in-islam_202311
+    work_title: "The Reconstruction of Religious Thought in Islam"
+    year: 1930
+    split_into: 6

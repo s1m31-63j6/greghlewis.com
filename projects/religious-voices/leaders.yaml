@@ -1,0 +1,823 @@
+# Religious Voices — leader manifest.
+#
+# Source of truth for both the corpus pipeline (which scrapers to invoke,
+# which texts to chunk) and the frontend (dropdown population, sort order).
+#
+# Sort order: leaders within a religion are displayed sorted by era_start
+# ascending. era_start = year their public ministry / publishing career
+# meaningfully began (not birth year).
+#
+# Mormon coverage is intentionally complete (all 18 prophets through Oaks).
+# Other traditions follow a ~20-year cadence from 1800-2026 where publicly
+# available English-language source material exists.
+
+leaders:
+
+  # -------- Mormon (all prophets, Joseph Smith → Dallin H. Oaks) --------
+
+  - leader_id: joseph-smith
+    religion: Mormon
+    full_name: Joseph Smith Jr.
+    role: Founding prophet of The Church of Jesus Christ of Latter-day Saints
+    dates: 1805-1844
+    era_start: 1830
+    themes:
+      - Restoration of primitive Christianity
+      - Revelation as ongoing
+      - Gathering of Israel
+      - The Book of Mormon as ancient scripture
+      - Theosis and the nature of God
+    sources:
+      - { url: "https://www.josephsmithpapers.org/", type: papers, license: "public" }
+
+  - leader_id: brigham-young
+    religion: Mormon
+    full_name: Brigham Young
+    role: 2nd President, LDS Church
+    dates: 1801-1877
+    era_start: 1847
+    themes:
+      - Pioneering and the Great Basin migration
+      - Practical theology of work and self-reliance
+      - Building Zion in the wilderness
+      - Plain speech and frontier directness
+    sources:
+      - { url: "https://archive.org/details/journalofdiscour01youn", type: jod, license: "public-domain" }
+
+  - leader_id: john-taylor
+    religion: Mormon
+    full_name: John Taylor
+    role: 3rd President, LDS Church
+    dates: 1808-1887
+    era_start: 1880
+    themes:
+      - Defense of plural marriage under federal prosecution
+      - The kingdom of God as a literal political reality
+      - English-Mormon literary craft (he was a poet and editor)
+    sources:
+      - { url: "https://archive.org/details/journalofdiscour26unse", type: jod, license: "public-domain" }
+
+  - leader_id: wilford-woodruff
+    religion: Mormon
+    full_name: Wilford Woodruff
+    role: 4th President, LDS Church
+    dates: 1807-1898
+    era_start: 1889
+    themes:
+      - The 1890 Manifesto ending plural marriage
+      - Temple work and salvation for the dead
+      - Personal journaling as spiritual discipline
+    sources:
+      - { url: "https://archive.org/details/conferencereport1898chur", type: conference_report, license: "public-domain" }
+
+  - leader_id: lorenzo-snow
+    religion: Mormon
+    full_name: Lorenzo Snow
+    role: 5th President, LDS Church
+    dates: 1814-1901
+    era_start: 1898
+    themes:
+      - Tithing as the path out of financial crisis
+      - "As man now is, God once was; as God now is, man may become."
+      - Quiet dignity over public theatrics
+    sources:
+      - { url: "https://archive.org/", type: conference_report, license: "public-domain" }
+
+  - leader_id: joseph-f-smith
+    religion: Mormon
+    full_name: Joseph F. Smith
+    role: 6th President, LDS Church
+    dates: 1838-1918
+    era_start: 1901
+    themes:
+      - Vision of the redemption of the dead (D&C 138)
+      - Defending the Church through the Reed Smoot hearings
+      - Family-centered gospel teaching
+    sources:
+      - { url: "https://archive.org/", type: conference_report, license: "public-domain" }
+
+  - leader_id: heber-j-grant
+    religion: Mormon
+    full_name: Heber J. Grant
+    role: 7th President, LDS Church
+    dates: 1856-1945
+    era_start: 1918
+    themes:
+      - Word of Wisdom enforcement
+      - Welfare program in the Great Depression
+      - Persistence as the cardinal virtue
+    sources:
+      - { url: "https://archive.org/", type: conference_report, license: "public-domain" }
+
+  - leader_id: george-albert-smith
+    religion: Mormon
+    full_name: George Albert Smith
+    role: 8th President, LDS Church
+    dates: 1870-1951
+    era_start: 1945
+    themes:
+      - Postwar relief to Europe
+      - Personal kindness as gospel witness
+      - "I would not be a stumbling block in the way of any man."
+    sources:
+      - { url: "https://archive.org/", type: conference_report, license: "public-domain" }
+
+  - leader_id: david-o-mckay
+    religion: Mormon
+    full_name: David O. McKay
+    role: 9th President, LDS Church
+    dates: 1873-1970
+    era_start: 1951
+    themes:
+      - "Every member a missionary"
+      - The family as the fundamental unit
+      - International expansion of the Church
+    sources:
+      - { url: "https://archive.org/", type: conference_report, license: "public-domain" }
+
+  - leader_id: joseph-fielding-smith
+    religion: Mormon
+    full_name: Joseph Fielding Smith
+    role: 10th President, LDS Church
+    dates: 1876-1972
+    era_start: 1970
+    themes:
+      - Doctrinal precision and scriptural literalism
+      - Genealogy and temple work
+      - Skepticism of organic evolution
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  - leader_id: harold-b-lee
+    religion: Mormon
+    full_name: Harold B. Lee
+    role: 11th President, LDS Church
+    dates: 1899-1973
+    era_start: 1972
+    themes:
+      - Correlation of Church curriculum
+      - "The most important work you will do is within the walls of your own home."
+      - Welfare and self-reliance
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  - leader_id: spencer-w-kimball
+    religion: Mormon
+    full_name: Spencer W. Kimball
+    role: 12th President, LDS Church
+    dates: 1895-1985
+    era_start: 1973
+    themes:
+      - 1978 revelation extending priesthood to all worthy men
+      - "Lengthen your stride"
+      - The miracle of forgiveness
+      - Indigenous and international outreach
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  - leader_id: ezra-taft-benson
+    religion: Mormon
+    full_name: Ezra Taft Benson
+    role: 13th President, LDS Church
+    dates: 1899-1994
+    era_start: 1985
+    themes:
+      - Centering the Book of Mormon as the keystone of Latter-day Saint life
+      - Pride as the universal sin
+      - The constitutional foundations of liberty
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  - leader_id: howard-w-hunter
+    religion: Mormon
+    full_name: Howard W. Hunter
+    role: 14th President, LDS Church
+    dates: 1907-1995
+    era_start: 1994
+    themes:
+      - Christ-centered discipleship
+      - Temple worthiness as the measure
+      - Gentleness as strength
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  - leader_id: gordon-b-hinckley
+    religion: Mormon
+    full_name: Gordon B. Hinckley
+    role: 15th President, LDS Church
+    dates: 1910-2008
+    era_start: 1995
+    themes:
+      - Aggressive temple building (small temples worldwide)
+      - Optimism and "stand a little taller"
+      - Media engagement and public-facing Mormonism
+      - The Proclamation on the Family
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  - leader_id: thomas-s-monson
+    religion: Mormon
+    full_name: Thomas S. Monson
+    role: 16th President, LDS Church
+    dates: 1927-2018
+    era_start: 2008
+    themes:
+      - Ministering to one — the widow, the lonely
+      - Story-driven gospel teaching
+      - "Decisions determine destiny"
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  - leader_id: russell-m-nelson
+    religion: Mormon
+    full_name: Russell M. Nelson
+    role: 17th President, LDS Church
+    dates: 1924-2025
+    era_start: 2018
+    themes:
+      - The correct name of the Church
+      - Gathering of Israel on both sides of the veil
+      - Personal revelation as a survival skill
+      - Sweeping organizational change (home-centered Church-supported gospel learning)
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  - leader_id: dallin-h-oaks
+    religion: Mormon
+    full_name: Dallin H. Oaks
+    role: 18th President, LDS Church
+    dates: 1932-
+    era_start: 2025
+    themes:
+      - Religious freedom as constitutional priority
+      - Legal precision applied to doctrine
+      - The Two Great Commandments as moral compass
+    sources:
+      - { url: "https://www.churchofjesuschrist.org/study/general-conference", type: general_conference, license: "fair-use" }
+
+  # -------- Catholic (~10 popes, 1800-2026) --------
+
+  - leader_id: pius-ix
+    religion: Catholic
+    full_name: Pope Pius IX
+    role: Pope (1846-1878)
+    dates: 1792-1878
+    era_start: 1846
+    themes:
+      - Definition of the Immaculate Conception
+      - First Vatican Council and papal infallibility
+      - The Syllabus of Errors against modernism
+    sources:
+      - { url: "https://www.vatican.va/content/pius-ix/", type: vatican, license: "public" }
+
+  - leader_id: leo-xiii
+    religion: Catholic
+    full_name: Pope Leo XIII
+    role: Pope (1878-1903)
+    dates: 1810-1903
+    era_start: 1878
+    themes:
+      - Rerum Novarum and Catholic social teaching
+      - Just wages, workers' associations
+      - Engagement with industrial modernity
+    sources:
+      - { url: "https://www.vatican.va/content/leo-xiii/", type: vatican, license: "public" }
+
+  - leader_id: pius-x
+    religion: Catholic
+    full_name: Pope Pius X
+    role: Pope (1903-1914)
+    dates: 1835-1914
+    era_start: 1903
+    themes:
+      - Anti-modernism (Pascendi Dominici Gregis)
+      - Frequent communion, early communion for children
+      - Liturgical reform
+    sources:
+      - { url: "https://www.vatican.va/content/pius-x/", type: vatican, license: "public" }
+
+  - leader_id: pius-xi
+    religion: Catholic
+    full_name: Pope Pius XI
+    role: Pope (1922-1939)
+    dates: 1857-1939
+    era_start: 1922
+    themes:
+      - Quadragesimo Anno and the further development of Catholic social teaching
+      - Casti Connubii on Christian marriage
+      - Mit Brennender Sorge — confronting Nazi Germany
+      - Catholic Action — the laity's apostolate
+    sources:
+      - { url: "https://www.vatican.va/content/pius-xi/", type: vatican, license: "public" }
+
+  - leader_id: pius-xii
+    religion: Catholic
+    full_name: Pope Pius XII
+    role: Pope (1939-1958)
+    dates: 1876-1958
+    era_start: 1939
+    themes:
+      - Wartime diplomacy and silence
+      - Mystici Corporis Christi (Church as mystical body)
+      - Mariology — Assumption of Mary defined
+    sources:
+      - { url: "https://www.vatican.va/content/pius-xii/", type: vatican, license: "public" }
+
+  - leader_id: john-xxiii
+    religion: Catholic
+    full_name: Pope John XXIII
+    role: Pope (1958-1963)
+    dates: 1881-1963
+    era_start: 1958
+    themes:
+      - Convening the Second Vatican Council
+      - Aggiornamento — bringing the Church up to date
+      - Pacem in Terris — peace among nations
+    sources:
+      - { url: "https://www.vatican.va/content/john-xxiii/", type: vatican, license: "public" }
+
+  - leader_id: paul-vi
+    religion: Catholic
+    full_name: Pope Paul VI
+    role: Pope (1963-1978)
+    dates: 1897-1978
+    era_start: 1963
+    themes:
+      - Closing Vatican II and implementing its reforms
+      - Humanae Vitae (against artificial contraception)
+      - Populorum Progressio — development of peoples
+    sources:
+      - { url: "https://www.vatican.va/content/paul-vi/", type: vatican, license: "public" }
+
+  - leader_id: john-paul-ii
+    religion: Catholic
+    full_name: Pope John Paul II
+    role: Pope (1978-2005)
+    dates: 1920-2005
+    era_start: 1978
+    themes:
+      - Theology of the Body
+      - Confronting communism in Eastern Europe
+      - Evangelii Nuntiandi successor — new evangelization
+      - World Youth Day and global pastoral travel
+    sources:
+      - { url: "https://www.vatican.va/content/john-paul-ii/", type: vatican, license: "public" }
+
+  - leader_id: benedict-xvi
+    religion: Catholic
+    full_name: Pope Benedict XVI
+    role: Pope (2005-2013)
+    dates: 1927-2022
+    era_start: 2005
+    themes:
+      - Faith and reason as inseparable
+      - Continuity-of-tradition liturgical reform
+      - "Dictatorship of relativism"
+      - Theological precision over pastoral improvisation
+    sources:
+      - { url: "https://www.vatican.va/content/benedict-xvi/", type: vatican, license: "public" }
+
+  - leader_id: francis
+    religion: Catholic
+    full_name: Pope Francis
+    role: Pope (2013-2025)
+    dates: 1936-2025
+    era_start: 2013
+    themes:
+      - Mercy as the primary key
+      - "A poor Church for the poor"
+      - Laudato Si' and integral ecology
+      - Synodality — walking together
+    sources:
+      - { url: "https://www.vatican.va/content/francesco/", type: vatican, license: "public" }
+
+  - leader_id: leo-xiv
+    religion: Catholic
+    full_name: Pope Leo XIV
+    role: Pope (2025- )
+    dates: 1955-
+    era_start: 2025
+    themes:
+      - First American pope (Augustinian)
+      - Continuity with Francis on synodality, with Benedict on doctrine
+      - AI and human dignity (his stated framing for the Leo name)
+    sources:
+      - { url: "https://www.vatican.va/content/leo-xiv/", type: vatican, license: "public" }
+
+  # -------- Methodist (~5 leaders) --------
+
+  - leader_id: francis-asbury
+    religion: Methodist
+    full_name: Francis Asbury
+    role: First Methodist bishop in America
+    dates: 1745-1816
+    era_start: 1800
+    themes:
+      - Circuit-riding itinerancy
+      - Frontier evangelism on horseback
+      - Methodist discipline and connectional polity
+    sources:
+      - { url: "https://wesley.nnu.edu/", type: wesley_center, license: "public-domain" }
+
+  - leader_id: matthew-simpson
+    religion: Methodist
+    full_name: Matthew Simpson
+    role: Methodist Episcopal bishop
+    dates: 1811-1884
+    era_start: 1852
+    themes:
+      - Antislavery preaching
+      - Lincoln's eulogist
+      - American Methodism's public voice
+    sources:
+      - { url: "https://archive.org/details/sermons00sims", type: archive, license: "public-domain" }
+
+  - leader_id: edwin-holt-hughes
+    religion: Methodist
+    full_name: Edwin Holt Hughes
+    role: Methodist Episcopal bishop
+    dates: 1866-1950
+    era_start: 1908
+    themes:
+      - Methodist unification (1939 merger)
+      - Social gospel without losing personal piety
+      - Plainspoken evangelical Methodism
+    sources:
+      - { url: "https://archive.org/", type: archive, license: "public-domain" }
+
+  - leader_id: james-k-mathews
+    religion: Methodist
+    full_name: James K. Mathews
+    role: United Methodist bishop
+    dates: 1913-2010
+    era_start: 1960
+    themes:
+      - Mission to India
+      - Ecumenical engagement
+      - Civil rights advocacy within Methodism
+    sources:
+      - { url: "https://www.gcah.org/", type: gcah, license: "fair-use" }
+
+  - leader_id: will-willimon
+    religion: Methodist
+    full_name: William H. Willimon
+    role: United Methodist bishop, theologian
+    dates: 1946-
+    era_start: 1990
+    themes:
+      - '"Resident Aliens" — the Church as colony in a hostile culture'
+      - Preaching as the central pastoral act
+      - Recovery of distinctly Christian language
+    sources:
+      - { url: "https://willwillimon.com/", type: blog, license: "fair-use" }
+
+  # -------- Southern Baptist (~5 leaders) --------
+
+  - leader_id: charles-spurgeon
+    religion: Southern Baptist
+    full_name: Charles Haddon Spurgeon
+    role: '"Prince of Preachers" — Particular Baptist (London)'
+    dates: 1834-1892
+    era_start: 1854
+    themes:
+      - Reformed soteriology preached to the masses
+      - Practical pastoral counsel
+      - The Downgrade Controversy (defense of biblical inerrancy)
+      - Sermons as pamphlets — print evangelism at industrial scale
+    sources:
+      - { url: "https://www.spurgeon.org/resource-library/sermons/", type: spurgeon, license: "public-domain" }
+
+  - leader_id: george-w-truett
+    religion: Southern Baptist
+    full_name: George W. Truett
+    role: Pastor, First Baptist Dallas; SBC president
+    dates: 1867-1944
+    era_start: 1897
+    themes:
+      - Religious liberty for all — "soul competency"
+      - The Baptist distinctive of separation of church and state
+      - Pastoral preaching to large urban congregations
+    sources:
+      - { url: "https://archive.org/", type: archive, license: "public-domain" }
+
+  - leader_id: w-a-criswell
+    religion: Southern Baptist
+    full_name: W. A. Criswell
+    role: Pastor, First Baptist Dallas; SBC president
+    dates: 1909-2002
+    era_start: 1944
+    themes:
+      - Verse-by-verse expository preaching
+      - Biblical inerrancy as the line in the sand
+      - The Conservative Resurgence in the SBC
+    sources:
+      - { url: "https://www.wacriswell.com/", type: wacriswell, license: "fair-use" }
+
+  - leader_id: billy-graham
+    religion: Southern Baptist
+    full_name: Billy Graham
+    role: Evangelist
+    dates: 1918-2018
+    era_start: 1949
+    themes:
+      - Mass evangelism — the crusades
+      - '"The Bible says…" as authoritative ground'
+      - Pastor to American presidents
+      - Cooperation across denominational lines
+    sources:
+      - { url: "https://billygraham.org/decision-magazine/", type: bgea, license: "fair-use" }
+
+  - leader_id: albert-mohler
+    religion: Southern Baptist
+    full_name: R. Albert Mohler Jr.
+    role: President, Southern Baptist Theological Seminary
+    dates: 1959-
+    era_start: 1993
+    themes:
+      - Confessional Calvinism within the SBC
+      - Cultural commentary from a Reformed Baptist frame
+      - Theological triage
+      - Daily news through a worldview lens (The Briefing)
+    sources:
+      - { url: "https://albertmohler.com/", type: mohler, license: "fair-use" }
+
+  # -------- Jewish (~5 leaders) --------
+
+  - leader_id: isaac-mayer-wise
+    religion: Jewish
+    full_name: Isaac Mayer Wise
+    role: Founder of American Reform Judaism
+    dates: 1819-1900
+    era_start: 1854
+    themes:
+      - Reform as American Judaism's adaptation
+      - Hebrew Union College and an educated rabbinate
+      - The Pittsburgh Platform (1885)
+    sources:
+      - { url: "https://archive.org/", type: archive, license: "public-domain" }
+
+  - leader_id: solomon-schechter
+    religion: Jewish
+    full_name: Solomon Schechter
+    role: President, Jewish Theological Seminary; architect of Conservative Judaism
+    dates: 1847-1915
+    era_start: 1902
+    themes:
+      - Catholic Israel — the historical Jewish people as authority
+      - Recovery of the Cairo Geniza
+      - Mediating tradition and modernity
+    sources:
+      - { url: "https://archive.org/", type: archive, license: "public-domain" }
+
+  - leader_id: abraham-joshua-heschel
+    religion: Jewish
+    full_name: Abraham Joshua Heschel
+    role: Rabbi, theologian, civil rights leader
+    dates: 1907-1972
+    era_start: 1945
+    themes:
+      - Radical amazement before creation
+      - The Sabbath as a cathedral in time
+      - Prophetic critique of injustice — "praying with one's feet"
+      - The God of pathos, not of philosophical abstraction
+    sources:
+      - { url: "https://www.jstor.org/", type: scholarly, license: "fair-use" }
+
+  - leader_id: joseph-soloveitchik
+    religion: Jewish
+    full_name: Joseph B. Soloveitchik
+    role: '"The Rav" — preeminent 20th-century Modern Orthodox theologian'
+    dates: 1903-1993
+    era_start: 1950
+    themes:
+      - Halakhic Man — religion within the dialectic of Adam I and Adam II
+      - The Lonely Man of Faith
+      - Halakha as the medium of religious creativity
+      - Synthesis of yeshiva learning and secular philosophy
+    sources:
+      - { url: "https://www.yutorah.org/", type: yutorah, license: "fair-use" }
+
+  - leader_id: jonathan-sacks
+    religion: Jewish
+    full_name: Lord Jonathan Sacks
+    role: Chief Rabbi of the United Hebrew Congregations of the Commonwealth
+    dates: 1948-2020
+    era_start: 1991
+    themes:
+      - Covenant and Conversation (weekly Torah commentary)
+      - The dignity of difference
+      - Morality recovered from the marketplace
+      - Judaism's gift to a fragmented modernity
+    sources:
+      - { url: "https://www.rabbisacks.org/", type: sacks, license: "fair-use" }
+
+  # -------- Buddhist (~5 leaders, English voice) --------
+
+  - leader_id: henry-olcott
+    religion: Buddhist
+    full_name: Henry Steel Olcott
+    role: Co-founder, Theosophical Society; first Western convert to Buddhism in formal ceremony
+    dates: 1832-1907
+    era_start: 1880
+    themes:
+      - The Buddhist Catechism — accessible English-language Buddhism
+      - Sinhalese Buddhist revival
+      - Comparative religion and Theosophy
+    sources:
+      - { url: "https://archive.org/details/buddhistcatechis00olco", type: archive, license: "public-domain" }
+
+  - leader_id: dt-suzuki
+    religion: Buddhist
+    full_name: D. T. Suzuki
+    role: Zen Buddhist scholar; principal English-language popularizer of Zen
+    dates: 1870-1966
+    era_start: 1907
+    themes:
+      - Zen and the bridge between Eastern and Western thought
+      - Satori — sudden awakening
+      - Critique of conceptual mediation
+      - Zen and Japanese culture (tea, archery, calligraphy)
+    sources:
+      - { url: "https://archive.org/", type: archive, license: "mixed" }
+
+  - leader_id: thich-nhat-hanh
+    religion: Buddhist
+    full_name: Thich Nhat Hanh
+    role: Vietnamese Zen master, peace activist
+    dates: 1926-2022
+    era_start: 1966
+    themes:
+      - Engaged Buddhism — Buddhism in society's pain
+      - Mindfulness as moment-to-moment awareness
+      - Interbeing — the radical interconnection of all things
+      - Plum Village community life
+    sources:
+      - { url: "https://plumvillage.org/library/dharma-talks", type: plumvillage, license: "fair-use" }
+
+  - leader_id: dalai-lama
+    religion: Buddhist
+    full_name: Tenzin Gyatso, 14th Dalai Lama
+    role: Spiritual leader of Tibetan Buddhism
+    dates: 1935-
+    era_start: 1959
+    themes:
+      - Compassion as the universal religion
+      - Tibetan exile and nonviolent advocacy
+      - Dialogue with Western science
+      - "Kindness is my religion."
+    sources:
+      - { url: "https://www.dalailama.com/messages", type: dalailama, license: "fair-use" }
+
+  - leader_id: pema-chodron
+    religion: Buddhist
+    full_name: Pema Chödrön
+    role: American Tibetan Buddhist nun; teacher in the Shambhala lineage
+    dates: 1936-
+    era_start: 1994
+    themes:
+      - Staying with difficulty — "the places that scare you"
+      - Tonglen — giving and receiving practice
+      - Groundlessness as the basic situation
+      - Practical dharma for Western lay practitioners
+    sources:
+      - { url: "https://pemachodronfoundation.org/", type: pcf, license: "fair-use" }
+
+  # -------- Islam (~5 leaders, English voices — skews modern) --------
+
+  - leader_id: sayyid-ahmad-khan
+    religion: Islam
+    full_name: Sir Sayyid Ahmad Khan
+    role: Indian Muslim modernist reformer; founder of Aligarh Movement
+    dates: 1817-1898
+    era_start: 1860
+    themes:
+      - Reconciling Islam with modern science and reason
+      - English-language Muslim higher education
+      - Muslim political identity in colonial India
+    sources:
+      - { url: "https://archive.org/", type: archive, license: "public-domain" }
+
+  - leader_id: muhammad-iqbal
+    religion: Islam
+    full_name: Muhammad Iqbal
+    role: Poet-philosopher; spiritual father of Pakistan
+    dates: 1877-1938
+    era_start: 1908
+    themes:
+      - The Reconstruction of Religious Thought in Islam
+      - Khudi — the development of the self
+      - Ijtihad — fresh interpretation for the modern era
+      - Islamic philosophy in dialogue with Bergson, Nietzsche
+    sources:
+      - { url: "https://archive.org/details/reconstructionof00iqba", type: archive, license: "public-domain" }
+
+  - leader_id: hamza-yusuf
+    religion: Islam
+    full_name: Hamza Yusuf
+    role: Co-founder and president of Zaytuna College
+    dates: 1958-
+    era_start: 1990
+    themes:
+      - Traditional Sunni Islam in a Western intellectual key
+      - Classical Islamic sciences and Ash'ari/Maliki orthodoxy
+      - Civilizational decline and the Islamic response
+      - Liberal arts education from a Muslim foundation
+    sources:
+      - { url: "https://www.zaytuna.edu/", type: zaytuna, license: "fair-use" }
+
+  - leader_id: nouman-ali-khan
+    religion: Islam
+    full_name: Nouman Ali Khan
+    role: Founder, Bayyinah Institute; Qur'anic studies teacher
+    dates: 1978-
+    era_start: 2005
+    themes:
+      - Qur'anic Arabic and linguistic miracle
+      - Accessible khutbahs in plain English
+      - Family and youth Muslim formation in the West
+    sources:
+      - { url: "https://www.bayyinah.com/", type: bayyinah, license: "fair-use" }
+
+  - leader_id: yasmin-mogahed
+    religion: Islam
+    full_name: Yasmin Mogahed
+    role: Speaker, author; Yaqeen Institute
+    dates: 1980-
+    era_start: 2008
+    themes:
+      - Reclaim Your Heart — purification of the soul
+      - Tawakkul (reliance on God) as the antidote to anxiety
+      - Female Muslim voice on emotional and spiritual life
+    sources:
+      - { url: "https://yaqeeninstitute.org/", type: yaqeen, license: "fair-use" }
+
+  # -------- Hindu (~5 leaders) --------
+
+  - leader_id: vivekananda
+    religion: Hindu
+    full_name: Swami Vivekananda
+    role: Disciple of Ramakrishna; introduced Vedanta to the West
+    dates: 1863-1902
+    era_start: 1893
+    themes:
+      - Practical Vedanta — religion expressed in service
+      - 1893 Parliament of the World's Religions
+      - The harmony of all religions
+      - Karma yoga and the awakening of India
+    sources:
+      - { url: "https://www.ramakrishnavivekananda.info/vivekananda/complete_works.htm", type: ramakrishna, license: "public-domain" }
+
+  - leader_id: sri-aurobindo
+    religion: Hindu
+    full_name: Sri Aurobindo
+    role: Philosopher, yogi; Integral Yoga
+    dates: 1872-1950
+    era_start: 1910
+    themes:
+      - Integral Yoga — the divinization of all life
+      - The Life Divine — evolution of consciousness
+      - Indian nationalism transmuted into spiritual mission
+      - Synthesis of Eastern and Western thought
+    sources:
+      - { url: "https://www.sriaurobindoashram.org/sriaurobindo/writings.php", type: aurobindo, license: "fair-use" }
+
+  - leader_id: gandhi
+    religion: Hindu
+    full_name: Mohandas K. Gandhi
+    role: Indian independence leader; advocate of nonviolent resistance
+    dates: 1869-1948
+    era_start: 1915
+    themes:
+      - Satyagraha — soul-force, truth-force
+      - Ahimsa — nonviolence as creed and method
+      - The Bhagavad Gita as the guide to action
+      - Swadeshi and simple living
+    sources:
+      - { url: "https://www.gandhiheritageportal.org/", type: gandhi, license: "public" }
+
+  - leader_id: chinmayananda
+    religion: Hindu
+    full_name: Swami Chinmayananda
+    role: Founder, Chinmaya Mission; Vedanta teacher
+    dates: 1916-1993
+    era_start: 1953
+    themes:
+      - Vedanta for the householder
+      - Geeta Gyana Yajna — public Bhagavad Gita teaching
+      - Action without attachment in modern life
+    sources:
+      - { url: "https://www.chinmayamission.com/", type: chinmaya, license: "fair-use" }
+
+  - leader_id: sadhguru
+    religion: Hindu
+    full_name: Sadhguru (Jaggi Vasudev)
+    role: Founder, Isha Foundation; yogi
+    dates: 1957-
+    era_start: 2000
+    themes:
+      - Inner Engineering — yoga as practical technology
+      - The mystical accessible to the modern professional
+      - Environmental advocacy (Save Soil, Rally for Rivers)
+      - Direct, irreverent transmission style
+    sources:
+      - { url: "https://isha.sadhguru.org/", type: isha, license: "fair-use" }

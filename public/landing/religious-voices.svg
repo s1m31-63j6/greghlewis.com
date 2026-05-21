@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 337" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Religious Voices preview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FAF7F0"/>
+      <stop offset="1" stop-color="#EFE8DA"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="337" fill="url(#bg)"/>
+
+  <!-- Title block -->
+  <g font-family="Georgia, 'Source Serif 4', serif" fill="#1c1917">
+    <text x="40" y="92" font-size="38" font-weight="500">Religious</text>
+    <text x="40" y="138" font-size="38" font-weight="500">Voices</text>
+  </g>
+  <line x1="40" y1="160" x2="120" y2="160" stroke="#1B4F7A" stroke-width="2"/>
+  <text x="40" y="184" font-family="Inter, system-ui, sans-serif" font-size="13" fill="#57534e">Eight traditions · two centuries</text>
+
+  <!-- Voice lines — alternating "quoted" (solid stone) and "extrapolation" (lighter, italic-shaped dash) -->
+  <g transform="translate(40,220)">
+    <line x1="0" y1="0" x2="280" y2="0" stroke="#1c1917" stroke-width="2.2"/>
+    <line x1="0" y1="14" x2="200" y2="14" stroke="#a8a29e" stroke-width="1.6" stroke-dasharray="5 3"/>
+    <line x1="0" y1="28" x2="320" y2="28" stroke="#1c1917" stroke-width="2.2"/>
+    <line x1="0" y1="42" x2="160" y2="42" stroke="#a8a29e" stroke-width="1.6" stroke-dasharray="5 3"/>
+    <line x1="0" y1="56" x2="240" y2="56" stroke="#1c1917" stroke-width="2.2"/>
+    <line x1="0" y1="70" x2="190" y2="70" stroke="#a8a29e" stroke-width="1.6" stroke-dasharray="5 3"/>
+  </g>
+
+  <!-- Tradition cluster (small dots — 8 traditions) -->
+  <g transform="translate(440,80)">
+    <text x="0" y="0" font-family="Inter, system-ui, sans-serif" font-size="10" letter-spacing="0.1em" font-weight="600" fill="#57534e" text-anchor="start">TRADITIONS</text>
+    <g fill="#1B4F7A">
+      <circle cx="6" cy="22" r="5"/>
+      <circle cx="26" cy="22" r="5"/>
+      <circle cx="46" cy="22" r="5"/>
+      <circle cx="66" cy="22" r="5"/>
+      <circle cx="6" cy="42" r="5"/>
+      <circle cx="26" cy="42" r="5"/>
+      <circle cx="46" cy="42" r="5"/>
+      <circle cx="66" cy="42" r="5"/>
+    </g>
+  </g>
+
+  <!-- Decade markers along bottom -->
+  <g font-family="ui-monospace, 'JetBrains Mono', monospace" font-size="9" fill="#a8a29e" letter-spacing="0.05em">
+    <text x="40" y="320">1800</text>
+    <text x="170" y="320">1850</text>
+    <text x="290" y="320">1900</text>
+    <text x="410" y="320">1950</text>
+    <text x="520" y="320">2026</text>
+  </g>
+  <line x1="40" y1="305" x2="560" y2="305" stroke="#d6d3d1" stroke-width="1"/>
+</svg>

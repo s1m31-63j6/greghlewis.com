@@ -1,0 +1,133 @@
+# Vatican.va source mapping — papal encyclicals and apostolic
+# constitutions fetched directly from the Holy See's official archive.
+#
+# Wikisource has thin coverage of modern popes; vatican.va has the
+# complete English-language texts for nearly every encyclical from
+# Pope Leo XIII (1878) through the present.
+#
+# Each entry: leader_id (must exist in leaders.yaml), full URL to the
+# vatican.va HTML page, work_title for the UI, publication year.
+
+sources:
+
+  # ----- Pope Leo XIII (1878-1903) — supplementary to Wikisource entries -----
+  - leader_id: leo-xiii
+    url: https://www.vatican.va/content/leo-xiii/en/encyclicals/documents/hf_l-xiii_enc_15051891_rerum-novarum.html
+    work_title: "Rerum Novarum — On Capital and Labor (1891)"
+    year: 1891
+
+  # ----- Pope Pius X (1903-1914) -----
+  - leader_id: pius-x
+    url: https://www.vatican.va/content/pius-x/en/encyclicals/documents/hf_p-x_enc_19031904_e-supremi.html
+    work_title: "E Supremi — On the Restoration of All Things in Christ"
+    year: 1903
+
+  # ----- Pope Pius XI (1922-1939) -----
+  - leader_id: pius-xi
+    url: https://www.vatican.va/content/pius-xi/en/encyclicals/documents/hf_p-xi_enc_19310515_quadragesimo-anno.html
+    work_title: "Quadragesimo Anno — On the Reconstruction of the Social Order (1931)"
+    year: 1931
+  - leader_id: pius-xi
+    url: https://www.vatican.va/content/pius-xi/en/encyclicals/documents/hf_p-xi_enc_19301231_casti-connubii.html
+    work_title: "Casti Connubii — On Christian Marriage (1930)"
+    year: 1930
+  - leader_id: pius-xi
+    url: https://www.vatican.va/content/pius-xi/en/encyclicals/documents/hf_p-xi_enc_19370314_mit-brennender-sorge.html
+    work_title: "Mit Brennender Sorge — On the Church and the German Reich (1937)"
+    year: 1937
+
+  # ----- Pope Pius XII (1939-1958) -----
+  - leader_id: pius-xii
+    url: https://www.vatican.va/content/pius-xii/en/encyclicals/documents/hf_p-xii_enc_29061943_mystici-corporis-christi.html
+    work_title: "Mystici Corporis Christi (1943)"
+    year: 1943
+  - leader_id: pius-xii
+    url: https://www.vatican.va/content/pius-xii/en/encyclicals/documents/hf_p-xii_enc_20111947_mediator-dei.html
+    work_title: "Mediator Dei — On the Sacred Liturgy (1947)"
+    year: 1947
+  - leader_id: pius-xii
+    url: https://www.vatican.va/content/pius-xii/en/encyclicals/documents/hf_p-xii_enc_12081950_humani-generis.html
+    work_title: "Humani Generis (1950)"
+    year: 1950
+
+  # ----- Pope John XXIII (1958-1963) -----
+  - leader_id: john-xxiii
+    url: https://www.vatican.va/content/john-xxiii/en/encyclicals/documents/hf_j-xxiii_enc_15051961_mater.html
+    work_title: "Mater et Magistra (1961)"
+    year: 1961
+  - leader_id: john-xxiii
+    url: https://www.vatican.va/content/john-xxiii/en/encyclicals/documents/hf_j-xxiii_enc_11041963_pacem.html
+    work_title: "Pacem in Terris (1963)"
+    year: 1963
+
+  # ----- Pope Paul VI (1963-1978) -----
+  - leader_id: paul-vi
+    url: https://www.vatican.va/content/paul-vi/en/encyclicals/documents/hf_p-vi_enc_26031967_populorum.html
+    work_title: "Populorum Progressio (1967)"
+    year: 1967
+  - leader_id: paul-vi
+    url: https://www.vatican.va/content/paul-vi/en/encyclicals/documents/hf_p-vi_enc_25071968_humanae-vitae.html
+    work_title: "Humanae Vitae (1968)"
+    year: 1968
+  - leader_id: paul-vi
+    url: https://www.vatican.va/content/paul-vi/en/apost_exhortations/documents/hf_p-vi_exh_19751208_evangelii-nuntiandi.html
+    work_title: "Evangelii Nuntiandi (apostolic exhortation, 1975)"
+    year: 1975
+
+  # ----- Pope John Paul II (1978-2005) -----
+  - leader_id: john-paul-ii
+    url: https://www.vatican.va/content/john-paul-ii/en/encyclicals/documents/hf_jp-ii_enc_04031979_redemptor-hominis.html
+    work_title: "Redemptor Hominis (1979)"
+    year: 1979
+  - leader_id: john-paul-ii
+    url: https://www.vatican.va/content/john-paul-ii/en/encyclicals/documents/hf_jp-ii_enc_14091981_laborem-exercens.html
+    work_title: "Laborem Exercens — On Human Work (1981)"
+    year: 1981
+  - leader_id: john-paul-ii
+    url: https://www.vatican.va/content/john-paul-ii/en/encyclicals/documents/hf_jp-ii_enc_01051991_centesimus-annus.html
+    work_title: "Centesimus Annus (1991)"
+    year: 1991
+  - leader_id: john-paul-ii
+    url: https://www.vatican.va/content/john-paul-ii/en/encyclicals/documents/hf_jp-ii_enc_06081993_veritatis-splendor.html
+    work_title: "Veritatis Splendor (1993)"
+    year: 1993
+  - leader_id: john-paul-ii
+    url: https://www.vatican.va/content/john-paul-ii/en/encyclicals/documents/hf_jp-ii_enc_25031995_evangelium-vitae.html
+    work_title: "Evangelium Vitae — The Gospel of Life (1995)"
+    year: 1995
+  - leader_id: john-paul-ii
+    url: https://www.vatican.va/content/john-paul-ii/en/encyclicals/documents/hf_jp-ii_enc_14091998_fides-et-ratio.html
+    work_title: "Fides et Ratio (1998)"
+    year: 1998
+
+  # ----- Pope Benedict XVI (2005-2013) -----
+  - leader_id: benedict-xvi
+    url: https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20051225_deus-caritas-est.html
+    work_title: "Deus Caritas Est — God is Love (2005)"
+    year: 2005
+  - leader_id: benedict-xvi
+    url: https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20071130_spe-salvi.html
+    work_title: "Spe Salvi — Saved in Hope (2007)"
+    year: 2007
+  - leader_id: benedict-xvi
+    url: https://www.vatican.va/content/benedict-xvi/en/encyclicals/documents/hf_ben-xvi_enc_20090629_caritas-in-veritate.html
+    work_title: "Caritas in Veritate (2009)"
+    year: 2009
+
+  # ----- Pope Francis (2013-2025) -----
+  - leader_id: francis
+    url: https://www.vatican.va/content/francesco/en/encyclicals/documents/papa-francesco_20130629_enciclica-lumen-fidei.html
+    work_title: "Lumen Fidei — The Light of Faith (2013)"
+    year: 2013
+  - leader_id: francis
+    url: https://www.vatican.va/content/francesco/en/encyclicals/documents/papa-francesco_20150524_enciclica-laudato-si.html
+    work_title: "Laudato Si' — On Care for Our Common Home (2015)"
+    year: 2015
+  - leader_id: francis
+    url: https://www.vatican.va/content/francesco/en/encyclicals/documents/papa-francesco_20201003_enciclica-fratelli-tutti.html
+    work_title: "Fratelli Tutti (2020)"
+    year: 2020
+  - leader_id: francis
+    url: https://www.vatican.va/content/francesco/en/apost_exhortations/documents/papa-francesco_esortazione-ap_20131124_evangelii-gaudium.html
+    work_title: "Evangelii Gaudium — The Joy of the Gospel (2013)"
+    year: 2013

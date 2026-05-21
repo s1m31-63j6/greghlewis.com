@@ -1,0 +1,186 @@
+# Wikisource source mapping — public-domain religious texts that the
+# wikisource scraper pulls into the corpus.
+#
+# Encyclicals/works that DO NOT exist on Wikisource as full text are
+# served by scrape/archive_org.py instead (see archive_org_sources.yaml)
+# or by the journal_of_discourses.py auto-harvester for JoD pages.
+#
+# Each entry: leader_id (must exist in leaders.yaml), Wikisource page
+# slug, work title for the UI, publication year, and optional
+# `attribution_contains` to guard against misattribution in multi-author
+# volumes.
+
+sources:
+
+  # ============================================================
+  # MORMON — Joseph Smith (Brigham Young / Taylor / Woodruff covered
+  # via the JoD auto-harvester in scrape/journal_of_discourses.py)
+  # ============================================================
+
+  - leader_id: joseph-smith
+    page: King_Follett_Discourse
+    work_title: King Follett Discourse
+    year: 1844
+    attribution_contains: "Joseph Smith"
+
+  # ============================================================
+  # CATHOLIC — encyclicals on Wikisource (only those with full text)
+  # ============================================================
+
+  # ----- Pope Pius IX (1846-1878) -----
+  - leader_id: pius-ix
+    page: Pastoral_Letter_Promulgating_the_Jubilee/Syllabus_of_Errors
+    work_title: Syllabus of Errors
+    year: 1864
+  - leader_id: pius-ix
+    page: Quanta_Cura
+    work_title: Quanta Cura (encyclical)
+    year: 1864
+
+  # ----- Pope Leo XIII (1878-1903) -----
+  - leader_id: leo-xiii
+    page: Rerum_Novarum
+    work_title: Rerum Novarum (encyclical)
+    year: 1891
+  - leader_id: leo-xiii
+    page: Immortale_Dei
+    work_title: "Immortale Dei — The Christian Constitution of States"
+    year: 1885
+
+  # ----- Pope Pius X (1903-1914) -----
+  - leader_id: pius-x
+    page: Pascendi_Dominici_Gregis
+    work_title: "Pascendi Dominici Gregis (against Modernism)"
+    year: 1907
+
+  # ============================================================
+  # HINDU — Vivekananda's Complete Works (Volume 1-3)
+  # ============================================================
+
+  # ----- Karma-Yoga (8 chapters, 1896) -----
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Karma-Yoga/Karma_in_its_Effect_on_Character
+    work_title: "Karma in its Effect on Character — Karma-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Karma-Yoga/Each_is_great_in_his_own_place
+    work_title: "Each is great in his own place — Karma-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: "The_Complete_Works_of_Swami_Vivekananda/Volume_1/Karma-Yoga/Non-attachment_is_complete_self-abnegation"
+    work_title: "Non-attachment is complete self-abnegation — Karma-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: "The_Complete_Works_of_Swami_Vivekananda/Volume_1/Karma-Yoga/We_help_ourselves,_not_the_world"
+    work_title: "We help ourselves, not the world — Karma-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Karma-Yoga/What_is_Duty%3F
+    work_title: "What is Duty? — Karma-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Karma-Yoga/The_Ideal_of_Karma-Yoga
+    work_title: "The Ideal of Karma-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Karma-Yoga/The_Secret_of_Work
+    work_title: "The Secret of Work — Karma-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Karma-Yoga/Freedom
+    work_title: "Freedom — Karma-Yoga"
+    year: 1896
+
+  # ----- Chicago Addresses (1893 Parliament of Religions) -----
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Addresses_at_The_Parliament_of_Religions/Response_to_Welcome
+    work_title: "Response to Welcome — Parliament of Religions"
+    year: 1893
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Addresses_at_The_Parliament_of_Religions/Paper_on_Hinduism
+    work_title: "Paper on Hinduism — Parliament of Religions"
+    year: 1893
+  - leader_id: vivekananda
+    page: "The_Complete_Works_of_Swami_Vivekananda/Volume_1/Addresses_at_The_Parliament_of_Religions/Buddhism,_the_Fulfilment_of_Hinduism"
+    work_title: "Buddhism, the Fulfilment of Hinduism — Parliament of Religions"
+    year: 1893
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Addresses_at_The_Parliament_of_Religions/Address_at_the_Final_Session
+    work_title: "Address at the Final Session — Parliament of Religions"
+    year: 1893
+
+  # ----- Raja-Yoga (selected chapters) -----
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_1/Raja-Yoga/Introductory
+    work_title: "Introductory — Raja-Yoga"
+    year: 1896
+
+  # ----- Bhakti-Yoga (Volume 3, devotion-focused) -----
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_3/Bhakti-Yoga/Definition_of_Bhakti
+    work_title: "Definition of Bhakti — Bhakti-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_3/Bhakti-Yoga/The_Philosophy_of_Ishvara
+    work_title: "The Philosophy of Ishvara — Bhakti-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: "The_Complete_Works_of_Swami_Vivekananda/Volume_3/Bhakti-Yoga/Spiritual_Realisation,_the_aim_of_Bhakti-Yoga"
+    work_title: "Spiritual Realisation, the aim of Bhakti-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_3/Bhakti-Yoga/The_Need_of_Symbols
+    work_title: "The Need of Symbols — Bhakti-Yoga"
+    year: 1896
+  - leader_id: vivekananda
+    page: "The_Complete_Works_of_Swami_Vivekananda/Volume_3/Bhakti-Yoga/Christ,_the_Messenger"
+    work_title: "Christ, the Messenger — Bhakti-Yoga"
+    year: 1900
+
+  # ----- Lectures from Colombo to Almora (Vol 3, 1897) -----
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_3/Lectures_from_Colombo_to_Almora/Vedanta_in_its_Application_to_Indian_Life
+    work_title: "Vedanta in its Application to Indian Life"
+    year: 1897
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_3/Lectures_from_Colombo_to_Almora/The_Mission_of_the_Vedanta
+    work_title: "The Mission of the Vedanta"
+    year: 1897
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_3/Lectures_from_Colombo_to_Almora/The_Common_Bases_of_Hinduism
+    work_title: "The Common Bases of Hinduism"
+    year: 1897
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_3/Lectures_from_Colombo_to_Almora/The_Sages_of_India
+    work_title: "The Sages of India"
+    year: 1897
+  - leader_id: vivekananda
+    page: The_Complete_Works_of_Swami_Vivekananda/Volume_3/Lectures_from_Colombo_to_Almora/The_Vedanta
+    work_title: "The Vedanta — Lectures from Colombo to Almora"
+    year: 1897
+
+  # ----- Mahatma Gandhi — Indian Home Rule (1919 edition chapters) -----
+  - leader_id: gandhi
+    page: Indian_Home_Rule_(1919_edition)/The_Congress_and_Its_Officials
+    work_title: "Indian Home Rule — The Congress and Its Officials"
+    year: 1919
+  - leader_id: gandhi
+    page: Indian_Home_Rule_(1919_edition)/The_Partition_of_Bengal
+    work_title: "Indian Home Rule — The Partition of Bengal"
+    year: 1919
+  - leader_id: gandhi
+    page: Indian_Home_Rule_(1919_edition)/Discontent_and_Unrest
+    work_title: "Indian Home Rule — Discontent and Unrest"
+    year: 1919
+  - leader_id: gandhi
+    page: Indian_Home_Rule_(1919_edition)/What_is_Swaraj%3F
+    work_title: "Indian Home Rule — What is Swaraj?"
+    year: 1919
+  - leader_id: gandhi
+    page: Indian_Home_Rule_(1919_edition)/The_Condition_of_England
+    work_title: "Indian Home Rule — The Condition of England"
+    year: 1919
+  - leader_id: gandhi
+    page: Indian_Home_Rule_(1919_edition)/Civilisation
+    work_title: "Indian Home Rule — Civilisation"
+    year: 1919
