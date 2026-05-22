@@ -79,6 +79,11 @@ class HostingStack(cdk.Stack):
                     # the unversioned ARN ("anthropic.claude-sonnet-4-6")
                     # and any future versioned variants.
                     "arn:aws:bedrock:*::foundation-model/anthropic.claude-sonnet-4-6*",
+                    # Religious Voices uses Bedrock Cohere embeddings at
+                    # query time (no Knowledge Base) — the corpus vectors
+                    # are bundled with the site, but query vectors are
+                    # produced live so the embedding space matches.
+                    f"arn:aws:bedrock:{self.region}::foundation-model/cohere.embed-english-v3",
                 ],
             )
         )
