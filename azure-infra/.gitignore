@@ -1,0 +1,9 @@
+# Live parameter files contain secrets — never commit. The
+# .example.json template is committed.
+main.parameters.json
+*.parameters.json
+!main.parameters.example.json
+deploy-outputs.json
+.sql-admin-password
+node_modules/
+_temp-*.cjs

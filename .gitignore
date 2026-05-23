@@ -57,3 +57,10 @@ cdk.context.json
 # scrapeable free sources. Per-project; never committed. Path-specific
 # rule so it doesn't match the engine.corpus Python module under src/.
 projects/nfl-prospect-comparables/engine/corpus/
+
+# project-local Claude Code settings (memory, hooks, agents)
+.claude/
+
+# adventureworks-chat: Function project ignores its own build artifacts
+# via azure-functions/adventureworks/.gitignore. Azure-infra parameter
+# files (with secrets) are ignored via azure-infra/.gitignore.

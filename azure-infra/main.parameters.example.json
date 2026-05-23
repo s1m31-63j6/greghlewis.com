@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "projectPrefix": { "value": "awchat" },
+    "location": { "value": "eastus2" },
+    "adminPrincipalObjectId": {
+      "value": "REPLACE_WITH_OUTPUT_OF: az ad signed-in-user show --query id -o tsv"
+    },
+    "alertEmail": { "value": "greghlewis@gmail.com" },
+    "fabricAdminUpn": { "value": "REPLACE_WITH_YOUR_TENANT_USER_UPN (e.g. user@yourorg.onmicrosoft.com)" },
+    "anthropicApiKey": {
+      "value": "REPLACE_WITH_ANTHROPIC_KEY (from console.anthropic.com)"
+    },
+    "sqlAdminLogin": { "value": "awadmin" },
+    "sqlAdminPassword": {
+      "value": "REPLACE_WITH_GENERATED_PASSWORD (openssl rand -base64 24)"
+    },
+    "openAIModelDeployment": { "value": "gpt-4o-mini" },
+    "openAIModelName": { "value": "gpt-4o-mini" },
+    "openAIModelVersion": { "value": "2024-07-18" }
+  }
+}
