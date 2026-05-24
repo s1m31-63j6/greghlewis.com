@@ -10,9 +10,10 @@ export interface ChatRequestBody {
 }
 
 export interface ChartSpec {
-  // Vega-Lite spec, validated structurally on the client.
-  $schema?: string;
-  // Allow any other top-level key — Vega-Lite specs are open-ended.
+  // Plotly.js figure spec — { data: [...traces], layout: {...} }.
+  // Open-ended top-level shape; the frontend renders with react-plotly.js.
+  data?: unknown[];
+  layout?: Record<string, unknown>;
   [key: string]: unknown;
 }
 

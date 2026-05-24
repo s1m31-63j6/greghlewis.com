@@ -35,8 +35,12 @@ async function buildPool(): Promise<sql.ConnectionPool> {
         token: tk.token,
       },
     },
-    connectionTimeout: 5_000,
-    requestTimeout: 10_000,
+    // Azure SQL Serverless auto-pauses after 60 min idle. Wake-up from
+    // a cold DB typically takes 10-30s on the first connection. Be
+    // generous on connectionTimeout so the first request after idle
+    // doesn't fail. Subsequent connections from a warm pool are instant.
+    connectionTimeout: 60_000,
+    requestTimeout: 15_000,
     pool: {
       max: 1,
       min: 0,

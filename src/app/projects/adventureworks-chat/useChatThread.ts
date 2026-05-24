@@ -31,7 +31,11 @@ export function useChatThread({ getTurnstileToken, resetTurnstile, functionUrl }
       setError(null);
 
       const userTurn: ChatTurn = { role: "user", content: trimmed };
-      const assistantTurn: ChatTurn = { role: "assistant", content: "" };
+      const assistantTurn: ChatTurn = {
+        role: "assistant",
+        content: "",
+        question: trimmed, // ResultPanel reads this to echo the question
+      };
 
       setTurns((prev) => {
         const next = [...prev, userTurn, assistantTurn];

@@ -1,16 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { MessageRenderer } from "./MessageRenderer";
+// Dashboard-first layout for the chat-based reporting engine.
+//
+//   ┌─────────────────────────────────────────────────────┐
+//   │  Model toggle              [Clear]                  │
+//   │  [ Ask the warehouse … ]                    [ Ask ] │
+//   │  Turnstile widget                                   │
+//   ├─────────────────────────────────────────────────────┤
+//   │  ResultPanel  — large persistent chart + table      │
+//   │  + narrative + SQL expander + meta                  │
+//   ├─────────────────────────────────────────────────────┤
+//   │  Past queries — clickable cards                     │
+//   └─────────────────────────────────────────────────────┘
+
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ResultPanel } from "./ResultPanel";
 import { ModelToggle } from "./ModelToggle";
+import { QueryHistory } from "./QueryHistory";
 import { Turnstile, type TurnstileHandle } from "./Turnstile";
-import { DashboardLauncher } from "./DashboardLauncher";
 import { STARTERS } from "./starters";
 import { useChatThread } from "./useChatThread";
-import type { ModelChoice } from "@/lib/adventureworks/types";
+import type { ChatTurn, ModelChoice } from "@/lib/adventureworks/types";
 
-// Cloudflare's "always passes" test sitekey. Used as a fallback so local
-// dev works without a real key set in env.
 const TURNSTILE_TEST_SITE_KEY = "1x00000000000000000000AA";
 
 interface Props {
@@ -20,10 +31,9 @@ interface Props {
 export function Chat({ functionUrl }: Props) {
   const [value, setValue] = useState("");
   const [model, setModel] = useState<ModelChoice>("claude");
-  const [dashboardOpen, setDashboardOpen] = useState(false);
+  const [pinnedIdx, setPinnedIdx] = useState<number | null>(null);
   const turnstileRef = useRef<TurnstileHandle | null>(null);
   const [hasTurnstileToken, setHasTurnstileToken] = useState(false);
-  const threadRef = useRef<HTMLDivElement>(null);
 
   const siteKey =
     process.env.NEXT_PUBLIC_ADVENTUREWORKS_TURNSTILE_SITEKEY ||
@@ -38,11 +48,24 @@ export function Chat({ functionUrl }: Props) {
     functionUrl,
   });
 
+  const assistantTurns = useMemo(
+    () => turns.filter((t) => t.role === "assistant") as ChatTurn[],
+    [turns],
+  );
+  const latestAssistant = assistantTurns[assistantTurns.length - 1] ?? null;
+  const displayed: ChatTurn | null =
+    pinnedIdx !== null ? assistantTurns[pinnedIdx] ?? latestAssistant : latestAssistant;
+  const history = assistantTurns.slice(0, -1).map((t) => ({
+    question: t.question ?? "(no question)",
+    turn: t,
+  }));
+  const streamingCurrent =
+    pinnedIdx === null && busy && streamingIdx !== null;
+
+  // Reset pin whenever a new query is asked.
   useEffect(() => {
-    if (threadRef.current) {
-      threadRef.current.scrollTop = threadRef.current.scrollHeight;
-    }
-  }, [turns, busy]);
+    if (busy) setPinnedIdx(null);
+  }, [busy]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,10 +81,7 @@ export function Chat({ functionUrl }: Props) {
     void ask(q, model);
   };
 
-  const empty = turns.length === 0 && !busy;
-  const functionUrlMissing = !functionUrl;
-
-  if (functionUrlMissing) {
+  if (!functionUrl) {
     return (
       <div className="rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
         <div className="font-medium">Chat backend not configured.</div>
@@ -69,100 +89,40 @@ export function Chat({ functionUrl }: Props) {
           Set <code className="text-[12px] bg-amber-100 px-1 rounded">
             NEXT_PUBLIC_ADVENTUREWORKS_FUNCTION_URL
           </code>{" "}
-          in the Amplify environment, redeploy, and this chat will come live.
+          in the Amplify environment, redeploy, and the chat will come online.
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex items-center justify-between gap-3 flex-wrap">
-        <ModelToggle value={model} onChange={setModel} disabled={busy} />
-        {turns.length > 0 && (
-          <button
-            type="button"
-            onClick={() => {
-              reset();
-              setValue("");
-            }}
-            className="text-[11px] text-stone-500 hover:text-stone-900 underline underline-offset-2 transition"
-          >
-            New conversation
-          </button>
-        )}
-      </div>
-
-      <div
-        ref={threadRef}
-        className="rounded-xl border border-stone-200 bg-stone-50/50 p-5 min-h-[320px] max-h-[68vh] overflow-y-auto"
-      >
-        {empty ? (
-          <div className="text-stone-500 text-sm">
-            <p className="mb-3">
-              Ask the warehouse a question. The model will generate T-SQL,
-              run it against AdventureWorksDW, draw the result as a chart,
-              and tell you what it means.
-            </p>
-            <div className="flex flex-wrap gap-2 mt-4">
-              {STARTERS.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  onClick={() => askStarter(s)}
-                  className="text-xs px-3 py-1.5 rounded-full border border-stone-300 bg-white text-stone-700 hover:border-stone-500 hover:text-stone-900 transition"
-                >
-                  {s}
-                </button>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {turns.map((t, i) => (
-              <div key={i}>
-                <div className="text-[10px] uppercase tracking-wider text-stone-500 mb-1.5">
-                  {t.role === "user" ? "You" : "AdventureWorks Reporting"}
-                </div>
-                {t.role === "user" ? (
-                  <p className="text-stone-900 font-medium text-[15px] leading-relaxed">
-                    {t.content}
-                  </p>
-                ) : (
-                  <MessageRenderer
-                    turn={t}
-                    streaming={i === streamingIdx && busy}
-                    onLaunchDashboard={() => setDashboardOpen(true)}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-        {error && (
-          <div className="mt-4 text-sm text-amber-700">
-            <span className="font-medium">Something went wrong.</span>{" "}
-            <span className="text-stone-600">{error}</span>
-          </div>
-        )}
-      </div>
-
-      <div className="flex flex-col sm:flex-row gap-3 sm:items-end">
-        <div className="shrink-0">
-          <Turnstile
-            ref={turnstileRef}
-            siteKey={siteKey}
-            onTokenChange={(t) => setHasTurnstileToken(!!t)}
-          />
+    <div className="flex flex-col gap-5">
+      {/* Query bar */}
+      <div className="rounded-xl border border-stone-200 bg-white p-4 space-y-3">
+        <div className="flex items-center justify-between gap-3 flex-wrap">
+          <ModelToggle value={model} onChange={setModel} disabled={busy} />
+          {turns.length > 0 && (
+            <button
+              type="button"
+              onClick={() => {
+                reset();
+                setValue("");
+                setPinnedIdx(null);
+              }}
+              className="text-[11px] text-stone-500 hover:text-stone-900 underline underline-offset-2"
+            >
+              Clear all
+            </button>
+          )}
         </div>
-        <form onSubmit={submit} className="flex-1 flex gap-2">
+        <form onSubmit={submit} className="flex flex-col sm:flex-row gap-2 sm:items-stretch">
           <input
             type="text"
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="Ask the warehouse…"
             disabled={busy}
-            className="flex-1 bg-white border border-stone-300 rounded-md px-4 py-2.5 text-sm text-stone-900 placeholder:text-stone-500 focus:outline-none focus:border-stone-500 transition disabled:opacity-60"
+            className="flex-1 bg-white border border-stone-300 rounded-md px-4 py-2.5 text-[15px] text-stone-900 placeholder:text-stone-500 focus:outline-none focus:border-stone-500 transition disabled:opacity-60"
           />
           <button
             type="submit"
@@ -172,17 +132,56 @@ export function Chat({ functionUrl }: Props) {
                 ? "Complete the verification challenge to ask"
                 : undefined
             }
-            className="text-sm px-5 py-2.5 rounded-md bg-stone-900 hover:bg-stone-700 text-white transition disabled:opacity-40 disabled:cursor-not-allowed"
+            className="text-sm px-6 py-2.5 rounded-md bg-stone-900 hover:bg-stone-700 text-white transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {busy ? "…" : "Ask"}
+            {busy ? "Asking…" : "Ask"}
           </button>
         </form>
+        <div className="flex items-start justify-between gap-3 flex-wrap">
+          <Turnstile
+            ref={turnstileRef}
+            siteKey={siteKey}
+            onTokenChange={(t) => setHasTurnstileToken(!!t)}
+          />
+          {turns.length === 0 && !busy && (
+            <div className="flex flex-wrap gap-1.5 max-w-[60%]">
+              {STARTERS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => askStarter(s)}
+                  className="text-xs px-2.5 py-1 rounded-full border border-stone-300 bg-white text-stone-700 hover:border-stone-500 hover:text-stone-900 transition"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
-      <DashboardLauncher
-        functionUrl={functionUrl}
-        open={dashboardOpen}
-        onClose={() => setDashboardOpen(false)}
+      {error && (
+        <div className="rounded-md border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+          <span className="font-medium">Something went wrong.</span>{" "}
+          <span className="text-amber-800">{error}</span>
+        </div>
+      )}
+
+      {/* Main result panel */}
+      <ResultPanel
+        turn={displayed}
+        streaming={streamingCurrent && displayed === latestAssistant}
+      />
+
+      {/* History */}
+      <QueryHistory
+        items={history}
+        activeIdx={pinnedIdx}
+        onSelect={setPinnedIdx}
+        onReset={() => {
+          reset();
+          setPinnedIdx(null);
+        }}
       />
     </div>
   );

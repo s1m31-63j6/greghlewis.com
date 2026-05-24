@@ -3,8 +3,11 @@
 
 export type ModelChoice = "azure-openai" | "claude";
 
+// Plotly figure spec — { data: [...traces], layout: {...} }. Loosely typed
+// because the model emits an open-ended shape and react-plotly accepts it.
 export type ChartSpec = {
-  $schema?: string;
+  data?: unknown[];
+  layout?: Record<string, unknown>;
   [key: string]: unknown;
 };
 
@@ -31,6 +34,7 @@ export type StreamEvent =
 export interface ChatTurn {
   role: "user" | "assistant";
   content: string;            // user text OR assistant narrative
+  question?: string;          // assistant turn carries a copy of the originating user question
   status?: string;            // last status message ("Generating SQL…" etc)
   sql?: string;
   validation?: { ok: boolean; errors?: string[] };
