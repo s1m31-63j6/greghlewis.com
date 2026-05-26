@@ -42,9 +42,9 @@ param alertEmail string
 @description('UPN of a user in THIS tenant who will be Fabric capacity admin. Must be a tenant identity, not an external email.')
 param fabricAdminUpn string
 
-@description('Anthropic API key for the Claude side of the A/B. Marked @secure so it is not logged.')
-@secure()
-param anthropicApiKey string
+// NOTE: Anthropic API key is intentionally NOT a Bicep parameter. It's
+// set out-of-band via `az keyvault secret set` so that future redeploys
+// don't overwrite the live key with a parameter-file placeholder.
 
 @description('SQL admin login (used only by deploymentScript that loads the bacpac; not by the app).')
 param sqlAdminLogin string = 'awadmin'
@@ -94,7 +94,6 @@ module keyVault 'modules/keyvault.bicep' = {
     keyVaultName: names.keyVault
     location: location
     adminPrincipalObjectId: adminPrincipalObjectId
-    anthropicApiKey: anthropicApiKey
   }
 }
 

@@ -1,11 +1,16 @@
-// Key Vault for the Anthropic API key (and later the Power BI service
-// principal secret, which Greg adds manually after authoring the report).
+// Key Vault for the Anthropic API key + Power BI service principal
+// secret.
+//
+// IMPORTANT: secrets are NOT declared in this Bicep. Each Bicep redeploy
+// would otherwise overwrite the live secret with whatever's in the
+// parameter file (typically a placeholder), silently breaking the
+// Function until someone notices. Bootstrap secrets out-of-band:
+//   az keyvault secret set --vault-name <name> --name anthropic-api-key --value <key>
+//   az keyvault secret set --vault-name <name> --name pbi-sp-secret --value <secret>
 
 param keyVaultName string
 param location string
 param adminPrincipalObjectId string
-@secure()
-param anthropicApiKey string
 
 resource kv 'Microsoft.KeyVault/vaults@2024-04-01-preview' = {
   name: keyVaultName
@@ -17,15 +22,6 @@ resource kv 'Microsoft.KeyVault/vaults@2024-04-01-preview' = {
     enableSoftDelete: true
     softDeleteRetentionInDays: 7
     publicNetworkAccess: 'Enabled'
-  }
-}
-
-resource anthropicSecret 'Microsoft.KeyVault/vaults/secrets@2024-04-01-preview' = {
-  parent: kv
-  name: 'anthropic-api-key'
-  properties: {
-    value: anthropicApiKey
-    contentType: 'text/plain'
   }
 }
 

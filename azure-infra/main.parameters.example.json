@@ -9,9 +9,6 @@
     },
     "alertEmail": { "value": "greghlewis@gmail.com" },
     "fabricAdminUpn": { "value": "REPLACE_WITH_YOUR_TENANT_USER_UPN (e.g. user@yourorg.onmicrosoft.com)" },
-    "anthropicApiKey": {
-      "value": "REPLACE_WITH_ANTHROPIC_KEY (from console.anthropic.com)"
-    },
     "sqlAdminLogin": { "value": "awadmin" },
     "sqlAdminPassword": {
       "value": "REPLACE_WITH_GENERATED_PASSWORD (openssl rand -base64 24)"
