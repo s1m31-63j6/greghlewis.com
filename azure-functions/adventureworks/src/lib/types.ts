@@ -55,9 +55,3 @@ export interface ChatLogRow {
   cost_est_usd: number;
   timestamp: string;
 }
-
-export interface PbiStatus {
-  state: "Active" | "Paused" | "Resuming" | "Pausing" | "Unknown";
-  last_activity_at: string | null;
-  capacity_name: string;
-}

@@ -35,10 +35,5 @@ resource ratelimitsTable 'Microsoft.Storage/storageAccounts/tableServices/tables
   name: 'ratelimits'
 }
 
-resource pbistateTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2024-01-01' = {
-  parent: tableService
-  name: 'pbistate'
-}
-
 output storageAccountName string = storage.name
 output storageAccountId string = storage.id

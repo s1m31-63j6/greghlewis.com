@@ -6,7 +6,7 @@ import { SchemaOverview } from "./SchemaOverview";
 export const metadata: Metadata = {
   title: "AdventureWorks Chat-Based Reporting · Greg Lewis",
   description:
-    "A reporting engine you talk to. Natural-language questions on Microsoft's canonical sales warehouse return SQL, tables, charts, and live Power BI dashboards. Two frontier LLMs go head-to-head.",
+    "A reporting engine you talk to. Natural-language questions on Microsoft's canonical sales warehouse return T-SQL, a sortable table, an interactive Plotly chart, and a senior-analyst narrative — all in one streamed turn.",
 };
 
 export default function Page() {
@@ -58,8 +58,6 @@ export default function Page() {
         <p>
           Architecture: a TypeScript Azure Function (Flex Consumption) on
           Node 22 calls{" "}
-          <span className="text-stone-900">Azure OpenAI gpt-4.1-mini</span>{" "}
-          or{" "}
           <span className="text-stone-900">Anthropic Claude Sonnet 4.6</span>{" "}
           to generate T-SQL, validates the AST with{" "}
           <code className="text-[11px] bg-stone-100 px-1 rounded">
@@ -67,16 +65,10 @@ export default function Page() {
           </code>{" "}
           (SELECT-only, table allowlist, mandatory row cap), executes
           on Azure SQL Serverless via Managed Identity, then re-prompts
-          the same model for a 2–3 sentence narrative and a Vega-Lite
-          chart spec. The Function&apos;s system-assigned MI authenticates
-          to SQL, Azure OpenAI, Key Vault, and Microsoft.Fabric — zero
-          secrets in code.
-        </p>
-        <p>
-          The Power BI launch button resumes a Fabric F2 capacity on
-          demand (~60–90s cold start), generates an embed token via a
-          service principal, and pauses again after 30 minutes idle.
-          Everything is provisioned by Bicep.
+          the model for a 2–3 sentence narrative and a Plotly figure
+          spec. The Function&apos;s system-assigned MI authenticates to
+          SQL and Key Vault — zero secrets in code. Everything is
+          provisioned by Bicep.
         </p>
         <p>
           A deliberate architectural contrast to the other projects on
@@ -88,7 +80,8 @@ export default function Page() {
           >
             the methodology page
           </Link>{" "}
-          for the live A/B comparison between the two models.
+          for the architecture, SQL safety model, and the planned A/B
+          between models.
         </p>
       </footer>
     </main>

@@ -2,17 +2,16 @@
 //
 // What this deploys:
 //   - Azure SQL server + serverless DB (auto-pause 60 min)
-//   - Azure OpenAI resource + gpt-4.1-mini deployment
 //   - Storage account + Table Storage for chatlogs + rate-limit counters
-//   - Key Vault for Anthropic API key + Power BI SP secret
+//   - Key Vault for the Anthropic API key
 //   - Function App (Flex Consumption, Node 22) with Managed Identity
-//   - Fabric F2 capacity (provisioned PAUSED by default)
-//   - Budget alert + action group at $20/mo with kill-switch Logic App
+//   - Budget alert + action group at $20/mo
 //
 // What this does NOT deploy (must be done manually):
-//   - Power BI workspace + report (authored in Power BI Desktop, published)
-//   - AAD App Registration for Power BI service principal
-//   - bacpac import to load AdventureWorksDW (run scripts/load_bacpac.sh after)
+//   - bacpac import to load AdventureWorksDW (run scripts/post-deploy.sh after)
+//
+// Azure OpenAI is disabled until quota is granted on this subscription;
+// see the commented `module openAI` block below.
 //
 // Usage:
 //   az deployment group create \
@@ -38,9 +37,6 @@ param adminPrincipalObjectId string
 
 @description('Email for budget + kill-switch alerts. External addresses are fine here.')
 param alertEmail string
-
-@description('UPN of a user in THIS tenant who will be Fabric capacity admin. Must be a tenant identity, not an external email.')
-param fabricAdminUpn string
 
 // NOTE: Anthropic API key is intentionally NOT a Bicep parameter. It's
 // set out-of-band via `az keyvault secret set` so that future redeploys
@@ -70,10 +66,6 @@ var names = {
   openAI: '${projectPrefix}-aoai-${suffix}'
   functionApp: '${projectPrefix}-fn-${suffix}'
   appServicePlan: '${projectPrefix}-plan-${suffix}'
-  // PowerBIDedicated capacity names: lowercase alphanumeric only, must start
-  // with a letter. uniqueString() returns a 13-char lowercase token so this
-  // satisfies that constraint and stays globally unique per RG.
-  pbi: 'awchatpbi${suffix}'
   logAnalytics: '${projectPrefix}-logs-${suffix}'
   appInsights: '${projectPrefix}-appi-${suffix}'
   actionGroup: '${projectPrefix}-alerts'
@@ -127,35 +119,6 @@ module sql 'modules/sql.bicep' = {
 //   }
 // }
 
-// Power BI Embedded is DISABLED in v1.
-//
-// We tried two paths:
-//   1. Fabric F-SKU (Microsoft.Fabric/capacities) — RegionalQuota=0 on
-//      the Students subscription; would have required a Microsoft
-//      support request to lift.
-//   2. Legacy A-SKU (Microsoft.PowerBIDedicated/capacities) — provisions
-//      in Azure without a quota gate, but the BYU Power BI tenant has
-//      been migrated to Fabric-only workspace types; "Embedded" license
-//      mode is greyed out at workspace settings. The Azure resource
-//      can't be bound to a workspace.
-//
-// Net: chat-driven PBI embed isn't reachable on this subscription
-// without either a Fabric quota uplift OR a different tenant. Plotly
-// covers the visualization story for v1.
-//
-// To re-enable (after Fabric quota uplift): restore both modules below,
-// re-add NEXT_PUBLIC_ADVENTUREWORKS_PBI_ENABLED=true on Amplify, and
-// uncomment the launch button in MessageRenderer / ResultPanel.
-//
-// module pbi 'modules/pbi-embedded.bicep' = {
-//   name: 'pbi'
-//   params: {
-//     capacityName: names.pbi
-//     location: location
-//     adminUpn: fabricAdminUpn
-//   }
-// }
-
 module functionApp 'modules/function.bicep' = {
   name: 'functionApp'
   params: {
@@ -170,8 +133,6 @@ module functionApp 'modules/function.bicep' = {
     openAIEndpoint: ''
     openAIDeployment: ''
     keyVaultName: keyVault.outputs.keyVaultName
-    fabricCapacityName: ''
-    fabricResourceId: ''
   }
 }
 
@@ -195,17 +156,6 @@ module storageRbac 'modules/storage-rbac.bicep' = {
   }
 }
 
-// pbiRbac disabled with the pbi module (see comment above). Re-enable
-// alongside the pbi module if Fabric quota is approved.
-//
-// module pbiRbac 'modules/pbi-embedded-rbac.bicep' = {
-//   name: 'pbiRbac'
-//   params: {
-//     capacityName: pbi.outputs.capacityName
-//     functionPrincipalId: functionApp.outputs.principalId
-//   }
-// }
-
 module monitor 'modules/monitor.bicep' = {
   name: 'monitor'
   params: {
@@ -222,5 +172,3 @@ output functionPrincipalId string = functionApp.outputs.principalId
 output sqlServerFqdn string = sql.outputs.sqlServerFqdn
 output keyVaultName string = keyVault.outputs.keyVaultName
 output storageAccountName string = storage.outputs.storageAccountName
-output pbiCapacityName string = pbi.outputs.capacityName
-output pbiCapacityResourceId string = pbi.outputs.capacityResourceId

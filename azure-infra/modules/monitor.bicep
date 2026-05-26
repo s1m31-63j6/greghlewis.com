@@ -1,12 +1,8 @@
 // Budget + action group. If the monthly burn crosses 80% of the cap,
 // an email goes to the alert address; if it crosses 100%, a second
-// email fires AND (in v2) a Logic App pauses everything.
-//
-// The kill-switch Logic App is intentionally NOT in this Bicep — v1
-// keeps it manual (alert at 100% → Greg manually pauses Fabric in the
-// portal). The deferred Logic App requires HTTP+Auth chaining that
-// inflates the Bicep complexity for marginal automation value at this
-// budget level.
+// email fires. Manual intervention from there — at this budget level
+// the automation isn't worth the Bicep complexity of a kill-switch
+// Logic App.
 
 param actionGroupName string
 param budgetName string

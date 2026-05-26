@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 # Runs after `az deployment group create` succeeds. Captures deploy
-# outputs, pauses Fabric (stops the $0.36/hr meter), loads
-# AdventureWorksDW from Microsoft's sample .bacpac, and wires the
-# Function MI as a contained db_datareader user.
+# outputs, loads AdventureWorksDW from Microsoft's sample .bacpac, and
+# wires the Function MI as a contained db_datareader user.
 #
 # Idempotent where possible. Re-run safely after fixing failures.
 
@@ -23,17 +22,8 @@ FUNCTION_NAME=$(jq -r '.functionAppName.value' "$OUTPUTS_FILE")
 FUNCTION_URL=$(jq -r '.functionUrl.value' "$OUTPUTS_FILE")
 SQL_SERVER_FQDN=$(jq -r '.sqlServerFqdn.value' "$OUTPUTS_FILE")
 SQL_SERVER=$(echo "$SQL_SERVER_FQDN" | sed 's/\.database\.windows\.net//')
-FABRIC_NAME=$(jq -r '.fabricCapacityName.value' "$OUTPUTS_FILE")
 STORAGE_ACCOUNT=$(jq -r '.storageAccountName.value' "$OUTPUTS_FILE")
 KEY_VAULT=$(jq -r '.keyVaultName.value' "$OUTPUTS_FILE")
-
-echo "==> Pausing Fabric capacity to stop the $0.36/hr meter"
-az resource invoke-action \
-  --resource-group "$RG" \
-  --resource-type Microsoft.Fabric/capacities \
-  --name "$FABRIC_NAME" \
-  --action suspend \
-  --api-version 2023-11-01 || echo "(suspend may have failed if already paused — continuing)"
 
 echo "==> Downloading AdventureWorksDW2022 .bacpac"
 BACPAC_PATH="/tmp/AdventureWorksDW2022.bacpac"

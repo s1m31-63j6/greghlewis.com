@@ -14,11 +14,6 @@ const nextConfig: NextConfig = {
       process.env.NEXT_PUBLIC_ADVENTUREWORKS_FUNCTION_URL,
     NEXT_PUBLIC_ADVENTUREWORKS_TURNSTILE_SITEKEY:
       process.env.NEXT_PUBLIC_ADVENTUREWORKS_TURNSTILE_SITEKEY,
-    // Flip to "true" once Fabric F2 quota is approved AND a PBI workspace
-    // + report are authored. Until then the dashboard launch button stays
-    // hidden — Vega-Lite charts cover the v1 visualisation story.
-    NEXT_PUBLIC_ADVENTUREWORKS_PBI_ENABLED:
-      process.env.NEXT_PUBLIC_ADVENTUREWORKS_PBI_ENABLED,
   },
 };
 

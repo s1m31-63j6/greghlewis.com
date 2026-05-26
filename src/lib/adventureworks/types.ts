@@ -43,18 +43,3 @@ export interface ChatTurn {
   meta?: ModelMeta;
   errored?: string;
 }
-
-export interface PbiEmbed {
-  state: "Active";
-  token: string;
-  expiration: string;
-  embedUrl: string;
-  reportId: string;
-}
-
-export type PbiState =
-  | "Active"
-  | "Paused"
-  | "Resuming"
-  | "Pausing"
-  | "Unknown";

@@ -16,23 +16,12 @@
     "AW_ANTHROPIC_KEY_SECRET": "anthropic-api-key",
     "AW_ANTHROPIC_MODEL": "claude-sonnet-4-6",
 
-    "AW_FABRIC_CAPACITY_NAME": "REPLACE",
-    "AW_FABRIC_RESOURCE_ID": "/subscriptions/.../providers/Microsoft.Fabric/capacities/REPLACE",
-
     "AW_STORAGE_ACCOUNT": "REPLACE",
     "AW_CHATLOG_TABLE": "chatlogs",
     "AW_RATELIMIT_TABLE": "ratelimits",
-    "AW_PBI_STATE_TABLE": "pbistate",
 
     "AW_DAILY_QUERY_CAP_PER_IP": "20",
     "AW_DAILY_TOKEN_CAP_PER_IP": "50000",
-    "AW_PBI_IDLE_PAUSE_MINUTES": "30",
-
-    "AW_PBI_WORKSPACE_ID": "",
-    "AW_PBI_REPORT_ID": "",
-    "AW_PBI_SP_CLIENT_ID": "",
-    "AW_PBI_SP_TENANT_ID": "",
-    "AW_PBI_SP_SECRET_NAME": "pbi-sp-secret",
 
     "TURNSTILE_SECRET_KEY": ""
   },

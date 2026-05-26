@@ -19,8 +19,6 @@ param sqlDbName string
 param openAIEndpoint string
 param openAIDeployment string
 param keyVaultName string
-param fabricCapacityName string
-param fabricResourceId string
 
 resource logAnalytics 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
   name: logAnalyticsName
@@ -140,14 +138,6 @@ resource fnApp 'Microsoft.Web/sites@2024-04-01' = {
           value: 'claude-sonnet-4-6'
         }
         {
-          name: 'AW_FABRIC_CAPACITY_NAME'
-          value: fabricCapacityName
-        }
-        {
-          name: 'AW_FABRIC_RESOURCE_ID'
-          value: fabricResourceId
-        }
-        {
           name: 'AW_STORAGE_ACCOUNT'
           value: storage.name
         }
@@ -160,10 +150,6 @@ resource fnApp 'Microsoft.Web/sites@2024-04-01' = {
           value: 'ratelimits'
         }
         {
-          name: 'AW_PBI_STATE_TABLE'
-          value: 'pbistate'
-        }
-        {
           name: 'AW_DAILY_QUERY_CAP_PER_IP'
           value: '20'
         }
@@ -171,13 +157,8 @@ resource fnApp 'Microsoft.Web/sites@2024-04-01' = {
           name: 'AW_DAILY_TOKEN_CAP_PER_IP'
           value: '50000'
         }
-        {
-          name: 'AW_PBI_IDLE_PAUSE_MINUTES'
-          value: '30'
-        }
-        // TURNSTILE_SECRET_KEY, AW_PBI_WORKSPACE_ID, AW_PBI_REPORT_ID,
-        // AW_PBI_SP_CLIENT_ID, AW_PBI_SP_TENANT_ID are set manually in
-        // the portal AFTER you author the PBI report (see DEPLOY.md).
+        // TURNSTILE_SECRET_KEY is set manually in the portal after
+        // provisioning a Turnstile sitekey + secret in Cloudflare.
       ]
     }
   }

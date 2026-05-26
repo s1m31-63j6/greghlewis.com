@@ -89,48 +89,19 @@ export default function Methodology() {
 
         <div>
           <h2 className="text-stone-900 font-serif text-xl mb-2">
-            4. Visualization: Plotly, not Power BI
+            4. Visualization
           </h2>
           <p>
-            The original architecture called for Power BI Embedded as
-            the visualization layer — chat question → SQL → filtered
-            PBI report. The build hit two compounding constraints on
-            the host Azure subscription:
-          </p>
-          <ul className="list-disc pl-5 mt-2 space-y-1.5 text-[14px]">
-            <li>
-              <strong>Fabric F-SKU quota = 0</strong>. The modern
-              Microsoft.Fabric capacity SKUs (which back chat-driven,
-              app-owns-data PBI embed) sit behind a subscription quota
-              that&apos;s zero by default on the Azure for Students
-              tier where this project lives. Lifting it would have
-              meant a Microsoft support ticket and a 1–3 business day
-              wait.
-            </li>
-            <li>
-              <strong>Legacy A-SKU is blocked at the tenant.</strong>{" "}
-              The older{" "}
-              <code>Microsoft.PowerBIDedicated/capacities</code> SKU
-              provisions cleanly in Azure without a quota gate — but
-              the host Power BI tenant has been migrated to
-              Fabric-only workspace types, and the
-              &quot;Embedded&quot; license mode for binding a
-              workspace to an A-SKU is now greyed out at workspace
-              settings. So even though the Azure resource provisions,
-              no workspace can bind to it.
-            </li>
-          </ul>
-          <p className="mt-3">
-            The pragmatic choice was{" "}
-            <strong>Plotly as the chat-driven visualization layer</strong>:
-            the model emits a Plotly figure spec on each query, the
-            React UI renders it client-side with native interactivity
-            (hover, click-zoom, pan, legend toggling), and the table
-            beside it is sortable and free-text filterable. It&apos;s
-            the closest we get to &quot;sliceable, diceable&quot;
-            without a paid Microsoft capacity. The Power BI integration
-            stays sketched in the Bicep + Function code, commented and
-            ready to re-enable if the Fabric quota ever changes.
+            On the second prompt the model emits a Plotly figure spec
+            — a JSON object with <code>data</code> traces and a{" "}
+            <code>layout</code> — chosen for the column types of the
+            result set. The React UI renders it with{" "}
+            <code>react-plotly.js</code>, which gives hover, click-zoom,
+            pan, and legend toggling for free. The table beside it is
+            sortable and free-text filterable. The chart prompt
+            constrains the model to a small palette and forbids dual
+            y-axes with mismatched scales (see &sect;6 for why), so the
+            visual story stays legible even on adversarial result sets.
           </p>
         </div>
 

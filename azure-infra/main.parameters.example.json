@@ -8,7 +8,6 @@
       "value": "REPLACE_WITH_OUTPUT_OF: az ad signed-in-user show --query id -o tsv"
     },
     "alertEmail": { "value": "greghlewis@gmail.com" },
-    "fabricAdminUpn": { "value": "REPLACE_WITH_YOUR_TENANT_USER_UPN (e.g. user@yourorg.onmicrosoft.com)" },
     "sqlAdminLogin": { "value": "awadmin" },
     "sqlAdminPassword": {
       "value": "REPLACE_WITH_GENERATED_PASSWORD (openssl rand -base64 24)"
