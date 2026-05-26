@@ -29,6 +29,42 @@ export function SortableTable({ columns, rows, totalRows }: Props) {
     return set;
   }, [columns, rows]);
 
+  // Year / date-key columns get plain integer formatting (no thousands
+  // separator) so "2,010" doesn't look like a number. Heuristic: column
+  // name contains 'year'/'yr'/'datekey'/'monthnum', OR the values are
+  // integers in the 1900-2200 range.
+  const yearLikeColumns = useMemo(() => {
+    const set = new Set<string>();
+    for (const col of columns) {
+      const lname = col.toLowerCase();
+      const nameHint =
+        lname === "year" ||
+        lname === "yr" ||
+        lname.endsWith("year") ||
+        lname.startsWith("year") ||
+        lname.includes("datekey") ||
+        lname === "monthnum" ||
+        lname === "month_num";
+      if (nameHint) {
+        set.add(col);
+        continue;
+      }
+      const colIdx = columns.indexOf(col);
+      const sample = rows.find(
+        (r) => r[colIdx] !== null && r[colIdx] !== undefined,
+      )?.[colIdx];
+      if (
+        typeof sample === "number" &&
+        Number.isInteger(sample) &&
+        sample >= 1900 &&
+        sample <= 2200
+      ) {
+        set.add(col);
+      }
+    }
+    return set;
+  }, [columns, rows]);
+
   const moneyColumns = useMemo(() => {
     const set = new Set<string>();
     for (const col of columns) {
@@ -90,6 +126,10 @@ export function SortableTable({ columns, rows, totalRows }: Props) {
   const formatCell = (v: unknown, col: string): string => {
     if (v === null || v === undefined) return "—";
     if (typeof v === "number") {
+      if (yearLikeColumns.has(col)) {
+        // Plain integer — no thousands separator. "2013", not "2,013".
+        return String(Math.trunc(v));
+      }
       if (moneyColumns.has(col)) {
         return v.toLocaleString(undefined, {
           style: "currency",

@@ -48,6 +48,12 @@ Given (1) the user's original question, (2) the T-SQL that was executed, and (3)
     Other palette entries if needed: "#7A1B4F" (claret), "#B8860B" (ochre), "#2F5233" (forest).
     Always set a chart title that states the finding (e.g. "Bikes Dominate 2013 Internet Sales").
 
+  CHART AESTHETICS — IMPORTANT
+  - NEVER use a dual y-axis when one metric's range is more than ~30x the other's. The smaller-range series becomes invisible. If you must show two wildly different metrics, emit ONLY the more meaningful one as a chart and mention the other in the narrative, OR drop the chart entirely if a table tells the story better.
+  - For year-over-year growth percentages: the first year's prior period is null and the second year often shows an absurd % (e.g. 16,000%) because the first year was partial. EITHER exclude rows where the prior-period value is < 10% of the dataset average, OR drop the percentage trace entirely and chart only the absolute values, OR use a log-scaled axis. NEVER let an outlier dominate the chart.
+  - Year columns: pass values as integers (2010, 2011) and set xaxis.type = "category" so Plotly treats them as discrete labels rather than continuous. NEVER format years with thousands separators.
+  - For tiny result sets (≤ 5 rows of a single metric): consider whether a chart adds value over the table. If not, omit chart_spec (return chart_spec: null).
+
 ## Output contract
 
 Return a single JSON object:
