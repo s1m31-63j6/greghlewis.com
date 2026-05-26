@@ -106,6 +106,19 @@ export function validateSql(rawSql: string): ValidationResult {
     };
   }
 
+  // Collect CTE names from the AST so the table-allowlist check below
+  // doesn't reject them. `node-sql-parser` reports CTE references via
+  // tableList() with the same shape as real table references — we have
+  // to filter them out ourselves.
+  const cteNames = new Set<string>();
+  const astObj = ast as { with?: Array<{ name?: { value?: string } }> };
+  if (Array.isArray(astObj.with)) {
+    for (const cte of astObj.with) {
+      const name = cte?.name?.value;
+      if (typeof name === "string") cteNames.add(name.toLowerCase());
+    }
+  }
+
   // Table allowlist via parser.tableList — returns "<op>::<schema>::<table>".
   let tableList: string[];
   try {
@@ -122,6 +135,7 @@ export function validateSql(rawSql: string): ValidationResult {
         errors: [`Disallowed operation '${op}' on ${tableName}`],
       };
     }
+    if (cteNames.has(tableName.toLowerCase())) continue; // CTE, not a real table
     if (!ALLOWED_TABLES.has(tableName)) {
       return { ok: false, errors: [`Disallowed table: ${tableName}`] };
     }

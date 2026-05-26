@@ -70,7 +70,10 @@ var names = {
   openAI: '${projectPrefix}-aoai-${suffix}'
   functionApp: '${projectPrefix}-fn-${suffix}'
   appServicePlan: '${projectPrefix}-plan-${suffix}'
-  fabric: '${projectPrefix}f2${suffix}' // no hyphens for fabric capacity name
+  // PowerBIDedicated capacity names: lowercase alphanumeric only, must start
+  // with a letter. uniqueString() returns a 13-char lowercase token so this
+  // satisfies that constraint and stays globally unique per RG.
+  pbi: 'awchatpbi${suffix}'
   logAnalytics: '${projectPrefix}-logs-${suffix}'
   appInsights: '${projectPrefix}-appi-${suffix}'
   actionGroup: '${projectPrefix}-alerts'
@@ -125,20 +128,17 @@ module sql 'modules/sql.bicep' = {
 //   }
 // }
 
-// Fabric F2 is DISABLED in v1 — Students subscriptions have a 0
-// RegionalQuota CapacityUnits cap. Quota request needed at
-// https://learn.microsoft.com/en-us/fabric/enterprise/fabric-quotas.
-// Until approved, the Power BI launch button stays hidden via
-// NEXT_PUBLIC_ADVENTUREWORKS_PBI_ENABLED=false in Amplify.
-//
-// module fabric 'modules/fabric.bicep' = {
-//   name: 'fabric'
-//   params: {
-//     capacityName: names.fabric
-//     location: location
-//     adminEmail: fabricAdminUpn
-//   }
-// }
+// Power BI Embedded A-SKU capacity. Provisioned Active by default; the
+// post-deploy script + idle-pause TimerTrigger keep it suspended when
+// not in use ($0/hr paused, $1.0081/hr active for A1).
+module pbi 'modules/pbi-embedded.bicep' = {
+  name: 'pbi'
+  params: {
+    capacityName: names.pbi
+    location: location
+    adminUpn: fabricAdminUpn
+  }
+}
 
 module functionApp 'modules/function.bicep' = {
   name: 'functionApp'
@@ -154,8 +154,8 @@ module functionApp 'modules/function.bicep' = {
     openAIEndpoint: ''
     openAIDeployment: ''
     keyVaultName: keyVault.outputs.keyVaultName
-    fabricCapacityName: ''
-    fabricResourceId: ''
+    fabricCapacityName: pbi.outputs.capacityName
+    fabricResourceId: pbi.outputs.capacityResourceId
   }
 }
 
@@ -180,14 +180,14 @@ module storageRbac 'modules/storage-rbac.bicep' = {
 }
 
 // Grant Function MI → Microsoft.Fabric resume/pause on the capacity.
-// fabricRbac disabled — fabric module is commented out (quota=0 on Students).
-// module fabricRbac 'modules/fabric-rbac.bicep' = {
-//   name: 'fabricRbac'
-//   params: {
-//     fabricCapacityName: fabric.outputs.capacityName
-//     functionPrincipalId: functionApp.outputs.principalId
-//   }
-// }
+// Grant Function MI → Microsoft.PowerBIDedicated resume/pause on the capacity.
+module pbiRbac 'modules/pbi-embedded-rbac.bicep' = {
+  name: 'pbiRbac'
+  params: {
+    capacityName: pbi.outputs.capacityName
+    functionPrincipalId: functionApp.outputs.principalId
+  }
+}
 
 module monitor 'modules/monitor.bicep' = {
   name: 'monitor'
@@ -205,3 +205,5 @@ output functionPrincipalId string = functionApp.outputs.principalId
 output sqlServerFqdn string = sql.outputs.sqlServerFqdn
 output keyVaultName string = keyVault.outputs.keyVaultName
 output storageAccountName string = storage.outputs.storageAccountName
+output pbiCapacityName string = pbi.outputs.capacityName
+output pbiCapacityResourceId string = pbi.outputs.capacityResourceId

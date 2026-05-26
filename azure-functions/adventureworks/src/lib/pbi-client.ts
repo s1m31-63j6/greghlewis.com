@@ -1,12 +1,19 @@
-// Power BI Embedded + Microsoft.Fabric capacity client.
+// Power BI Embedded capacity client (A-SKU,
+// Microsoft.PowerBIDedicated/capacities). We picked A-SKU over the
+// newer Fabric F-SKU because Students subscriptions have a 0 default
+// quota for Microsoft.Fabric/capacities but allow A1+ out of the box.
+// Functionally equivalent: anonymous embed, pausable to $0.
 //
 // Two distinct identities at play:
-//   - The Function's MI calls the Azure Management plane (Fabric
+//   - The Function's MI calls the Azure Management plane (capacity
 //     resume/suspend) — it has Contributor on the capacity.
-//   - A separate Service Principal (created in Phase 14) calls the
-//     Power BI REST API (GenerateToken) — PBI doesn't yet support
-//     system-assigned MIs for workspace operations. SP credential
-//     lives in Key Vault.
+//   - A separate Service Principal calls the Power BI REST API
+//     (GenerateToken) — PBI doesn't yet support system-assigned MIs
+//     for workspace operations. SP credential lives in Key Vault.
+//
+// Env var names (AW_FABRIC_*) retain the original naming for backwards
+// compatibility with the app settings already in place. The values point
+// at a Microsoft.PowerBIDedicated resource.
 
 import { DefaultAzureCredential, ClientSecretCredential } from "@azure/identity";
 import { SecretClient } from "@azure/keyvault-secrets";
@@ -40,7 +47,7 @@ export interface CapacityInfo {
 
 export async function getCapacity(): Promise<CapacityInfo> {
   const token = await armToken();
-  const url = `${fabricApiBase()}?api-version=2023-11-01`;
+  const url = `${fabricApiBase()}?api-version=2021-01-01`;
   const r = await fetch(url, {
     headers: { Authorization: `Bearer ${token}` },
   });
@@ -57,7 +64,7 @@ export async function getCapacity(): Promise<CapacityInfo> {
 
 async function postCapacityAction(action: "resume" | "suspend"): Promise<void> {
   const token = await armToken();
-  const url = `${fabricApiBase()}/${action}?api-version=2023-11-01`;
+  const url = `${fabricApiBase()}/${action}?api-version=2021-01-01`;
   const r = await fetch(url, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}` },
