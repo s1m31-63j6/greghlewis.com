@@ -127,17 +127,34 @@ module sql 'modules/sql.bicep' = {
 //   }
 // }
 
-// Power BI Embedded A-SKU capacity. Provisioned Active by default; the
-// post-deploy script + idle-pause TimerTrigger keep it suspended when
-// not in use ($0/hr paused, $1.0081/hr active for A1).
-module pbi 'modules/pbi-embedded.bicep' = {
-  name: 'pbi'
-  params: {
-    capacityName: names.pbi
-    location: location
-    adminUpn: fabricAdminUpn
-  }
-}
+// Power BI Embedded is DISABLED in v1.
+//
+// We tried two paths:
+//   1. Fabric F-SKU (Microsoft.Fabric/capacities) — RegionalQuota=0 on
+//      the Students subscription; would have required a Microsoft
+//      support request to lift.
+//   2. Legacy A-SKU (Microsoft.PowerBIDedicated/capacities) — provisions
+//      in Azure without a quota gate, but the BYU Power BI tenant has
+//      been migrated to Fabric-only workspace types; "Embedded" license
+//      mode is greyed out at workspace settings. The Azure resource
+//      can't be bound to a workspace.
+//
+// Net: chat-driven PBI embed isn't reachable on this subscription
+// without either a Fabric quota uplift OR a different tenant. Plotly
+// covers the visualization story for v1.
+//
+// To re-enable (after Fabric quota uplift): restore both modules below,
+// re-add NEXT_PUBLIC_ADVENTUREWORKS_PBI_ENABLED=true on Amplify, and
+// uncomment the launch button in MessageRenderer / ResultPanel.
+//
+// module pbi 'modules/pbi-embedded.bicep' = {
+//   name: 'pbi'
+//   params: {
+//     capacityName: names.pbi
+//     location: location
+//     adminUpn: fabricAdminUpn
+//   }
+// }
 
 module functionApp 'modules/function.bicep' = {
   name: 'functionApp'
@@ -153,8 +170,8 @@ module functionApp 'modules/function.bicep' = {
     openAIEndpoint: ''
     openAIDeployment: ''
     keyVaultName: keyVault.outputs.keyVaultName
-    fabricCapacityName: pbi.outputs.capacityName
-    fabricResourceId: pbi.outputs.capacityResourceId
+    fabricCapacityName: ''
+    fabricResourceId: ''
   }
 }
 
@@ -178,15 +195,16 @@ module storageRbac 'modules/storage-rbac.bicep' = {
   }
 }
 
-// Grant Function MI → Microsoft.Fabric resume/pause on the capacity.
-// Grant Function MI → Microsoft.PowerBIDedicated resume/pause on the capacity.
-module pbiRbac 'modules/pbi-embedded-rbac.bicep' = {
-  name: 'pbiRbac'
-  params: {
-    capacityName: pbi.outputs.capacityName
-    functionPrincipalId: functionApp.outputs.principalId
-  }
-}
+// pbiRbac disabled with the pbi module (see comment above). Re-enable
+// alongside the pbi module if Fabric quota is approved.
+//
+// module pbiRbac 'modules/pbi-embedded-rbac.bicep' = {
+//   name: 'pbiRbac'
+//   params: {
+//     capacityName: pbi.outputs.capacityName
+//     functionPrincipalId: functionApp.outputs.principalId
+//   }
+// }
 
 module monitor 'modules/monitor.bicep' = {
   name: 'monitor'

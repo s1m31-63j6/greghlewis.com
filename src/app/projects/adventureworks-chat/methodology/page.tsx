@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "AdventureWorks Chat — Methodology · Greg Lewis",
   description:
-    "Architecture, prompt design, SQL validation, and live A/B comparison of Azure OpenAI vs. Anthropic Claude on the AdventureWorksDW text-to-SQL benchmark.",
+    "Architecture, prompt design, SQL validation, and design tradeoffs for a chat-based reporting engine on Microsoft's AdventureWorksDW sample warehouse.",
 };
 
 export default function Methodology() {
@@ -24,12 +24,13 @@ export default function Methodology() {
           Methodology
         </h1>
         <p className="mt-3 text-stone-600 text-base leading-relaxed">
-          How the AdventureWorks chat-based reporting engine works, and
-          how two frontier LLMs compare on the same workload.
+          How the AdventureWorks chat-based reporting engine works, what
+          design choices it made, and which ones were forced by the
+          subscription constraints it was built within.
         </p>
       </header>
 
-      <section className="space-y-6 text-stone-700 text-[15px] leading-relaxed">
+      <section className="space-y-8 text-stone-700 text-[15px] leading-relaxed">
         <div>
           <h2 className="text-stone-900 font-serif text-xl mb-2">
             1. The shape of the problem
@@ -52,17 +53,16 @@ export default function Methodology() {
           </h2>
           <p>
             A TypeScript Azure Function on Flex Consumption orchestrates
-            two stages per chat turn. Stage A generates SQL from a
+            two stages per chat turn. Stage A generates T-SQL from a
             ~2K-token schema digest plus five canonical few-shot
-            examples; stage B re-prompts the same model for a narrative
-            and a Vega-Lite chart spec given the result rows. The
+            examples; stage B re-prompts the same model with the result
+            rows for a narrative and a Plotly figure spec. The
             Function&apos;s system-assigned Managed Identity is the
             principal everywhere: it authenticates to Azure SQL (added
-            as a contained <code>db_datareader</code> user), Azure
-            OpenAI (Cognitive Services OpenAI User), Key Vault (which
-            holds the Anthropic API key), and Microsoft.Fabric (which
-            owns the Power BI Embedded capacity). Nothing is a long-lived
-            secret in code.
+            as a contained <code>db_datareader</code> user), to Key
+            Vault (which holds the Anthropic API key), and to Azure
+            Table Storage (chat logs + per-IP rate limit counters).
+            Nothing is a long-lived secret in code.
           </p>
         </div>
 
@@ -71,43 +71,138 @@ export default function Methodology() {
             3. SQL safety
           </h2>
           <p>
-            Even with a read-only database user, the generated SQL goes
-            through an AST check: the statement must parse as a single
-            SELECT against the AdventureWorksDW dimension and fact
-            tables, must include a TOP/LIMIT cap of 500 rows, and is
-            denied if it touches <code>xp_*</code>, <code>sys.*</code>,
+            Even with a read-only database user, every generated query
+            goes through an AST check before execution: the statement
+            must parse as a single <code>SELECT</code> against the
+            AdventureWorksDW allowlist of dimension and fact tables,
+            must include a <code>TOP</code>/<code>LIMIT</code> cap of
+            500 rows, and is denied if it touches{" "}
+            <code>xp_*</code>, <code>sys.*</code>,{" "}
             <code>OPENROWSET</code>, or chains multiple statements.
             <code>node-sql-parser</code> with the T-SQL dialect powers
-            the check; the validator is unit-testable in isolation.
+            the check. If execution still fails (e.g. a CTE alias
+            mistake — see &sect;6), the Function sends the error back
+            to the model and asks for a one-shot repair before
+            surfacing the failure.
           </p>
         </div>
 
         <div>
           <h2 className="text-stone-900 font-serif text-xl mb-2">
-            4. Cost engineering
+            4. Visualization: Plotly, not Power BI
+          </h2>
+          <p>
+            The original architecture called for Power BI Embedded as
+            the visualization layer — chat question → SQL → filtered
+            PBI report. The build hit two compounding constraints on
+            the host Azure subscription:
+          </p>
+          <ul className="list-disc pl-5 mt-2 space-y-1.5 text-[14px]">
+            <li>
+              <strong>Fabric F-SKU quota = 0</strong>. The modern
+              Microsoft.Fabric capacity SKUs (which back chat-driven,
+              app-owns-data PBI embed) sit behind a subscription quota
+              that&apos;s zero by default on the Azure for Students
+              tier where this project lives. Lifting it would have
+              meant a Microsoft support ticket and a 1–3 business day
+              wait.
+            </li>
+            <li>
+              <strong>Legacy A-SKU is blocked at the tenant.</strong>{" "}
+              The older{" "}
+              <code>Microsoft.PowerBIDedicated/capacities</code> SKU
+              provisions cleanly in Azure without a quota gate — but
+              the host Power BI tenant has been migrated to
+              Fabric-only workspace types, and the
+              &quot;Embedded&quot; license mode for binding a
+              workspace to an A-SKU is now greyed out at workspace
+              settings. So even though the Azure resource provisions,
+              no workspace can bind to it.
+            </li>
+          </ul>
+          <p className="mt-3">
+            The pragmatic choice was{" "}
+            <strong>Plotly as the chat-driven visualization layer</strong>:
+            the model emits a Plotly figure spec on each query, the
+            React UI renders it client-side with native interactivity
+            (hover, click-zoom, pan, legend toggling), and the table
+            beside it is sortable and free-text filterable. It&apos;s
+            the closest we get to &quot;sliceable, diceable&quot;
+            without a paid Microsoft capacity. The Power BI integration
+            stays sketched in the Bicep + Function code, commented and
+            ready to re-enable if the Fabric quota ever changes.
+          </p>
+        </div>
+
+        <div>
+          <h2 className="text-stone-900 font-serif text-xl mb-2">
+            5. Cost engineering
           </h2>
           <p>
             Azure SQL is on the Serverless GP tier with a 60-minute
-            auto-pause; Functions are Flex Consumption (scale-to-zero
-            with working HTTP streaming); Power BI Embedded runs on a
-            Fabric F2 capacity that is paused by default and only
-            resumes when a user explicitly clicks &quot;Launch live
-            dashboard.&quot; A TimerTrigger pauses it again after 30
-            minutes idle. The total bill at portfolio traffic is on the
-            order of $10/month, plus a one-off $100 of Azure for
-            Students credit that lasts most of a year.
+            auto-pause: idle storage costs ~$2.50/mo, compute is
+            billed only while the warehouse is responding to queries.
+            Functions are Flex Consumption — scale-to-zero with
+            working HTTP streaming. The total monthly bill at
+            portfolio traffic (~20 queries/day) lands around $5–8,
+            covered for ~12 months by the $100 Azure for Students
+            credit. A budget alert at $20/mo is wired through Action
+            Groups as a kill-switch trigger.
           </p>
         </div>
 
         <div>
           <h2 className="text-stone-900 font-serif text-xl mb-2">
-            5. Two-model A/B
+            6. Bug taxonomy from the build
           </h2>
           <p>
-            Every chat turn logs the model used, latency, token counts,
-            cost estimate, validation outcome, row count, and success
-            flag to Azure Table Storage. After roughly a hundred logged
-            turns the methodology page will publish:
+            Three real classes of LLM-emitted SQL bug surfaced during
+            development and were fixed via prompt + validator changes:
+          </p>
+          <ul className="list-disc pl-5 mt-2 space-y-1.5 text-[14px]">
+            <li>
+              <strong>CTE name confused with allowlist.</strong>{" "}
+              <code>node-sql-parser&apos;s</code> table extractor
+              returns CTE references with the same shape as real
+              tables. The validator now extracts CTE names from the
+              AST and exempts them from the allowlist check.
+            </li>
+            <li>
+              <strong>CTE column reference broken downstream.</strong>{" "}
+              The model would write{" "}
+              <code>WITH yearly AS (SELECT d.CalendarYear AS Year ...)</code>{" "}
+              and then a subquery referring to <code>CalendarYear</code>{" "}
+              on the CTE — which has no such column, only{" "}
+              <code>Year</code>. Hardened the SQL prompt with an
+              explicit CTE-alias-discipline section + a right/wrong
+              example.
+            </li>
+            <li>
+              <strong>Outlier-distorted chart.</strong> Year-over-year
+              queries on a partial first year (~$43K) made the 2011
+              YoY growth +16,000% and dominated the dual-axis chart.
+              The chart prompt now forbids dual y-axes with &gt;30:1
+              scale mismatches, and instructs the model to either drop
+              the percentage trace or filter incomplete-period rows.
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="text-stone-900 font-serif text-xl mb-2">
+            7. Two-model A/B (planned)
+          </h2>
+          <p>
+            The project was scoped for a head-to-head between Azure
+            OpenAI and Anthropic Claude on the same workload. Azure
+            OpenAI quota also came back as 0 across every gpt-4o-mini
+            SKU on the Students subscription, so the live build runs
+            <strong> Claude Sonnet 4.6</strong> only for now. Every
+            chat turn still logs model id, latency, token counts, cost
+            estimate, validation outcome, row count, and success flag
+            to Azure Table Storage — once the Azure OpenAI quota lifts
+            and the second model is wired in, the methodology page
+            will publish:
           </p>
           <ul className="list-disc pl-5 mt-2 space-y-1 text-[14px]">
             <li>SQL execution success rate, by model</li>
@@ -119,42 +214,39 @@ export default function Methodology() {
               filter, missing GROUP BY, syntax error, timeout
             </li>
           </ul>
-          <p className="mt-3 text-[13px] italic text-stone-500">
-            Comparison results will appear here once the log has enough
-            turns to make the differences signal rather than noise.
-          </p>
         </div>
 
         <div>
           <h2 className="text-stone-900 font-serif text-xl mb-2">
-            6. Why Azure, not AWS
+            8. Why Azure, not AWS
           </h2>
           <p>
             The rest of this portfolio runs on AWS — Bedrock, Amplify,
-            CDK Python. This one is deliberately Microsoft-native end to
-            end, because clients are multi-cloud and the credible
-            argument is <em>which workload belongs where</em>, not which
-            cloud is &quot;best.&quot; Azure SQL is the right home for
-            tabular relational analytics; Power BI is the right home
-            for executive dashboards; Azure OpenAI&apos;s data residency
-            posture matters to enterprises that won&apos;t put queries
-            through the public OpenAI API. Two clouds, one portfolio.
+            CDK Python. This project is deliberately Microsoft-native
+            end to end, because clients are multi-cloud and the
+            credible argument is <em>which workload belongs where</em>,
+            not which cloud is &quot;best.&quot; Azure SQL is the
+            right home for tabular relational analytics; Azure
+            Functions with Managed Identity is a clean fit for a thin
+            orchestration layer with zero-secret data-plane access.
+            The frontend continues to live on AWS Amplify (same
+            Next.js monorepo as the rest of the site) and calls the
+            Azure Function URL cross-origin. Two clouds, one
+            portfolio.
           </p>
         </div>
 
         <div>
           <h2 className="text-stone-900 font-serif text-xl mb-2">
-            7. Stack
+            9. Stack
           </h2>
           <p>
             Azure SQL Database Serverless · Azure Functions (Flex
-            Consumption, Node 22, TypeScript) · Azure OpenAI Service ·
-            Anthropic Claude (via SDK from a Key-Vault-managed key) ·
-            Power BI Embedded on Fabric F2 · Azure Key Vault · Azure
-            Table Storage · Microsoft.Fabric capacity REST · Bicep ·
-            <code>mssql</code> · <code>node-sql-parser</code> ·
-            Vega-Lite via <code>react-vega</code> ·{" "}
-            <code>powerbi-client-react</code> · Cloudflare Turnstile.
+            Consumption, Node 22, TypeScript) · Anthropic Claude
+            Sonnet 4.6 (via SDK from a Key-Vault-managed key) · Azure
+            Key Vault · Azure Table Storage · Bicep · <code>mssql</code>{" "}
+            · <code>node-sql-parser</code> · Plotly.js via{" "}
+            <code>react-plotly.js</code> · Cloudflare Turnstile.
             Frontend: Next.js 16 on AWS Amplify, calling the Azure
             Function URL cross-origin.
           </p>
