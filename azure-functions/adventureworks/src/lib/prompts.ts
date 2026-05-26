@@ -28,6 +28,21 @@ You MUST return a single JSON object matching this exact schema:
 - Use N'...' literals for NVARCHAR columns.
 - Round money columns at the SELECT level when aggregating (e.g. CAST(SUM(SalesAmount) AS DECIMAL(19,2))).
 
+## CTE alias discipline — CRITICAL
+When you use a CTE (\`WITH name AS (SELECT col AS alias ...)\`), every reference to that column downstream — outer query, subqueries, joins, WHERE, ORDER BY, anywhere — MUST use the alias, NOT the original column name. The CTE's projection defines what columns exist downstream.
+
+Wrong:
+\`\`\`sql
+WITH yearly AS (SELECT d.CalendarYear AS Year, SUM(s.SalesAmount) AS Sales FROM ... GROUP BY d.CalendarYear)
+SELECT * FROM yearly WHERE Year > (SELECT MIN(CalendarYear) FROM yearly)
+                                              ^^^^^^^^^^^^ "yearly" has no column called CalendarYear
+\`\`\`
+
+Right:
+\`\`\`sql
+SELECT * FROM yearly WHERE Year > (SELECT MIN(Year) FROM yearly)
+\`\`\`
+
 ## Few-shot examples
 
 ${renderFewShots()}

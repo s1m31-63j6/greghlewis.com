@@ -174,9 +174,48 @@ async function runPipeline(args: PipelineArgs): Promise<void> {
       throw new Error(`SQL validation failed: ${v.errors?.join("; ") ?? "unknown"}`);
     }
 
-    // ── Stage B: execute ────────────────────────────────────────────────
+    // ── Stage B: execute (with one-shot repair on failure) ─────────────
     await emit({ type: "status", message: "Querying AdventureWorksDW…" });
-    const queryResult = await executeQuery(v.normalizedSql);
+    let sqlToExecute = v.normalizedSql;
+    let queryResult;
+    try {
+      queryResult = await executeQuery(sqlToExecute);
+    } catch (firstErr) {
+      const firstMsg = firstErr instanceof Error ? firstErr.message : String(firstErr);
+      ctx.log(`SQL execute failed; trying one-shot repair: ${firstMsg}`);
+      await emit({
+        type: "status",
+        message: `SQL hit an error — asking model to repair: ${firstMsg.slice(0, 80)}`,
+      });
+
+      const repairPrompt = `The T-SQL you generated failed to execute. Return a corrected version using the same JSON output contract.\n\nOriginal user question:\n${query}\n\nGenerated SQL:\n${sqlToExecute}\n\nDatabase error:\n${firstMsg}\n\nFix the SQL and return { "sql": "...", "rationale": "..." }.`;
+
+      const repair = await callModel(model, SQL_SYSTEM_PROMPT, repairPrompt, []);
+      totalPrompt += repair.prompt_tokens;
+      totalCompletion += repair.completion_tokens;
+      totalCost += repair.cost_est;
+
+      let parsedRepair: { sql?: string };
+      try {
+        parsedRepair = JSON.parse(repair.content);
+      } catch {
+        throw firstErr; // give up — surface the original failure
+      }
+      const repairedSql = (parsedRepair.sql ?? "").trim();
+      if (!repairedSql) throw firstErr;
+
+      const v2 = validateSql(repairedSql);
+      if (!v2.ok || !v2.normalizedSql) {
+        throw new Error(
+          `Repair attempt failed validation: ${v2.errors?.join("; ") ?? "unknown"}`,
+        );
+      }
+      sqlToExecute = v2.normalizedSql;
+      generatedSql = sqlToExecute;
+      await emit({ type: "sql", sql: sqlToExecute });
+      await emit({ type: "validation", ok: true });
+      queryResult = await executeQuery(sqlToExecute);
+    }
     rowCount = queryResult.row_count;
     await emit({
       type: "rows",
