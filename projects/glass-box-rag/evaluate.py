@@ -31,6 +31,8 @@ from rich.console import Console
 from rich.table import Table
 
 from common import BUILD, ROOT
+
+_HYDE: dict = {}
 from retrieve import Config, Index, search
 
 console = Console()
@@ -57,7 +59,9 @@ def cases_of(index: Index, hits) -> list[str]:
 
 
 def score_one(index: Index, q: dict, cfg: Config) -> tuple[float, float, float, float, int]:
-    hits = search(index, q["q"], cfg, as_of=q.get("as_of"))
+    h = _HYDE.get(q["id"], {})
+    probe_hyde = (h.get("hyde", "") + "\n" + "\n".join(h.get("variants", []))).strip()
+    hits = search(index, q["q"], cfg, as_of=q.get("as_of"), hyde=probe_hyde or None)
     got = cases_of(index, hits)
     gold = set(q["gold"])
     crit = set(q.get("critical") or q["gold"])
@@ -100,6 +104,9 @@ GRID = [
            diversify_after_rerank=True),
     Config(use_bm25=True, use_dense=True, use_rerank=True, per_case=2,
            diversify_after_rerank=True, use_as_of=True),
+    Config(use_bm25=True, use_dense=True, use_rerank=True, per_case=2,
+           diversify_after_rerank=True, use_as_of=True, use_hyde=True),
+    Config(use_bm25=True, use_dense=True, use_rerank=False, per_case=2, use_hyde=True),
 ]
 
 
@@ -109,6 +116,9 @@ def main() -> int:
     ap.add_argument("--json")
     args = ap.parse_args()
 
+    global _HYDE
+    hyde_path = BUILD / "hyde.json"
+    _HYDE = json.loads(hyde_path.read_text()) if hyde_path.exists() else {}
     questions = yaml.safe_load((ROOT / "golden.yaml").read_text())["questions"]
     index = Index()
     console.print(f"{len(questions)} golden questions | {len(index.chunks)} chunks | top-{args.top}\n")

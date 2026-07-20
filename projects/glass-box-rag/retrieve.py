@@ -230,6 +230,9 @@ class Config:
     diversify_after_rerank: bool = False
     # Honour a temporal constraint extracted from the question ("as of 2015...").
     use_as_of: bool = False
+    # Prepend a HyDE passage / query variants to the retrieval probe. Measured, not
+    # assumed — see the ablation table.
+    use_hyde: bool = False
 
     @property
     def label(self) -> str:
@@ -249,6 +252,8 @@ class Config:
                 name += "-post"
         if self.use_as_of:
             name += "+asof"
+        if self.use_hyde:
+            name += "+hyde"
         return name
 
 
@@ -258,15 +263,20 @@ def search(
     cfg: Config,
     trace: dict | None = None,
     as_of: int | None = None,
+    hyde: str | None = None,
 ) -> list[Hit]:
+    # The probe is what the retrievers see; `query` stays the human question so the
+    # cross-encoder still scores against what was actually asked.
+    probe = f"{query}\n{hyde}" if (cfg.use_hyde and hyde) else query
+
     runs: list[list[Hit]] = []
     if index and cfg.use_bm25:
-        r = index.bm25(query, k=cfg.candidates)
+        r = index.bm25(probe, k=cfg.candidates)
         runs.append(r)
         if trace is not None:
             trace["bm25"] = r
     if cfg.use_dense:
-        r = index.dense(query, k=cfg.candidates)
+        r = index.dense(probe, k=cfg.candidates)
         runs.append(r)
         if trace is not None:
             trace["dense"] = r
