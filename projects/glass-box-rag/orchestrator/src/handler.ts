@@ -23,7 +23,10 @@ declare const awslambda: {
   };
 };
 
-const CORS = process.env.GBRAG_ALLOWED_ORIGIN ?? "https://greghlewis.com";
+// CORS headers are NOT set here. The Function URL's own CORS config emits them,
+// and setting them again from the handler produced TWO
+// `access-control-allow-origin` headers — which browsers reject outright
+// ("contains multiple values"), breaking the page while curl looked fine.
 
 function question(event: any): string | null {
   const method = event?.requestContext?.http?.method ?? "GET";
@@ -48,7 +51,6 @@ export const handler = awslambda.streamifyResponse(
         "Content-Type": "text/event-stream; charset=utf-8",
         "Cache-Control": "no-cache, no-transform",
         "X-Accel-Buffering": "no",
-        "Access-Control-Allow-Origin": CORS,
       },
     });
 

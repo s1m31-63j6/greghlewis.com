@@ -1,0 +1,312 @@
+[
+ {
+  "source": "texaco-1995",
+  "target": "harper-row-1985",
+  "weight": 21
+ },
+ {
+  "source": "kadrey-2025",
+  "target": "google-oracle-2021",
+  "weight": 19
+ },
+ {
+  "source": "astm-upcodes-2026",
+  "target": "campbell-1994",
+  "weight": 16
+ },
+ {
+  "source": "tveyes-2018",
+  "target": "campbell-1994",
+  "weight": 16
+ },
+ {
+  "source": "astm-upcodes-2026",
+  "target": "google-oracle-2021",
+  "weight": 14
+ },
+ {
+  "source": "astm-upcodes-2026",
+  "target": "warhol-2023",
+  "weight": 12
+ },
+ {
+  "source": "authors-guild-google-2015",
+  "target": "campbell-1994",
+  "weight": 12
+ },
+ {
+  "source": "hachette-2024",
+  "target": "warhol-2023",
+  "weight": 12
+ },
+ {
+  "source": "hathitrust-2014",
+  "target": "campbell-1994",
+  "weight": 12
+ },
+ {
+  "source": "perfect10-2007",
+  "target": "campbell-1994",
+  "weight": 12
+ },
+ {
+  "source": "texaco-1995",
+  "target": "sony-betamax-1984",
+  "weight": 12
+ },
+ {
+  "source": "kadrey-2025",
+  "target": "warhol-2023",
+  "weight": 11
+ },
+ {
+  "source": "bartz-2025",
+  "target": "warhol-2023",
+  "weight": 10
+ },
+ {
+  "source": "hachette-2024",
+  "target": "campbell-1994",
+  "weight": 10
+ },
+ {
+  "source": "napster-2001",
+  "target": "sony-betamax-1984",
+  "weight": 10
+ },
+ {
+  "source": "bartz-2025",
+  "target": "campbell-1994",
+  "weight": 8
+ },
+ {
+  "source": "connectix-2000",
+  "target": "campbell-1994",
+  "weight": 8
+ },
+ {
+  "source": "kadrey-2025",
+  "target": "campbell-1994",
+  "weight": 8
+ },
+ {
+  "source": "ross-2025",
+  "target": "feist-1991",
+  "weight": 8
+ },
+ {
+  "source": "tveyes-2018",
+  "target": "sony-betamax-1984",
+  "weight": 8
+ },
+ {
+  "source": "hachette-2024",
+  "target": "harper-row-1985",
+  "weight": 7
+ },
+ {
+  "source": "hachette-2024",
+  "target": "sony-betamax-1984",
+  "weight": 7
+ },
+ {
+  "source": "perfect10-2007",
+  "target": "sony-betamax-1984",
+  "weight": 7
+ },
+ {
+  "source": "ross-2025",
+  "target": "google-oracle-2021",
+  "weight": 6
+ },
+ {
+  "source": "sega-accolade-1992",
+  "target": "harper-row-1985",
+  "weight": 6
+ },
+ {
+  "source": "tveyes-2018",
+  "target": "harper-row-1985",
+  "weight": 6
+ },
+ {
+  "source": "astm-upcodes-2026",
+  "target": "harper-row-1985",
+  "weight": 5
+ },
+ {
+  "source": "connectix-2000",
+  "target": "sony-betamax-1984",
+  "weight": 5
+ },
+ {
+  "source": "kadrey-2025",
+  "target": "harper-row-1985",
+  "weight": 5
+ },
+ {
+  "source": "kelly-arriba-2003",
+  "target": "campbell-1994",
+  "weight": 5
+ },
+ {
+  "source": "napster-2001",
+  "target": "campbell-1994",
+  "weight": 5
+ },
+ {
+  "source": "perfect10-2007",
+  "target": "harper-row-1985",
+  "weight": 5
+ },
+ {
+  "source": "authors-guild-google-2015",
+  "target": "harper-row-1985",
+  "weight": 4
+ },
+ {
+  "source": "nyt-openai-2025",
+  "target": "sony-betamax-1984",
+  "weight": 4
+ },
+ {
+  "source": "nyt-openai-2025",
+  "target": "warhol-2023",
+  "weight": 4
+ },
+ {
+  "source": "ross-2025",
+  "target": "harper-row-1985",
+  "weight": 4
+ },
+ {
+  "source": "ross-2025",
+  "target": "warhol-2023",
+  "weight": 4
+ },
+ {
+  "source": "astm-prorg-2023",
+  "target": "harper-row-1985",
+  "weight": 3
+ },
+ {
+  "source": "astm-prorg-2023",
+  "target": "campbell-1994",
+  "weight": 3
+ },
+ {
+  "source": "bartz-2025",
+  "target": "harper-row-1985",
+  "weight": 3
+ },
+ {
+  "source": "hathitrust-2014",
+  "target": "sony-betamax-1984",
+  "weight": 3
+ },
+ {
+  "source": "hathitrust-2014",
+  "target": "harper-row-1985",
+  "weight": 3
+ },
+ {
+  "source": "kadrey-2025",
+  "target": "sony-betamax-1984",
+  "weight": 3
+ },
+ {
+  "source": "ross-2025",
+  "target": "campbell-1994",
+  "weight": 3
+ },
+ {
+  "source": "sega-accolade-1992",
+  "target": "sony-betamax-1984",
+  "weight": 3
+ },
+ {
+  "source": "astm-upcodes-2026",
+  "target": "sony-betamax-1984",
+  "weight": 2
+ },
+ {
+  "source": "authors-guild-google-2015",
+  "target": "sony-betamax-1984",
+  "weight": 2
+ },
+ {
+  "source": "bartz-2025",
+  "target": "google-oracle-2021",
+  "weight": 2
+ },
+ {
+  "source": "bartz-2025",
+  "target": "sony-betamax-1984",
+  "weight": 2
+ },
+ {
+  "source": "connectix-2000",
+  "target": "harper-row-1985",
+  "weight": 2
+ },
+ {
+  "source": "texaco-1995",
+  "target": "feist-1991",
+  "weight": 2
+ },
+ {
+  "source": "andersen-2024",
+  "target": "sony-betamax-1984",
+  "weight": 1
+ },
+ {
+  "source": "astm-prorg-2023",
+  "target": "feist-1991",
+  "weight": 1
+ },
+ {
+  "source": "astm-prorg-2023",
+  "target": "sony-betamax-1984",
+  "weight": 1
+ },
+ {
+  "source": "connectix-2000",
+  "target": "feist-1991",
+  "weight": 1
+ },
+ {
+  "source": "doe-github-2024",
+  "target": "harper-row-1985",
+  "weight": 1
+ },
+ {
+  "source": "hachette-2024",
+  "target": "google-oracle-2021",
+  "weight": 1
+ },
+ {
+  "source": "intercept-2025",
+  "target": "sony-betamax-1984",
+  "weight": 1
+ },
+ {
+  "source": "intercept-2025",
+  "target": "harper-row-1985",
+  "weight": 1
+ },
+ {
+  "source": "kelly-arriba-2003",
+  "target": "harper-row-1985",
+  "weight": 1
+ },
+ {
+  "source": "napster-2001",
+  "target": "harper-row-1985",
+  "weight": 1
+ },
+ {
+  "source": "nyt-openai-2025",
+  "target": "feist-1991",
+  "weight": 1
+ }
+]

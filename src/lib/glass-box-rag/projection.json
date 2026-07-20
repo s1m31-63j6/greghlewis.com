@@ -1,0 +1,7592 @@
+[
+ {
+  "id": "andersen-2024::000",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8318,
+  "y": -0.3125
+ },
+ {
+  "id": "andersen-2024::001",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7928,
+  "y": -0.3349
+ },
+ {
+  "id": "andersen-2024::002",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8015,
+  "y": -0.3561
+ },
+ {
+  "id": "andersen-2024::003",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7948,
+  "y": -0.3488
+ },
+ {
+  "id": "andersen-2024::004",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8119,
+  "y": -0.3074
+ },
+ {
+  "id": "andersen-2024::005",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8692,
+  "y": -0.2942
+ },
+ {
+  "id": "andersen-2024::006",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8055,
+  "y": -0.2923
+ },
+ {
+  "id": "andersen-2024::007",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7967,
+  "y": -0.2923
+ },
+ {
+  "id": "andersen-2024::008",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8251,
+  "y": -0.2657
+ },
+ {
+  "id": "andersen-2024::009",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8251,
+  "y": -0.2728
+ },
+ {
+  "id": "andersen-2024::010",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8326,
+  "y": -0.2403
+ },
+ {
+  "id": "andersen-2024::011",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8007,
+  "y": -0.2685
+ },
+ {
+  "id": "andersen-2024::012",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7827,
+  "y": -0.2541
+ },
+ {
+  "id": "andersen-2024::013",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7696,
+  "y": -0.3333
+ },
+ {
+  "id": "andersen-2024::014",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.771,
+  "y": -0.3161
+ },
+ {
+  "id": "andersen-2024::015",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7926,
+  "y": -0.3124
+ },
+ {
+  "id": "andersen-2024::016",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7841,
+  "y": -0.3145
+ },
+ {
+  "id": "andersen-2024::017",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7738,
+  "y": -0.3859
+ },
+ {
+  "id": "andersen-2024::018",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7643,
+  "y": -0.3991
+ },
+ {
+  "id": "andersen-2024::019",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7533,
+  "y": -0.4017
+ },
+ {
+  "id": "andersen-2024::020",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7618,
+  "y": -0.4214
+ },
+ {
+  "id": "andersen-2024::021",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7594,
+  "y": -0.4433
+ },
+ {
+  "id": "andersen-2024::022",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7571,
+  "y": -0.4414
+ },
+ {
+  "id": "andersen-2024::023",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7589,
+  "y": -0.4222
+ },
+ {
+  "id": "andersen-2024::024",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7354,
+  "y": -0.4055
+ },
+ {
+  "id": "andersen-2024::025",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.834,
+  "y": -0.3473
+ },
+ {
+  "id": "andersen-2024::026",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8137,
+  "y": -0.3296
+ },
+ {
+  "id": "andersen-2024::027",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8443,
+  "y": -0.3498
+ },
+ {
+  "id": "andersen-2024::028",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8504,
+  "y": -0.3442
+ },
+ {
+  "id": "andersen-2024::029",
+  "case_id": "andersen-2024",
+  "case_name": "Andersen v. Stability AI Ltd.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.856,
+  "y": -0.3594
+ },
+ {
+  "id": "astm-prorg-2023::000",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.2473,
+  "y": -0.4405
+ },
+ {
+  "id": "astm-prorg-2023::001",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.2456,
+  "y": -0.428
+ },
+ {
+  "id": "astm-prorg-2023::002",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.2288,
+  "y": -0.4377
+ },
+ {
+  "id": "astm-prorg-2023::003",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.2145,
+  "y": -0.4275
+ },
+ {
+  "id": "astm-prorg-2023::004",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.2188,
+  "y": -0.414
+ },
+ {
+  "id": "astm-prorg-2023::005",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.231,
+  "y": -0.4175
+ },
+ {
+  "id": "astm-prorg-2023::006",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.2072,
+  "y": -0.4166
+ },
+ {
+  "id": "astm-prorg-2023::007",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.2065,
+  "y": -0.4403
+ },
+ {
+  "id": "astm-prorg-2023::008",
+  "case_id": "astm-prorg-2023",
+  "case_name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "layer": "ancestor",
+  "court": "cadc",
+  "year": 2023,
+  "x": -0.1992,
+  "y": -0.4575
+ },
+ {
+  "id": "astm-upcodes-2026::000",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.288,
+  "y": -0.3747
+ },
+ {
+  "id": "astm-upcodes-2026::001",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2734,
+  "y": -0.38
+ },
+ {
+  "id": "astm-upcodes-2026::002",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2829,
+  "y": -0.3835
+ },
+ {
+  "id": "astm-upcodes-2026::003",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": 0.2441,
+  "y": -0.1348
+ },
+ {
+  "id": "astm-upcodes-2026::004",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": 0.4271,
+  "y": -0.1406
+ },
+ {
+  "id": "astm-upcodes-2026::005",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2243,
+  "y": -0.2901
+ },
+ {
+  "id": "astm-upcodes-2026::006",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.1549,
+  "y": -0.1577
+ },
+ {
+  "id": "astm-upcodes-2026::007",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2827,
+  "y": -0.3536
+ },
+ {
+  "id": "astm-upcodes-2026::008",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2886,
+  "y": -0.3444
+ },
+ {
+  "id": "astm-upcodes-2026::009",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2739,
+  "y": -0.3365
+ },
+ {
+  "id": "astm-upcodes-2026::010",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2716,
+  "y": -0.3068
+ },
+ {
+  "id": "astm-upcodes-2026::011",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2656,
+  "y": -0.3217
+ },
+ {
+  "id": "astm-upcodes-2026::012",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2494,
+  "y": -0.3792
+ },
+ {
+  "id": "astm-upcodes-2026::013",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2304,
+  "y": -0.3791
+ },
+ {
+  "id": "astm-upcodes-2026::014",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2253,
+  "y": -0.3414
+ },
+ {
+  "id": "astm-upcodes-2026::015",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2399,
+  "y": -0.3467
+ },
+ {
+  "id": "astm-upcodes-2026::016",
+  "case_id": "astm-upcodes-2026",
+  "case_name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "layer": "modern",
+  "court": "ca3",
+  "year": 2026,
+  "x": -0.2405,
+  "y": -0.3356
+ },
+ {
+  "id": "authors-guild-google-2015::000",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0881,
+  "y": -0.2026
+ },
+ {
+  "id": "authors-guild-google-2015::001",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0944,
+  "y": -0.1988
+ },
+ {
+  "id": "authors-guild-google-2015::002",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0997,
+  "y": -0.1898
+ },
+ {
+  "id": "authors-guild-google-2015::003",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.1235,
+  "y": -0.173
+ },
+ {
+  "id": "authors-guild-google-2015::004",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": -0.1821,
+  "y": -0.1085
+ },
+ {
+  "id": "authors-guild-google-2015::005",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": -0.0448,
+  "y": -0.1605
+ },
+ {
+  "id": "authors-guild-google-2015::006",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0218,
+  "y": -0.1955
+ },
+ {
+  "id": "authors-guild-google-2015::007",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0209,
+  "y": -0.1768
+ },
+ {
+  "id": "authors-guild-google-2015::008",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": -0.5987,
+  "y": -0.1297
+ },
+ {
+  "id": "authors-guild-google-2015::009",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": -0.0454,
+  "y": -0.1789
+ },
+ {
+  "id": "authors-guild-google-2015::010",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0416,
+  "y": -0.1726
+ },
+ {
+  "id": "authors-guild-google-2015::011",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0531,
+  "y": -0.1563
+ },
+ {
+  "id": "authors-guild-google-2015::012",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0589,
+  "y": -0.1728
+ },
+ {
+  "id": "authors-guild-google-2015::013",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0589,
+  "y": -0.1877
+ },
+ {
+  "id": "authors-guild-google-2015::014",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0638,
+  "y": -0.2049
+ },
+ {
+  "id": "authors-guild-google-2015::015",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0834,
+  "y": -0.2231
+ },
+ {
+  "id": "authors-guild-google-2015::016",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.0922,
+  "y": -0.2243
+ },
+ {
+  "id": "authors-guild-google-2015::017",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.1254,
+  "y": -0.2068
+ },
+ {
+  "id": "authors-guild-google-2015::018",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": 0.133,
+  "y": -0.2182
+ },
+ {
+  "id": "authors-guild-google-2015::019",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": -0.1381,
+  "y": -0.2204
+ },
+ {
+  "id": "authors-guild-google-2015::020",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": -0.1405,
+  "y": -0.2202
+ },
+ {
+  "id": "authors-guild-google-2015::021",
+  "case_id": "authors-guild-google-2015",
+  "case_name": "Authors Guild v. Google, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2015,
+  "x": -0.5445,
+  "y": 0.2661
+ },
+ {
+  "id": "bartz-2025::000",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3607,
+  "y": -0.3003
+ },
+ {
+  "id": "bartz-2025::001",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.336,
+  "y": -0.2802
+ },
+ {
+  "id": "bartz-2025::002",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3485,
+  "y": -0.2875
+ },
+ {
+  "id": "bartz-2025::003",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.352,
+  "y": -0.3197
+ },
+ {
+  "id": "bartz-2025::004",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3721,
+  "y": -0.3335
+ },
+ {
+  "id": "bartz-2025::005",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3589,
+  "y": -0.3421
+ },
+ {
+  "id": "bartz-2025::006",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3367,
+  "y": -0.3041
+ },
+ {
+  "id": "bartz-2025::007",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3213,
+  "y": -0.3289
+ },
+ {
+  "id": "bartz-2025::008",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2716,
+  "y": -0.2284
+ },
+ {
+  "id": "bartz-2025::009",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3381,
+  "y": -0.3422
+ },
+ {
+  "id": "bartz-2025::010",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3729,
+  "y": -0.3492
+ },
+ {
+  "id": "bartz-2025::011",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3579,
+  "y": -0.374
+ },
+ {
+  "id": "bartz-2025::012",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3193,
+  "y": -0.3109
+ },
+ {
+  "id": "bartz-2025::013",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2734,
+  "y": -0.2867
+ },
+ {
+  "id": "bartz-2025::014",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2903,
+  "y": -0.2772
+ },
+ {
+  "id": "bartz-2025::015",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2589,
+  "y": -0.2954
+ },
+ {
+  "id": "bartz-2025::016",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2978,
+  "y": -0.3018
+ },
+ {
+  "id": "bartz-2025::017",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3103,
+  "y": -0.2947
+ },
+ {
+  "id": "bartz-2025::018",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2765,
+  "y": -0.2662
+ },
+ {
+  "id": "bartz-2025::019",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2849,
+  "y": -0.2395
+ },
+ {
+  "id": "bartz-2025::020",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3124,
+  "y": -0.2595
+ },
+ {
+  "id": "bartz-2025::021",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3099,
+  "y": -0.2445
+ },
+ {
+  "id": "bartz-2025::022",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2429,
+  "y": -0.3385
+ },
+ {
+  "id": "bartz-2025::023",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3056,
+  "y": -0.3793
+ },
+ {
+  "id": "bartz-2025::024",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3132,
+  "y": -0.3496
+ },
+ {
+  "id": "bartz-2025::025",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2636,
+  "y": -0.3268
+ },
+ {
+  "id": "bartz-2025::026",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3466,
+  "y": -0.3583
+ },
+ {
+  "id": "bartz-2025::027",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2815,
+  "y": -0.3145
+ },
+ {
+  "id": "bartz-2025::028",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.296,
+  "y": -0.3227
+ },
+ {
+  "id": "bartz-2025::029",
+  "case_id": "bartz-2025",
+  "case_name": "Bartz v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3091,
+  "y": -0.3145
+ },
+ {
+  "id": "campbell-1994::000",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.738,
+  "y": -0.1415
+ },
+ {
+  "id": "campbell-1994::001",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7156,
+  "y": -0.1367
+ },
+ {
+  "id": "campbell-1994::002",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.3031,
+  "y": 0.4383
+ },
+ {
+  "id": "campbell-1994::003",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6934,
+  "y": -0.0209
+ },
+ {
+  "id": "campbell-1994::004",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7158,
+  "y": -0.0687
+ },
+ {
+  "id": "campbell-1994::005",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6604,
+  "y": -0.1098
+ },
+ {
+  "id": "campbell-1994::006",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6145,
+  "y": -0.1136
+ },
+ {
+  "id": "campbell-1994::007",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6772,
+  "y": -0.0752
+ },
+ {
+  "id": "campbell-1994::008",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6947,
+  "y": -0.0937
+ },
+ {
+  "id": "campbell-1994::009",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7518,
+  "y": -0.0867
+ },
+ {
+  "id": "campbell-1994::010",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7434,
+  "y": -0.1174
+ },
+ {
+  "id": "campbell-1994::011",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7579,
+  "y": -0.1564
+ },
+ {
+  "id": "campbell-1994::012",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6666,
+  "y": -0.0404
+ },
+ {
+  "id": "campbell-1994::013",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.696,
+  "y": -0.0577
+ },
+ {
+  "id": "campbell-1994::014",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7369,
+  "y": -0.1299
+ },
+ {
+  "id": "campbell-1994::015",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7129,
+  "y": -0.1251
+ },
+ {
+  "id": "campbell-1994::016",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7158,
+  "y": -0.1487
+ },
+ {
+  "id": "campbell-1994::017",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.1483,
+  "y": -0.1332
+ },
+ {
+  "id": "campbell-1994::018",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7116,
+  "y": -0.0233
+ },
+ {
+  "id": "campbell-1994::019",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7115,
+  "y": -0.0762
+ },
+ {
+  "id": "campbell-1994::020",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6153,
+  "y": -0.1189
+ },
+ {
+  "id": "campbell-1994::021",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6673,
+  "y": -0.0744
+ },
+ {
+  "id": "campbell-1994::022",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6785,
+  "y": -0.0901
+ },
+ {
+  "id": "campbell-1994::023",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7031,
+  "y": -0.0958
+ },
+ {
+  "id": "campbell-1994::024",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7613,
+  "y": -0.0702
+ },
+ {
+  "id": "campbell-1994::025",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7539,
+  "y": -0.1163
+ },
+ {
+  "id": "campbell-1994::026",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.734,
+  "y": -0.0274
+ },
+ {
+  "id": "campbell-1994::027",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6936,
+  "y": -0.0325
+ },
+ {
+  "id": "campbell-1994::028",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6943,
+  "y": -0.1316
+ },
+ {
+  "id": "campbell-1994::029",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6657,
+  "y": -0.0399
+ },
+ {
+  "id": "campbell-1994::030",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7003,
+  "y": -0.0547
+ },
+ {
+  "id": "campbell-1994::031",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.7172,
+  "y": -0.0368
+ },
+ {
+  "id": "campbell-1994::032",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.694,
+  "y": -0.0344
+ },
+ {
+  "id": "campbell-1994::033",
+  "case_id": "campbell-1994",
+  "case_name": "Campbell v. Acuff-Rose Music, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1994,
+  "x": -0.6831,
+  "y": -0.1258
+ },
+ {
+  "id": "concord-anthropic-2025::000",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4437,
+  "y": -0.3406
+ },
+ {
+  "id": "concord-anthropic-2025::001",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4256,
+  "y": -0.329
+ },
+ {
+  "id": "concord-anthropic-2025::002",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4097,
+  "y": -0.3061
+ },
+ {
+  "id": "concord-anthropic-2025::003",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4361,
+  "y": -0.1555
+ },
+ {
+  "id": "concord-anthropic-2025::004",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4179,
+  "y": -0.3143
+ },
+ {
+  "id": "concord-anthropic-2025::005",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4158,
+  "y": -0.2801
+ },
+ {
+  "id": "concord-anthropic-2025::006",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4425,
+  "y": -0.2575
+ },
+ {
+  "id": "concord-anthropic-2025::007",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4461,
+  "y": -0.3045
+ },
+ {
+  "id": "concord-anthropic-2025::008",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4694,
+  "y": -0.2838
+ },
+ {
+  "id": "concord-anthropic-2025::009",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4424,
+  "y": -0.296
+ },
+ {
+  "id": "concord-anthropic-2025::010",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4296,
+  "y": -0.2961
+ },
+ {
+  "id": "concord-anthropic-2025::011",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4414,
+  "y": -0.2846
+ },
+ {
+  "id": "concord-anthropic-2025::012",
+  "case_id": "concord-anthropic-2025",
+  "case_name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.4421,
+  "y": -0.2463
+ },
+ {
+  "id": "connectix-2000::000",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": -0.0012,
+  "y": 0.2927
+ },
+ {
+  "id": "connectix-2000::001",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": -0.0073,
+  "y": 0.3108
+ },
+ {
+  "id": "connectix-2000::002",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0513,
+  "y": 0.2686
+ },
+ {
+  "id": "connectix-2000::003",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.036,
+  "y": 0.2902
+ },
+ {
+  "id": "connectix-2000::004",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0013,
+  "y": 0.2942
+ },
+ {
+  "id": "connectix-2000::005",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0464,
+  "y": 0.2276
+ },
+ {
+  "id": "connectix-2000::006",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0343,
+  "y": 0.2659
+ },
+ {
+  "id": "connectix-2000::007",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0191,
+  "y": 0.2696
+ },
+ {
+  "id": "connectix-2000::008",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": -0.0298,
+  "y": 0.2947
+ },
+ {
+  "id": "connectix-2000::009",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": -0.0348,
+  "y": 0.3004
+ },
+ {
+  "id": "connectix-2000::010",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0077,
+  "y": 0.2443
+ },
+ {
+  "id": "connectix-2000::011",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0052,
+  "y": 0.3226
+ },
+ {
+  "id": "connectix-2000::012",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0138,
+  "y": 0.296
+ },
+ {
+  "id": "connectix-2000::013",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": 0.0192,
+  "y": 0.2638
+ },
+ {
+  "id": "connectix-2000::014",
+  "case_id": "connectix-2000",
+  "case_name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2000,
+  "x": -0.0082,
+  "y": 0.2712
+ },
+ {
+  "id": "cox-sony-2026::000",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4355,
+  "y": 0.529
+ },
+ {
+  "id": "cox-sony-2026::001",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4148,
+  "y": 0.5132
+ },
+ {
+  "id": "cox-sony-2026::002",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4569,
+  "y": 0.5055
+ },
+ {
+  "id": "cox-sony-2026::003",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4462,
+  "y": 0.5159
+ },
+ {
+  "id": "cox-sony-2026::004",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4468,
+  "y": 0.5414
+ },
+ {
+  "id": "cox-sony-2026::005",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4287,
+  "y": 0.5244
+ },
+ {
+  "id": "cox-sony-2026::006",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4276,
+  "y": 0.5425
+ },
+ {
+  "id": "cox-sony-2026::007",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4536,
+  "y": 0.5262
+ },
+ {
+  "id": "cox-sony-2026::008",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4381,
+  "y": 0.5124
+ },
+ {
+  "id": "cox-sony-2026::009",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4217,
+  "y": 0.5028
+ },
+ {
+  "id": "cox-sony-2026::010",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4408,
+  "y": 0.4936
+ },
+ {
+  "id": "cox-sony-2026::011",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.475,
+  "y": 0.5176
+ },
+ {
+  "id": "cox-sony-2026::012",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.498,
+  "y": 0.5403
+ },
+ {
+  "id": "cox-sony-2026::013",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.4801,
+  "y": 0.5391
+ },
+ {
+  "id": "cox-sony-2026::014",
+  "case_id": "cox-sony-2026",
+  "case_name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "layer": "modern",
+  "court": "scotus",
+  "year": 2026,
+  "x": 0.462,
+  "y": 0.5457
+ },
+ {
+  "id": "doe-github-2024::000",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.9024,
+  "y": -0.2082
+ },
+ {
+  "id": "doe-github-2024::001",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8857,
+  "y": -0.1891
+ },
+ {
+  "id": "doe-github-2024::002",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8889,
+  "y": -0.1939
+ },
+ {
+  "id": "doe-github-2024::003",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8391,
+  "y": -0.1431
+ },
+ {
+  "id": "doe-github-2024::004",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8899,
+  "y": -0.1572
+ },
+ {
+  "id": "doe-github-2024::005",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.9057,
+  "y": -0.151
+ },
+ {
+  "id": "doe-github-2024::006",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8893,
+  "y": -0.1726
+ },
+ {
+  "id": "doe-github-2024::007",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8493,
+  "y": -0.1732
+ },
+ {
+  "id": "doe-github-2024::008",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7612,
+  "y": -0.1958
+ },
+ {
+  "id": "doe-github-2024::009",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7617,
+  "y": -0.1967
+ },
+ {
+  "id": "doe-github-2024::010",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7523,
+  "y": -0.2195
+ },
+ {
+  "id": "doe-github-2024::011",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.7612,
+  "y": -0.2103
+ },
+ {
+  "id": "doe-github-2024::012",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.82,
+  "y": -0.1809
+ },
+ {
+  "id": "doe-github-2024::013",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.821,
+  "y": -0.1864
+ },
+ {
+  "id": "doe-github-2024::014",
+  "case_id": "doe-github-2024",
+  "case_name": "Doe v. GitHub, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2024,
+  "x": 0.8213,
+  "y": -0.1654
+ },
+ {
+  "id": "feist-1991::000",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4586,
+  "y": 0.1905
+ },
+ {
+  "id": "feist-1991::001",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4635,
+  "y": 0.2643
+ },
+ {
+  "id": "feist-1991::002",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4616,
+  "y": 0.255
+ },
+ {
+  "id": "feist-1991::003",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.472,
+  "y": 0.2797
+ },
+ {
+  "id": "feist-1991::004",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4455,
+  "y": 0.2632
+ },
+ {
+  "id": "feist-1991::005",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4225,
+  "y": 0.265
+ },
+ {
+  "id": "feist-1991::006",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4177,
+  "y": 0.2527
+ },
+ {
+  "id": "feist-1991::007",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4574,
+  "y": 0.2842
+ },
+ {
+  "id": "feist-1991::008",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4536,
+  "y": 0.2743
+ },
+ {
+  "id": "feist-1991::009",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.433,
+  "y": 0.2454
+ },
+ {
+  "id": "feist-1991::010",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4586,
+  "y": 0.2032
+ },
+ {
+  "id": "feist-1991::011",
+  "case_id": "feist-1991",
+  "case_name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1991,
+  "x": -0.4595,
+  "y": 0.1991
+ },
+ {
+  "id": "google-oracle-2021::000",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1126,
+  "y": -0.8131
+ },
+ {
+  "id": "google-oracle-2021::001",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.0994,
+  "y": -0.7368
+ },
+ {
+  "id": "google-oracle-2021::002",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1046,
+  "y": -0.7772
+ },
+ {
+  "id": "google-oracle-2021::003",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1082,
+  "y": -0.8289
+ },
+ {
+  "id": "google-oracle-2021::004",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1239,
+  "y": -0.8468
+ },
+ {
+  "id": "google-oracle-2021::005",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1694,
+  "y": -0.8331
+ },
+ {
+  "id": "google-oracle-2021::006",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1806,
+  "y": -0.8254
+ },
+ {
+  "id": "google-oracle-2021::007",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1355,
+  "y": -0.8262
+ },
+ {
+  "id": "google-oracle-2021::008",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1277,
+  "y": -0.7981
+ },
+ {
+  "id": "google-oracle-2021::009",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.339,
+  "y": 0.3595
+ },
+ {
+  "id": "google-oracle-2021::010",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1096,
+  "y": -0.7514
+ },
+ {
+  "id": "google-oracle-2021::011",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": 0.0133,
+  "y": 0.1678
+ },
+ {
+  "id": "google-oracle-2021::012",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1291,
+  "y": -0.7331
+ },
+ {
+  "id": "google-oracle-2021::013",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1298,
+  "y": -0.7137
+ },
+ {
+  "id": "google-oracle-2021::014",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1466,
+  "y": -0.8051
+ },
+ {
+  "id": "google-oracle-2021::015",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.139,
+  "y": -0.7849
+ },
+ {
+  "id": "google-oracle-2021::016",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.099,
+  "y": -0.793
+ },
+ {
+  "id": "google-oracle-2021::017",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1123,
+  "y": -0.7766
+ },
+ {
+  "id": "google-oracle-2021::018",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.0658,
+  "y": -0.7903
+ },
+ {
+  "id": "google-oracle-2021::019",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.0887,
+  "y": -0.8049
+ },
+ {
+  "id": "google-oracle-2021::020",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.104,
+  "y": -0.848
+ },
+ {
+  "id": "google-oracle-2021::021",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1087,
+  "y": -0.7961
+ },
+ {
+  "id": "google-oracle-2021::022",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1236,
+  "y": -0.822
+ },
+ {
+  "id": "google-oracle-2021::023",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1491,
+  "y": -0.8169
+ },
+ {
+  "id": "google-oracle-2021::024",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1639,
+  "y": -0.7862
+ },
+ {
+  "id": "google-oracle-2021::025",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.172,
+  "y": -0.7768
+ },
+ {
+  "id": "google-oracle-2021::026",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1487,
+  "y": -0.7395
+ },
+ {
+  "id": "google-oracle-2021::027",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1518,
+  "y": -0.7636
+ },
+ {
+  "id": "google-oracle-2021::028",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.0876,
+  "y": -0.8456
+ },
+ {
+  "id": "google-oracle-2021::029",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.0882,
+  "y": -0.8278
+ },
+ {
+  "id": "google-oracle-2021::030",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.0845,
+  "y": -0.7723
+ },
+ {
+  "id": "google-oracle-2021::031",
+  "case_id": "google-oracle-2021",
+  "case_name": "Google LLC v. Oracle America, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2021,
+  "x": -0.1501,
+  "y": -0.7518
+ },
+ {
+  "id": "hachette-2024::000",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": 0.0225,
+  "y": -0.3945
+ },
+ {
+  "id": "hachette-2024::001",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": 0.0411,
+  "y": -0.4076
+ },
+ {
+  "id": "hachette-2024::002",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": 0.026,
+  "y": -0.3994
+ },
+ {
+  "id": "hachette-2024::003",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0142,
+  "y": -0.4072
+ },
+ {
+  "id": "hachette-2024::004",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0335,
+  "y": -0.4003
+ },
+ {
+  "id": "hachette-2024::005",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0286,
+  "y": -0.373
+ },
+ {
+  "id": "hachette-2024::006",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.3397,
+  "y": 0.3901
+ },
+ {
+  "id": "hachette-2024::007",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0541,
+  "y": -0.3357
+ },
+ {
+  "id": "hachette-2024::008",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0837,
+  "y": -0.3007
+ },
+ {
+  "id": "hachette-2024::009",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0838,
+  "y": -0.2956
+ },
+ {
+  "id": "hachette-2024::010",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": 0.0332,
+  "y": -0.057
+ },
+ {
+  "id": "hachette-2024::011",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0611,
+  "y": -0.3521
+ },
+ {
+  "id": "hachette-2024::012",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0833,
+  "y": -0.3191
+ },
+ {
+  "id": "hachette-2024::013",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0924,
+  "y": -0.3471
+ },
+ {
+  "id": "hachette-2024::014",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0775,
+  "y": -0.3403
+ },
+ {
+  "id": "hachette-2024::015",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0479,
+  "y": -0.2614
+ },
+ {
+  "id": "hachette-2024::016",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0428,
+  "y": -0.2403
+ },
+ {
+  "id": "hachette-2024::017",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0674,
+  "y": -0.3653
+ },
+ {
+  "id": "hachette-2024::018",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0506,
+  "y": -0.3844
+ },
+ {
+  "id": "hachette-2024::019",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0418,
+  "y": -0.4182
+ },
+ {
+  "id": "hachette-2024::020",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0682,
+  "y": -0.4102
+ },
+ {
+  "id": "hachette-2024::021",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.093,
+  "y": -0.3988
+ },
+ {
+  "id": "hachette-2024::022",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0703,
+  "y": -0.3885
+ },
+ {
+  "id": "hachette-2024::023",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0602,
+  "y": -0.3688
+ },
+ {
+  "id": "hachette-2024::024",
+  "case_id": "hachette-2024",
+  "case_name": "Hachette Book Group, Inc. v. Internet Archive",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2024,
+  "x": -0.0356,
+  "y": -0.3345
+ },
+ {
+  "id": "harper-row-1985::000",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6053,
+  "y": 0.5262
+ },
+ {
+  "id": "harper-row-1985::001",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6401,
+  "y": 0.5196
+ },
+ {
+  "id": "harper-row-1985::002",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6142,
+  "y": 0.4991
+ },
+ {
+  "id": "harper-row-1985::003",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5587,
+  "y": 0.3626
+ },
+ {
+  "id": "harper-row-1985::004",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6062,
+  "y": 0.4711
+ },
+ {
+  "id": "harper-row-1985::005",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5938,
+  "y": 0.4895
+ },
+ {
+  "id": "harper-row-1985::006",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6533,
+  "y": 0.4774
+ },
+ {
+  "id": "harper-row-1985::007",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6331,
+  "y": 0.4739
+ },
+ {
+  "id": "harper-row-1985::008",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6269,
+  "y": 0.4534
+ },
+ {
+  "id": "harper-row-1985::009",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5892,
+  "y": 0.4371
+ },
+ {
+  "id": "harper-row-1985::010",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.7044,
+  "y": 0.5236
+ },
+ {
+  "id": "harper-row-1985::011",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6774,
+  "y": 0.5427
+ },
+ {
+  "id": "harper-row-1985::012",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4712,
+  "y": 0.4962
+ },
+ {
+  "id": "harper-row-1985::013",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4327,
+  "y": 0.5181
+ },
+ {
+  "id": "harper-row-1985::014",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6403,
+  "y": 0.5576
+ },
+ {
+  "id": "harper-row-1985::015",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5684,
+  "y": 0.5352
+ },
+ {
+  "id": "harper-row-1985::016",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.547,
+  "y": 0.5051
+ },
+ {
+  "id": "harper-row-1985::017",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4018,
+  "y": 0.361
+ },
+ {
+  "id": "harper-row-1985::018",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5366,
+  "y": 0.4769
+ },
+ {
+  "id": "harper-row-1985::019",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.3283,
+  "y": 0.4424
+ },
+ {
+  "id": "harper-row-1985::020",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.3584,
+  "y": 0.48
+ },
+ {
+  "id": "harper-row-1985::021",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4043,
+  "y": 0.4832
+ },
+ {
+  "id": "harper-row-1985::022",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4701,
+  "y": 0.3848
+ },
+ {
+  "id": "harper-row-1985::023",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4305,
+  "y": 0.3998
+ },
+ {
+  "id": "harper-row-1985::024",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4817,
+  "y": 0.4462
+ },
+ {
+  "id": "harper-row-1985::025",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5242,
+  "y": 0.4492
+ },
+ {
+  "id": "harper-row-1985::026",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5597,
+  "y": 0.4802
+ },
+ {
+  "id": "harper-row-1985::027",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6521,
+  "y": 0.4249
+ },
+ {
+  "id": "harper-row-1985::028",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.58,
+  "y": 0.5218
+ },
+ {
+  "id": "harper-row-1985::029",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6608,
+  "y": 0.6282
+ },
+ {
+  "id": "harper-row-1985::030",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6761,
+  "y": 0.6219
+ },
+ {
+  "id": "harper-row-1985::031",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6772,
+  "y": 0.5961
+ },
+ {
+  "id": "harper-row-1985::032",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5843,
+  "y": 0.5789
+ },
+ {
+  "id": "harper-row-1985::033",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.52,
+  "y": 0.5371
+ },
+ {
+  "id": "harper-row-1985::034",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6921,
+  "y": 0.6336
+ },
+ {
+  "id": "harper-row-1985::035",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5841,
+  "y": 0.5511
+ },
+ {
+  "id": "harper-row-1985::036",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5536,
+  "y": 0.5155
+ },
+ {
+  "id": "harper-row-1985::037",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4059,
+  "y": 0.3611
+ },
+ {
+  "id": "harper-row-1985::038",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5347,
+  "y": 0.4765
+ },
+ {
+  "id": "harper-row-1985::039",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.3267,
+  "y": 0.4425
+ },
+ {
+  "id": "harper-row-1985::040",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.3567,
+  "y": 0.4823
+ },
+ {
+  "id": "harper-row-1985::041",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4042,
+  "y": 0.4831
+ },
+ {
+  "id": "harper-row-1985::042",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4702,
+  "y": 0.3848
+ },
+ {
+  "id": "harper-row-1985::043",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4306,
+  "y": 0.4003
+ },
+ {
+  "id": "harper-row-1985::044",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4815,
+  "y": 0.4458
+ },
+ {
+  "id": "harper-row-1985::045",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5244,
+  "y": 0.4494
+ },
+ {
+  "id": "harper-row-1985::046",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5602,
+  "y": 0.4781
+ },
+ {
+  "id": "harper-row-1985::047",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6522,
+  "y": 0.4248
+ },
+ {
+  "id": "harper-row-1985::048",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5799,
+  "y": 0.5206
+ },
+ {
+  "id": "harper-row-1985::049",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.658,
+  "y": 0.6253
+ },
+ {
+  "id": "harper-row-1985::050",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6745,
+  "y": 0.6352
+ },
+ {
+  "id": "harper-row-1985::051",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6817,
+  "y": 0.6066
+ },
+ {
+  "id": "harper-row-1985::052",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6042,
+  "y": 0.5575
+ },
+ {
+  "id": "harper-row-1985::053",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5175,
+  "y": 0.345
+ },
+ {
+  "id": "harper-row-1985::054",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6249,
+  "y": 0.5119
+ },
+ {
+  "id": "harper-row-1985::055",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5589,
+  "y": 0.3625
+ },
+ {
+  "id": "harper-row-1985::056",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6074,
+  "y": 0.4693
+ },
+ {
+  "id": "harper-row-1985::057",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5976,
+  "y": 0.4898
+ },
+ {
+  "id": "harper-row-1985::058",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4541,
+  "y": 0.5299
+ },
+ {
+  "id": "harper-row-1985::059",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6481,
+  "y": 0.4772
+ },
+ {
+  "id": "harper-row-1985::060",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6292,
+  "y": 0.4863
+ },
+ {
+  "id": "harper-row-1985::061",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6014,
+  "y": 0.4457
+ },
+ {
+  "id": "harper-row-1985::062",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.3593,
+  "y": 0.4176
+ },
+ {
+  "id": "harper-row-1985::063",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.5215,
+  "y": 0.5381
+ },
+ {
+  "id": "harper-row-1985::064",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6929,
+  "y": 0.633
+ },
+ {
+  "id": "harper-row-1985::065",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6179,
+  "y": 0.5801
+ },
+ {
+  "id": "harper-row-1985::066",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.7047,
+  "y": 0.5228
+ },
+ {
+  "id": "harper-row-1985::067",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6753,
+  "y": 0.5394
+ },
+ {
+  "id": "harper-row-1985::068",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4718,
+  "y": 0.4967
+ },
+ {
+  "id": "harper-row-1985::069",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.4342,
+  "y": 0.5186
+ },
+ {
+  "id": "harper-row-1985::070",
+  "case_id": "harper-row-1985",
+  "case_name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1985,
+  "x": -0.6396,
+  "y": 0.5504
+ },
+ {
+  "id": "hathitrust-2014::000",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.1017,
+  "y": -0.3038
+ },
+ {
+  "id": "hathitrust-2014::001",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.106,
+  "y": -0.3211
+ },
+ {
+  "id": "hathitrust-2014::002",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.1031,
+  "y": -0.3409
+ },
+ {
+  "id": "hathitrust-2014::003",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": -0.3793,
+  "y": 0.3665
+ },
+ {
+  "id": "hathitrust-2014::004",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": -0.3083,
+  "y": 0.4174
+ },
+ {
+  "id": "hathitrust-2014::005",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": -0.0738,
+  "y": -0.1491
+ },
+ {
+  "id": "hathitrust-2014::006",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.0201,
+  "y": -0.2549
+ },
+ {
+  "id": "hathitrust-2014::007",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": -0.0012,
+  "y": -0.2591
+ },
+ {
+  "id": "hathitrust-2014::008",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.0099,
+  "y": -0.2803
+ },
+ {
+  "id": "hathitrust-2014::009",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.0713,
+  "y": -0.2993
+ },
+ {
+  "id": "hathitrust-2014::010",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.0504,
+  "y": -0.3082
+ },
+ {
+  "id": "hathitrust-2014::011",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.0624,
+  "y": -0.3106
+ },
+ {
+  "id": "hathitrust-2014::012",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.1229,
+  "y": -0.3091
+ },
+ {
+  "id": "hathitrust-2014::013",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.119,
+  "y": -0.3118
+ },
+ {
+  "id": "hathitrust-2014::014",
+  "case_id": "hathitrust-2014",
+  "case_name": "Authors Guild, Inc. v. HathiTrust",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2014,
+  "x": 0.083,
+  "y": -0.3355
+ },
+ {
+  "id": "intercept-2025::000",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8549,
+  "y": -0.0086
+ },
+ {
+  "id": "intercept-2025::001",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8918,
+  "y": 0.022
+ },
+ {
+  "id": "intercept-2025::002",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.9024,
+  "y": -0.0022
+ },
+ {
+  "id": "intercept-2025::003",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8856,
+  "y": 0.0032
+ },
+ {
+  "id": "intercept-2025::004",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8603,
+  "y": 0.0243
+ },
+ {
+  "id": "intercept-2025::005",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8709,
+  "y": -0.0372
+ },
+ {
+  "id": "intercept-2025::006",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.9939,
+  "y": -0.0457
+ },
+ {
+  "id": "intercept-2025::007",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 1.0,
+  "y": -0.0426
+ },
+ {
+  "id": "intercept-2025::008",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.9812,
+  "y": -0.0439
+ },
+ {
+  "id": "intercept-2025::009",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8661,
+  "y": 0.0045
+ },
+ {
+  "id": "intercept-2025::010",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.9063,
+  "y": 0.0312
+ },
+ {
+  "id": "intercept-2025::011",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8726,
+  "y": 0.01
+ },
+ {
+  "id": "intercept-2025::012",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8419,
+  "y": 0.0245
+ },
+ {
+  "id": "intercept-2025::013",
+  "case_id": "intercept-2025",
+  "case_name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8437,
+  "y": 0.0145
+ },
+ {
+  "id": "kadrey-2025::000",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3036,
+  "y": -0.5048
+ },
+ {
+  "id": "kadrey-2025::001",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2637,
+  "y": -0.5017
+ },
+ {
+  "id": "kadrey-2025::002",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2856,
+  "y": -0.4818
+ },
+ {
+  "id": "kadrey-2025::003",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": -0.3357,
+  "y": 0.3879
+ },
+ {
+  "id": "kadrey-2025::004",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": -0.1855,
+  "y": -0.0775
+ },
+ {
+  "id": "kadrey-2025::005",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.3261,
+  "y": -0.5258
+ },
+ {
+  "id": "kadrey-2025::006",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.291,
+  "y": -0.5562
+ },
+ {
+  "id": "kadrey-2025::007",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2829,
+  "y": -0.5597
+ },
+ {
+  "id": "kadrey-2025::008",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2339,
+  "y": -0.5824
+ },
+ {
+  "id": "kadrey-2025::009",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2415,
+  "y": -0.5886
+ },
+ {
+  "id": "kadrey-2025::010",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2723,
+  "y": -0.5246
+ },
+ {
+  "id": "kadrey-2025::011",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.299,
+  "y": -0.4676
+ },
+ {
+  "id": "kadrey-2025::012",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1957,
+  "y": -0.4707
+ },
+ {
+  "id": "kadrey-2025::013",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2377,
+  "y": -0.5193
+ },
+ {
+  "id": "kadrey-2025::014",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2412,
+  "y": -0.5207
+ },
+ {
+  "id": "kadrey-2025::015",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2475,
+  "y": -0.5181
+ },
+ {
+  "id": "kadrey-2025::016",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1743,
+  "y": -0.4933
+ },
+ {
+  "id": "kadrey-2025::017",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1509,
+  "y": -0.482
+ },
+ {
+  "id": "kadrey-2025::018",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2176,
+  "y": -0.5326
+ },
+ {
+  "id": "kadrey-2025::019",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2371,
+  "y": -0.5592
+ },
+ {
+  "id": "kadrey-2025::020",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.196,
+  "y": -0.4476
+ },
+ {
+  "id": "kadrey-2025::021",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1954,
+  "y": -0.4481
+ },
+ {
+  "id": "kadrey-2025::022",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1974,
+  "y": -0.4918
+ },
+ {
+  "id": "kadrey-2025::023",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2346,
+  "y": -0.4735
+ },
+ {
+  "id": "kadrey-2025::024",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1775,
+  "y": -0.5551
+ },
+ {
+  "id": "kadrey-2025::025",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1495,
+  "y": -0.5735
+ },
+ {
+  "id": "kadrey-2025::026",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1614,
+  "y": -0.6009
+ },
+ {
+  "id": "kadrey-2025::027",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1484,
+  "y": -0.5829
+ },
+ {
+  "id": "kadrey-2025::028",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1233,
+  "y": -0.5587
+ },
+ {
+  "id": "kadrey-2025::029",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1406,
+  "y": -0.539
+ },
+ {
+  "id": "kadrey-2025::030",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1637,
+  "y": -0.5502
+ },
+ {
+  "id": "kadrey-2025::031",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1742,
+  "y": -0.5887
+ },
+ {
+  "id": "kadrey-2025::032",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.1741,
+  "y": -0.5348
+ },
+ {
+  "id": "kadrey-2025::033",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.195,
+  "y": -0.5274
+ },
+ {
+  "id": "kadrey-2025::034",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2154,
+  "y": -0.5506
+ },
+ {
+  "id": "kadrey-2025::035",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.256,
+  "y": -0.5457
+ },
+ {
+  "id": "kadrey-2025::036",
+  "case_id": "kadrey-2025",
+  "case_name": "Kadrey v. Meta Platforms, Inc.",
+  "layer": "modern",
+  "court": "cand",
+  "year": 2025,
+  "x": 0.2245,
+  "y": -0.5039
+ },
+ {
+  "id": "kelly-arriba-2003::000",
+  "case_id": "kelly-arriba-2003",
+  "case_name": "Kelly v. Arriba Soft Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2003,
+  "x": 0.2159,
+  "y": 0.0001
+ },
+ {
+  "id": "kelly-arriba-2003::001",
+  "case_id": "kelly-arriba-2003",
+  "case_name": "Kelly v. Arriba Soft Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2003,
+  "x": 0.2102,
+  "y": -0.0039
+ },
+ {
+  "id": "kelly-arriba-2003::002",
+  "case_id": "kelly-arriba-2003",
+  "case_name": "Kelly v. Arriba Soft Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2003,
+  "x": 0.2014,
+  "y": -0.0311
+ },
+ {
+  "id": "kelly-arriba-2003::003",
+  "case_id": "kelly-arriba-2003",
+  "case_name": "Kelly v. Arriba Soft Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2003,
+  "x": 0.1805,
+  "y": -0.0148
+ },
+ {
+  "id": "kelly-arriba-2003::004",
+  "case_id": "kelly-arriba-2003",
+  "case_name": "Kelly v. Arriba Soft Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2003,
+  "x": 0.1629,
+  "y": -0.019
+ },
+ {
+  "id": "kelly-arriba-2003::005",
+  "case_id": "kelly-arriba-2003",
+  "case_name": "Kelly v. Arriba Soft Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2003,
+  "x": 0.1781,
+  "y": -0.0083
+ },
+ {
+  "id": "kelly-arriba-2003::006",
+  "case_id": "kelly-arriba-2003",
+  "case_name": "Kelly v. Arriba Soft Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2003,
+  "x": 0.2044,
+  "y": -0.0174
+ },
+ {
+  "id": "kelly-arriba-2003::007",
+  "case_id": "kelly-arriba-2003",
+  "case_name": "Kelly v. Arriba Soft Corp.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2003,
+  "x": 0.1218,
+  "y": -0.0305
+ },
+ {
+  "id": "napster-2001::000",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4302,
+  "y": 0.3061
+ },
+ {
+  "id": "napster-2001::001",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4351,
+  "y": 0.2891
+ },
+ {
+  "id": "napster-2001::002",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4496,
+  "y": 0.3125
+ },
+ {
+  "id": "napster-2001::003",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4008,
+  "y": 0.2701
+ },
+ {
+  "id": "napster-2001::004",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.3934,
+  "y": 0.2524
+ },
+ {
+  "id": "napster-2001::005",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.3879,
+  "y": 0.298
+ },
+ {
+  "id": "napster-2001::006",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.3926,
+  "y": 0.2841
+ },
+ {
+  "id": "napster-2001::007",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.3904,
+  "y": 0.2801
+ },
+ {
+  "id": "napster-2001::008",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4196,
+  "y": 0.3702
+ },
+ {
+  "id": "napster-2001::009",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4107,
+  "y": 0.4119
+ },
+ {
+  "id": "napster-2001::010",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4068,
+  "y": 0.3808
+ },
+ {
+  "id": "napster-2001::011",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4295,
+  "y": 0.376
+ },
+ {
+  "id": "napster-2001::012",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4161,
+  "y": 0.3428
+ },
+ {
+  "id": "napster-2001::013",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4395,
+  "y": 0.3616
+ },
+ {
+  "id": "napster-2001::014",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4518,
+  "y": 0.3584
+ },
+ {
+  "id": "napster-2001::015",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4505,
+  "y": 0.338
+ },
+ {
+  "id": "napster-2001::016",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4281,
+  "y": 0.3347
+ },
+ {
+  "id": "napster-2001::017",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4342,
+  "y": 0.3329
+ },
+ {
+  "id": "napster-2001::018",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.4644,
+  "y": 0.3344
+ },
+ {
+  "id": "napster-2001::019",
+  "case_id": "napster-2001",
+  "case_name": "A&M Records, Inc. v. Napster, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2001,
+  "x": 0.485,
+  "y": 0.3398
+ },
+ {
+  "id": "nyt-openai-2025::000",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.781,
+  "y": 0.0061
+ },
+ {
+  "id": "nyt-openai-2025::001",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.699,
+  "y": -0.0519
+ },
+ {
+  "id": "nyt-openai-2025::002",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7997,
+  "y": -0.0178
+ },
+ {
+  "id": "nyt-openai-2025::003",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7442,
+  "y": 0.0078
+ },
+ {
+  "id": "nyt-openai-2025::004",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8014,
+  "y": 0.01
+ },
+ {
+  "id": "nyt-openai-2025::005",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8572,
+  "y": 0.0532
+ },
+ {
+  "id": "nyt-openai-2025::006",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7958,
+  "y": -0.0948
+ },
+ {
+  "id": "nyt-openai-2025::007",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7911,
+  "y": -0.0015
+ },
+ {
+  "id": "nyt-openai-2025::008",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7826,
+  "y": 0.0419
+ },
+ {
+  "id": "nyt-openai-2025::009",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7785,
+  "y": 0.0663
+ },
+ {
+  "id": "nyt-openai-2025::010",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7881,
+  "y": 0.039
+ },
+ {
+  "id": "nyt-openai-2025::011",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7934,
+  "y": 0.0286
+ },
+ {
+  "id": "nyt-openai-2025::012",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.337,
+  "y": 0.5123
+ },
+ {
+  "id": "nyt-openai-2025::013",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7181,
+  "y": 0.145
+ },
+ {
+  "id": "nyt-openai-2025::014",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7201,
+  "y": 0.1424
+ },
+ {
+  "id": "nyt-openai-2025::015",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.3269,
+  "y": 0.4957
+ },
+ {
+  "id": "nyt-openai-2025::016",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.3095,
+  "y": 0.508
+ },
+ {
+  "id": "nyt-openai-2025::017",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8249,
+  "y": -0.0595
+ },
+ {
+  "id": "nyt-openai-2025::018",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8875,
+  "y": -0.1059
+ },
+ {
+  "id": "nyt-openai-2025::019",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.862,
+  "y": -0.0734
+ },
+ {
+  "id": "nyt-openai-2025::020",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 1.0,
+  "y": -0.0529
+ },
+ {
+  "id": "nyt-openai-2025::021",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8749,
+  "y": -0.0897
+ },
+ {
+  "id": "nyt-openai-2025::022",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.848,
+  "y": -0.0625
+ },
+ {
+  "id": "nyt-openai-2025::023",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.915,
+  "y": 0.0025
+ },
+ {
+  "id": "nyt-openai-2025::024",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.9201,
+  "y": 0.0127
+ },
+ {
+  "id": "nyt-openai-2025::025",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8216,
+  "y": 0.0018
+ },
+ {
+  "id": "nyt-openai-2025::026",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7688,
+  "y": -0.0589
+ },
+ {
+  "id": "nyt-openai-2025::027",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7699,
+  "y": -0.0552
+ },
+ {
+  "id": "nyt-openai-2025::028",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8372,
+  "y": 0.0456
+ },
+ {
+  "id": "nyt-openai-2025::029",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.7713,
+  "y": -0.019
+ },
+ {
+  "id": "nyt-openai-2025::030",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.6819,
+  "y": 0.0337
+ },
+ {
+  "id": "nyt-openai-2025::031",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.688,
+  "y": 0.0325
+ },
+ {
+  "id": "nyt-openai-2025::032",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.6832,
+  "y": 0.0305
+ },
+ {
+  "id": "nyt-openai-2025::033",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.6921,
+  "y": -0.0981
+ },
+ {
+  "id": "nyt-openai-2025::034",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.6898,
+  "y": -0.1018
+ },
+ {
+  "id": "nyt-openai-2025::035",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.6934,
+  "y": -0.0906
+ },
+ {
+  "id": "nyt-openai-2025::036",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.6418,
+  "y": -0.0598
+ },
+ {
+  "id": "nyt-openai-2025::037",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.6546,
+  "y": -0.0598
+ },
+ {
+  "id": "nyt-openai-2025::038",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.6604,
+  "y": -0.058
+ },
+ {
+  "id": "nyt-openai-2025::039",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": -0.3361,
+  "y": 0.1467
+ },
+ {
+  "id": "nyt-openai-2025::040",
+  "case_id": "nyt-openai-2025",
+  "case_name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2025,
+  "x": 0.8094,
+  "y": -0.0236
+ },
+ {
+  "id": "perfect10-2007::000",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3395,
+  "y": 0.0573
+ },
+ {
+  "id": "perfect10-2007::001",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3415,
+  "y": 0.0417
+ },
+ {
+  "id": "perfect10-2007::002",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3682,
+  "y": 0.0762
+ },
+ {
+  "id": "perfect10-2007::003",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3521,
+  "y": 0.0771
+ },
+ {
+  "id": "perfect10-2007::004",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3159,
+  "y": 0.0388
+ },
+ {
+  "id": "perfect10-2007::005",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3217,
+  "y": 0.0448
+ },
+ {
+  "id": "perfect10-2007::006",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3095,
+  "y": 0.0606
+ },
+ {
+  "id": "perfect10-2007::007",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": -0.1419,
+  "y": -0.1214
+ },
+ {
+  "id": "perfect10-2007::008",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": -0.04,
+  "y": -0.1398
+ },
+ {
+  "id": "perfect10-2007::009",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.2624,
+  "y": 0.0349
+ },
+ {
+  "id": "perfect10-2007::010",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.2649,
+  "y": 0.0377
+ },
+ {
+  "id": "perfect10-2007::011",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.2759,
+  "y": 0.0444
+ },
+ {
+  "id": "perfect10-2007::012",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.316,
+  "y": 0.0815
+ },
+ {
+  "id": "perfect10-2007::013",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3259,
+  "y": 0.1038
+ },
+ {
+  "id": "perfect10-2007::014",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3683,
+  "y": 0.3935
+ },
+ {
+  "id": "perfect10-2007::015",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.39,
+  "y": 0.3811
+ },
+ {
+  "id": "perfect10-2007::016",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3447,
+  "y": 0.1101
+ },
+ {
+  "id": "perfect10-2007::017",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3528,
+  "y": 0.1207
+ },
+ {
+  "id": "perfect10-2007::018",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3563,
+  "y": 0.0937
+ },
+ {
+  "id": "perfect10-2007::019",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.338,
+  "y": 0.0824
+ },
+ {
+  "id": "perfect10-2007::020",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3332,
+  "y": 0.0718
+ },
+ {
+  "id": "perfect10-2007::021",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.3042,
+  "y": 0.0861
+ },
+ {
+  "id": "perfect10-2007::022",
+  "case_id": "perfect10-2007",
+  "case_name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 2007,
+  "x": 0.4407,
+  "y": 0.2745
+ },
+ {
+  "id": "raw-story-2024::000",
+  "case_id": "raw-story-2024",
+  "case_name": "Raw Story Media, Inc. v. OpenAI Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2024,
+  "x": 0.8371,
+  "y": -0.0192
+ },
+ {
+  "id": "raw-story-2024::001",
+  "case_id": "raw-story-2024",
+  "case_name": "Raw Story Media, Inc. v. OpenAI Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2024,
+  "x": 0.8908,
+  "y": -0.0657
+ },
+ {
+  "id": "raw-story-2024::002",
+  "case_id": "raw-story-2024",
+  "case_name": "Raw Story Media, Inc. v. OpenAI Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2024,
+  "x": 0.8981,
+  "y": -0.0973
+ },
+ {
+  "id": "raw-story-2024::003",
+  "case_id": "raw-story-2024",
+  "case_name": "Raw Story Media, Inc. v. OpenAI Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2024,
+  "x": 0.9176,
+  "y": -0.0902
+ },
+ {
+  "id": "raw-story-2024::004",
+  "case_id": "raw-story-2024",
+  "case_name": "Raw Story Media, Inc. v. OpenAI Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2024,
+  "x": 0.9169,
+  "y": -0.0704
+ },
+ {
+  "id": "raw-story-2024::005",
+  "case_id": "raw-story-2024",
+  "case_name": "Raw Story Media, Inc. v. OpenAI Inc.",
+  "layer": "modern",
+  "court": "nysd",
+  "year": 2024,
+  "x": 0.9062,
+  "y": -0.0743
+ },
+ {
+  "id": "ross-2025::000",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2598,
+  "y": 0.1515
+ },
+ {
+  "id": "ross-2025::001",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.285,
+  "y": 0.1497
+ },
+ {
+  "id": "ross-2025::002",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2774,
+  "y": 0.1653
+ },
+ {
+  "id": "ross-2025::003",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.297,
+  "y": 0.1838
+ },
+ {
+  "id": "ross-2025::004",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2891,
+  "y": 0.1697
+ },
+ {
+  "id": "ross-2025::005",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2963,
+  "y": 0.1536
+ },
+ {
+  "id": "ross-2025::006",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.3121,
+  "y": 0.1494
+ },
+ {
+  "id": "ross-2025::007",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2405,
+  "y": 0.1626
+ },
+ {
+  "id": "ross-2025::008",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2444,
+  "y": 0.1447
+ },
+ {
+  "id": "ross-2025::009",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2429,
+  "y": 0.1057
+ },
+ {
+  "id": "ross-2025::010",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2463,
+  "y": 0.1028
+ },
+ {
+  "id": "ross-2025::011",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2533,
+  "y": 0.1168
+ },
+ {
+  "id": "ross-2025::012",
+  "case_id": "ross-2025",
+  "case_name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "layer": "modern",
+  "court": "ded",
+  "year": 2025,
+  "x": -0.2516,
+  "y": 0.1546
+ },
+ {
+  "id": "sega-accolade-1992::000",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1297,
+  "y": 0.2409
+ },
+ {
+  "id": "sega-accolade-1992::001",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1564,
+  "y": 0.2262
+ },
+ {
+  "id": "sega-accolade-1992::002",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1479,
+  "y": 0.2401
+ },
+ {
+  "id": "sega-accolade-1992::003",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0885,
+  "y": 0.1825
+ },
+ {
+  "id": "sega-accolade-1992::004",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0895,
+  "y": 0.1613
+ },
+ {
+  "id": "sega-accolade-1992::005",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0831,
+  "y": 0.1673
+ },
+ {
+  "id": "sega-accolade-1992::006",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0771,
+  "y": 0.1923
+ },
+ {
+  "id": "sega-accolade-1992::007",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0747,
+  "y": 0.209
+ },
+ {
+  "id": "sega-accolade-1992::008",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.117,
+  "y": 0.2027
+ },
+ {
+  "id": "sega-accolade-1992::009",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1255,
+  "y": 0.2042
+ },
+ {
+  "id": "sega-accolade-1992::010",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0354,
+  "y": 0.1777
+ },
+ {
+  "id": "sega-accolade-1992::011",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0945,
+  "y": 0.2265
+ },
+ {
+  "id": "sega-accolade-1992::012",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0999,
+  "y": 0.2098
+ },
+ {
+  "id": "sega-accolade-1992::013",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.0603,
+  "y": 0.1977
+ },
+ {
+  "id": "sega-accolade-1992::014",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1391,
+  "y": 0.2516
+ },
+ {
+  "id": "sega-accolade-1992::015",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1453,
+  "y": 0.2593
+ },
+ {
+  "id": "sega-accolade-1992::016",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1607,
+  "y": 0.2665
+ },
+ {
+  "id": "sega-accolade-1992::017",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1713,
+  "y": 0.2808
+ },
+ {
+  "id": "sega-accolade-1992::018",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.163,
+  "y": 0.2537
+ },
+ {
+  "id": "sega-accolade-1992::019",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.1018,
+  "y": 0.2376
+ },
+ {
+  "id": "sega-accolade-1992::020",
+  "case_id": "sega-accolade-1992",
+  "case_name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "layer": "ancestor",
+  "court": "ca9",
+  "year": 1992,
+  "x": 0.177,
+  "y": 0.2391
+ },
+ {
+  "id": "sony-betamax-1984::000",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1073,
+  "y": 0.6108
+ },
+ {
+  "id": "sony-betamax-1984::001",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0865,
+  "y": 0.5912
+ },
+ {
+  "id": "sony-betamax-1984::002",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1617,
+  "y": 0.5846
+ },
+ {
+  "id": "sony-betamax-1984::003",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1898,
+  "y": 0.6209
+ },
+ {
+  "id": "sony-betamax-1984::004",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2456,
+  "y": 0.6032
+ },
+ {
+  "id": "sony-betamax-1984::005",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2853,
+  "y": 0.5697
+ },
+ {
+  "id": "sony-betamax-1984::006",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2844,
+  "y": 0.5374
+ },
+ {
+  "id": "sony-betamax-1984::007",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2455,
+  "y": 0.511
+ },
+ {
+  "id": "sony-betamax-1984::008",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0892,
+  "y": 0.5353
+ },
+ {
+  "id": "sony-betamax-1984::009",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1001,
+  "y": 0.4722
+ },
+ {
+  "id": "sony-betamax-1984::010",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.093,
+  "y": 0.4979
+ },
+ {
+  "id": "sony-betamax-1984::011",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0698,
+  "y": 0.6062
+ },
+ {
+  "id": "sony-betamax-1984::012",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0285,
+  "y": 0.6341
+ },
+ {
+  "id": "sony-betamax-1984::013",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.197,
+  "y": 0.5867
+ },
+ {
+  "id": "sony-betamax-1984::014",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.3278,
+  "y": 0.5775
+ },
+ {
+  "id": "sony-betamax-1984::015",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.3503,
+  "y": 0.5818
+ },
+ {
+  "id": "sony-betamax-1984::016",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2518,
+  "y": 0.6165
+ },
+ {
+  "id": "sony-betamax-1984::017",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1163,
+  "y": 0.6775
+ },
+ {
+  "id": "sony-betamax-1984::018",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2558,
+  "y": 0.4391
+ },
+ {
+  "id": "sony-betamax-1984::019",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.033,
+  "y": 0.5371
+ },
+ {
+  "id": "sony-betamax-1984::020",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0143,
+  "y": 0.5743
+ },
+ {
+  "id": "sony-betamax-1984::021",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1011,
+  "y": 0.5939
+ },
+ {
+  "id": "sony-betamax-1984::022",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0671,
+  "y": 0.6449
+ },
+ {
+  "id": "sony-betamax-1984::023",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1343,
+  "y": 0.551
+ },
+ {
+  "id": "sony-betamax-1984::024",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1717,
+  "y": 0.4771
+ },
+ {
+  "id": "sony-betamax-1984::025",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1665,
+  "y": 0.567
+ },
+ {
+  "id": "sony-betamax-1984::026",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1807,
+  "y": 0.5628
+ },
+ {
+  "id": "sony-betamax-1984::027",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2971,
+  "y": 0.4063
+ },
+ {
+  "id": "sony-betamax-1984::028",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2513,
+  "y": 0.4138
+ },
+ {
+  "id": "sony-betamax-1984::029",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.0009,
+  "y": 0.4944
+ },
+ {
+  "id": "sony-betamax-1984::030",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1311,
+  "y": 0.536
+ },
+ {
+  "id": "sony-betamax-1984::031",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.3078,
+  "y": 0.5428
+ },
+ {
+  "id": "sony-betamax-1984::032",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2605,
+  "y": 0.5448
+ },
+ {
+  "id": "sony-betamax-1984::033",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1915,
+  "y": 0.5134
+ },
+ {
+  "id": "sony-betamax-1984::034",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1343,
+  "y": 0.4782
+ },
+ {
+  "id": "sony-betamax-1984::035",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1441,
+  "y": 0.4934
+ },
+ {
+  "id": "sony-betamax-1984::036",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2245,
+  "y": 0.5786
+ },
+ {
+  "id": "sony-betamax-1984::037",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1657,
+  "y": 0.6152
+ },
+ {
+  "id": "sony-betamax-1984::038",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2094,
+  "y": 0.4815
+ },
+ {
+  "id": "sony-betamax-1984::039",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1802,
+  "y": 0.4522
+ },
+ {
+  "id": "sony-betamax-1984::040",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1017,
+  "y": 0.6012
+ },
+ {
+  "id": "sony-betamax-1984::041",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1712,
+  "y": 0.5272
+ },
+ {
+  "id": "sony-betamax-1984::042",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2216,
+  "y": 0.5197
+ },
+ {
+  "id": "sony-betamax-1984::043",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1756,
+  "y": 0.411
+ },
+ {
+  "id": "sony-betamax-1984::044",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0389,
+  "y": 0.5031
+ },
+ {
+  "id": "sony-betamax-1984::045",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.3622,
+  "y": 0.6168
+ },
+ {
+  "id": "sony-betamax-1984::046",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2335,
+  "y": 0.5339
+ },
+ {
+  "id": "sony-betamax-1984::047",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1023,
+  "y": 0.5585
+ },
+ {
+  "id": "sony-betamax-1984::048",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0537,
+  "y": 0.5456
+ },
+ {
+  "id": "sony-betamax-1984::049",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1136,
+  "y": 0.6241
+ },
+ {
+  "id": "sony-betamax-1984::050",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0916,
+  "y": 0.5977
+ },
+ {
+  "id": "sony-betamax-1984::051",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1348,
+  "y": 0.5919
+ },
+ {
+  "id": "sony-betamax-1984::052",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1642,
+  "y": 0.6051
+ },
+ {
+  "id": "sony-betamax-1984::053",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2466,
+  "y": 0.6044
+ },
+ {
+  "id": "sony-betamax-1984::054",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2834,
+  "y": 0.5758
+ },
+ {
+  "id": "sony-betamax-1984::055",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2858,
+  "y": 0.5419
+ },
+ {
+  "id": "sony-betamax-1984::056",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2459,
+  "y": 0.512
+ },
+ {
+  "id": "sony-betamax-1984::057",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0881,
+  "y": 0.5353
+ },
+ {
+  "id": "sony-betamax-1984::058",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.165,
+  "y": 0.5224
+ },
+ {
+  "id": "sony-betamax-1984::059",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0999,
+  "y": 0.4729
+ },
+ {
+  "id": "sony-betamax-1984::060",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0929,
+  "y": 0.4974
+ },
+ {
+  "id": "sony-betamax-1984::061",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0928,
+  "y": 0.6146
+ },
+ {
+  "id": "sony-betamax-1984::062",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0683,
+  "y": 0.6442
+ },
+ {
+  "id": "sony-betamax-1984::063",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1342,
+  "y": 0.5511
+ },
+ {
+  "id": "sony-betamax-1984::064",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1712,
+  "y": 0.4767
+ },
+ {
+  "id": "sony-betamax-1984::065",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1671,
+  "y": 0.565
+ },
+ {
+  "id": "sony-betamax-1984::066",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1816,
+  "y": 0.5575
+ },
+ {
+  "id": "sony-betamax-1984::067",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2974,
+  "y": 0.4079
+ },
+ {
+  "id": "sony-betamax-1984::068",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2498,
+  "y": 0.4136
+ },
+ {
+  "id": "sony-betamax-1984::069",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0049,
+  "y": 0.4909
+ },
+ {
+  "id": "sony-betamax-1984::070",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1389,
+  "y": 0.5305
+ },
+ {
+  "id": "sony-betamax-1984::071",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.3182,
+  "y": 0.5397
+ },
+ {
+  "id": "sony-betamax-1984::072",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2147,
+  "y": 0.5494
+ },
+ {
+  "id": "sony-betamax-1984::073",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1415,
+  "y": 0.4768
+ },
+ {
+  "id": "sony-betamax-1984::074",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1563,
+  "y": 0.5007
+ },
+ {
+  "id": "sony-betamax-1984::075",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2062,
+  "y": 0.5925
+ },
+ {
+  "id": "sony-betamax-1984::076",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0584,
+  "y": 0.6027
+ },
+ {
+  "id": "sony-betamax-1984::077",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2114,
+  "y": 0.5948
+ },
+ {
+  "id": "sony-betamax-1984::078",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.3113,
+  "y": 0.5792
+ },
+ {
+  "id": "sony-betamax-1984::079",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.3494,
+  "y": 0.5871
+ },
+ {
+  "id": "sony-betamax-1984::080",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2523,
+  "y": 0.6168
+ },
+ {
+  "id": "sony-betamax-1984::081",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1162,
+  "y": 0.6818
+ },
+ {
+  "id": "sony-betamax-1984::082",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.257,
+  "y": 0.4385
+ },
+ {
+  "id": "sony-betamax-1984::083",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.0344,
+  "y": 0.5354
+ },
+ {
+  "id": "sony-betamax-1984::084",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.014,
+  "y": 0.5727
+ },
+ {
+  "id": "sony-betamax-1984::085",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0236,
+  "y": 0.5837
+ },
+ {
+  "id": "sony-betamax-1984::086",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1666,
+  "y": 0.6145
+ },
+ {
+  "id": "sony-betamax-1984::087",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.211,
+  "y": 0.4805
+ },
+ {
+  "id": "sony-betamax-1984::088",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1802,
+  "y": 0.453
+ },
+ {
+  "id": "sony-betamax-1984::089",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1015,
+  "y": 0.6013
+ },
+ {
+  "id": "sony-betamax-1984::090",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1722,
+  "y": 0.5275
+ },
+ {
+  "id": "sony-betamax-1984::091",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.2216,
+  "y": 0.5188
+ },
+ {
+  "id": "sony-betamax-1984::092",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": -0.1755,
+  "y": 0.4094
+ },
+ {
+  "id": "sony-betamax-1984::093",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.0394,
+  "y": 0.5026
+ },
+ {
+  "id": "sony-betamax-1984::094",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.3617,
+  "y": 0.6155
+ },
+ {
+  "id": "sony-betamax-1984::095",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.2339,
+  "y": 0.5359
+ },
+ {
+  "id": "sony-betamax-1984::096",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.1029,
+  "y": 0.5565
+ },
+ {
+  "id": "sony-betamax-1984::097",
+  "case_id": "sony-betamax-1984",
+  "case_name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 1984,
+  "x": 0.053,
+  "y": 0.5437
+ },
+ {
+  "id": "texaco-1995::000",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3211,
+  "y": -0.0494
+ },
+ {
+  "id": "texaco-1995::001",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3545,
+  "y": -0.0519
+ },
+ {
+  "id": "texaco-1995::002",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3465,
+  "y": -0.0306
+ },
+ {
+  "id": "texaco-1995::003",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3503,
+  "y": -0.0458
+ },
+ {
+  "id": "texaco-1995::004",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3624,
+  "y": -0.0787
+ },
+ {
+  "id": "texaco-1995::005",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3723,
+  "y": -0.1259
+ },
+ {
+  "id": "texaco-1995::006",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3955,
+  "y": -0.1339
+ },
+ {
+  "id": "texaco-1995::007",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3829,
+  "y": -0.13
+ },
+ {
+  "id": "texaco-1995::008",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.2882,
+  "y": 0.3837
+ },
+ {
+  "id": "texaco-1995::009",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3823,
+  "y": 0.0096
+ },
+ {
+  "id": "texaco-1995::010",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3786,
+  "y": 0.0046
+ },
+ {
+  "id": "texaco-1995::011",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3411,
+  "y": -0.0829
+ },
+ {
+  "id": "texaco-1995::012",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3344,
+  "y": -0.0647
+ },
+ {
+  "id": "texaco-1995::013",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.2789,
+  "y": -0.0217
+ },
+ {
+  "id": "texaco-1995::014",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.2777,
+  "y": -0.0507
+ },
+ {
+  "id": "texaco-1995::015",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.2851,
+  "y": -0.0654
+ },
+ {
+  "id": "texaco-1995::016",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.295,
+  "y": -0.1114
+ },
+ {
+  "id": "texaco-1995::017",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.284,
+  "y": -0.1534
+ },
+ {
+  "id": "texaco-1995::018",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.2865,
+  "y": -0.149
+ },
+ {
+  "id": "texaco-1995::019",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.2683,
+  "y": -0.1365
+ },
+ {
+  "id": "texaco-1995::020",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.2526,
+  "y": -0.1338
+ },
+ {
+  "id": "texaco-1995::021",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3105,
+  "y": -0.0717
+ },
+ {
+  "id": "texaco-1995::022",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3207,
+  "y": -0.1064
+ },
+ {
+  "id": "texaco-1995::023",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3192,
+  "y": -0.1248
+ },
+ {
+  "id": "texaco-1995::024",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3792,
+  "y": -0.0987
+ },
+ {
+  "id": "texaco-1995::025",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3638,
+  "y": -0.106
+ },
+ {
+  "id": "texaco-1995::026",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3502,
+  "y": -0.1563
+ },
+ {
+  "id": "texaco-1995::027",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3599,
+  "y": -0.1368
+ },
+ {
+  "id": "texaco-1995::028",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3296,
+  "y": -0.1117
+ },
+ {
+  "id": "texaco-1995::029",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.2845,
+  "y": -0.0818
+ },
+ {
+  "id": "texaco-1995::030",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3201,
+  "y": -0.0898
+ },
+ {
+  "id": "texaco-1995::031",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": -0.3565,
+  "y": -0.1227
+ },
+ {
+  "id": "texaco-1995::032",
+  "case_id": "texaco-1995",
+  "case_name": "American Geophysical Union v. Texaco Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 1995,
+  "x": 0.5223,
+  "y": 0.2992
+ },
+ {
+  "id": "tveyes-2018::000",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.092,
+  "y": 0.0042
+ },
+ {
+  "id": "tveyes-2018::001",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.1063,
+  "y": 0.0034
+ },
+ {
+  "id": "tveyes-2018::002",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0864,
+  "y": -0.0965
+ },
+ {
+  "id": "tveyes-2018::003",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0538,
+  "y": -0.0409
+ },
+ {
+  "id": "tveyes-2018::004",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0816,
+  "y": -0.0786
+ },
+ {
+  "id": "tveyes-2018::005",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.1095,
+  "y": -0.0485
+ },
+ {
+  "id": "tveyes-2018::006",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0983,
+  "y": -0.0147
+ },
+ {
+  "id": "tveyes-2018::007",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0648,
+  "y": -0.002
+ },
+ {
+  "id": "tveyes-2018::008",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0322,
+  "y": -0.0238
+ },
+ {
+  "id": "tveyes-2018::009",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0165,
+  "y": -0.047
+ },
+ {
+  "id": "tveyes-2018::010",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": 0.0003,
+  "y": -0.0521
+ },
+ {
+  "id": "tveyes-2018::011",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": 0.0308,
+  "y": -0.0133
+ },
+ {
+  "id": "tveyes-2018::012",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": 0.0358,
+  "y": 0.0041
+ },
+ {
+  "id": "tveyes-2018::013",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0076,
+  "y": -0.0832
+ },
+ {
+  "id": "tveyes-2018::014",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0099,
+  "y": 0.0182
+ },
+ {
+  "id": "tveyes-2018::015",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0997,
+  "y": 0.0463
+ },
+ {
+  "id": "tveyes-2018::016",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.1009,
+  "y": 0.0247
+ },
+ {
+  "id": "tveyes-2018::017",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.1168,
+  "y": 0.0557
+ },
+ {
+  "id": "tveyes-2018::018",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0953,
+  "y": 0.0171
+ },
+ {
+  "id": "tveyes-2018::019",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.119,
+  "y": 0.014
+ },
+ {
+  "id": "tveyes-2018::020",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0689,
+  "y": -0.0897
+ },
+ {
+  "id": "tveyes-2018::021",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0454,
+  "y": -0.0514
+ },
+ {
+  "id": "tveyes-2018::022",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0651,
+  "y": -0.0707
+ },
+ {
+  "id": "tveyes-2018::023",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.1004,
+  "y": -0.0717
+ },
+ {
+  "id": "tveyes-2018::024",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.1075,
+  "y": -0.0271
+ },
+ {
+  "id": "tveyes-2018::025",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0753,
+  "y": 0.0107
+ },
+ {
+  "id": "tveyes-2018::026",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0263,
+  "y": -0.0416
+ },
+ {
+  "id": "tveyes-2018::027",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.0219,
+  "y": -0.0274
+ },
+ {
+  "id": "tveyes-2018::028",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": -0.019,
+  "y": -0.0619
+ },
+ {
+  "id": "tveyes-2018::029",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": 0.0007,
+  "y": -0.0366
+ },
+ {
+  "id": "tveyes-2018::030",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": 0.0343,
+  "y": -0.0253
+ },
+ {
+  "id": "tveyes-2018::031",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": 0.0016,
+  "y": 0.0258
+ },
+ {
+  "id": "tveyes-2018::032",
+  "case_id": "tveyes-2018",
+  "case_name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "layer": "ancestor",
+  "court": "ca2",
+  "year": 2018,
+  "x": 0.0391,
+  "y": 0.0045
+ },
+ {
+  "id": "warhol-2023::000",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8025,
+  "y": -0.4356
+ },
+ {
+  "id": "warhol-2023::001",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7754,
+  "y": -0.3718
+ },
+ {
+  "id": "warhol-2023::002",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6634,
+  "y": -0.2236
+ },
+ {
+  "id": "warhol-2023::003",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7555,
+  "y": -0.4062
+ },
+ {
+  "id": "warhol-2023::004",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.798,
+  "y": -0.3876
+ },
+ {
+  "id": "warhol-2023::005",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7545,
+  "y": -0.5283
+ },
+ {
+  "id": "warhol-2023::006",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7538,
+  "y": -0.5259
+ },
+ {
+  "id": "warhol-2023::007",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8001,
+  "y": -0.422
+ },
+ {
+  "id": "warhol-2023::008",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7996,
+  "y": -0.4066
+ },
+ {
+  "id": "warhol-2023::009",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8042,
+  "y": -0.4526
+ },
+ {
+  "id": "warhol-2023::010",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7822,
+  "y": -0.4152
+ },
+ {
+  "id": "warhol-2023::011",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8247,
+  "y": -0.3899
+ },
+ {
+  "id": "warhol-2023::012",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7747,
+  "y": -0.3608
+ },
+ {
+  "id": "warhol-2023::013",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7222,
+  "y": -0.3319
+ },
+ {
+  "id": "warhol-2023::014",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6765,
+  "y": -0.3079
+ },
+ {
+  "id": "warhol-2023::015",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6761,
+  "y": -0.2829
+ },
+ {
+  "id": "warhol-2023::016",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6953,
+  "y": -0.3164
+ },
+ {
+  "id": "warhol-2023::017",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7427,
+  "y": -0.3497
+ },
+ {
+  "id": "warhol-2023::018",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8231,
+  "y": -0.4288
+ },
+ {
+  "id": "warhol-2023::019",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8193,
+  "y": -0.4087
+ },
+ {
+  "id": "warhol-2023::020",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.775,
+  "y": -0.4288
+ },
+ {
+  "id": "warhol-2023::021",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7751,
+  "y": -0.3936
+ },
+ {
+  "id": "warhol-2023::022",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8403,
+  "y": -0.4658
+ },
+ {
+  "id": "warhol-2023::023",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8384,
+  "y": -0.4605
+ },
+ {
+  "id": "warhol-2023::024",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6751,
+  "y": -0.3091
+ },
+ {
+  "id": "warhol-2023::025",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6768,
+  "y": -0.2243
+ },
+ {
+  "id": "warhol-2023::026",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6718,
+  "y": -0.3416
+ },
+ {
+  "id": "warhol-2023::027",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7853,
+  "y": -0.4354
+ },
+ {
+  "id": "warhol-2023::028",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.8075,
+  "y": -0.3802
+ },
+ {
+  "id": "warhol-2023::029",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7136,
+  "y": -0.3749
+ },
+ {
+  "id": "warhol-2023::030",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7629,
+  "y": -0.3904
+ },
+ {
+  "id": "warhol-2023::031",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7506,
+  "y": -0.383
+ },
+ {
+  "id": "warhol-2023::032",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7236,
+  "y": -0.3566
+ },
+ {
+  "id": "warhol-2023::033",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7364,
+  "y": -0.3747
+ },
+ {
+  "id": "warhol-2023::034",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7472,
+  "y": -0.4275
+ },
+ {
+  "id": "warhol-2023::035",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7272,
+  "y": -0.4374
+ },
+ {
+  "id": "warhol-2023::036",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6918,
+  "y": -0.4462
+ },
+ {
+  "id": "warhol-2023::037",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7524,
+  "y": -0.4871
+ },
+ {
+  "id": "warhol-2023::038",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7945,
+  "y": -0.4775
+ },
+ {
+  "id": "warhol-2023::039",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7735,
+  "y": -0.4779
+ },
+ {
+  "id": "warhol-2023::040",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7651,
+  "y": -0.4455
+ },
+ {
+  "id": "warhol-2023::041",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6353,
+  "y": -0.3725
+ },
+ {
+  "id": "warhol-2023::042",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6271,
+  "y": -0.3008
+ },
+ {
+  "id": "warhol-2023::043",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6541,
+  "y": -0.2618
+ },
+ {
+  "id": "warhol-2023::044",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7417,
+  "y": -0.45
+ },
+ {
+  "id": "warhol-2023::045",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7509,
+  "y": -0.4704
+ },
+ {
+  "id": "warhol-2023::046",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6691,
+  "y": -0.4515
+ },
+ {
+  "id": "warhol-2023::047",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7283,
+  "y": -0.4059
+ },
+ {
+  "id": "warhol-2023::048",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7036,
+  "y": -0.3992
+ },
+ {
+  "id": "warhol-2023::049",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6928,
+  "y": -0.4229
+ },
+ {
+  "id": "warhol-2023::050",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6322,
+  "y": -0.413
+ },
+ {
+  "id": "warhol-2023::051",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6647,
+  "y": -0.3977
+ },
+ {
+  "id": "warhol-2023::052",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6702,
+  "y": -0.4104
+ },
+ {
+  "id": "warhol-2023::053",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6982,
+  "y": -0.4843
+ },
+ {
+  "id": "warhol-2023::054",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7168,
+  "y": -0.4951
+ },
+ {
+  "id": "warhol-2023::055",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.7175,
+  "y": -0.4562
+ },
+ {
+  "id": "warhol-2023::056",
+  "case_id": "warhol-2023",
+  "case_name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "layer": "ancestor",
+  "court": "scotus",
+  "year": 2023,
+  "x": -0.6981,
+  "y": -0.4402
+ }
+]

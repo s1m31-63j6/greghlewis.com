@@ -7,6 +7,8 @@ import type { NextConfig } from "next";
 // route handlers see them at request time.
 const nextConfig: NextConfig = {
   env: {
+    NEXT_PUBLIC_GLASS_BOX_RAG_FUNCTION_URL:
+      process.env.NEXT_PUBLIC_GLASS_BOX_RAG_FUNCTION_URL,
     NFLCOMPARABLES_KB_ID: process.env.NFLCOMPARABLES_KB_ID,
     NFLCOMPARABLES_AWS_ACCOUNT: process.env.NFLCOMPARABLES_AWS_ACCOUNT,
     NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,

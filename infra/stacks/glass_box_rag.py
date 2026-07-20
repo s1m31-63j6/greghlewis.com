@@ -24,7 +24,7 @@ RERANK_MODEL = "cohere.rerank-v3-5:0"
 
 
 class GlassBoxRagStack(Stack):
-    def __init__(self, scope: Construct, cid: str, *, allowed_origin: str, **kwargs):
+    def __init__(self, scope: Construct, cid: str, *, allowed_origins: list[str], **kwargs):
         super().__init__(scope, cid, **kwargs)
         account, region = self.account, self.region
 
@@ -42,7 +42,6 @@ class GlassBoxRagStack(Stack):
             timeout=Duration.minutes(5),
             environment={
                 "GBRAG_AWS_ACCOUNT": account,
-                "GBRAG_ALLOWED_ORIGIN": allowed_origin,
                 "GBRAG_DATA_DIR": "/var/task/data",
                 "NODE_OPTIONS": "--enable-source-maps",
             },
@@ -68,7 +67,9 @@ class GlassBoxRagStack(Stack):
             auth_type=lambda_.FunctionUrlAuthType.NONE,
             invoke_mode=lambda_.InvokeMode.RESPONSE_STREAM,
             cors=lambda_.FunctionUrlCorsOptions(
-                allowed_origins=[allowed_origin],
+                # localhost is included so the page can be exercised in `npm run dev`.
+                # The endpoint is public regardless, so this widens nothing material.
+                allowed_origins=allowed_origins,
                 allowed_methods=[lambda_.HttpMethod.GET, lambda_.HttpMethod.POST],
                 allowed_headers=["content-type"],
             ),

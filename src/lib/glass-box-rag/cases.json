@@ -1,0 +1,254 @@
+[
+ {
+  "id": "campbell-1994",
+  "name": "Campbell v. Acuff-Rose Music, Inc.",
+  "court": "scotus",
+  "year": 1994,
+  "layer": "ancestor",
+  "citation": "510 U.S. 569",
+  "judge": null
+ },
+ {
+  "id": "harper-row-1985",
+  "name": "Harper & Row Publishers, Inc. v. Nation Enterprises",
+  "court": "scotus",
+  "year": 1985,
+  "layer": "ancestor",
+  "citation": "471 U.S. 539",
+  "judge": null
+ },
+ {
+  "id": "sony-betamax-1984",
+  "name": "Sony Corp. of America v. Universal City Studios, Inc.",
+  "court": "scotus",
+  "year": 1984,
+  "layer": "ancestor",
+  "citation": "464 U.S. 417",
+  "judge": null
+ },
+ {
+  "id": "feist-1991",
+  "name": "Feist Publications, Inc. v. Rural Telephone Service Co.",
+  "court": "scotus",
+  "year": 1991,
+  "layer": "ancestor",
+  "citation": "499 U.S. 340",
+  "judge": null
+ },
+ {
+  "id": "google-oracle-2021",
+  "name": "Google LLC v. Oracle America, Inc.",
+  "court": "scotus",
+  "year": 2021,
+  "layer": "ancestor",
+  "citation": "593 U.S. 1",
+  "judge": null
+ },
+ {
+  "id": "warhol-2023",
+  "name": "Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith",
+  "court": "scotus",
+  "year": 2023,
+  "layer": "ancestor",
+  "citation": "598 U.S. 508",
+  "judge": null
+ },
+ {
+  "id": "authors-guild-google-2015",
+  "name": "Authors Guild v. Google, Inc.",
+  "court": "ca2",
+  "year": 2015,
+  "layer": "ancestor",
+  "citation": "804 F.3d 202",
+  "judge": null
+ },
+ {
+  "id": "hathitrust-2014",
+  "name": "Authors Guild, Inc. v. HathiTrust",
+  "court": "ca2",
+  "year": 2014,
+  "layer": "ancestor",
+  "citation": "755 F.3d 87",
+  "judge": null
+ },
+ {
+  "id": "tveyes-2018",
+  "name": "Fox News Network, LLC v. TVEyes, Inc.",
+  "court": "ca2",
+  "year": 2018,
+  "layer": "ancestor",
+  "citation": "883 F.3d 169",
+  "judge": null
+ },
+ {
+  "id": "texaco-1995",
+  "name": "American Geophysical Union v. Texaco Inc.",
+  "court": "ca2",
+  "year": 1995,
+  "layer": "ancestor",
+  "citation": "60 F.3d 913",
+  "judge": null
+ },
+ {
+  "id": "hachette-2024",
+  "name": "Hachette Book Group, Inc. v. Internet Archive",
+  "court": "ca2",
+  "year": 2024,
+  "layer": "ancestor",
+  "citation": "115 F.4th 163",
+  "judge": null
+ },
+ {
+  "id": "sega-accolade-1992",
+  "name": "Sega Enterprises Ltd. v. Accolade, Inc.",
+  "court": "ca9",
+  "year": 1992,
+  "layer": "ancestor",
+  "citation": "977 F.2d 1510",
+  "judge": null
+ },
+ {
+  "id": "connectix-2000",
+  "name": "Sony Computer Entertainment, Inc. v. Connectix Corp.",
+  "court": "ca9",
+  "year": 2000,
+  "layer": "ancestor",
+  "citation": "203 F.3d 596",
+  "judge": null
+ },
+ {
+  "id": "kelly-arriba-2003",
+  "name": "Kelly v. Arriba Soft Corp.",
+  "court": "ca9",
+  "year": 2003,
+  "layer": "ancestor",
+  "citation": "336 F.3d 811",
+  "judge": null
+ },
+ {
+  "id": "perfect10-2007",
+  "name": "Perfect 10, Inc. v. Amazon.com, Inc.",
+  "court": "ca9",
+  "year": 2007,
+  "layer": "ancestor",
+  "citation": "508 F.3d 1146",
+  "judge": null
+ },
+ {
+  "id": "napster-2001",
+  "name": "A&M Records, Inc. v. Napster, Inc.",
+  "court": "ca9",
+  "year": 2001,
+  "layer": "ancestor",
+  "citation": "239 F.3d 1004",
+  "judge": null
+ },
+ {
+  "id": "astm-prorg-2023",
+  "name": "American Society for Testing and Materials v. Public.Resource.Org, Inc.",
+  "court": "cadc",
+  "year": 2023,
+  "layer": "ancestor",
+  "citation": "82 F.4th 1262",
+  "judge": null
+ },
+ {
+  "id": "ross-2025",
+  "name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
+  "court": "ded",
+  "year": 2025,
+  "layer": "modern",
+  "citation": "765 F. Supp. 3d 382",
+  "judge": "Bibas"
+ },
+ {
+  "id": "bartz-2025",
+  "name": "Bartz v. Anthropic PBC",
+  "court": "cand",
+  "year": 2025,
+  "layer": "modern",
+  "citation": null,
+  "judge": "Alsup"
+ },
+ {
+  "id": "kadrey-2025",
+  "name": "Kadrey v. Meta Platforms, Inc.",
+  "court": "cand",
+  "year": 2025,
+  "layer": "modern",
+  "citation": null,
+  "judge": "Chhabria"
+ },
+ {
+  "id": "cox-sony-2026",
+  "name": "Cox Communications, Inc. v. Sony Music Entertainment",
+  "court": "scotus",
+  "year": 2026,
+  "layer": "modern",
+  "citation": "607 U.S. ___",
+  "judge": "Thomas"
+ },
+ {
+  "id": "astm-upcodes-2026",
+  "name": "American Society for Testing and Materials v. UpCodes, Inc.",
+  "court": "ca3",
+  "year": 2026,
+  "layer": "modern",
+  "citation": null,
+  "judge": null
+ },
+ {
+  "id": "nyt-openai-2025",
+  "name": "The New York Times Co. v. Microsoft Corp. & OpenAI",
+  "court": "nysd",
+  "year": 2025,
+  "layer": "modern",
+  "citation": null,
+  "judge": "Stein"
+ },
+ {
+  "id": "andersen-2024",
+  "name": "Andersen v. Stability AI Ltd.",
+  "court": "cand",
+  "year": 2024,
+  "layer": "modern",
+  "citation": null,
+  "judge": "Orrick"
+ },
+ {
+  "id": "concord-anthropic-2025",
+  "name": "Concord Music Group, Inc. v. Anthropic PBC",
+  "court": "cand",
+  "year": 2025,
+  "layer": "modern",
+  "citation": null,
+  "judge": "Lee"
+ },
+ {
+  "id": "raw-story-2024",
+  "name": "Raw Story Media, Inc. v. OpenAI Inc.",
+  "court": "nysd",
+  "year": 2024,
+  "layer": "modern",
+  "citation": null,
+  "judge": "McMahon"
+ },
+ {
+  "id": "intercept-2025",
+  "name": "The Intercept Media, Inc. v. OpenAI, Inc.",
+  "court": "nysd",
+  "year": 2025,
+  "layer": "modern",
+  "citation": null,
+  "judge": "Rakoff"
+ },
+ {
+  "id": "doe-github-2024",
+  "name": "Doe v. GitHub, Inc.",
+  "court": "cand",
+  "year": 2024,
+  "layer": "modern",
+  "citation": null,
+  "judge": "Tigar"
+ }
+]

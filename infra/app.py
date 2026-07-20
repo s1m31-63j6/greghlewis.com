@@ -86,7 +86,11 @@ GlassBoxRagStack(
         "Glass Box RAG orchestrator Lambda + streaming Function URL "
         "(legal precedent retrieval with a live pipeline trace)"
     ),
-    allowed_origin="https://greghlewis.com",
+    allowed_origins=[
+        "https://greghlewis.com",
+        "https://www.greghlewis.com",
+        "http://localhost:3000",
+    ],
 )
 
 app.synth()
