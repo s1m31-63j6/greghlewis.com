@@ -97,44 +97,87 @@ def fetch_govinfo(case: dict, client: httpx.Client) -> Opinion | None:
     return _mk(case, best[2], "govinfo", url=f"https://www.govinfo.gov/app/details/{pkg}")
 
 
+def _norm_cite(c: str) -> str:
+    return " ".join(c.split()).lower().replace(".", "")
+
+
 def fetch_courtlistener(case: dict, client: httpx.Client) -> Opinion | None:
+    """Resolve a case by NAME + court, then confirm identity by parallel citation.
+
+    Searching for the citation string itself is wrong — CourtListener's relevance
+    ranking returns opinions that *cite* it. Searching by name is also not enough:
+    for Campbell the top two hits are the 1993 cert-stage entries (507 U.S. 1003),
+    not the 1994 merits decision (510 U.S. 569). The citation array on the cluster
+    is the only reliable identity check, so we require an exact match.
+    """
     if not CL_TOKEN:
         console.print(f"  [yellow]{case['id']}: needs COURTLISTENER_TOKEN[/yellow]")
         return None
     headers = {"Authorization": f"Token {CL_TOKEN}"}
-    q = case.get("citation") or case["name"]
-    r = client.get(f"{CL}/search/", params={"q": f'"{q}"', "type": "o"}, headers=headers, timeout=60)
+    want = case.get("citation")
+
+    r = client.get(
+        f"{CL}/search/",
+        params={"q": case["name"], "type": "o", "court": case["court"]},
+        headers=headers, timeout=90,
+    )
     r.raise_for_status()
     results = r.json().get("results") or []
     if not results:
-        console.print(f"  [red]{case['id']}: no search hit for {q}[/red]")
+        console.print(f"  [red]{case['id']}: no search hits[/red]")
         return None
-    top = results[0]
-    ops = top.get("opinions") or []
-    if not ops:
+
+    match = None
+    if want:
+        target = _norm_cite(want)
+        for res in results:
+            if any(_norm_cite(c) == target for c in (res.get("citation") or [])):
+                match = res
+                break
+    if match is None:
+        console.print(
+            f"  [red]{case['id']}: no result carries citation {want!r}; "
+            f"top hit was {results[0].get('caseName')!r} ({results[0].get('dateFiled')}). "
+            f"Refusing to guess.[/red]"
+        )
         return None
+
+    console.print(f"  matched {match.get('caseName')} ({match.get('dateFiled')}) via {want}")
     time.sleep(CL_DELAY)
 
-    r2 = client.get(f"{CL}/opinions/{ops[0]['id']}/", headers=headers, timeout=60)
-    r2.raise_for_status()
-    o = r2.json()
-    # Preference order matters: html_with_citations already has citations tagged,
-    # which the citation pass can parse straight into graph edges.
-    text = ""
-    for field in ("html_with_citations", "xml_harvard", "html_columbia", "html", "plain_text"):
-        if o.get(field):
-            text = o[field]
-            break
-    if "<" in text[:400]:
-        from bs4 import BeautifulSoup
+    # A cluster holds majority + concurrences + dissents as separate sub-opinions.
+    # Keep them all — the separate writings matter in fair-use doctrine (Warhol's
+    # dissent is argued over as much as the majority).
+    parts: list[str] = []
+    for op_ref in match.get("opinions") or []:
+        r2 = client.get(f"{CL}/opinions/{op_ref['id']}/", headers=headers, timeout=90)
+        if r2.status_code != 200:
+            continue
+        o = r2.json()
+        # html_with_citations has citations pre-tagged, which the citation pass
+        # can parse straight into graph edges.
+        raw = ""
+        for field in ("html_with_citations", "xml_harvard", "html_columbia", "html", "plain_text"):
+            if o.get(field):
+                raw = o[field]
+                break
+        if not raw:
+            continue
+        if "<" in raw[:400]:
+            from bs4 import BeautifulSoup
 
-        text = BeautifulSoup(text, "lxml").get_text("\n")
-    time.sleep(CL_DELAY)
+            raw = BeautifulSoup(raw, "lxml").get_text("\n")
+        parts.append(raw)
+        time.sleep(CL_DELAY)
+
+    if not parts:
+        console.print(f"  [red]{case['id']}: cluster matched but no opinion text[/red]")
+        return None
 
     return _mk(
-        case, clean_text(text), "courtlistener",
-        url=f"https://www.courtlistener.com{top.get('absolute_url', '')}",
-        precedential_status=top.get("status"),
+        case, clean_text("\n\n".join(parts)), "courtlistener",
+        url=f"https://www.courtlistener.com{match.get('absolute_url', '')}",
+        precedential_status=match.get("status"),
     )
 
 

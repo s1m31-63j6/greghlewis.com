@@ -240,10 +240,11 @@ modern:
     judge: Stein
     layer: modern
     source: url
-    url: null   # TODO Phase 1: RECAP or court site. govinfo has ZERO granules for this docket.
+    url: https://www.nysd.uscourts.gov/sites/default/files/2025-04/yf%2023cv11195%20OpenAI%20MTD%20opinion%20april%204%202025.pdf
     note: |
-      COVERAGE GAP — SDNY does not feed this docket to GPO (verified: 0 granules).
-      Must come from RECAP or the court website.
+      govinfo has ZERO granules for this docket (SDNY doesn't feed GPO), so this comes
+      from the court's own site — native text layer, no OCR noise. Consolidated opinion
+      covering NYT + Daily News + CIR.
 
   - id: andersen-2024
     name: Andersen v. Stability AI Ltd.
@@ -278,8 +279,11 @@ modern:
     judge: McMahon
     layer: modern
     source: url
-    url: null   # TODO Phase 1
-    note: DMCA 1202(b) dismissed for lack of Article III standing.
+    url: https://patentlyo.com/media/2024/11/Raw-Story-Order.pdf
+    note: |
+      DMCA 1202(b) dismissed for lack of Article III standing. Dkt. 117.
+      OCR'd scan — body prose is clean but the caption block garbles
+      (e.g. "1:24-0v-01514"). No native-text copy found on any open host.
 
   - id: intercept-2025
     name: The Intercept Media, Inc. v. OpenAI, Inc.
@@ -289,8 +293,13 @@ modern:
     judge: Rakoff
     layer: modern
     source: url
-    url: null   # TODO Phase 1
-    note: 1202(b)(1) allowed to proceed — DIRECTLY conflicts with Raw Story, same district.
+    url: https://chatgptiseatingtheworld.com/wp-content/uploads/2025/02/Judge-Rakoff-decision-mtd-The-Intercept-Feb-20-2025.pdf
+    note: |
+      1202(b)(1) allowed to proceed — DIRECTLY conflicts with Raw Story, same district.
+      This is the reasoned Feb 20 2025 opinion, not the Nov 2024 bottom-line order.
+      OCR'd scan; "1202(b)(1)" sometimes tokenizes as "(b) (1)" — normalize before
+      keyword matching. The RECAP copy is image-only with no text layer, so this
+      blog-hosted mirror is strictly better despite the source.
 
   - id: doe-github-2024
     name: Doe v. GitHub, Inc.

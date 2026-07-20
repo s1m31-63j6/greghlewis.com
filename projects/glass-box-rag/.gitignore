@@ -2,3 +2,6 @@
 # commit them. (The opinions themselves are public domain; this is about repo size
 # and keeping the manifest the single source of truth.)
 data/
+
+# API tokens (CourtListener, govinfo)
+.env
