@@ -1,0 +1,4 @@
+# Fetched opinions and build artifacts are reproducible from cases.yaml — don't
+# commit them. (The opinions themselves are public domain; this is about repo size
+# and keeping the manifest the single source of truth.)
+data/

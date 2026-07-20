@@ -1,0 +1,36 @@
+[project]
+name = "glass-box-rag"
+version = "0.1.0"
+description = "Glass Box RAG — legal precedent corpus pipeline (fetch → chunk → embed → index) and the offline retrieval/evaluation harness."
+requires-python = ">=3.11"
+dependencies = [
+    # Corpus acquisition
+    "httpx>=0.27",
+    "beautifulsoup4>=4.12",
+    "lxml>=5.2",
+    "pypdf>=5.1",          # govinfo and court sites serve opinions as PDF
+    "pydantic>=2.7",
+    "pyyaml>=6.0",
+    "tenacity>=8.3",       # CourtListener free tier is 5/min — retries must back off
+    "tiktoken>=0.7",
+    "rich>=13.7",
+    # Citation handling
+    "eyecite>=2.6",        # extract + resolve citations from opinion text
+    # Bedrock embeddings + rerank
+    "boto3>=1.35",
+    # Offline retrieval + evaluation harness (Phase 2)
+    "rank-bm25>=0.2.2",    # reference BM25 to validate the hand-written TS implementation
+    "numpy>=1.26",
+    "scikit-learn>=1.5",   # 2D projection (t-SNE/PCA) for the embedding-map tab
+                           # NB: umap-learn pins an llvmlite that won't build on 3.11
+    "duckdb>=1.1",         # query the 530MB CourtListener citation-map bulk file
+]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.4",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

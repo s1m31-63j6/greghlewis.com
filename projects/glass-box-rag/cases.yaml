@@ -1,0 +1,314 @@
+# Glass Box RAG — corpus manifest
+#
+# Two acquisition paths, because they genuinely differ:
+#   source: courtlistener  -> clean text + citation edges + parallel cites + precedential status
+#   source: govinfo        -> PDF text + MODS metadata; NO citation edges (we extract them)
+#   source: url            -> direct fetch from a court/official site (gap-fill)
+#
+# `layer` drives retrieval metadata and the citation-network visualization:
+#   modern   = the generative-AI cases
+#   ancestor = the fair-use lineage those cases argue over
+#
+# `binding_on` is deliberate: legal retrieval should distinguish binding from persuasive
+# authority. SCOTUS binds everyone; a circuit binds its own districts; a district court
+# binds no one.
+
+ancestors:
+  - id: campbell-1994
+    name: Campbell v. Acuff-Rose Music, Inc.
+    citation: 510 U.S. 569
+    court: scotus
+    year: 1994
+    layer: ancestor
+    source: courtlistener
+    note: Transformative use enters fair-use doctrine. Cited by every modern AI opinion.
+
+  - id: harper-row-1985
+    name: Harper & Row Publishers, Inc. v. Nation Enterprises
+    citation: 471 U.S. 539
+    court: scotus
+    year: 1985
+    layer: ancestor
+    source: courtlistener
+
+  - id: sony-betamax-1984
+    name: Sony Corp. of America v. Universal City Studios, Inc.
+    citation: 464 U.S. 417
+    court: scotus
+    year: 1984
+    layer: ancestor
+    source: courtlistener
+    note: Substantial-noninfringing-use rule; reshaped by Cox v. Sony (2026).
+
+  - id: feist-1991
+    name: Feist Publications, Inc. v. Rural Telephone Service Co.
+    citation: 499 U.S. 340
+    court: scotus
+    year: 1991
+    layer: ancestor
+    source: courtlistener
+
+  - id: google-oracle-2021
+    name: Google LLC v. Oracle America, Inc.
+    citation: 593 U.S. 1
+    court: scotus
+    year: 2021
+    layer: ancestor
+    source: courtlistener
+
+  - id: warhol-2023
+    name: Andy Warhol Foundation for the Visual Arts, Inc. v. Goldsmith
+    citation: 598 U.S. 508
+    court: scotus
+    year: 2023
+    layer: ancestor
+    source: courtlistener
+    note: Narrows transformativeness where commercial purpose is shared. Central to Ross.
+
+  - id: authors-guild-google-2015
+    name: Authors Guild v. Google, Inc.
+    citation: 804 F.3d 202
+    court: ca2
+    year: 2015
+    layer: ancestor
+    source: courtlistener
+
+  - id: hathitrust-2014
+    name: Authors Guild, Inc. v. HathiTrust
+    citation: 755 F.3d 87
+    court: ca2
+    year: 2014
+    layer: ancestor
+    source: courtlistener
+
+  - id: tveyes-2018
+    name: Fox News Network, LLC v. TVEyes, Inc.
+    citation: 883 F.3d 169
+    court: ca2
+    year: 2018
+    layer: ancestor
+    source: courtlistener
+
+  - id: texaco-1995
+    name: American Geophysical Union v. Texaco Inc.
+    citation: 60 F.3d 913
+    court: ca2
+    year: 1995
+    layer: ancestor
+    source: courtlistener
+    note: The "market for licensing" case Chhabria leans on in Kadrey.
+
+  - id: hachette-2024
+    name: Hachette Book Group, Inc. v. Internet Archive
+    citation: 115 F.4th 163
+    court: ca2
+    year: 2024
+    layer: ancestor
+    source: courtlistener
+    note: Most important recent pre-AI fair-use appellate decision.
+
+  - id: sega-accolade-1992
+    name: Sega Enterprises Ltd. v. Accolade, Inc.
+    citation: 977 F.2d 1510
+    court: ca9
+    year: 1992
+    layer: ancestor
+    source: courtlistener
+    note: |
+      Intermediate copying. Pin the AMENDED opinion (CourtListener dates it 1993-01-06);
+      the cluster search surfaces 1992-04-03. Load-bearing pair with Connectix.
+
+  - id: connectix-2000
+    name: Sony Computer Entertainment, Inc. v. Connectix Corp.
+    citation: 203 F.3d 596
+    court: ca9
+    year: 2000
+    layer: ancestor
+    source: courtlistener
+    note: The other half of the intermediate-copying pair. Alsup, Chhabria, and Bibas all use it.
+
+  - id: kelly-arriba-2003
+    name: Kelly v. Arriba Soft Corp.
+    citation: 336 F.3d 811
+    court: ca9
+    year: 2003
+    layer: ancestor
+    source: courtlistener
+
+  - id: perfect10-2007
+    name: Perfect 10, Inc. v. Amazon.com, Inc.
+    citation: 508 F.3d 1146
+    court: ca9
+    year: 2007
+    layer: ancestor
+    source: courtlistener
+
+  - id: napster-2001
+    name: A&M Records, Inc. v. Napster, Inc.
+    citation: 239 F.3d 1004
+    court: ca9
+    year: 2001
+    layer: ancestor
+    source: courtlistener
+
+  - id: astm-prorg-2023
+    name: American Society for Testing and Materials v. Public.Resource.Org, Inc.
+    citation: 82 F.4th 1262
+    court: cadc
+    year: 2023
+    layer: ancestor
+    source: courtlistener
+    note: Direct predecessor to the 3d Cir. UpCodes decision.
+
+modern:
+  # --- Tier A: the only three actual fair-use merits rulings that exist ---
+  - id: ross-2025
+    name: Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.
+    citation: 765 F. Supp. 3d 382
+    court: ded
+    year: 2025
+    date: 2025-02-11
+    judge: Bibas
+    layer: modern
+    source: url
+    url: https://www.ded.uscourts.gov/sites/ded/files/opinions/20-613_5.pdf
+    govinfo_package: USCOURTS-ded-1_20-cv-00613
+    note: |
+      Fair use REJECTED. Held 2,243 Westlaw headnotes protectable. Non-generative AI.
+      Thematically central: the proprietary editorial layer we deliberately exclude is
+      the very thing this case is about. 3d Cir. appeal argued 2026-06-11, undecided.
+
+  - id: bartz-2025
+    name: Bartz v. Anthropic PBC
+    docket: 3:24-cv-05417
+    court: cand
+    year: 2025
+    date: 2025-06-23
+    judge: Alsup
+    layer: modern
+    source: govinfo
+    govinfo_package: USCOURTS-cand-3_24-cv-05417
+    note: |
+      Training "exceedingly transformative" = fair use. Retention of ~7M pirated books
+      is NOT. Pairs with Kadrey (2 days later, opposite factor-4 reasoning).
+
+  - id: kadrey-2025
+    name: Kadrey v. Meta Platforms, Inc.
+    docket: 3:23-cv-03417
+    court: cand
+    year: 2025
+    date: 2025-06-25
+    judge: Chhabria
+    layer: modern
+    source: govinfo
+    govinfo_package: USCOURTS-cand-3_23-cv-03417
+    note: |
+      Fair use found, but ONLY because plaintiffs failed to build a market-dilution
+      record. Explicitly says most such cases should come out the other way.
+      THE contrast target against Bartz.
+
+  # --- Tier D: 2026, controlling ---
+  - id: cox-sony-2026
+    name: Cox Communications, Inc. v. Sony Music Entertainment
+    citation: 607 U.S. ___
+    court: scotus
+    year: 2026
+    date: 2026-03-25
+    judge: Thomas
+    layer: modern
+    source: url
+    url: https://www.supremecourt.gov/opinions/25pdf/24-171_bq7d.pdf
+    note: Narrows contributory liability. Now controlling for AI output-infringement theories.
+
+  - id: astm-upcodes-2026
+    name: American Society for Testing and Materials v. UpCodes, Inc.
+    court: ca3
+    year: 2026
+    date: 2026-04-07
+    layer: modern
+    source: url
+    url: https://www.lawnext.com/wp-content/uploads/2026/04/aastm_v_upcodes_3d_cir_op.pdf
+    note: 3d Cir. ordered supplemental briefing in Ross on this decision's effect. Live bridge.
+
+  # --- Tier B: adjacent doctrine (pleading, DMCA 1202, standing, secondary liability) ---
+  - id: nyt-openai-2025
+    name: The New York Times Co. v. Microsoft Corp. & OpenAI
+    docket: 1:23-cv-11195
+    court: nysd
+    year: 2025
+    date: 2025-04-04
+    judge: Stein
+    layer: modern
+    source: url
+    url: null   # TODO Phase 1: RECAP or court site. govinfo has ZERO granules for this docket.
+    note: |
+      COVERAGE GAP — SDNY does not feed this docket to GPO (verified: 0 granules).
+      Must come from RECAP or the court website.
+
+  - id: andersen-2024
+    name: Andersen v. Stability AI Ltd.
+    docket: 3:23-cv-00201
+    court: cand
+    year: 2024
+    date: 2024-08-12
+    judge: Orrick
+    layer: modern
+    source: govinfo
+    govinfo_package: USCOURTS-cand-3_23-cv-00201
+
+  - id: concord-anthropic-2025
+    name: Concord Music Group, Inc. v. Anthropic PBC
+    docket: 5:24-cv-03811
+    court: cand
+    year: 2025
+    judge: Lee
+    layer: modern
+    source: govinfo
+    note: |
+      THREE separate written opinions (PI denial 2025-03-25, MTD 2025-03-26, amended-MTD
+      denial Oct 2025). Good "same case, evolving reasoning" retrieval target — ingest
+      each order as its own document.
+
+  # --- The intra-SDNY 1202 split. Both required; the conflict is a golden-set item. ---
+  - id: raw-story-2024
+    name: Raw Story Media, Inc. v. OpenAI Inc.
+    court: nysd
+    year: 2024
+    date: 2024-11-07
+    judge: McMahon
+    layer: modern
+    source: url
+    url: null   # TODO Phase 1
+    note: DMCA 1202(b) dismissed for lack of Article III standing.
+
+  - id: intercept-2025
+    name: The Intercept Media, Inc. v. OpenAI, Inc.
+    court: nysd
+    year: 2025
+    date: 2025-02-20
+    judge: Rakoff
+    layer: modern
+    source: url
+    url: null   # TODO Phase 1
+    note: 1202(b)(1) allowed to proceed — DIRECTLY conflicts with Raw Story, same district.
+
+  - id: doe-github-2024
+    name: Doe v. GitHub, Inc.
+    court: cand
+    year: 2024
+    judge: Tigar
+    layer: modern
+    source: govinfo
+    note: 1202(b) dismissed on identicality. 9th Cir. No. 24-7700 argued 2026-02-11, pending.
+
+# Deliberately EXCLUDED — documented so the choice is legible on the methodology page.
+excluded:
+  - name: Getty Images v. Stability AI
+    reason: |
+      US action voluntarily dismissed in D. Del. Aug 2025 and refiled in N.D. Cal.; no US
+      merits opinion. The substantive ruling is UK High Court [2025] EWHC 2863 (Ch), which
+      does not cite US precedent and would pollute the citation graph.
+  - name: UMG / Concord v. Suno & Udio
+    reason: No merits opinion — resolved commercially (settlements Oct-Nov 2025).
+  - name: Disney & Universal v. Midjourney
+    reason: Discovery rulings only, no merits opinion.
