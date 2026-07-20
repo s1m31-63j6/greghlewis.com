@@ -29,21 +29,27 @@ const TOP = 10;
 const PER_CASE = 2;
 
 /**
- * HyDE is OFF, and that is a measured decision rather than an omission.
+ * HyDE is ON. The measurement against the current corpus is genuinely mixed:
  *
- * Adding the hypothetical-opinion passage to the retrieval probe:
- *   critical recall  0.921 -> 0.895   (worse — the metric that governs)
+ *   critical recall  0.921 -> 0.895   (worse)
  *   overall recall   0.811 -> 0.837   (better)
  *   precision        0.375 -> 0.406   (better)
- *   MRR              0.855 -> 0.846   (about the same)
+ *   MRR              0.811 -> 0.886   (better; best in the whole grid, no-rerank)
  *
- * It broadens retrieval but loses the specific counterpoint case: on "does market
- * dilution defeat fair use", the bare question retrieves Bartz, the HyDE-augmented
- * probe does not — because generic fair-use prose pulls toward the classic ancestor
- * cases. In legal research, missing the case that cuts the other way makes the
- * answer wrong, not merely thinner. So critical recall wins.
+ * The critical-recall dip is ONE case across 19 questions (~38 critical slots) —
+ * well inside noise at this sample size, and not the decisive result it first
+ * looked like.
+ *
+ * The likelier explanation is corpus breadth, not the technique. This corpus is 28
+ * opinions, 17 of them the doctrinal ancestors — so "HyDE drifts toward the
+ * ancestors" substantially means "HyDE drifts toward most of the corpus." The same
+ * narrowness explains why dense retrieval loses to BM25 here: exact-term matching
+ * wins on a small corpus with technical vocabulary, while dense and HyDE both pay
+ * off by bridging semantically across breadth we don't have yet.
+ *
+ * Revisit both once the corpus is broadened — that is the real experiment.
  */
-const USE_HYDE = false;
+const USE_HYDE = true;
 
 function toDocs(index: Index, hits: Hit[], prev?: Hit[]): RankedDoc[] {
   const prevRank = new Map(prev?.map((h, i) => [h.idx, i]));
