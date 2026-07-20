@@ -32,10 +32,18 @@ TARGET_TOKENS = 1000
 OVERLAP_TOKENS = 150
 MIN_TOKENS = 60  # below this a chunk is usually a stray heading
 
-# Part headings: a line that is just a roman numeral, or a roman numeral followed
-# by a short title. Subsections: a single capital letter, optionally titled.
-_PART = re.compile(r"^\s*(?:PART\s+)?([IVXL]{1,6})\.?\s*(.{0,70})?$", re.MULTILINE)
-_SUBPART = re.compile(r"^\s*([A-H])\.\s*(.{0,70})?$", re.MULTILINE)
+# Headings must be a numeral/letter ALONE on its line, optionally followed by a
+# short ALL-CAPS title. This is deliberately conservative.
+#
+# The permissive version of these patterns made the trailing period optional and
+# allowed any short title, which matched ordinary prose: "In 2016, petitioner..."
+# parsed as numeral "I" + title "n 2016, petitioner...", and "Lisa S. Blatt argued"
+# as "L" + "isa S. Blatt argued". Warhol alone produced 63 bogus "sections".
+# Requiring the period AND an uppercase-or-empty title kills that whole class.
+# Under-detecting a heading merely yields a larger chunk; mis-detecting one puts
+# nonsense in the section label shown in the UI.
+_PART = re.compile(r"^[ \t]*(?:PART[ \t]+)?([IVXL]{1,6})\.[ \t]*([A-Z][A-Z0-9 \-'&,]{2,60})?[ \t]*$", re.MULTILINE)
+_SUBPART = re.compile(r"^[ \t]*([A-H])\.[ \t]*([A-Z][A-Z0-9 \-'&,]{2,60})?[ \t]*$", re.MULTILINE)
 
 
 @dataclass

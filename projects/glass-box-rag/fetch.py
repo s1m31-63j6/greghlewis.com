@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import io
 import os
+import re
 import sys
 import time
 
@@ -116,9 +117,15 @@ def fetch_courtlistener(case: dict, client: httpx.Client) -> Opinion | None:
     headers = {"Authorization": f"Token {CL_TOKEN}"}
     want = case.get("citation")
 
+    # Punctuation-heavy names rank badly: querying the literal
+    # "Perfect 10, Inc. v. Amazon.com, Inc." pushed the real case off page one
+    # entirely (top hit was an unrelated Luvdarts case). Strip the legal furniture.
+    simple = re.sub(r"\b(Inc|Ltd|LLC|Co|Corp|v)\b\.?|[,\.]", " ", case["name"])
+    simple = " ".join(simple.split())
+
     r = client.get(
         f"{CL}/search/",
-        params={"q": case["name"], "type": "o", "court": case["court"]},
+        params={"q": simple, "type": "o", "court": case["court"]},
         headers=headers, timeout=90,
     )
     r.raise_for_status()

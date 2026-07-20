@@ -265,10 +265,12 @@ modern:
     judge: Lee
     layer: modern
     source: govinfo
+    govinfo_package: USCOURTS-cand-5_24-cv-03811   # verified: 15 granules
     note: |
       THREE separate written opinions (PI denial 2025-03-25, MTD 2025-03-26, amended-MTD
-      denial Oct 2025). Good "same case, evolving reasoning" retrieval target — ingest
-      each order as its own document.
+      denial Oct 2025). Good "same case, evolving reasoning" retrieval target. NOTE: the
+      fetcher's largest-granule heuristic only takes ONE of the three — ingesting all
+      three as separate documents is a TODO.
 
   # --- The intra-SDNY 1202 split. Both required; the conflict is a golden-set item. ---
   - id: raw-story-2024
@@ -308,6 +310,7 @@ modern:
     judge: Tigar
     layer: modern
     source: govinfo
+    govinfo_package: USCOURTS-cand-4_22-cv-06823   # verified: 4 granules (note 4_, not 3_)
     note: 1202(b) dismissed on identicality. 9th Cir. No. 24-7700 argued 2026-02-11, pending.
 
 # Deliberately EXCLUDED — documented so the choice is legible on the methodology page.
