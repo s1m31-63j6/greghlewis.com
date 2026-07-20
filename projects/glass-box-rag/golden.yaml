@@ -1,0 +1,130 @@
+# Golden Q&A set — ground truth for the evaluation harness.
+#
+# `gold` lists the opinions a competent lawyer would expect to see for the question.
+# `critical` is the subset that would make the answer WRONG if missed — usually the
+# case that is the direct counterpoint or the controlling authority. Recall on
+# `critical` is the metric that matters; overall recall is the softer one.
+#
+# These are doctrinal judgments, not facts. They are the foundation every metric
+# rests on, so they are worth arguing with. Reviewed by: (pending)
+
+questions:
+  # --- the two splits that make this corpus interesting ---
+  - id: market-dilution-split
+    q: Does market dilution from competing AI-generated works defeat fair use?
+    gold: [kadrey-2025, bartz-2025, warhol-2023, harper-row-1985, texaco-1995]
+    critical: [kadrey-2025, bartz-2025]
+    note: |
+      Decided two days apart on opposite reasoning. Retrieving only Kadrey gives a
+      confidently one-sided answer. This is the headline test.
+
+  - id: dmca-1202-standing
+    q: Does removing copyright management information from training data create Article III standing?
+    gold: [raw-story-2024, intercept-2025, doe-github-2024, andersen-2024]
+    critical: [raw-story-2024, intercept-2025]
+    note: Intra-SDNY split — Raw Story dismissed, Intercept allowed. Both required.
+
+  # --- core fair-use doctrine ---
+  - id: transformative-definition
+    q: What makes a secondary use transformative rather than derivative?
+    gold: [campbell-1994, warhol-2023, google-oracle-2021, authors-guild-google-2015]
+    critical: [campbell-1994, warhol-2023]
+
+  - id: commercial-purpose
+    q: How does sharing the same commercial purpose as the original affect the first fair use factor?
+    gold: [warhol-2023, campbell-1994, harper-row-1985]
+    critical: [warhol-2023]
+
+  - id: unpublished-work
+    q: Does using an unpublished work weigh against fair use?
+    gold: [harper-row-1985, campbell-1994]
+    critical: [harper-row-1985]
+
+  # --- the AI cases ---
+  - id: westlaw-headnotes
+    q: Are Westlaw headnotes protectable original expression?
+    gold: [ross-2025, feist-1991]
+    critical: [ross-2025]
+
+  - id: pirated-acquisition
+    q: Does acquiring training data from pirated sources defeat fair use even if the training itself is transformative?
+    gold: [bartz-2025, kadrey-2025]
+    critical: [bartz-2025]
+    note: Alsup split these two questions apart — training fine, retention not.
+
+  - id: llm-training-books
+    q: Is training a large language model on copyrighted books fair use?
+    gold: [bartz-2025, kadrey-2025, hathitrust-2014, authors-guild-google-2015]
+    critical: [bartz-2025, kadrey-2025]
+
+  - id: output-substantial-similarity
+    q: Can a generative model's outputs infringe when they reproduce protected expression?
+    gold: [nyt-openai-2025, concord-anthropic-2025, andersen-2024]
+    critical: [nyt-openai-2025]
+
+  # --- intermediate copying: the load-bearing pair ---
+  - id: intermediate-copying
+    q: Is copying an entire work as an intermediate step to reach unprotected functional elements fair use?
+    gold: [sega-accolade-1992, connectix-2000, google-oracle-2021]
+    critical: [sega-accolade-1992, connectix-2000]
+    note: Alsup, Chhabria, and Bibas all reason from this pair.
+
+  # --- secondary liability ---
+  - id: contributory-liability
+    q: When is a service provider contributorily liable for user infringement?
+    gold: [cox-sony-2026, sony-betamax-1984, napster-2001, concord-anthropic-2025]
+    critical: [cox-sony-2026]
+    note: Cox (2026) narrowed this and is now controlling. Missing it dates the answer.
+
+  - id: staple-article
+    q: Does a product with substantial non-infringing uses escape contributory liability?
+    gold: [sony-betamax-1984, cox-sony-2026, napster-2001]
+    critical: [sony-betamax-1984, cox-sony-2026]
+
+  # --- search, indexing, and snippets ---
+  - id: search-index-fair-use
+    q: Is building a full-text search index over copyrighted books fair use?
+    gold: [authors-guild-google-2015, hathitrust-2014, perfect10-2007, kelly-arriba-2003]
+    critical: [authors-guild-google-2015, hathitrust-2014]
+
+  - id: thumbnails
+    q: Are reduced-size image thumbnails in search results fair use?
+    gold: [kelly-arriba-2003, perfect10-2007]
+    critical: [kelly-arriba-2003, perfect10-2007]
+
+  # --- market harm ---
+  - id: licensing-market
+    q: Does the existence of a licensing market count as market harm under the fourth factor?
+    gold: [texaco-1995, hachette-2024, warhol-2023, tveyes-2018]
+    critical: [texaco-1995]
+
+  - id: controlled-digital-lending
+    q: Is scanning and lending one digital copy per owned physical book fair use?
+    gold: [hachette-2024, hathitrust-2014, authors-guild-google-2015]
+    critical: [hachette-2024]
+
+  # --- copyrightability limits ---
+  - id: facts-not-copyrightable
+    q: Are facts and data compilations protected by copyright?
+    gold: [feist-1991, ross-2025]
+    critical: [feist-1991]
+
+  - id: law-in-the-public-domain
+    q: Can privately drafted standards incorporated into law be freely copied?
+    gold: [astm-prorg-2023, astm-upcodes-2026]
+    critical: [astm-prorg-2023, astm-upcodes-2026]
+    note: |
+      The 3d Circuit ordered supplemental briefing in Ross on UpCodes' effect, so
+      these two are a live doctrinal bridge, not a side branch.
+
+  # --- temporal reasoning: a deliberate trap ---
+  - id: anachronism-check
+    q: As of the 2015 Authors Guild decision, what was the controlling test for transformative use?
+    gold: [campbell-1994, harper-row-1985, authors-guild-google-2015]
+    critical: [campbell-1994]
+    note: |
+      TRAP: Warhol (2023) is the most semantically similar answer but did not exist
+      yet. A system that cites it here is reasoning anachronistically. Scored by
+      whether warhol-2023 is ABSENT — see `forbidden`.
+    forbidden: [warhol-2023]
+    as_of: 2015
