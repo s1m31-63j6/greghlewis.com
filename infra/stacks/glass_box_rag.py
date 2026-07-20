@@ -40,6 +40,16 @@ class GlassBoxRagStack(Stack):
             code=lambda_.Code.from_asset(ORCHESTRATOR_DIR),
             memory_size=2048,  # the dense scan is a 759x1024 dot product per query
             timeout=Duration.minutes(5),
+            # NOTE: reserved concurrency would be the right spend ceiling here — each
+            # request costs roughly $0.04 in Sonnet tokens on a public endpoint — but
+            # this account's TOTAL Lambda concurrency quota is 10 (not the default
+            # 1000), and AWS refuses any reservation that would drop unreserved below
+            # 10. So it cannot be set until the quota is raised.
+            #
+            # Consequence worth knowing: this function shares that 10-slot pool with
+            # the Amplify SSR Lambda that serves the rest of greghlewis.com, so heavy
+            # traffic here can starve the whole site. Raising the quota and then
+            # reserving a small slice for this function is the fix.
             environment={
                 "GBRAG_AWS_ACCOUNT": account,
                 "GBRAG_DATA_DIR": "/var/task/data",

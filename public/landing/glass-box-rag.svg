@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 337" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Glass Box RAG preview">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FBFAF7"/>
+      <stop offset="1" stop-color="#EFEDE7"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="337" fill="url(#bg)"/>
+
+  <!-- Title block -->
+  <g font-family="Georgia, 'Source Serif 4', serif" fill="#1c1917">
+    <text x="40" y="84" font-size="38" font-weight="500">Glass Box</text>
+    <text x="40" y="126" font-size="38" font-weight="500">RAG</text>
+  </g>
+  <text x="40" y="154" font-family="Inter, Helvetica, Arial, sans-serif"
+        font-size="13" fill="#78716c">Legal precedent retrieval that shows its work</text>
+
+  <!-- Pipeline silhouette: two lanes converge, then narrow through rerank to an answer.
+       Readable as a shape at thumbnail size; the labels are detail for full size. -->
+  <g stroke="#a8a29e" fill="none" stroke-width="1.5">
+    <path d="M 42 224 H 148"/>
+    <path d="M 42 268 H 148"/>
+    <path d="M 148 224 C 176 224, 176 246, 202 246"/>
+    <path d="M 148 268 C 176 268, 176 246, 202 246"/>
+    <path d="M 246 246 H 292"/>
+    <path d="M 336 246 H 382"/>
+    <path d="M 430 246 H 476"/>
+  </g>
+
+  <g fill="#1c1917">
+    <circle cx="42" cy="224" r="4"/>
+    <circle cx="42" cy="268" r="4"/>
+  </g>
+
+  <g>
+    <rect x="202" y="232" width="44" height="28" rx="4" fill="#e7e5e4" stroke="#a8a29e" stroke-width="1"/>
+    <rect x="292" y="232" width="44" height="28" rx="4" fill="#d6d3d1" stroke="#78716c" stroke-width="1"/>
+    <rect x="382" y="232" width="48" height="28" rx="4" fill="#e7e5e4" stroke="#a8a29e" stroke-width="1"/>
+    <rect x="476" y="228" width="82" height="36" rx="4" fill="#1c1917"/>
+  </g>
+
+  <g font-family="Inter, Helvetica, Arial, sans-serif" font-size="9" fill="#57534e" text-anchor="middle">
+    <text x="95" y="218">BM25</text>
+    <text x="95" y="262">dense</text>
+    <text x="224" y="250">fuse</text>
+    <text x="314" y="250">rerank</text>
+    <text x="406" y="250">diversify</text>
+  </g>
+  <text x="517" y="250" font-family="Inter, Helvetica, Arial, sans-serif" font-size="10"
+        fill="#fafaf9" text-anchor="middle">answer</text>
+
+  <!-- Agentic hop: loops back to RETRIEVAL, not to fusion — a hop re-runs both
+       lanes against a new query, it does not just re-fuse the same candidates.
+       Routed below the lanes so it clears the title block. -->
+  <path d="M 406 262 C 406 306, 95 306, 95 274" stroke="#b45309" stroke-width="1.4"
+        fill="none" stroke-dasharray="4 3"/>
+  <text x="250" y="316" font-family="Inter, Helvetica, Arial, sans-serif" font-size="9"
+        fill="#b45309" text-anchor="middle">follow citation, retrieve again</text>
+
+  <text x="40" y="196" font-family="Inter, Helvetica, Arial, sans-serif" font-size="11" fill="#a8a29e">
+    28 opinions · 759 passages · measured, not asserted
+  </text>
+</svg>

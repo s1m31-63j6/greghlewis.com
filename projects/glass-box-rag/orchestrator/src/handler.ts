@@ -12,6 +12,7 @@
  */
 
 import { run } from "./pipeline.js";
+import { checkRateLimit, clientIp } from "./ratelimit.js";
 import type { StreamEvent } from "./events.js";
 
 declare const awslambda: {
@@ -66,6 +67,16 @@ export const handler = awslambda.streamifyResponse(
         send({ type: "error", message: "question too long" });
         return;
       }
+
+      const rl = checkRateLimit(clientIp(event));
+      if (!rl.allowed) {
+        send({
+          type: "error",
+          message: `Rate limit reached. Try again in about ${Math.ceil((rl.retryAfter ?? 60) / 60)} minute(s).`,
+        });
+        return;
+      }
+
       await run(q, send);
     } catch (e) {
       const message = e instanceof Error ? e.message : "unknown error";
