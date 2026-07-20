@@ -7,6 +7,7 @@ from stacks.nfl_comparables_data import DataStack
 from stacks.nfl_comparables_db import DbStack
 from stacks.nfl_comparables_hosting import HostingStack
 from stacks.nfl_comparables_kb import KbStack
+from stacks.glass_box_rag import GlassBoxRagStack
 from stacks.nfl_comparables_kb_db import KbDbStack
 
 app = cdk.App()
@@ -74,5 +75,18 @@ hosting_stack = HostingStack(
     account=env.account,
 )
 hosting_stack.add_dependency(kb_stack)
+
+# Glass Box RAG runs its own Lambda rather than the Amplify SSR route, because
+# Amplify buffers SSE and cuts the origin at ~30s — see the stack docstring.
+GlassBoxRagStack(
+    app,
+    "GlassBoxRag",
+    env=env,
+    description=(
+        "Glass Box RAG orchestrator Lambda + streaming Function URL "
+        "(legal precedent retrieval with a live pipeline trace)"
+    ),
+    allowed_origin="https://greghlewis.com",
+)
 
 app.synth()
