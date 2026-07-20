@@ -37,6 +37,15 @@ export async function GET() {
   return sseStream(120);
 }
 
-export async function POST() {
-  return sseStream(120);
+export async function POST(req: Request) {
+  // Duration is caller-controlled so we can distinguish "buffered but completes under the
+  // CDN timeout" from "genuinely streams incrementally".
+  let seconds = 120;
+  try {
+    const body = (await req.json()) as { seconds?: number };
+    if (typeof body?.seconds === "number") seconds = Math.min(Math.max(body.seconds, 1), 300);
+  } catch {
+    /* default */
+  }
+  return sseStream(seconds);
 }
