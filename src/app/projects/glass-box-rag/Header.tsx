@@ -18,6 +18,9 @@ export function Header() {
         <div>
           <h1 className="font-serif text-3xl leading-tight text-slate-900 sm:text-4xl">
             Glass Box RAG
+            <span className="mt-1 block font-serif text-lg font-normal text-slate-500 sm:text-xl">
+              AI Fair Use Legality
+            </span>
           </h1>
           <Link
             href="/projects/glass-box-rag/methodology"

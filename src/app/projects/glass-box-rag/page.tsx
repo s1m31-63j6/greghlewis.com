@@ -6,7 +6,7 @@ import { Header } from "./Header";
 import { ProjectShell } from "./ProjectShell";
 
 export const metadata: Metadata = {
-  title: "Glass Box RAG · Greg Lewis",
+  title: "Glass Box RAG — AI Fair Use Legality · Greg Lewis",
   description:
     "A legal precedent retrieval system that shows its work — hybrid search, cross-encoder reranking, and an agentic citation loop over published opinions on AI and copyright, rendered live as it runs.",
 };
