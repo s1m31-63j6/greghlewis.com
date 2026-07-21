@@ -3,8 +3,10 @@
 import { useState } from "react";
 
 import { CitationsTab } from "./CitationsTab";
+import { COPY, useLevel } from "./copy";
 import { EmbeddingTab } from "./EmbeddingTab";
 import { EvaluationTab } from "./EvaluationTab";
+import { Markdown } from "./Markdown";
 import { PipelineTab } from "./PipelineTab";
 import { useGlassBoxRag } from "./useGlassBoxRag";
 
@@ -21,6 +23,7 @@ type Tab = (typeof TABS)[number];
 export function ProjectShell({ functionUrl }: { functionUrl?: string }) {
   const [tab, setTab] = useState<Tab>("Pipeline");
   const [value, setValue] = useState("");
+  const level = useLevel();
   const { trace, busy, ask } = useGlassBoxRag(functionUrl);
 
   const submit = (q: string) => {
@@ -32,7 +35,7 @@ export function ProjectShell({ functionUrl }: { functionUrl?: string }) {
 
   if (!functionUrl) {
     return (
-      <div className="rounded-xl border border-amber-300 bg-amber-50 p-4 text-[13px] text-amber-900">
+      <div className="rounded-2xl border border-yellow-300 bg-yellow-50 p-4 text-[13px] text-yellow-800">
         The retrieval service isn&apos;t configured. Set{" "}
         <code>NEXT_PUBLIC_GLASS_BOX_RAG_FUNCTION_URL</code> and redeploy.
       </div>
@@ -54,13 +57,13 @@ export function ProjectShell({ functionUrl }: { functionUrl?: string }) {
             value={value}
             onChange={(e) => setValue(e.target.value)}
             placeholder="Ask about AI, copyright, and fair use…"
-            className="min-w-0 flex-1 rounded-md border border-stone-300 px-3 py-2 text-[14px] outline-none focus:border-stone-500"
+            className="min-w-0 flex-1 rounded-lg border border-slate-300 px-3 py-2 text-[14px] outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
             disabled={busy}
           />
           <button
             type="submit"
             disabled={busy || !value.trim()}
-            className="rounded-md bg-stone-900 px-4 py-2 text-[14px] text-white hover:bg-stone-700 disabled:opacity-40"
+            className="rounded-lg bg-blue-700 px-4 py-2 text-[14px] font-medium text-white shadow-sm transition hover:bg-blue-600 disabled:opacity-40"
           >
             {busy ? "Working…" : "Ask"}
           </button>
@@ -72,7 +75,7 @@ export function ProjectShell({ functionUrl }: { functionUrl?: string }) {
               <button
                 key={s}
                 onClick={() => submit(s)}
-                className="rounded-full border border-stone-200 px-2.5 py-1 text-left text-[11px] text-stone-600 hover:bg-stone-50"
+                className="rounded-full border border-slate-200 px-2.5 py-1 text-left text-[11px] text-slate-600 transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-700"
               >
                 {s}
               </button>
@@ -80,14 +83,8 @@ export function ProjectShell({ functionUrl }: { functionUrl?: string }) {
           </div>
         )}
 
-        <div className="min-h-[280px] rounded-xl border border-stone-200 bg-stone-50/50 p-4">
-          {!trace && (
-            <p className="text-[13px] text-stone-500">
-              Answers are grounded only in 28 published opinions on AI and copyright fair use.
-              Where the courts disagree — and on the central questions they do — the answer says
-              so rather than picking a side.
-            </p>
-          )}
+        <div className="min-h-[280px] rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+          {!trace && <p className="text-[13px] text-slate-500">{COPY.chatEmpty[level]}</p>}
 
           {trace?.error && (
             <p className="rounded border border-red-200 bg-red-50 p-2 text-[12px] text-red-800">
@@ -97,27 +94,27 @@ export function ProjectShell({ functionUrl }: { functionUrl?: string }) {
 
           {trace && (
             <>
-              <p className="text-[13px] font-medium text-stone-900">{trace.question}</p>
+              <p className="text-[13px] font-medium text-slate-900">{trace.question}</p>
               {trace.answer ? (
-                <div className="mt-3 whitespace-pre-wrap text-[13px] leading-relaxed text-stone-700">
-                  {trace.answer}
+                <div className="mt-3">
+                  <Markdown>{trace.answer}</Markdown>
                 </div>
               ) : (
-                <p className="mt-3 text-[12px] italic text-stone-400">
-                  {busy ? "Retrieving and reasoning — watch the pipeline →" : ""}
+                <p className="mt-3 text-[12px] italic text-slate-400">
+                  {busy ? COPY.chatWorking[level] : ""}
                 </p>
               )}
 
               {trace.citations.length > 0 && (
-                <div className="mt-4 border-t border-stone-200 pt-2">
-                  <p className="text-[10px] uppercase tracking-wider text-stone-500">
+                <div className="mt-4 border-t border-slate-200 pt-2">
+                  <p className="text-[10px] uppercase tracking-wider text-slate-500">
                     Opinions relied on
                   </p>
                   <ul className="mt-1 space-y-0.5">
                     {trace.citations.map((c) => (
-                      <li key={c.case_id} className="text-[11px] text-stone-600">
+                      <li key={c.case_id} className="text-[11px] text-slate-600">
                         {c.case_name}
-                        {c.citation && <span className="text-stone-400"> · {c.citation}</span>}
+                        {c.citation && <span className="text-slate-400"> · {c.citation}</span>}
                       </li>
                     ))}
                   </ul>
@@ -129,16 +126,16 @@ export function ProjectShell({ functionUrl }: { functionUrl?: string }) {
       </div>
 
       {/* right — the instrument panel */}
-      <div className="rounded-xl border border-stone-200 bg-white">
-        <div className="flex gap-1 border-b border-stone-200 p-2">
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <div className="flex gap-1 border-b border-slate-200 bg-slate-50/60 p-2">
           {TABS.map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className={`rounded px-2.5 py-1 text-[11px] ${
+              className={`rounded-lg px-2.5 py-1 text-[11px] transition ${
                 t === tab
-                  ? "bg-stone-900 text-white"
-                  : "text-stone-600 hover:bg-stone-100"
+                  ? "bg-blue-700 text-white shadow-sm"
+                  : "text-slate-600 hover:bg-white hover:text-blue-700"
               }`}
             >
               {t}

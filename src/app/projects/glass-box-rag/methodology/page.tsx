@@ -13,25 +13,25 @@ export default function Methodology() {
       <nav className="mb-8">
         <Link
           href="/projects/glass-box-rag"
-          className="text-xs uppercase tracking-wider text-stone-500 transition hover:text-stone-900"
+          className="text-xs uppercase tracking-wider text-slate-500 transition hover:text-slate-900"
         >
           ← Back to the demo
         </Link>
       </nav>
 
       <header className="mb-8">
-        <h1 className="font-serif text-3xl leading-tight text-stone-900 sm:text-4xl">
+        <h1 className="font-serif text-3xl leading-tight text-slate-900 sm:text-4xl">
           Methodology
         </h1>
-        <p className="mt-3 text-base leading-relaxed text-stone-600">
+        <p className="mt-3 text-base leading-relaxed text-slate-600">
           How the corpus was built, what each retrieval stage is worth when you actually
           measure it, and which parts of the design the measurements argued against.
         </p>
       </header>
 
-      <section className="space-y-8 text-[15px] leading-relaxed text-stone-700">
+      <section className="space-y-8 text-[15px] leading-relaxed text-slate-700">
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">1. The shape of the problem</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">1. The shape of the problem</h2>
           <p>
             Legal research has a failure mode that generic retrieval does not. If a system
             asked &ldquo;does market dilution defeat fair use?&rdquo; returns five passages that
@@ -46,7 +46,7 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">2. Building the corpus</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">2. Building the corpus</h2>
           <p>
             28 published opinions, ~415,000 words: the three decisions that have actually
             reached the merits on AI training and fair use, the adjacent rulings on pleading
@@ -81,7 +81,7 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">3. Retrieval, stage by stage</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">3. Retrieval, stage by stage</h2>
           <p>
             Every stage is a separate function so the evaluation harness can switch it off and
             price it. BM25 is written out rather than imported, and checked against{" "}
@@ -113,7 +113,7 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">4. What the measurements said</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">4. What the measurements said</h2>
           <p>
             Scored against a 19-question golden set with case-level ground truth. The headline
             metric is <strong>critical recall</strong> — the fraction of must-have cases
@@ -153,7 +153,7 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">
+          <h2 className="mb-2 font-serif text-xl text-slate-900">
             5. Query transformation, and a result still in dispute
           </h2>
           <p>
@@ -176,7 +176,7 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">
+          <h2 className="mb-2 font-serif text-xl text-slate-900">
             5b. A corpus that can grade itself is not a test
           </h2>
           <p>
@@ -207,7 +207,7 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">6. The agentic loop</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">6. The agentic loop</h2>
           <p>
             After retrieving, the model is asked a narrow question: is this enough, or does it
             turn on a precedent you have not been given? If the latter, it follows an edge in
@@ -224,7 +224,7 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">7. Why it runs where it runs</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">7. Why it runs where it runs</h2>
           <p>
             The pipeline runs in a dedicated Lambda behind a Function URL in{" "}
             <code>RESPONSE_STREAM</code> mode, not in the site&apos;s Next.js runtime. That was
@@ -243,7 +243,7 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">8. What is deliberately absent</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">8. What is deliberately absent</h2>
           <p>
             No Westlaw or Lexis headnotes, no Shepard&apos;s or KeyCite treatment signals. Those
             are proprietary editorial layers, and their absence is a real limitation: the
@@ -259,8 +259,8 @@ export default function Methodology() {
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-stone-900">9. Stack</h2>
-          <p className="text-[14px] text-stone-600">
+          <h2 className="mb-2 font-serif text-xl text-slate-900">9. Stack</h2>
+          <p className="text-[14px] text-slate-600">
             Python (uv) for the offline corpus and evaluation harness · TypeScript on AWS Lambda
             with a streaming Function URL · Amazon Bedrock — Claude Sonnet 4.6 for analysis,
             assessment, and synthesis; Titan Text Embeddings v2; Cohere Rerank 3.5 · hand-written

@@ -15,7 +15,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "glass-box-rag",
-    title: "Glass Box RAG",
+    title: "Glass Box RAG — Fair Use AI",
     date: "2026-07-20",
     oneLiner:
       "A legal precedent retrieval system that shows its work — ask about AI and copyright fair use, and watch the two searches race, the ranks reshuffle under fusion and again under a cross-encoder, and the agent decide whether to follow a citation.",
