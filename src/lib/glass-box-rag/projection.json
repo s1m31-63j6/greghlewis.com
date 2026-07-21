@@ -6,8 +6,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8318,
-  "y": -0.3125
+  "x": -0.5891,
+  "y": -0.3156
  },
  {
   "id": "andersen-2024::001",
@@ -16,8 +16,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7928,
-  "y": -0.3349
+  "x": -0.5558,
+  "y": -0.3256
  },
  {
   "id": "andersen-2024::002",
@@ -26,8 +26,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8015,
-  "y": -0.3561
+  "x": -0.5583,
+  "y": -0.3436
  },
  {
   "id": "andersen-2024::003",
@@ -36,8 +36,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7948,
-  "y": -0.3488
+  "x": -0.5544,
+  "y": -0.3363
  },
  {
   "id": "andersen-2024::004",
@@ -46,8 +46,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8119,
-  "y": -0.3074
+  "x": -0.5756,
+  "y": -0.3081
  },
  {
   "id": "andersen-2024::005",
@@ -56,8 +56,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8692,
-  "y": -0.2942
+  "x": -0.6369,
+  "y": -0.3012
  },
  {
   "id": "andersen-2024::006",
@@ -66,8 +66,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8055,
-  "y": -0.2923
+  "x": -0.5742,
+  "y": -0.2952
  },
  {
   "id": "andersen-2024::007",
@@ -76,8 +76,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7967,
-  "y": -0.2923
+  "x": -0.5676,
+  "y": -0.2931
  },
  {
   "id": "andersen-2024::008",
@@ -86,8 +86,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8251,
-  "y": -0.2657
+  "x": -0.5961,
+  "y": -0.2816
  },
  {
   "id": "andersen-2024::009",
@@ -96,8 +96,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8251,
-  "y": -0.2728
+  "x": -0.5945,
+  "y": -0.2868
  },
  {
   "id": "andersen-2024::010",
@@ -106,8 +106,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8326,
-  "y": -0.2403
+  "x": -0.6062,
+  "y": -0.2618
  },
  {
   "id": "andersen-2024::011",
@@ -116,8 +116,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8007,
-  "y": -0.2685
+  "x": -0.5784,
+  "y": -0.2769
  },
  {
   "id": "andersen-2024::012",
@@ -126,8 +126,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7827,
-  "y": -0.2541
+  "x": -0.5719,
+  "y": -0.2602
  },
  {
   "id": "andersen-2024::013",
@@ -136,8 +136,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7696,
-  "y": -0.3333
+  "x": -0.5385,
+  "y": -0.3194
  },
  {
   "id": "andersen-2024::014",
@@ -146,8 +146,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.771,
-  "y": -0.3161
+  "x": -0.5429,
+  "y": -0.3065
  },
  {
   "id": "andersen-2024::015",
@@ -156,8 +156,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7926,
-  "y": -0.3124
+  "x": -0.5601,
+  "y": -0.3079
  },
  {
   "id": "andersen-2024::016",
@@ -166,8 +166,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7841,
-  "y": -0.3145
+  "x": -0.5533,
+  "y": -0.3079
  },
  {
   "id": "andersen-2024::017",
@@ -176,8 +176,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7738,
-  "y": -0.3859
+  "x": -0.5306,
+  "y": -0.3603
  },
  {
   "id": "andersen-2024::018",
@@ -186,8 +186,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7643,
-  "y": -0.3991
+  "x": -0.5205,
+  "y": -0.3682
  },
  {
   "id": "andersen-2024::019",
@@ -196,8 +196,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7533,
-  "y": -0.4017
+  "x": -0.5113,
+  "y": -0.3673
  },
  {
   "id": "andersen-2024::020",
@@ -206,8 +206,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7618,
-  "y": -0.4214
+  "x": -0.5148,
+  "y": -0.3848
  },
  {
   "id": "andersen-2024::021",
@@ -216,8 +216,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7594,
-  "y": -0.4433
+  "x": -0.5091,
+  "y": -0.4014
  },
  {
   "id": "andersen-2024::022",
@@ -226,8 +226,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7571,
-  "y": -0.4414
+  "x": -0.5075,
+  "y": -0.3994
  },
  {
   "id": "andersen-2024::023",
@@ -236,8 +236,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7589,
-  "y": -0.4222
+  "x": -0.5123,
+  "y": -0.3849
  },
  {
   "id": "andersen-2024::024",
@@ -246,8 +246,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7354,
-  "y": -0.4055
+  "x": -0.4968,
+  "y": -0.3688
  },
  {
   "id": "andersen-2024::025",
@@ -256,8 +256,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.834,
-  "y": -0.3473
+  "x": -0.586,
+  "y": -0.3424
  },
  {
   "id": "andersen-2024::026",
@@ -266,8 +266,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8137,
-  "y": -0.3296
+  "x": -0.5728,
+  "y": -0.3262
  },
  {
   "id": "andersen-2024::027",
@@ -276,8 +276,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8443,
-  "y": -0.3498
+  "x": -0.5938,
+  "y": -0.3456
  },
  {
   "id": "andersen-2024::028",
@@ -286,8 +286,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8504,
-  "y": -0.3442
+  "x": -0.5997,
+  "y": -0.3419
  },
  {
   "id": "andersen-2024::029",
@@ -296,8 +296,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.856,
-  "y": -0.3594
+  "x": -0.6023,
+  "y": -0.3545
  },
  {
   "id": "astm-prorg-2023::000",
@@ -306,8 +306,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.2473,
-  "y": -0.4405
+  "x": 0.3587,
+  "y": -0.3726
  },
  {
   "id": "astm-prorg-2023::001",
@@ -316,8 +316,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.2456,
-  "y": -0.428
+  "x": 0.3552,
+  "y": -0.3632
  },
  {
   "id": "astm-prorg-2023::002",
@@ -326,8 +326,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.2288,
-  "y": -0.4377
+  "x": 0.3439,
+  "y": -0.3745
  },
  {
   "id": "astm-prorg-2023::003",
@@ -336,8 +336,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.2145,
-  "y": -0.4275
+  "x": 0.3313,
+  "y": -0.369
  },
  {
   "id": "astm-prorg-2023::004",
@@ -346,8 +346,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.2188,
-  "y": -0.414
+  "x": 0.3322,
+  "y": -0.3578
  },
  {
   "id": "astm-prorg-2023::005",
@@ -356,8 +356,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.231,
-  "y": -0.4175
+  "x": 0.3424,
+  "y": -0.3581
  },
  {
   "id": "astm-prorg-2023::006",
@@ -366,8 +366,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.2072,
-  "y": -0.4166
+  "x": 0.3235,
+  "y": -0.3618
  },
  {
   "id": "astm-prorg-2023::007",
@@ -376,8 +376,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.2065,
-  "y": -0.4403
+  "x": 0.3273,
+  "y": -0.3803
  },
  {
   "id": "astm-prorg-2023::008",
@@ -386,8 +386,8 @@
   "layer": "ancestor",
   "court": "cadc",
   "year": 2023,
-  "x": -0.1992,
-  "y": -0.4575
+  "x": 0.3248,
+  "y": -0.3949
  },
  {
   "id": "astm-upcodes-2026::000",
@@ -396,8 +396,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.288,
-  "y": -0.3747
+  "x": 0.373,
+  "y": -0.3074
  },
  {
   "id": "astm-upcodes-2026::001",
@@ -406,8 +406,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2734,
-  "y": -0.38
+  "x": 0.3649,
+  "y": -0.3166
  },
  {
   "id": "astm-upcodes-2026::002",
@@ -416,8 +416,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2829,
-  "y": -0.3835
+  "x": 0.3728,
+  "y": -0.3163
  },
  {
   "id": "astm-upcodes-2026::003",
@@ -426,8 +426,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": 0.2441,
-  "y": -0.1348
+  "x": -0.014,
+  "y": -0.168
  },
  {
   "id": "astm-upcodes-2026::004",
@@ -436,8 +436,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": 0.4271,
-  "y": -0.1406
+  "x": -0.2194,
+  "y": -0.1671
  },
  {
   "id": "astm-upcodes-2026::005",
@@ -446,8 +446,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2243,
-  "y": -0.2901
+  "x": 0.1123,
+  "y": -0.1123
  },
  {
   "id": "astm-upcodes-2026::006",
@@ -456,8 +456,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.1549,
-  "y": -0.1577
+  "x": 0.2579,
+  "y": -0.2068
  },
  {
   "id": "astm-upcodes-2026::007",
@@ -466,8 +466,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2827,
-  "y": -0.3536
+  "x": 0.3632,
+  "y": -0.2931
  },
  {
   "id": "astm-upcodes-2026::008",
@@ -476,8 +476,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2886,
-  "y": -0.3444
+  "x": 0.3647,
+  "y": -0.2841
  },
  {
   "id": "astm-upcodes-2026::009",
@@ -486,8 +486,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2739,
-  "y": -0.3365
+  "x": 0.3514,
+  "y": -0.2837
  },
  {
   "id": "astm-upcodes-2026::010",
@@ -496,8 +496,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2716,
-  "y": -0.3068
+  "x": 0.3371,
+  "y": -0.2644
  },
  {
   "id": "astm-upcodes-2026::011",
@@ -506,8 +506,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2656,
-  "y": -0.3217
+  "x": 0.3399,
+  "y": -0.2765
  },
  {
   "id": "astm-upcodes-2026::012",
@@ -516,8 +516,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2494,
-  "y": -0.3792
+  "x": 0.3486,
+  "y": -0.3247
  },
  {
   "id": "astm-upcodes-2026::013",
@@ -526,8 +526,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2304,
-  "y": -0.3791
+  "x": 0.3338,
+  "y": -0.3295
  },
  {
   "id": "astm-upcodes-2026::014",
@@ -536,8 +536,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2253,
-  "y": -0.3414
+  "x": 0.318,
+  "y": -0.3019
  },
  {
   "id": "astm-upcodes-2026::015",
@@ -546,8 +546,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2399,
-  "y": -0.3467
+  "x": 0.3303,
+  "y": -0.3033
  },
  {
   "id": "astm-upcodes-2026::016",
@@ -556,8 +556,8 @@
   "layer": "modern",
   "court": "ca3",
   "year": 2026,
-  "x": -0.2405,
-  "y": -0.3356
+  "x": 0.3308,
+  "y": -0.2983
  },
  {
   "id": "authors-guild-google-2015::000",
@@ -566,8 +566,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0881,
-  "y": -0.2026
+  "x": 0.0934,
+  "y": -0.2046
  },
  {
   "id": "authors-guild-google-2015::001",
@@ -576,8 +576,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0944,
-  "y": -0.1988
+  "x": 0.0889,
+  "y": -0.2008
  },
  {
   "id": "authors-guild-google-2015::002",
@@ -586,8 +586,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0997,
-  "y": -0.1898
+  "x": 0.0856,
+  "y": -0.1934
  },
  {
   "id": "authors-guild-google-2015::003",
@@ -596,8 +596,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.1235,
-  "y": -0.173
+  "x": 0.0677,
+  "y": -0.177
  },
  {
   "id": "authors-guild-google-2015::004",
@@ -606,8 +606,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": -0.1821,
-  "y": -0.1085
+  "x": 0.2574,
+  "y": 0.1379
  },
  {
   "id": "authors-guild-google-2015::005",
@@ -616,8 +616,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": -0.0448,
-  "y": -0.1605
+  "x": 0.1986,
+  "y": -0.1786
  },
  {
   "id": "authors-guild-google-2015::006",
@@ -626,8 +626,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0218,
-  "y": -0.1955
+  "x": 0.1448,
+  "y": -0.2046
  },
  {
   "id": "authors-guild-google-2015::007",
@@ -636,8 +636,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0209,
-  "y": -0.1768
+  "x": 0.1502,
+  "y": -0.1909
  },
  {
   "id": "authors-guild-google-2015::008",
@@ -646,8 +646,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": -0.5987,
-  "y": -0.1297
+  "x": 0.5316,
+  "y": -0.0366
  },
  {
   "id": "authors-guild-google-2015::009",
@@ -656,8 +656,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": -0.0454,
-  "y": -0.1789
+  "x": 0.1958,
+  "y": -0.1942
  },
  {
   "id": "authors-guild-google-2015::010",
@@ -666,8 +666,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0416,
-  "y": -0.1726
+  "x": 0.1341,
+  "y": -0.1859
  },
  {
   "id": "authors-guild-google-2015::011",
@@ -676,8 +676,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0531,
-  "y": -0.1563
+  "x": 0.1275,
+  "y": -0.1723
  },
  {
   "id": "authors-guild-google-2015::012",
@@ -686,8 +686,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0589,
-  "y": -0.1728
+  "x": 0.1202,
+  "y": -0.1845
  },
  {
   "id": "authors-guild-google-2015::013",
@@ -696,8 +696,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0589,
-  "y": -0.1877
+  "x": 0.1181,
+  "y": -0.1958
  },
  {
   "id": "authors-guild-google-2015::014",
@@ -706,8 +706,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0638,
-  "y": -0.2049
+  "x": 0.1122,
+  "y": -0.2085
  },
  {
   "id": "authors-guild-google-2015::015",
@@ -716,8 +716,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0834,
-  "y": -0.2231
+  "x": 0.0946,
+  "y": -0.221
  },
  {
   "id": "authors-guild-google-2015::016",
@@ -726,8 +726,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.0922,
-  "y": -0.2243
+  "x": 0.0876,
+  "y": -0.221
  },
  {
   "id": "authors-guild-google-2015::017",
@@ -736,8 +736,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.1254,
-  "y": -0.2068
+  "x": 0.0634,
+  "y": -0.2045
  },
  {
   "id": "authors-guild-google-2015::018",
@@ -746,8 +746,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": 0.133,
-  "y": -0.2182
+  "x": 0.0563,
+  "y": -0.213
  },
  {
   "id": "authors-guild-google-2015::019",
@@ -756,8 +756,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": -0.1381,
-  "y": -0.2204
+  "x": 0.4088,
+  "y": -0.1474
  },
  {
   "id": "authors-guild-google-2015::020",
@@ -766,8 +766,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": -0.1405,
-  "y": -0.2202
+  "x": 0.4099,
+  "y": -0.1464
  },
  {
   "id": "authors-guild-google-2015::021",
@@ -776,8 +776,248 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2015,
-  "x": -0.5445,
-  "y": 0.2661
+  "x": 0.414,
+  "y": 0.2492
+ },
+ {
+  "id": "barrows-2025::000",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9823,
+  "y": -0.1021
+ },
+ {
+  "id": "barrows-2025::001",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.96,
+  "y": -0.1559
+ },
+ {
+  "id": "barrows-2025::002",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9646,
+  "y": -0.1409
+ },
+ {
+  "id": "barrows-2025::003",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9653,
+  "y": -0.1009
+ },
+ {
+  "id": "barrows-2025::004",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.7084,
+  "y": -0.1782
+ },
+ {
+  "id": "barrows-2025::005",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.7178,
+  "y": -0.1905
+ },
+ {
+  "id": "barrows-2025::006",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9567,
+  "y": -0.0864
+ },
+ {
+  "id": "barrows-2025::007",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9312,
+  "y": -0.0714
+ },
+ {
+  "id": "barrows-2025::008",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.959,
+  "y": -0.1459
+ },
+ {
+  "id": "barrows-2025::009",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9738,
+  "y": -0.1442
+ },
+ {
+  "id": "barrows-2025::010",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9647,
+  "y": -0.1294
+ },
+ {
+  "id": "barrows-2025::011",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9538,
+  "y": -0.1405
+ },
+ {
+  "id": "barrows-2025::012",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9637,
+  "y": -0.0506
+ },
+ {
+  "id": "barrows-2025::013",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9634,
+  "y": -0.0564
+ },
+ {
+  "id": "barrows-2025::014",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9251,
+  "y": -0.0373
+ },
+ {
+  "id": "barrows-2025::015",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9718,
+  "y": -0.0733
+ },
+ {
+  "id": "barrows-2025::016",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9366,
+  "y": -0.0894
+ },
+ {
+  "id": "barrows-2025::017",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9046,
+  "y": -0.0874
+ },
+ {
+  "id": "barrows-2025::018",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9288,
+  "y": -0.107
+ },
+ {
+  "id": "barrows-2025::019",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -1.0,
+  "y": -0.1378
+ },
+ {
+  "id": "barrows-2025::020",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9202,
+  "y": -0.1088
+ },
+ {
+  "id": "barrows-2025::021",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9171,
+  "y": -0.1394
+ },
+ {
+  "id": "barrows-2025::022",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9477,
+  "y": -0.1199
+ },
+ {
+  "id": "barrows-2025::023",
+  "case_id": "barrows-2025",
+  "case_name": "Estate of Barrows v. Humana",
+  "layer": "modern",
+  "court": "kywd",
+  "year": 2025,
+  "x": -0.9373,
+  "y": -0.1195
  },
  {
   "id": "bartz-2025::000",
@@ -786,8 +1026,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3607,
-  "y": -0.3003
+  "x": -0.149,
+  "y": -0.2865
  },
  {
   "id": "bartz-2025::001",
@@ -796,8 +1036,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.336,
-  "y": -0.2802
+  "x": -0.1316,
+  "y": -0.2686
  },
  {
   "id": "bartz-2025::002",
@@ -806,8 +1046,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3485,
-  "y": -0.2875
+  "x": -0.1403,
+  "y": -0.2759
  },
  {
   "id": "bartz-2025::003",
@@ -816,8 +1056,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.352,
-  "y": -0.3197
+  "x": -0.14,
+  "y": -0.3013
  },
  {
   "id": "bartz-2025::004",
@@ -826,8 +1066,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3721,
-  "y": -0.3335
+  "x": -0.1542,
+  "y": -0.3142
  },
  {
   "id": "bartz-2025::005",
@@ -836,8 +1076,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3589,
-  "y": -0.3421
+  "x": -0.1428,
+  "y": -0.3194
  },
  {
   "id": "bartz-2025::006",
@@ -846,8 +1086,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3367,
-  "y": -0.3041
+  "x": -0.1293,
+  "y": -0.2881
  },
  {
   "id": "bartz-2025::007",
@@ -856,8 +1096,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3213,
-  "y": -0.3289
+  "x": -0.1147,
+  "y": -0.305
  },
  {
   "id": "bartz-2025::008",
@@ -866,8 +1106,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2716,
-  "y": -0.2284
+  "x": -0.0872,
+  "y": -0.2195
  },
  {
   "id": "bartz-2025::009",
@@ -876,8 +1116,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3381,
-  "y": -0.3422
+  "x": -0.1263,
+  "y": -0.3176
  },
  {
   "id": "bartz-2025::010",
@@ -886,8 +1126,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3729,
-  "y": -0.3492
+  "x": -0.1526,
+  "y": -0.3268
  },
  {
   "id": "bartz-2025::011",
@@ -896,8 +1136,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3579,
-  "y": -0.374
+  "x": -0.1384,
+  "y": -0.344
  },
  {
   "id": "bartz-2025::012",
@@ -906,8 +1146,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3193,
-  "y": -0.3109
+  "x": -0.1149,
+  "y": -0.2904
  },
  {
   "id": "bartz-2025::013",
@@ -916,8 +1156,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2734,
-  "y": -0.2867
+  "x": -0.0813,
+  "y": -0.2666
  },
  {
   "id": "bartz-2025::014",
@@ -926,8 +1166,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2903,
-  "y": -0.2772
+  "x": -0.0956,
+  "y": -0.2607
  },
  {
   "id": "bartz-2025::015",
@@ -936,8 +1176,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2589,
-  "y": -0.2954
+  "x": -0.0696,
+  "y": -0.2727
  },
  {
   "id": "bartz-2025::016",
@@ -946,8 +1186,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2978,
-  "y": -0.3018
+  "x": -0.0993,
+  "y": -0.2809
  },
  {
   "id": "bartz-2025::017",
@@ -956,8 +1196,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3103,
-  "y": -0.2947
+  "x": -0.1099,
+  "y": -0.2767
  },
  {
   "id": "bartz-2025::018",
@@ -966,8 +1206,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2765,
-  "y": -0.2662
+  "x": -0.0864,
+  "y": -0.2504
  },
  {
   "id": "bartz-2025::019",
@@ -976,8 +1216,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2849,
-  "y": -0.2395
+  "x": -0.096,
+  "y": -0.2304
  },
  {
   "id": "bartz-2025::020",
@@ -986,8 +1226,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3124,
-  "y": -0.2595
+  "x": -0.1161,
+  "y": -0.2493
  },
  {
   "id": "bartz-2025::021",
@@ -996,8 +1236,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3099,
-  "y": -0.2445
+  "x": -0.1163,
+  "y": -0.237
  },
  {
   "id": "bartz-2025::022",
@@ -1006,8 +1246,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2429,
-  "y": -0.3385
+  "x": -0.0532,
+  "y": -0.3053
  },
  {
   "id": "bartz-2025::023",
@@ -1016,8 +1256,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3056,
-  "y": -0.3793
+  "x": -0.0969,
+  "y": -0.3431
  },
  {
   "id": "bartz-2025::024",
@@ -1026,8 +1266,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3132,
-  "y": -0.3496
+  "x": -0.1056,
+  "y": -0.32
  },
  {
   "id": "bartz-2025::025",
@@ -1036,8 +1276,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2636,
-  "y": -0.3268
+  "x": -0.0701,
+  "y": -0.2981
  },
  {
   "id": "bartz-2025::026",
@@ -1046,8 +1286,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3466,
-  "y": -0.3583
+  "x": -0.1311,
+  "y": -0.3308
  },
  {
   "id": "bartz-2025::027",
@@ -1056,8 +1296,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2815,
-  "y": -0.3145
+  "x": -0.0852,
+  "y": -0.2892
  },
  {
   "id": "bartz-2025::028",
@@ -1066,8 +1306,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.296,
-  "y": -0.3227
+  "x": -0.0955,
+  "y": -0.2975
  },
  {
   "id": "bartz-2025::029",
@@ -1076,8 +1316,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3091,
-  "y": -0.3145
+  "x": -0.1065,
+  "y": -0.2923
  },
  {
   "id": "campbell-1994::000",
@@ -1086,8 +1326,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.738,
-  "y": -0.1415
+  "x": 0.6203,
+  "y": 0.0356
  },
  {
   "id": "campbell-1994::001",
@@ -1096,8 +1336,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7156,
-  "y": -0.1367
+  "x": 0.6291,
+  "y": 0.0212
  },
  {
   "id": "campbell-1994::002",
@@ -1106,8 +1346,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.3031,
-  "y": 0.4383
+  "x": 0.27,
+  "y": 0.3298
  },
  {
   "id": "campbell-1994::003",
@@ -1116,8 +1356,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6934,
-  "y": -0.0209
+  "x": 0.6338,
+  "y": -0.0673
  },
  {
   "id": "campbell-1994::004",
@@ -1126,8 +1366,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7158,
-  "y": -0.0687
+  "x": 0.6291,
+  "y": -0.022
  },
  {
   "id": "campbell-1994::005",
@@ -1136,8 +1376,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6604,
-  "y": -0.1098
+  "x": 0.5822,
+  "y": -0.0237
  },
  {
   "id": "campbell-1994::006",
@@ -1146,8 +1386,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6145,
-  "y": -0.1136
+  "x": 0.5492,
+  "y": -0.038
  },
  {
   "id": "campbell-1994::007",
@@ -1156,8 +1396,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6772,
-  "y": -0.0752
+  "x": 0.6077,
+  "y": -0.0341
  },
  {
   "id": "campbell-1994::008",
@@ -1166,8 +1406,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6947,
-  "y": -0.0937
+  "x": 0.6078,
+  "y": -0.0134
  },
  {
   "id": "campbell-1994::009",
@@ -1176,8 +1416,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7518,
-  "y": -0.0867
+  "x": 0.5782,
+  "y": 0.0059
  },
  {
   "id": "campbell-1994::010",
@@ -1186,8 +1426,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7434,
-  "y": -0.1174
+  "x": 0.6036,
+  "y": 0.0228
  },
  {
   "id": "campbell-1994::011",
@@ -1196,8 +1436,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7579,
-  "y": -0.1564
+  "x": 0.6184,
+  "y": 0.0549
  },
  {
   "id": "campbell-1994::012",
@@ -1206,8 +1446,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6666,
-  "y": -0.0404
+  "x": 0.6092,
+  "y": -0.0611
  },
  {
   "id": "campbell-1994::013",
@@ -1216,8 +1456,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.696,
-  "y": -0.0577
+  "x": 0.6299,
+  "y": -0.0366
  },
  {
   "id": "campbell-1994::014",
@@ -1226,8 +1466,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7369,
-  "y": -0.1299
+  "x": 0.6142,
+  "y": 0.029
  },
  {
   "id": "campbell-1994::015",
@@ -1236,8 +1476,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7129,
-  "y": -0.1251
+  "x": 0.6227,
+  "y": 0.0127
  },
  {
   "id": "campbell-1994::016",
@@ -1246,8 +1486,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7158,
-  "y": -0.1487
+  "x": 0.637,
+  "y": 0.0296
  },
  {
   "id": "campbell-1994::017",
@@ -1256,8 +1496,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.1483,
-  "y": -0.1332
+  "x": 0.2456,
+  "y": -0.1919
  },
  {
   "id": "campbell-1994::018",
@@ -1266,8 +1506,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7116,
-  "y": -0.0233
+  "x": 0.6467,
+  "y": -0.0586
  },
  {
   "id": "campbell-1994::019",
@@ -1276,8 +1516,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7115,
-  "y": -0.0762
+  "x": 0.6367,
+  "y": -0.0187
  },
  {
   "id": "campbell-1994::020",
@@ -1286,8 +1526,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6153,
-  "y": -0.1189
+  "x": 0.5472,
+  "y": -0.0342
  },
  {
   "id": "campbell-1994::021",
@@ -1296,8 +1536,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6673,
-  "y": -0.0744
+  "x": 0.601,
+  "y": -0.0388
  },
  {
   "id": "campbell-1994::022",
@@ -1306,8 +1546,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6785,
-  "y": -0.0901
+  "x": 0.6064,
+  "y": -0.0235
  },
  {
   "id": "campbell-1994::023",
@@ -1316,8 +1556,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7031,
-  "y": -0.0958
+  "x": 0.6047,
+  "y": -0.0088
  },
  {
   "id": "campbell-1994::024",
@@ -1326,8 +1566,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7613,
-  "y": -0.0702
+  "x": 0.5684,
+  "y": 0.0072
  },
  {
   "id": "campbell-1994::025",
@@ -1336,8 +1576,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7539,
-  "y": -0.1163
+  "x": 0.5966,
+  "y": 0.0271
  },
  {
   "id": "campbell-1994::026",
@@ -1346,8 +1586,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.734,
-  "y": -0.0274
+  "x": 0.6616,
+  "y": -0.0443
  },
  {
   "id": "campbell-1994::027",
@@ -1356,8 +1596,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6936,
-  "y": -0.0325
+  "x": 0.6289,
+  "y": -0.0561
  },
  {
   "id": "campbell-1994::028",
@@ -1366,8 +1606,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6943,
-  "y": -0.1316
+  "x": 0.6386,
+  "y": 0.0084
  },
  {
   "id": "campbell-1994::029",
@@ -1376,8 +1616,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6657,
-  "y": -0.0399
+  "x": 0.609,
+  "y": -0.0624
  },
  {
   "id": "campbell-1994::030",
@@ -1386,8 +1626,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7003,
-  "y": -0.0547
+  "x": 0.6382,
+  "y": -0.0357
  },
  {
   "id": "campbell-1994::031",
@@ -1396,8 +1636,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.7172,
-  "y": -0.0368
+  "x": 0.6435,
+  "y": -0.0507
  },
  {
   "id": "campbell-1994::032",
@@ -1406,8 +1646,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.694,
-  "y": -0.0344
+  "x": 0.628,
+  "y": -0.0545
  },
  {
   "id": "campbell-1994::033",
@@ -1416,8 +1656,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1994,
-  "x": -0.6831,
-  "y": -0.1258
+  "x": 0.6475,
+  "y": 0.0001
  },
  {
   "id": "concord-anthropic-2025::000",
@@ -1426,8 +1666,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4437,
-  "y": -0.3406
+  "x": -0.2078,
+  "y": -0.3297
  },
  {
   "id": "concord-anthropic-2025::001",
@@ -1436,8 +1676,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4256,
-  "y": -0.329
+  "x": -0.1958,
+  "y": -0.318
  },
  {
   "id": "concord-anthropic-2025::002",
@@ -1446,8 +1686,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4097,
-  "y": -0.3061
+  "x": -0.1862,
+  "y": -0.2982
  },
  {
   "id": "concord-anthropic-2025::003",
@@ -1456,8 +1696,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4361,
-  "y": -0.1555
+  "x": -0.2217,
+  "y": -0.1836
  },
  {
   "id": "concord-anthropic-2025::004",
@@ -1466,8 +1706,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4179,
-  "y": -0.3143
+  "x": -0.1915,
+  "y": -0.3056
  },
  {
   "id": "concord-anthropic-2025::005",
@@ -1476,8 +1716,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4158,
-  "y": -0.2801
+  "x": -0.1945,
+  "y": -0.2791
  },
  {
   "id": "concord-anthropic-2025::006",
@@ -1486,8 +1726,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4425,
-  "y": -0.2575
+  "x": -0.218,
+  "y": -0.2651
  },
  {
   "id": "concord-anthropic-2025::007",
@@ -1496,8 +1736,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4461,
-  "y": -0.3045
+  "x": -0.2152,
+  "y": -0.3022
  },
  {
   "id": "concord-anthropic-2025::008",
@@ -1506,8 +1746,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4694,
-  "y": -0.2838
+  "x": -0.2358,
+  "y": -0.2888
  },
  {
   "id": "concord-anthropic-2025::009",
@@ -1516,8 +1756,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4424,
-  "y": -0.296
+  "x": -0.2133,
+  "y": -0.295
  },
  {
   "id": "concord-anthropic-2025::010",
@@ -1526,8 +1766,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4296,
-  "y": -0.2961
+  "x": -0.2032,
+  "y": -0.2933
  },
  {
   "id": "concord-anthropic-2025::011",
@@ -1536,8 +1776,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4414,
-  "y": -0.2846
+  "x": -0.2138,
+  "y": -0.2858
  },
  {
   "id": "concord-anthropic-2025::012",
@@ -1546,8 +1786,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.4421,
-  "y": -0.2463
+  "x": -0.2196,
+  "y": -0.2563
  },
  {
   "id": "connectix-2000::000",
@@ -1556,8 +1796,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": -0.0012,
-  "y": 0.2927
+  "x": -0.2293,
+  "y": 0.1581
  },
  {
   "id": "connectix-2000::001",
@@ -1566,8 +1806,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": -0.0073,
-  "y": 0.3108
+  "x": -0.2284,
+  "y": 0.1711
  },
  {
   "id": "connectix-2000::002",
@@ -1576,8 +1816,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0513,
-  "y": 0.2686
+  "x": -0.2407,
+  "y": 0.1151
  },
  {
   "id": "connectix-2000::003",
@@ -1586,8 +1826,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.036,
-  "y": 0.2902
+  "x": -0.2428,
+  "y": 0.1369
  },
  {
   "id": "connectix-2000::004",
@@ -1596,8 +1836,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0013,
-  "y": 0.2942
+  "x": -0.2192,
+  "y": 0.1597
  },
  {
   "id": "connectix-2000::005",
@@ -1606,8 +1846,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0464,
-  "y": 0.2276
+  "x": -0.2199,
+  "y": 0.09
  },
  {
   "id": "connectix-2000::006",
@@ -1616,8 +1856,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0343,
-  "y": 0.2659
+  "x": -0.2296,
+  "y": 0.1225
  },
  {
   "id": "connectix-2000::007",
@@ -1626,8 +1866,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0191,
-  "y": 0.2696
+  "x": -0.222,
+  "y": 0.1333
  },
  {
   "id": "connectix-2000::008",
@@ -1636,8 +1876,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": -0.0298,
-  "y": 0.2947
+  "x": -0.2459,
+  "y": 0.1722
  },
  {
   "id": "connectix-2000::009",
@@ -1646,8 +1886,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": -0.0348,
-  "y": 0.3004
+  "x": -0.2468,
+  "y": 0.1785
  },
  {
   "id": "connectix-2000::010",
@@ -1656,8 +1896,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0077,
-  "y": 0.2443
+  "x": -0.2041,
+  "y": 0.1228
  },
  {
   "id": "connectix-2000::011",
@@ -1666,8 +1906,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0052,
-  "y": 0.3226
+  "x": -0.2207,
+  "y": 0.1807
  },
  {
   "id": "connectix-2000::012",
@@ -1676,8 +1916,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0138,
-  "y": 0.296
+  "x": -0.2275,
+  "y": 0.1509
  },
  {
   "id": "connectix-2000::013",
@@ -1686,8 +1926,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": 0.0192,
-  "y": 0.2638
+  "x": -0.2208,
+  "y": 0.1295
  },
  {
   "id": "connectix-2000::014",
@@ -1696,8 +1936,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2000,
-  "x": -0.0082,
-  "y": 0.2712
+  "x": -0.2068,
+  "y": 0.1504
  },
  {
   "id": "cox-sony-2026::000",
@@ -1706,8 +1946,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4355,
-  "y": 0.529
+  "x": -0.3374,
+  "y": 0.4939
  },
  {
   "id": "cox-sony-2026::001",
@@ -1716,8 +1956,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4148,
-  "y": 0.5132
+  "x": -0.3236,
+  "y": 0.4787
  },
  {
   "id": "cox-sony-2026::002",
@@ -1726,8 +1966,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4569,
-  "y": 0.5055
+  "x": -0.3577,
+  "y": 0.4795
  },
  {
   "id": "cox-sony-2026::003",
@@ -1736,8 +1976,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4462,
-  "y": 0.5159
+  "x": -0.3476,
+  "y": 0.4858
  },
  {
   "id": "cox-sony-2026::004",
@@ -1746,8 +1986,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4468,
-  "y": 0.5414
+  "x": -0.3446,
+  "y": 0.5056
  },
  {
   "id": "cox-sony-2026::005",
@@ -1756,8 +1996,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4287,
-  "y": 0.5244
+  "x": -0.3326,
+  "y": 0.4893
  },
  {
   "id": "cox-sony-2026::006",
@@ -1766,8 +2006,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4276,
-  "y": 0.5425
+  "x": -0.3299,
+  "y": 0.5035
  },
  {
   "id": "cox-sony-2026::007",
@@ -1776,8 +2016,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4536,
-  "y": 0.5262
+  "x": -0.3522,
+  "y": 0.4949
  },
  {
   "id": "cox-sony-2026::008",
@@ -1786,8 +2026,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4381,
-  "y": 0.5124
+  "x": -0.3421,
+  "y": 0.4812
  },
  {
   "id": "cox-sony-2026::009",
@@ -1796,8 +2036,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4217,
-  "y": 0.5028
+  "x": -0.3305,
+  "y": 0.4716
  },
  {
   "id": "cox-sony-2026::010",
@@ -1806,8 +2046,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4408,
-  "y": 0.4936
+  "x": -0.3477,
+  "y": 0.4675
  },
  {
   "id": "cox-sony-2026::011",
@@ -1816,8 +2056,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.475,
-  "y": 0.5176
+  "x": -0.3699,
+  "y": 0.4914
  },
  {
   "id": "cox-sony-2026::012",
@@ -1826,8 +2066,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.498,
-  "y": 0.5403
+  "x": -0.3851,
+  "y": 0.5123
  },
  {
   "id": "cox-sony-2026::013",
@@ -1836,8 +2076,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.4801,
-  "y": 0.5391
+  "x": -0.3713,
+  "y": 0.5086
  },
  {
   "id": "cox-sony-2026::014",
@@ -1846,8 +2086,8 @@
   "layer": "modern",
   "court": "scotus",
   "year": 2026,
-  "x": 0.462,
-  "y": 0.5457
+  "x": -0.3558,
+  "y": 0.5113
  },
  {
   "id": "doe-github-2024::000",
@@ -1856,8 +2096,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.9024,
-  "y": -0.2082
+  "x": -0.5987,
+  "y": -0.1656
  },
  {
   "id": "doe-github-2024::001",
@@ -1866,8 +2106,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8857,
-  "y": -0.1891
+  "x": -0.6161,
+  "y": -0.1706
  },
  {
   "id": "doe-github-2024::002",
@@ -1876,8 +2116,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8889,
-  "y": -0.1939
+  "x": -0.6144,
+  "y": -0.1704
  },
  {
   "id": "doe-github-2024::003",
@@ -1886,8 +2126,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8391,
-  "y": -0.1431
+  "x": -0.7,
+  "y": -0.1698
  },
  {
   "id": "doe-github-2024::004",
@@ -1896,8 +2136,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8899,
-  "y": -0.1572
+  "x": -0.6365,
+  "y": -0.1552
  },
  {
   "id": "doe-github-2024::005",
@@ -1906,8 +2146,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.9057,
-  "y": -0.151
+  "x": -0.6473,
+  "y": -0.1502
  },
  {
   "id": "doe-github-2024::006",
@@ -1916,8 +2156,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8893,
-  "y": -0.1726
+  "x": -0.6277,
+  "y": -0.1626
  },
  {
   "id": "doe-github-2024::007",
@@ -1926,8 +2166,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8493,
-  "y": -0.1732
+  "x": -0.6116,
+  "y": -0.1951
  },
  {
   "id": "doe-github-2024::008",
@@ -1936,8 +2176,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7612,
-  "y": -0.1958
+  "x": -0.5757,
+  "y": -0.2122
  },
  {
   "id": "doe-github-2024::009",
@@ -1946,8 +2186,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7617,
-  "y": -0.1967
+  "x": -0.5753,
+  "y": -0.2133
  },
  {
   "id": "doe-github-2024::010",
@@ -1956,8 +2196,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7523,
-  "y": -0.2195
+  "x": -0.5629,
+  "y": -0.2272
  },
  {
   "id": "doe-github-2024::011",
@@ -1966,8 +2206,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.7612,
-  "y": -0.2103
+  "x": -0.5729,
+  "y": -0.2221
  },
  {
   "id": "doe-github-2024::012",
@@ -1976,8 +2216,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.82,
-  "y": -0.1809
+  "x": -0.6169,
+  "y": -0.2164
  },
  {
   "id": "doe-github-2024::013",
@@ -1986,8 +2226,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.821,
-  "y": -0.1864
+  "x": -0.6168,
+  "y": -0.2224
  },
  {
   "id": "doe-github-2024::014",
@@ -1996,8 +2236,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2024,
-  "x": 0.8213,
-  "y": -0.1654
+  "x": -0.629,
+  "y": -0.2133
  },
  {
   "id": "feist-1991::000",
@@ -2006,8 +2246,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4586,
-  "y": 0.1905
+  "x": 0.2538,
+  "y": 0.573
  },
  {
   "id": "feist-1991::001",
@@ -2016,8 +2256,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4635,
-  "y": 0.2643
+  "x": 0.2749,
+  "y": 0.5085
  },
  {
   "id": "feist-1991::002",
@@ -2026,8 +2266,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4616,
-  "y": 0.255
+  "x": 0.2689,
+  "y": 0.5015
  },
  {
   "id": "feist-1991::003",
@@ -2036,8 +2276,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.472,
-  "y": 0.2797
+  "x": 0.2865,
+  "y": 0.5074
  },
  {
   "id": "feist-1991::004",
@@ -2046,8 +2286,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4455,
-  "y": 0.2632
+  "x": 0.2624,
+  "y": 0.5122
  },
  {
   "id": "feist-1991::005",
@@ -2056,8 +2296,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4225,
-  "y": 0.265
+  "x": 0.2462,
+  "y": 0.5159
  },
  {
   "id": "feist-1991::006",
@@ -2066,8 +2306,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4177,
-  "y": 0.2527
+  "x": 0.2373,
+  "y": 0.5117
  },
  {
   "id": "feist-1991::007",
@@ -2076,8 +2316,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4574,
-  "y": 0.2842
+  "x": 0.2822,
+  "y": 0.5228
  },
  {
   "id": "feist-1991::008",
@@ -2086,8 +2326,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4536,
-  "y": 0.2743
+  "x": 0.2743,
+  "y": 0.5198
  },
  {
   "id": "feist-1991::009",
@@ -2096,8 +2336,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.433,
-  "y": 0.2454
+  "x": 0.2496,
+  "y": 0.5259
  },
  {
   "id": "feist-1991::010",
@@ -2106,8 +2346,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4586,
-  "y": 0.2032
+  "x": 0.2564,
+  "y": 0.5642
  },
  {
   "id": "feist-1991::011",
@@ -2116,8 +2356,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1991,
-  "x": -0.4595,
-  "y": 0.1991
+  "x": 0.2562,
+  "y": 0.5671
  },
  {
   "id": "google-oracle-2021::000",
@@ -2126,8 +2366,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1126,
-  "y": -0.8131
+  "x": 0.2344,
+  "y": -0.6981
  },
  {
   "id": "google-oracle-2021::001",
@@ -2136,8 +2376,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.0994,
-  "y": -0.7368
+  "x": 0.2232,
+  "y": -0.6377
  },
  {
   "id": "google-oracle-2021::002",
@@ -2146,8 +2386,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1046,
-  "y": -0.7772
+  "x": 0.228,
+  "y": -0.6693
  },
  {
   "id": "google-oracle-2021::003",
@@ -2156,8 +2396,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1082,
-  "y": -0.8289
+  "x": 0.231,
+  "y": -0.7106
  },
  {
   "id": "google-oracle-2021::004",
@@ -2166,8 +2406,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1239,
-  "y": -0.8468
+  "x": 0.2443,
+  "y": -0.7246
  },
  {
   "id": "google-oracle-2021::005",
@@ -2176,8 +2416,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1694,
-  "y": -0.8331
+  "x": 0.2792,
+  "y": -0.7134
  },
  {
   "id": "google-oracle-2021::006",
@@ -2186,8 +2426,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1806,
-  "y": -0.8254
+  "x": 0.2882,
+  "y": -0.707
  },
  {
   "id": "google-oracle-2021::007",
@@ -2196,8 +2436,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1355,
-  "y": -0.8262
+  "x": 0.2529,
+  "y": -0.7079
  },
  {
   "id": "google-oracle-2021::008",
@@ -2206,8 +2446,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1277,
-  "y": -0.7981
+  "x": 0.2466,
+  "y": -0.686
  },
  {
   "id": "google-oracle-2021::009",
@@ -2216,8 +2456,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.339,
-  "y": 0.3595
+  "x": 0.2515,
+  "y": 0.3715
  },
  {
   "id": "google-oracle-2021::010",
@@ -2226,8 +2466,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1096,
-  "y": -0.7514
+  "x": 0.2317,
+  "y": -0.649
  },
  {
   "id": "google-oracle-2021::011",
@@ -2236,8 +2476,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": 0.0133,
-  "y": 0.1678
+  "x": -0.1698,
+  "y": 0.0623
  },
  {
   "id": "google-oracle-2021::012",
@@ -2246,8 +2486,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1291,
-  "y": -0.7331
+  "x": 0.2466,
+  "y": -0.6344
  },
  {
   "id": "google-oracle-2021::013",
@@ -2256,8 +2496,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1298,
-  "y": -0.7137
+  "x": 0.2471,
+  "y": -0.6187
  },
  {
   "id": "google-oracle-2021::014",
@@ -2266,8 +2506,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1466,
-  "y": -0.8051
+  "x": 0.2615,
+  "y": -0.6911
  },
  {
   "id": "google-oracle-2021::015",
@@ -2276,8 +2516,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.139,
-  "y": -0.7849
+  "x": 0.2556,
+  "y": -0.6752
  },
  {
   "id": "google-oracle-2021::016",
@@ -2286,8 +2526,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.099,
-  "y": -0.793
+  "x": 0.2242,
+  "y": -0.6821
  },
  {
   "id": "google-oracle-2021::017",
@@ -2296,8 +2536,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1123,
-  "y": -0.7766
+  "x": 0.2346,
+  "y": -0.6686
  },
  {
   "id": "google-oracle-2021::018",
@@ -2306,8 +2546,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.0658,
-  "y": -0.7903
+  "x": 0.1979,
+  "y": -0.6795
  },
  {
   "id": "google-oracle-2021::019",
@@ -2316,8 +2556,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.0887,
-  "y": -0.8049
+  "x": 0.2158,
+  "y": -0.6914
  },
  {
   "id": "google-oracle-2021::020",
@@ -2326,8 +2566,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.104,
-  "y": -0.848
+  "x": 0.2285,
+  "y": -0.7261
  },
  {
   "id": "google-oracle-2021::021",
@@ -2336,8 +2576,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1087,
-  "y": -0.7961
+  "x": 0.2319,
+  "y": -0.6843
  },
  {
   "id": "google-oracle-2021::022",
@@ -2346,8 +2586,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1236,
-  "y": -0.822
+  "x": 0.2433,
+  "y": -0.7051
  },
  {
   "id": "google-oracle-2021::023",
@@ -2356,8 +2596,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1491,
-  "y": -0.8169
+  "x": 0.2637,
+  "y": -0.7004
  },
  {
   "id": "google-oracle-2021::024",
@@ -2366,8 +2606,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1639,
-  "y": -0.7862
+  "x": 0.2753,
+  "y": -0.6759
  },
  {
   "id": "google-oracle-2021::025",
@@ -2376,8 +2616,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.172,
-  "y": -0.7768
+  "x": 0.2815,
+  "y": -0.6685
  },
  {
   "id": "google-oracle-2021::026",
@@ -2386,8 +2626,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1487,
-  "y": -0.7395
+  "x": 0.2625,
+  "y": -0.639
  },
  {
   "id": "google-oracle-2021::027",
@@ -2396,8 +2636,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1518,
-  "y": -0.7636
+  "x": 0.2653,
+  "y": -0.6582
  },
  {
   "id": "google-oracle-2021::028",
@@ -2406,8 +2646,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.0876,
-  "y": -0.8456
+  "x": 0.2148,
+  "y": -0.7247
  },
  {
   "id": "google-oracle-2021::029",
@@ -2416,8 +2656,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.0882,
-  "y": -0.8278
+  "x": 0.2152,
+  "y": -0.7099
  },
  {
   "id": "google-oracle-2021::030",
@@ -2426,8 +2666,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.0845,
-  "y": -0.7723
+  "x": 0.2124,
+  "y": -0.6657
  },
  {
   "id": "google-oracle-2021::031",
@@ -2436,8 +2676,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2021,
-  "x": -0.1501,
-  "y": -0.7518
+  "x": 0.2637,
+  "y": -0.6487
  },
  {
   "id": "hachette-2024::000",
@@ -2446,8 +2686,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": 0.0225,
-  "y": -0.3945
+  "x": 0.1365,
+  "y": -0.36
  },
  {
   "id": "hachette-2024::001",
@@ -2456,8 +2696,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": 0.0411,
-  "y": -0.4076
+  "x": 0.1212,
+  "y": -0.3694
  },
  {
   "id": "hachette-2024::002",
@@ -2466,8 +2706,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": 0.026,
-  "y": -0.3994
+  "x": 0.1335,
+  "y": -0.3635
  },
  {
   "id": "hachette-2024::003",
@@ -2476,8 +2716,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0142,
-  "y": -0.4072
+  "x": 0.1653,
+  "y": -0.37
  },
  {
   "id": "hachette-2024::004",
@@ -2486,8 +2726,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0335,
-  "y": -0.4003
+  "x": 0.1808,
+  "y": -0.3645
  },
  {
   "id": "hachette-2024::005",
@@ -2496,8 +2736,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0286,
-  "y": -0.373
+  "x": 0.176,
+  "y": -0.3428
  },
  {
   "id": "hachette-2024::006",
@@ -2506,8 +2746,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.3397,
-  "y": 0.3901
+  "x": 0.263,
+  "y": 0.3563
  },
  {
   "id": "hachette-2024::007",
@@ -2516,8 +2756,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0541,
-  "y": -0.3357
+  "x": 0.1967,
+  "y": -0.311
  },
  {
   "id": "hachette-2024::008",
@@ -2526,8 +2766,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0837,
-  "y": -0.3007
+  "x": 0.225,
+  "y": -0.2856
  },
  {
   "id": "hachette-2024::009",
@@ -2536,8 +2776,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0838,
-  "y": -0.2956
+  "x": 0.2256,
+  "y": -0.2817
  },
  {
   "id": "hachette-2024::010",
@@ -2546,8 +2786,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": 0.0332,
-  "y": -0.057
+  "x": 0.1812,
+  "y": -0.0957
  },
  {
   "id": "hachette-2024::011",
@@ -2556,8 +2796,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0611,
-  "y": -0.3521
+  "x": 0.2016,
+  "y": -0.3243
  },
  {
   "id": "hachette-2024::012",
@@ -2566,8 +2806,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0833,
-  "y": -0.3191
+  "x": 0.2221,
+  "y": -0.3006
  },
  {
   "id": "hachette-2024::013",
@@ -2576,8 +2816,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0924,
-  "y": -0.3471
+  "x": 0.2266,
+  "y": -0.3239
  },
  {
   "id": "hachette-2024::014",
@@ -2586,8 +2826,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0775,
-  "y": -0.3403
+  "x": 0.2149,
+  "y": -0.3166
  },
  {
   "id": "hachette-2024::015",
@@ -2596,8 +2836,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0479,
-  "y": -0.2614
+  "x": 0.1874,
+  "y": -0.2646
  },
  {
   "id": "hachette-2024::016",
@@ -2606,8 +2846,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0428,
-  "y": -0.2403
+  "x": 0.186,
+  "y": -0.2468
  },
  {
   "id": "hachette-2024::017",
@@ -2616,8 +2856,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0674,
-  "y": -0.3653
+  "x": 0.2005,
+  "y": -0.3328
  },
  {
   "id": "hachette-2024::018",
@@ -2626,8 +2866,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0506,
-  "y": -0.3844
+  "x": 0.1939,
+  "y": -0.3513
  },
  {
   "id": "hachette-2024::019",
@@ -2636,8 +2876,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0418,
-  "y": -0.4182
+  "x": 0.1872,
+  "y": -0.3786
  },
  {
   "id": "hachette-2024::020",
@@ -2646,8 +2886,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0682,
-  "y": -0.4102
+  "x": 0.2075,
+  "y": -0.3713
  },
  {
   "id": "hachette-2024::021",
@@ -2656,8 +2896,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.093,
-  "y": -0.3988
+  "x": 0.2266,
+  "y": -0.361
  },
  {
   "id": "hachette-2024::022",
@@ -2666,8 +2906,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0703,
-  "y": -0.3885
+  "x": 0.2088,
+  "y": -0.3538
  },
  {
   "id": "hachette-2024::023",
@@ -2676,8 +2916,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0602,
-  "y": -0.3688
+  "x": 0.2037,
+  "y": -0.3394
  },
  {
   "id": "hachette-2024::024",
@@ -2686,8 +2926,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2024,
-  "x": -0.0356,
-  "y": -0.3345
+  "x": 0.1814,
+  "y": -0.3102
  },
  {
   "id": "harper-row-1985::000",
@@ -2696,8 +2936,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6053,
-  "y": 0.5262
+  "x": 0.4866,
+  "y": 0.4643
  },
  {
   "id": "harper-row-1985::001",
@@ -2706,8 +2946,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6401,
-  "y": 0.5196
+  "x": 0.5125,
+  "y": 0.4634
  },
  {
   "id": "harper-row-1985::002",
@@ -2716,8 +2956,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6142,
-  "y": 0.4991
+  "x": 0.5098,
+  "y": 0.441
  },
  {
   "id": "harper-row-1985::003",
@@ -2726,8 +2966,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5587,
-  "y": 0.3626
+  "x": 0.5138,
+  "y": 0.3372
  },
  {
   "id": "harper-row-1985::004",
@@ -2736,8 +2976,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6062,
-  "y": 0.4711
+  "x": 0.4986,
+  "y": 0.4275
  },
  {
   "id": "harper-row-1985::005",
@@ -2746,8 +2986,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5938,
-  "y": 0.4895
+  "x": 0.485,
+  "y": 0.4407
  },
  {
   "id": "harper-row-1985::006",
@@ -2756,8 +2996,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6533,
-  "y": 0.4774
+  "x": 0.4642,
+  "y": 0.4081
  },
  {
   "id": "harper-row-1985::007",
@@ -2766,8 +3006,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6331,
-  "y": 0.4739
+  "x": 0.4836,
+  "y": 0.4141
  },
  {
   "id": "harper-row-1985::008",
@@ -2776,8 +3016,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6269,
-  "y": 0.4534
+  "x": 0.4973,
+  "y": 0.4048
  },
  {
   "id": "harper-row-1985::009",
@@ -2786,8 +3026,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5892,
-  "y": 0.4371
+  "x": 0.525,
+  "y": 0.4181
  },
  {
   "id": "harper-row-1985::010",
@@ -2796,8 +3036,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.7044,
-  "y": 0.5236
+  "x": 0.5627,
+  "y": 0.4699
  },
  {
   "id": "harper-row-1985::011",
@@ -2806,8 +3046,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6774,
-  "y": 0.5427
+  "x": 0.5393,
+  "y": 0.4806
  },
  {
   "id": "harper-row-1985::012",
@@ -2816,8 +3056,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4712,
-  "y": 0.4962
+  "x": 0.4105,
+  "y": 0.3775
  },
  {
   "id": "harper-row-1985::013",
@@ -2826,8 +3066,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4327,
-  "y": 0.5181
+  "x": 0.398,
+  "y": 0.3492
  },
  {
   "id": "harper-row-1985::014",
@@ -2836,8 +3076,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6403,
-  "y": 0.5576
+  "x": 0.5082,
+  "y": 0.4946
  },
  {
   "id": "harper-row-1985::015",
@@ -2846,8 +3086,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5684,
-  "y": 0.5352
+  "x": 0.4586,
+  "y": 0.4712
  },
  {
   "id": "harper-row-1985::016",
@@ -2856,8 +3096,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.547,
-  "y": 0.5051
+  "x": 0.4375,
+  "y": 0.4588
  },
  {
   "id": "harper-row-1985::017",
@@ -2866,8 +3106,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4018,
-  "y": 0.361
+  "x": 0.2742,
+  "y": 0.4211
  },
  {
   "id": "harper-row-1985::018",
@@ -2876,8 +3116,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5366,
-  "y": 0.4769
+  "x": 0.4267,
+  "y": 0.4381
  },
  {
   "id": "harper-row-1985::019",
@@ -2886,8 +3126,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.3283,
-  "y": 0.4424
+  "x": 0.2973,
+  "y": 0.3205
  },
  {
   "id": "harper-row-1985::020",
@@ -2896,8 +3136,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.3584,
-  "y": 0.48
+  "x": 0.3241,
+  "y": 0.3465
  },
  {
   "id": "harper-row-1985::021",
@@ -2906,8 +3146,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4043,
-  "y": 0.4832
+  "x": 0.3588,
+  "y": 0.3571
  },
  {
   "id": "harper-row-1985::022",
@@ -2916,8 +3156,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4701,
-  "y": 0.3848
+  "x": 0.3405,
+  "y": 0.4413
  },
  {
   "id": "harper-row-1985::023",
@@ -2926,8 +3166,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4305,
-  "y": 0.3998
+  "x": 0.3216,
+  "y": 0.4125
  },
  {
   "id": "harper-row-1985::024",
@@ -2936,8 +3176,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4817,
-  "y": 0.4462
+  "x": 0.3814,
+  "y": 0.4095
  },
  {
   "id": "harper-row-1985::025",
@@ -2946,8 +3186,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5242,
-  "y": 0.4492
+  "x": 0.4143,
+  "y": 0.4161
  },
  {
   "id": "harper-row-1985::026",
@@ -2956,8 +3196,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5597,
-  "y": 0.4802
+  "x": 0.4464,
+  "y": 0.4311
  },
  {
   "id": "harper-row-1985::027",
@@ -2966,8 +3206,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6521,
-  "y": 0.4249
+  "x": 0.4757,
+  "y": 0.378
  },
  {
   "id": "harper-row-1985::028",
@@ -2976,8 +3216,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.58,
-  "y": 0.5218
+  "x": 0.4631,
+  "y": 0.4545
  },
  {
   "id": "harper-row-1985::029",
@@ -2986,8 +3226,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6608,
-  "y": 0.6282
+  "x": 0.5253,
+  "y": 0.5483
  },
  {
   "id": "harper-row-1985::030",
@@ -2996,8 +3236,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6761,
-  "y": 0.6219
+  "x": 0.5375,
+  "y": 0.5434
  },
  {
   "id": "harper-row-1985::031",
@@ -3006,8 +3246,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6772,
-  "y": 0.5961
+  "x": 0.5378,
+  "y": 0.523
  },
  {
   "id": "harper-row-1985::032",
@@ -3016,8 +3256,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5843,
-  "y": 0.5789
+  "x": 0.4656,
+  "y": 0.5048
  },
  {
   "id": "harper-row-1985::033",
@@ -3026,8 +3266,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.52,
-  "y": 0.5371
+  "x": 0.4055,
+  "y": 0.4667
  },
  {
   "id": "harper-row-1985::034",
@@ -3036,8 +3276,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6921,
-  "y": 0.6336
+  "x": 0.55,
+  "y": 0.5531
  },
  {
   "id": "harper-row-1985::035",
@@ -3046,8 +3286,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5841,
-  "y": 0.5511
+  "x": 0.469,
+  "y": 0.4827
  },
  {
   "id": "harper-row-1985::036",
@@ -3056,8 +3296,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5536,
-  "y": 0.5155
+  "x": 0.4431,
+  "y": 0.4682
  },
  {
   "id": "harper-row-1985::037",
@@ -3066,8 +3306,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4059,
-  "y": 0.3611
+  "x": 0.277,
+  "y": 0.4228
  },
  {
   "id": "harper-row-1985::038",
@@ -3076,8 +3316,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5347,
-  "y": 0.4765
+  "x": 0.4255,
+  "y": 0.4367
  },
  {
   "id": "harper-row-1985::039",
@@ -3086,8 +3326,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.3267,
-  "y": 0.4425
+  "x": 0.2976,
+  "y": 0.3179
  },
  {
   "id": "harper-row-1985::040",
@@ -3096,8 +3336,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.3567,
-  "y": 0.4823
+  "x": 0.3239,
+  "y": 0.3467
  },
  {
   "id": "harper-row-1985::041",
@@ -3106,8 +3346,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4042,
-  "y": 0.4831
+  "x": 0.3588,
+  "y": 0.3571
  },
  {
   "id": "harper-row-1985::042",
@@ -3116,8 +3356,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4702,
-  "y": 0.3848
+  "x": 0.3406,
+  "y": 0.4413
  },
  {
   "id": "harper-row-1985::043",
@@ -3126,8 +3366,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4306,
-  "y": 0.4003
+  "x": 0.3219,
+  "y": 0.4123
  },
  {
   "id": "harper-row-1985::044",
@@ -3136,8 +3376,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4815,
-  "y": 0.4458
+  "x": 0.3811,
+  "y": 0.4095
  },
  {
   "id": "harper-row-1985::045",
@@ -3146,8 +3386,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5244,
-  "y": 0.4494
+  "x": 0.4145,
+  "y": 0.4163
  },
  {
   "id": "harper-row-1985::046",
@@ -3156,8 +3396,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5602,
-  "y": 0.4781
+  "x": 0.4466,
+  "y": 0.4293
  },
  {
   "id": "harper-row-1985::047",
@@ -3166,8 +3406,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6522,
-  "y": 0.4248
+  "x": 0.4755,
+  "y": 0.378
  },
  {
   "id": "harper-row-1985::048",
@@ -3176,8 +3416,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5799,
-  "y": 0.5206
+  "x": 0.4627,
+  "y": 0.4531
  },
  {
   "id": "harper-row-1985::049",
@@ -3186,8 +3426,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.658,
-  "y": 0.6253
+  "x": 0.5231,
+  "y": 0.5455
  },
  {
   "id": "harper-row-1985::050",
@@ -3196,8 +3436,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6745,
-  "y": 0.6352
+  "x": 0.5361,
+  "y": 0.554
  },
  {
   "id": "harper-row-1985::051",
@@ -3206,8 +3446,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6817,
-  "y": 0.6066
+  "x": 0.5418,
+  "y": 0.5313
  },
  {
   "id": "harper-row-1985::052",
@@ -3216,8 +3456,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6042,
-  "y": 0.5575
+  "x": 0.4822,
+  "y": 0.4899
  },
  {
   "id": "harper-row-1985::053",
@@ -3226,8 +3466,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5175,
-  "y": 0.345
+  "x": 0.3108,
+  "y": 0.4729
  },
  {
   "id": "harper-row-1985::054",
@@ -3236,8 +3476,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6249,
-  "y": 0.5119
+  "x": 0.5083,
+  "y": 0.4526
  },
  {
   "id": "harper-row-1985::055",
@@ -3246,8 +3486,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5589,
-  "y": 0.3625
+  "x": 0.5137,
+  "y": 0.337
  },
  {
   "id": "harper-row-1985::056",
@@ -3256,8 +3496,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6074,
-  "y": 0.4693
+  "x": 0.4995,
+  "y": 0.4255
  },
  {
   "id": "harper-row-1985::057",
@@ -3266,8 +3506,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5976,
-  "y": 0.4898
+  "x": 0.4883,
+  "y": 0.4417
  },
  {
   "id": "harper-row-1985::058",
@@ -3276,8 +3516,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4541,
-  "y": 0.5299
+  "x": 0.4222,
+  "y": 0.3546
  },
  {
   "id": "harper-row-1985::059",
@@ -3286,8 +3526,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6481,
-  "y": 0.4772
+  "x": 0.4709,
+  "y": 0.4113
  },
  {
   "id": "harper-row-1985::060",
@@ -3296,8 +3536,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6292,
-  "y": 0.4863
+  "x": 0.4845,
+  "y": 0.4224
  },
  {
   "id": "harper-row-1985::061",
@@ -3306,8 +3546,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6014,
-  "y": 0.4457
+  "x": 0.5161,
+  "y": 0.4148
  },
  {
   "id": "harper-row-1985::062",
@@ -3316,8 +3556,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.3593,
-  "y": 0.4176
+  "x": 0.2884,
+  "y": 0.3572
  },
  {
   "id": "harper-row-1985::063",
@@ -3326,8 +3566,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.5215,
-  "y": 0.5381
+  "x": 0.4065,
+  "y": 0.4677
  },
  {
   "id": "harper-row-1985::064",
@@ -3336,8 +3576,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6929,
-  "y": 0.633
+  "x": 0.5508,
+  "y": 0.5524
  },
  {
   "id": "harper-row-1985::065",
@@ -3346,8 +3586,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6179,
-  "y": 0.5801
+  "x": 0.4894,
+  "y": 0.5121
  },
  {
   "id": "harper-row-1985::066",
@@ -3356,8 +3596,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.7047,
-  "y": 0.5228
+  "x": 0.5631,
+  "y": 0.4695
  },
  {
   "id": "harper-row-1985::067",
@@ -3366,8 +3606,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6753,
-  "y": 0.5394
+  "x": 0.5378,
+  "y": 0.4779
  },
  {
   "id": "harper-row-1985::068",
@@ -3376,8 +3616,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4718,
-  "y": 0.4967
+  "x": 0.411,
+  "y": 0.3776
  },
  {
   "id": "harper-row-1985::069",
@@ -3386,8 +3626,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.4342,
-  "y": 0.5186
+  "x": 0.3993,
+  "y": 0.3496
  },
  {
   "id": "harper-row-1985::070",
@@ -3396,8 +3636,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1985,
-  "x": -0.6396,
-  "y": 0.5504
+  "x": 0.5077,
+  "y": 0.4892
  },
  {
   "id": "hathitrust-2014::000",
@@ -3406,8 +3646,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.1017,
-  "y": -0.3038
+  "x": 0.066,
+  "y": -0.2829
  },
  {
   "id": "hathitrust-2014::001",
@@ -3416,8 +3656,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.106,
-  "y": -0.3211
+  "x": 0.06,
+  "y": -0.2958
  },
  {
   "id": "hathitrust-2014::002",
@@ -3426,8 +3666,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.1031,
-  "y": -0.3409
+  "x": 0.0593,
+  "y": -0.3112
  },
  {
   "id": "hathitrust-2014::003",
@@ -3436,8 +3676,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": -0.3793,
-  "y": 0.3665
+  "x": 0.2612,
+  "y": 0.4072
  },
  {
   "id": "hathitrust-2014::004",
@@ -3446,8 +3686,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": -0.3083,
-  "y": 0.4174
+  "x": 0.2688,
+  "y": 0.3157
  },
  {
   "id": "hathitrust-2014::005",
@@ -3456,8 +3696,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": -0.0738,
-  "y": -0.1491
+  "x": 0.2208,
+  "y": -0.1786
  },
  {
   "id": "hathitrust-2014::006",
@@ -3466,8 +3706,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.0201,
-  "y": -0.2549
+  "x": 0.1323,
+  "y": -0.2566
  },
  {
   "id": "hathitrust-2014::007",
@@ -3476,8 +3716,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": -0.0012,
-  "y": -0.2591
+  "x": 0.1472,
+  "y": -0.2609
  },
  {
   "id": "hathitrust-2014::008",
@@ -3486,8 +3726,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.0099,
-  "y": -0.2803
+  "x": 0.1393,
+  "y": -0.2779
  },
  {
   "id": "hathitrust-2014::009",
@@ -3496,8 +3736,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.0713,
-  "y": -0.2993
+  "x": 0.0899,
+  "y": -0.2838
  },
  {
   "id": "hathitrust-2014::010",
@@ -3506,8 +3746,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.0504,
-  "y": -0.3082
+  "x": 0.1039,
+  "y": -0.295
  },
  {
   "id": "hathitrust-2014::011",
@@ -3516,8 +3756,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.0624,
-  "y": -0.3106
+  "x": 0.0946,
+  "y": -0.2947
  },
  {
   "id": "hathitrust-2014::012",
@@ -3526,8 +3766,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.1229,
-  "y": -0.3091
+  "x": 0.0483,
+  "y": -0.2838
  },
  {
   "id": "hathitrust-2014::013",
@@ -3536,8 +3776,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.119,
-  "y": -0.3118
+  "x": 0.051,
+  "y": -0.2864
  },
  {
   "id": "hathitrust-2014::014",
@@ -3546,8 +3786,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2014,
-  "x": 0.083,
-  "y": -0.3355
+  "x": 0.0754,
+  "y": -0.3113
  },
  {
   "id": "intercept-2025::000",
@@ -3556,8 +3796,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8549,
-  "y": -0.0086
+  "x": -0.5504,
+  "y": -0.0585
  },
  {
   "id": "intercept-2025::001",
@@ -3566,8 +3806,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8918,
-  "y": 0.022
+  "x": -0.5681,
+  "y": -0.0236
  },
  {
   "id": "intercept-2025::002",
@@ -3576,8 +3816,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.9024,
-  "y": -0.0022
+  "x": -0.5798,
+  "y": -0.0394
  },
  {
   "id": "intercept-2025::003",
@@ -3586,8 +3826,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8856,
-  "y": 0.0032
+  "x": -0.5634,
+  "y": -0.0328
  },
  {
   "id": "intercept-2025::004",
@@ -3596,8 +3836,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8603,
-  "y": 0.0243
+  "x": -0.5425,
+  "y": -0.0347
  },
  {
   "id": "intercept-2025::005",
@@ -3606,8 +3846,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8709,
-  "y": -0.0372
+  "x": -0.5767,
+  "y": -0.0671
  },
  {
   "id": "intercept-2025::006",
@@ -3616,8 +3856,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.9939,
-  "y": -0.0457
+  "x": -0.6065,
+  "y": 0.0469
  },
  {
   "id": "intercept-2025::007",
@@ -3626,8 +3866,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 1.0,
-  "y": -0.0426
+  "x": -0.605,
+  "y": 0.0518
  },
  {
   "id": "intercept-2025::008",
@@ -3636,8 +3876,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.9812,
-  "y": -0.0439
+  "x": -0.6033,
+  "y": 0.0371
  },
  {
   "id": "intercept-2025::009",
@@ -3646,8 +3886,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8661,
-  "y": 0.0045
+  "x": -0.5569,
+  "y": -0.0478
  },
  {
   "id": "intercept-2025::010",
@@ -3656,8 +3896,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.9063,
-  "y": 0.0312
+  "x": -0.5816,
+  "y": -0.018
  },
  {
   "id": "intercept-2025::011",
@@ -3666,8 +3906,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8726,
-  "y": 0.01
+  "x": -0.5551,
+  "y": -0.0393
  },
  {
   "id": "intercept-2025::012",
@@ -3676,8 +3916,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8419,
-  "y": 0.0245
+  "x": -0.5303,
+  "y": -0.0423
  },
  {
   "id": "intercept-2025::013",
@@ -3686,8 +3926,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8437,
-  "y": 0.0145
+  "x": -0.5349,
+  "y": -0.05
  },
  {
   "id": "kadrey-2025::000",
@@ -3696,8 +3936,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3036,
-  "y": -0.5048
+  "x": -0.0941,
+  "y": -0.4429
  },
  {
   "id": "kadrey-2025::001",
@@ -3706,8 +3946,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2637,
-  "y": -0.5017
+  "x": -0.063,
+  "y": -0.44
  },
  {
   "id": "kadrey-2025::002",
@@ -3716,8 +3956,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2856,
-  "y": -0.4818
+  "x": -0.0802,
+  "y": -0.4241
  },
  {
   "id": "kadrey-2025::003",
@@ -3726,8 +3966,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": -0.3357,
-  "y": 0.3879
+  "x": 0.2635,
+  "y": 0.3488
  },
  {
   "id": "kadrey-2025::004",
@@ -3736,8 +3976,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": -0.1855,
-  "y": -0.0775
+  "x": 0.2375,
+  "y": 0.1668
  },
  {
   "id": "kadrey-2025::005",
@@ -3746,8 +3986,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.3261,
-  "y": -0.5258
+  "x": -0.1105,
+  "y": -0.4607
  },
  {
   "id": "kadrey-2025::006",
@@ -3756,8 +3996,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.291,
-  "y": -0.5562
+  "x": -0.083,
+  "y": -0.4841
  },
  {
   "id": "kadrey-2025::007",
@@ -3766,8 +4006,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2829,
-  "y": -0.5597
+  "x": -0.0764,
+  "y": -0.4869
  },
  {
   "id": "kadrey-2025::008",
@@ -3776,8 +4016,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2339,
-  "y": -0.5824
+  "x": -0.0364,
+  "y": -0.5032
  },
  {
   "id": "kadrey-2025::009",
@@ -3786,8 +4026,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2415,
-  "y": -0.5886
+  "x": -0.0423,
+  "y": -0.5084
  },
  {
   "id": "kadrey-2025::010",
@@ -3796,8 +4036,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2723,
-  "y": -0.5246
+  "x": -0.0692,
+  "y": -0.4586
  },
  {
   "id": "kadrey-2025::011",
@@ -3806,8 +4046,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.299,
-  "y": -0.4676
+  "x": -0.0913,
+  "y": -0.4133
  },
  {
   "id": "kadrey-2025::012",
@@ -3816,8 +4056,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1957,
-  "y": -0.4707
+  "x": -0.0099,
+  "y": -0.4141
  },
  {
   "id": "kadrey-2025::013",
@@ -3826,8 +4066,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2377,
-  "y": -0.5193
+  "x": -0.0419,
+  "y": -0.4536
  },
  {
   "id": "kadrey-2025::014",
@@ -3836,8 +4076,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2412,
-  "y": -0.5207
+  "x": -0.0449,
+  "y": -0.4548
  },
  {
   "id": "kadrey-2025::015",
@@ -3846,8 +4086,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2475,
-  "y": -0.5181
+  "x": -0.0499,
+  "y": -0.4529
  },
  {
   "id": "kadrey-2025::016",
@@ -3856,8 +4096,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1743,
-  "y": -0.4933
+  "x": 0.0076,
+  "y": -0.4309
  },
  {
   "id": "kadrey-2025::017",
@@ -3866,8 +4106,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1509,
-  "y": -0.482
+  "x": 0.0259,
+  "y": -0.4212
  },
  {
   "id": "kadrey-2025::018",
@@ -3876,8 +4116,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2176,
-  "y": -0.5326
+  "x": -0.0255,
+  "y": -0.463
  },
  {
   "id": "kadrey-2025::019",
@@ -3886,8 +4126,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2371,
-  "y": -0.5592
+  "x": -0.04,
+  "y": -0.4851
  },
  {
   "id": "kadrey-2025::020",
@@ -3896,8 +4136,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.196,
-  "y": -0.4476
+  "x": -0.011,
+  "y": -0.3956
  },
  {
   "id": "kadrey-2025::021",
@@ -3906,8 +4146,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1954,
-  "y": -0.4481
+  "x": -0.0102,
+  "y": -0.3959
  },
  {
   "id": "kadrey-2025::022",
@@ -3916,8 +4156,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1974,
-  "y": -0.4918
+  "x": -0.0106,
+  "y": -0.4308
  },
  {
   "id": "kadrey-2025::023",
@@ -3926,8 +4166,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2346,
-  "y": -0.4735
+  "x": -0.0403,
+  "y": -0.4168
  },
  {
   "id": "kadrey-2025::024",
@@ -3936,8 +4176,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1775,
-  "y": -0.5551
+  "x": 0.0067,
+  "y": -0.4797
  },
  {
   "id": "kadrey-2025::025",
@@ -3946,8 +4186,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1495,
-  "y": -0.5735
+  "x": 0.0296,
+  "y": -0.4938
  },
  {
   "id": "kadrey-2025::026",
@@ -3956,8 +4196,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1614,
-  "y": -0.6009
+  "x": 0.0209,
+  "y": -0.5159
  },
  {
   "id": "kadrey-2025::027",
@@ -3966,8 +4206,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1484,
-  "y": -0.5829
+  "x": 0.0307,
+  "y": -0.5013
  },
  {
   "id": "kadrey-2025::028",
@@ -3976,8 +4216,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1233,
-  "y": -0.5587
+  "x": 0.0501,
+  "y": -0.4818
  },
  {
   "id": "kadrey-2025::029",
@@ -3986,8 +4226,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1406,
-  "y": -0.539
+  "x": 0.0355,
+  "y": -0.4664
  },
  {
   "id": "kadrey-2025::030",
@@ -3996,8 +4236,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1637,
-  "y": -0.5502
+  "x": 0.0174,
+  "y": -0.4756
  },
  {
   "id": "kadrey-2025::031",
@@ -4006,8 +4246,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1742,
-  "y": -0.5887
+  "x": 0.0104,
+  "y": -0.5064
  },
  {
   "id": "kadrey-2025::032",
@@ -4016,8 +4256,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.1741,
-  "y": -0.5348
+  "x": 0.0088,
+  "y": -0.4634
  },
  {
   "id": "kadrey-2025::033",
@@ -4026,8 +4266,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.195,
-  "y": -0.5274
+  "x": -0.0079,
+  "y": -0.4583
  },
  {
   "id": "kadrey-2025::034",
@@ -4036,8 +4276,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2154,
-  "y": -0.5506
+  "x": -0.0233,
+  "y": -0.4772
  },
  {
   "id": "kadrey-2025::035",
@@ -4046,8 +4286,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.256,
-  "y": -0.5457
+  "x": -0.0557,
+  "y": -0.4751
  },
  {
   "id": "kadrey-2025::036",
@@ -4056,8 +4296,8 @@
   "layer": "modern",
   "court": "cand",
   "year": 2025,
-  "x": 0.2245,
-  "y": -0.5039
+  "x": -0.0318,
+  "y": -0.4408
  },
  {
   "id": "kelly-arriba-2003::000",
@@ -4066,8 +4306,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2003,
-  "x": 0.2159,
-  "y": 0.0001
+  "x": 0.0487,
+  "y": -0.0437
  },
  {
   "id": "kelly-arriba-2003::001",
@@ -4076,8 +4316,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2003,
-  "x": 0.2102,
-  "y": -0.0039
+  "x": 0.0496,
+  "y": -0.0506
  },
  {
   "id": "kelly-arriba-2003::002",
@@ -4086,8 +4326,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2003,
-  "x": 0.2014,
-  "y": -0.0311
+  "x": 0.061,
+  "y": -0.0694
  },
  {
   "id": "kelly-arriba-2003::003",
@@ -4096,8 +4336,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2003,
-  "x": 0.1805,
-  "y": -0.0148
+  "x": 0.0734,
+  "y": -0.0553
  },
  {
   "id": "kelly-arriba-2003::004",
@@ -4106,8 +4346,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2003,
-  "x": 0.1629,
-  "y": -0.019
+  "x": 0.0824,
+  "y": -0.0586
  },
  {
   "id": "kelly-arriba-2003::005",
@@ -4116,8 +4356,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2003,
-  "x": 0.1781,
-  "y": -0.0083
+  "x": 0.0766,
+  "y": -0.0497
  },
  {
   "id": "kelly-arriba-2003::006",
@@ -4126,8 +4366,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2003,
-  "x": 0.2044,
-  "y": -0.0174
+  "x": 0.0558,
+  "y": -0.0593
  },
  {
   "id": "kelly-arriba-2003::007",
@@ -4136,8 +4376,398 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2003,
-  "x": 0.1218,
-  "y": -0.0305
+  "x": 0.315,
+  "y": -0.1746
+ },
+ {
+  "id": "kisting-leung-2025::000",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8036,
+  "y": -0.1447
+ },
+ {
+  "id": "kisting-leung-2025::001",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8086,
+  "y": -0.1343
+ },
+ {
+  "id": "kisting-leung-2025::002",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7297,
+  "y": -0.1889
+ },
+ {
+  "id": "kisting-leung-2025::003",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7208,
+  "y": -0.1464
+ },
+ {
+  "id": "kisting-leung-2025::004",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7533,
+  "y": -0.1433
+ },
+ {
+  "id": "kisting-leung-2025::005",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7915,
+  "y": -0.1418
+ },
+ {
+  "id": "kisting-leung-2025::006",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7884,
+  "y": -0.1493
+ },
+ {
+  "id": "kisting-leung-2025::007",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7751,
+  "y": -0.0834
+ },
+ {
+  "id": "kisting-leung-2025::008",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7766,
+  "y": -0.0825
+ },
+ {
+  "id": "kisting-leung-2025::009",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7655,
+  "y": -0.0979
+ },
+ {
+  "id": "kisting-leung-2025::010",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7714,
+  "y": -0.0906
+ },
+ {
+  "id": "kisting-leung-2025::011",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8112,
+  "y": -0.1566
+ },
+ {
+  "id": "kisting-leung-2025::012",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8186,
+  "y": -0.17
+ },
+ {
+  "id": "kisting-leung-2025::013",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8246,
+  "y": -0.1353
+ },
+ {
+  "id": "kisting-leung-2025::014",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8305,
+  "y": -0.1758
+ },
+ {
+  "id": "kisting-leung-2025::015",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8278,
+  "y": -0.1769
+ },
+ {
+  "id": "kisting-leung-2025::016",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.808,
+  "y": -0.1936
+ },
+ {
+  "id": "kisting-leung-2025::017",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8128,
+  "y": -0.1862
+ },
+ {
+  "id": "kisting-leung-2025::018",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7593,
+  "y": -0.2062
+ },
+ {
+  "id": "kisting-leung-2025::019",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8152,
+  "y": -0.1125
+ },
+ {
+  "id": "kisting-leung-2025::020",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8582,
+  "y": -0.0924
+ },
+ {
+  "id": "kisting-leung-2025::021",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8572,
+  "y": -0.097
+ },
+ {
+  "id": "kisting-leung-2025::022",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8444,
+  "y": -0.0845
+ },
+ {
+  "id": "kisting-leung-2025::023",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.8288,
+  "y": -0.0972
+ },
+ {
+  "id": "kisting-leung-2025::024",
+  "case_id": "kisting-leung-2025",
+  "case_name": "Kisting-Leung v. Cigna",
+  "layer": "modern",
+  "court": "caed",
+  "year": 2025,
+  "x": -0.7672,
+  "y": -0.1776
+ },
+ {
+  "id": "lokken-2025::000",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9219,
+  "y": -0.1573
+ },
+ {
+  "id": "lokken-2025::001",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9409,
+  "y": -0.1624
+ },
+ {
+  "id": "lokken-2025::002",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9452,
+  "y": -0.173
+ },
+ {
+  "id": "lokken-2025::003",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.8983,
+  "y": -0.1565
+ },
+ {
+  "id": "lokken-2025::004",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.7123,
+  "y": -0.1823
+ },
+ {
+  "id": "lokken-2025::005",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9387,
+  "y": -0.0656
+ },
+ {
+  "id": "lokken-2025::006",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.949,
+  "y": -0.0506
+ },
+ {
+  "id": "lokken-2025::007",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9306,
+  "y": -0.0507
+ },
+ {
+  "id": "lokken-2025::008",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9002,
+  "y": -0.0759
+ },
+ {
+  "id": "lokken-2025::009",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.8925,
+  "y": -0.0798
+ },
+ {
+  "id": "lokken-2025::010",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9033,
+  "y": -0.093
+ },
+ {
+  "id": "lokken-2025::011",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9068,
+  "y": -0.134
+ },
+ {
+  "id": "lokken-2025::012",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9083,
+  "y": -0.1333
+ },
+ {
+  "id": "lokken-2025::013",
+  "case_id": "lokken-2025",
+  "case_name": "Estate of Lokken v. UnitedHealth Group",
+  "layer": "modern",
+  "court": "mnd",
+  "year": 2025,
+  "x": -0.9136,
+  "y": -0.1237
  },
  {
   "id": "napster-2001::000",
@@ -4146,8 +4776,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4302,
-  "y": 0.3061
+  "x": -0.361,
+  "y": 0.3193
  },
  {
   "id": "napster-2001::001",
@@ -4156,8 +4786,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4351,
-  "y": 0.2891
+  "x": -0.3683,
+  "y": 0.3092
  },
  {
   "id": "napster-2001::002",
@@ -4166,8 +4796,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4496,
-  "y": 0.3125
+  "x": -0.3724,
+  "y": 0.3313
  },
  {
   "id": "napster-2001::003",
@@ -4176,8 +4806,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4008,
-  "y": 0.2701
+  "x": -0.3343,
+  "y": 0.2962
  },
  {
   "id": "napster-2001::004",
@@ -4186,8 +4816,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.3934,
-  "y": 0.2524
+  "x": -0.3211,
+  "y": 0.29
  },
  {
   "id": "napster-2001::005",
@@ -4196,8 +4826,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.3879,
-  "y": 0.298
+  "x": -0.3555,
+  "y": 0.2803
  },
  {
   "id": "napster-2001::006",
@@ -4206,8 +4836,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.3926,
-  "y": 0.2841
+  "x": -0.3459,
+  "y": 0.2868
  },
  {
   "id": "napster-2001::007",
@@ -4216,8 +4846,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.3904,
-  "y": 0.2801
+  "x": -0.3433,
+  "y": 0.2858
  },
  {
   "id": "napster-2001::008",
@@ -4226,8 +4856,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4196,
-  "y": 0.3702
+  "x": -0.342,
+  "y": 0.3716
  },
  {
   "id": "napster-2001::009",
@@ -4236,8 +4866,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4107,
-  "y": 0.4119
+  "x": -0.3404,
+  "y": 0.3988
  },
  {
   "id": "napster-2001::010",
@@ -4246,8 +4876,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4068,
-  "y": 0.3808
+  "x": -0.3292,
+  "y": 0.3789
  },
  {
   "id": "napster-2001::011",
@@ -4256,8 +4886,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4295,
-  "y": 0.376
+  "x": -0.3325,
+  "y": 0.3608
  },
  {
   "id": "napster-2001::012",
@@ -4266,8 +4896,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4161,
-  "y": 0.3428
+  "x": -0.337,
+  "y": 0.3414
  },
  {
   "id": "napster-2001::013",
@@ -4276,8 +4906,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4395,
-  "y": 0.3616
+  "x": -0.3487,
+  "y": 0.3585
  },
  {
   "id": "napster-2001::014",
@@ -4286,8 +4916,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4518,
-  "y": 0.3584
+  "x": -0.3599,
+  "y": 0.3622
  },
  {
   "id": "napster-2001::015",
@@ -4296,8 +4926,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4505,
-  "y": 0.338
+  "x": -0.3665,
+  "y": 0.3487
  },
  {
   "id": "napster-2001::016",
@@ -4306,8 +4936,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4281,
-  "y": 0.3347
+  "x": -0.3505,
+  "y": 0.3387
  },
  {
   "id": "napster-2001::017",
@@ -4316,8 +4946,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4342,
-  "y": 0.3329
+  "x": -0.3557,
+  "y": 0.3392
  },
  {
   "id": "napster-2001::018",
@@ -4326,8 +4956,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.4644,
-  "y": 0.3344
+  "x": -0.3764,
+  "y": 0.3553
  },
  {
   "id": "napster-2001::019",
@@ -4336,8 +4966,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2001,
-  "x": 0.485,
-  "y": 0.3398
+  "x": -0.3903,
+  "y": 0.3625
  },
  {
   "id": "nyt-openai-2025::000",
@@ -4346,8 +4976,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.781,
-  "y": 0.0061
+  "x": -0.4988,
+  "y": -0.0791
  },
  {
   "id": "nyt-openai-2025::001",
@@ -4356,8 +4986,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.699,
-  "y": -0.0519
+  "x": -0.4689,
+  "y": -0.1564
  },
  {
   "id": "nyt-openai-2025::002",
@@ -4366,8 +4996,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7997,
-  "y": -0.0178
+  "x": -0.5185,
+  "y": -0.0871
  },
  {
   "id": "nyt-openai-2025::003",
@@ -4376,8 +5006,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7442,
-  "y": 0.0078
+  "x": -0.4668,
+  "y": -0.094
  },
  {
   "id": "nyt-openai-2025::004",
@@ -4386,8 +5016,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8014,
-  "y": 0.01
+  "x": -0.4889,
+  "y": -0.0804
  },
  {
   "id": "nyt-openai-2025::005",
@@ -4396,8 +5026,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8572,
-  "y": 0.0532
+  "x": -0.5298,
+  "y": -0.0164
  },
  {
   "id": "nyt-openai-2025::006",
@@ -4406,8 +5036,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7958,
-  "y": -0.0948
+  "x": -0.5477,
+  "y": -0.1345
  },
  {
   "id": "nyt-openai-2025::007",
@@ -4416,8 +5046,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7911,
-  "y": -0.0015
+  "x": -0.5077,
+  "y": -0.0796
  },
  {
   "id": "nyt-openai-2025::008",
@@ -4426,8 +5056,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7826,
-  "y": 0.0419
+  "x": -0.4893,
+  "y": -0.0528
  },
  {
   "id": "nyt-openai-2025::009",
@@ -4436,8 +5066,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7785,
-  "y": 0.0663
+  "x": -0.4766,
+  "y": -0.0369
  },
  {
   "id": "nyt-openai-2025::010",
@@ -4446,8 +5076,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7881,
-  "y": 0.039
+  "x": -0.4921,
+  "y": -0.0547
  },
  {
   "id": "nyt-openai-2025::011",
@@ -4456,8 +5086,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7934,
-  "y": 0.0286
+  "x": -0.5021,
+  "y": -0.0603
  },
  {
   "id": "nyt-openai-2025::012",
@@ -4466,8 +5096,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.337,
-  "y": 0.5123
+  "x": -0.252,
+  "y": 0.444
  },
  {
   "id": "nyt-openai-2025::013",
@@ -4476,8 +5106,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7181,
-  "y": 0.145
+  "x": -0.2465,
+  "y": 0.4147
  },
  {
   "id": "nyt-openai-2025::014",
@@ -4486,8 +5116,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7201,
-  "y": 0.1424
+  "x": -0.2465,
+  "y": 0.4067
  },
  {
   "id": "nyt-openai-2025::015",
@@ -4496,8 +5126,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.3269,
-  "y": 0.4957
+  "x": -0.2419,
+  "y": 0.4341
  },
  {
   "id": "nyt-openai-2025::016",
@@ -4506,8 +5136,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.3095,
-  "y": 0.508
+  "x": -0.2304,
+  "y": 0.4501
  },
  {
   "id": "nyt-openai-2025::017",
@@ -4516,8 +5146,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8249,
-  "y": -0.0595
+  "x": -0.5588,
+  "y": -0.1041
  },
  {
   "id": "nyt-openai-2025::018",
@@ -4526,8 +5156,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8875,
-  "y": -0.1059
+  "x": -0.6287,
+  "y": -0.0913
  },
  {
   "id": "nyt-openai-2025::019",
@@ -4536,8 +5166,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.862,
-  "y": -0.0734
+  "x": -0.5877,
+  "y": -0.0857
  },
  {
   "id": "nyt-openai-2025::020",
@@ -4546,8 +5176,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 1.0,
-  "y": -0.0529
+  "x": -0.6126,
+  "y": 0.0512
  },
  {
   "id": "nyt-openai-2025::021",
@@ -4556,8 +5186,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8749,
-  "y": -0.0897
+  "x": -0.6106,
+  "y": -0.0831
  },
  {
   "id": "nyt-openai-2025::022",
@@ -4566,8 +5196,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.848,
-  "y": -0.0625
+  "x": -0.5708,
+  "y": -0.0877
  },
  {
   "id": "nyt-openai-2025::023",
@@ -4576,8 +5206,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.915,
-  "y": 0.0025
+  "x": -0.5919,
+  "y": -0.0383
  },
  {
   "id": "nyt-openai-2025::024",
@@ -4586,8 +5216,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.9201,
-  "y": 0.0127
+  "x": -0.5955,
+  "y": -0.0314
  },
  {
   "id": "nyt-openai-2025::025",
@@ -4596,8 +5226,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8216,
-  "y": 0.0018
+  "x": -0.5249,
+  "y": -0.0669
  },
  {
   "id": "nyt-openai-2025::026",
@@ -4606,8 +5236,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7688,
-  "y": -0.0589
+  "x": -0.5107,
+  "y": -0.1305
  },
  {
   "id": "nyt-openai-2025::027",
@@ -4616,8 +5246,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7699,
-  "y": -0.0552
+  "x": -0.5103,
+  "y": -0.1276
  },
  {
   "id": "nyt-openai-2025::028",
@@ -4626,8 +5256,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8372,
-  "y": 0.0456
+  "x": -0.5189,
+  "y": -0.0291
  },
  {
   "id": "nyt-openai-2025::029",
@@ -4636,8 +5266,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.7713,
-  "y": -0.019
+  "x": -0.5019,
+  "y": -0.1009
  },
  {
   "id": "nyt-openai-2025::030",
@@ -4646,8 +5276,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.6819,
-  "y": 0.0337
+  "x": -0.4154,
+  "y": -0.0882
  },
  {
   "id": "nyt-openai-2025::031",
@@ -4656,8 +5286,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.688,
-  "y": 0.0325
+  "x": -0.4204,
+  "y": -0.0878
  },
  {
   "id": "nyt-openai-2025::032",
@@ -4666,8 +5296,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.6832,
-  "y": 0.0305
+  "x": -0.4171,
+  "y": -0.0897
  },
  {
   "id": "nyt-openai-2025::033",
@@ -4676,8 +5306,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.6921,
-  "y": -0.0981
+  "x": -0.4334,
+  "y": -0.1619
  },
  {
   "id": "nyt-openai-2025::034",
@@ -4686,8 +5316,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.6898,
-  "y": -0.1018
+  "x": -0.4302,
+  "y": -0.1635
  },
  {
   "id": "nyt-openai-2025::035",
@@ -4696,8 +5326,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.6934,
-  "y": -0.0906
+  "x": -0.4381,
+  "y": -0.1594
  },
  {
   "id": "nyt-openai-2025::036",
@@ -4706,8 +5336,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.6418,
-  "y": -0.0598
+  "x": -0.4655,
+  "y": -0.2013
  },
  {
   "id": "nyt-openai-2025::037",
@@ -4716,8 +5346,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.6546,
-  "y": -0.0598
+  "x": -0.4646,
+  "y": -0.1914
  },
  {
   "id": "nyt-openai-2025::038",
@@ -4726,8 +5356,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.6604,
-  "y": -0.058
+  "x": -0.4661,
+  "y": -0.1869
  },
  {
   "id": "nyt-openai-2025::039",
@@ -4736,8 +5366,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": -0.3361,
-  "y": 0.1467
+  "x": 0.1271,
+  "y": 0.136
  },
  {
   "id": "nyt-openai-2025::040",
@@ -4746,8 +5376,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2025,
-  "x": 0.8094,
-  "y": -0.0236
+  "x": -0.527,
+  "y": -0.0907
  },
  {
   "id": "perfect10-2007::000",
@@ -4756,8 +5386,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3395,
-  "y": 0.0573
+  "x": -0.0518,
+  "y": -0.0461
  },
  {
   "id": "perfect10-2007::001",
@@ -4766,8 +5396,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3415,
-  "y": 0.0417
+  "x": -0.0515,
+  "y": -0.0586
  },
  {
   "id": "perfect10-2007::002",
@@ -4776,8 +5406,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3682,
-  "y": 0.0762
+  "x": -0.0778,
+  "y": -0.0366
  },
  {
   "id": "perfect10-2007::003",
@@ -4786,8 +5416,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3521,
-  "y": 0.0771
+  "x": -0.0646,
+  "y": -0.0338
  },
  {
   "id": "perfect10-2007::004",
@@ -4796,8 +5426,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3159,
-  "y": 0.0388
+  "x": -0.0314,
+  "y": -0.057
  },
  {
   "id": "perfect10-2007::005",
@@ -4806,8 +5436,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3217,
-  "y": 0.0448
+  "x": -0.0367,
+  "y": -0.0535
  },
  {
   "id": "perfect10-2007::006",
@@ -4816,8 +5446,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3095,
-  "y": 0.0606
+  "x": -0.0297,
+  "y": -0.0391
  },
  {
   "id": "perfect10-2007::007",
@@ -4826,8 +5456,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": -0.1419,
-  "y": -0.1214
+  "x": 0.0937,
+  "y": -0.058
  },
  {
   "id": "perfect10-2007::008",
@@ -4836,8 +5466,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": -0.04,
-  "y": -0.1398
+  "x": 0.1965,
+  "y": -0.1609
  },
  {
   "id": "perfect10-2007::009",
@@ -4846,8 +5476,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.2624,
-  "y": 0.0349
+  "x": 0.0085,
+  "y": -0.0473
  },
  {
   "id": "perfect10-2007::010",
@@ -4856,8 +5486,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.2649,
-  "y": 0.0377
+  "x": 0.0067,
+  "y": -0.0449
  },
  {
   "id": "perfect10-2007::011",
@@ -4866,8 +5496,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.2759,
-  "y": 0.0444
+  "x": -0.0019,
+  "y": -0.0408
  },
  {
   "id": "perfect10-2007::012",
@@ -4876,8 +5506,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.316,
-  "y": 0.0815
+  "x": -0.0368,
+  "y": -0.0237
  },
  {
   "id": "perfect10-2007::013",
@@ -4886,8 +5516,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3259,
-  "y": 0.1038
+  "x": -0.048,
+  "y": -0.009
  },
  {
   "id": "perfect10-2007::014",
@@ -4896,8 +5526,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3683,
-  "y": 0.3935
+  "x": -0.3039,
+  "y": 0.4006
  },
  {
   "id": "perfect10-2007::015",
@@ -4906,8 +5536,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.39,
-  "y": 0.3811
+  "x": -0.3192,
+  "y": 0.3854
  },
  {
   "id": "perfect10-2007::016",
@@ -4916,8 +5546,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3447,
-  "y": 0.1101
+  "x": -0.0634,
+  "y": -0.0075
  },
  {
   "id": "perfect10-2007::017",
@@ -4926,8 +5556,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3528,
-  "y": 0.1207
+  "x": -0.071,
+  "y": -0.0018
  },
  {
   "id": "perfect10-2007::018",
@@ -4936,8 +5566,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3563,
-  "y": 0.0937
+  "x": -0.0704,
+  "y": -0.0218
  },
  {
   "id": "perfect10-2007::019",
@@ -4946,8 +5576,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.338,
-  "y": 0.0824
+  "x": -0.0542,
+  "y": -0.0267
  },
  {
   "id": "perfect10-2007::020",
@@ -4956,8 +5586,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3332,
-  "y": 0.0718
+  "x": -0.0494,
+  "y": -0.034
  },
  {
   "id": "perfect10-2007::021",
@@ -4966,8 +5596,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.3042,
-  "y": 0.0861
+  "x": -0.0286,
+  "y": -0.0181
  },
  {
   "id": "perfect10-2007::022",
@@ -4976,8 +5606,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 2007,
-  "x": 0.4407,
-  "y": 0.2745
+  "x": -0.3784,
+  "y": 0.3028
  },
  {
   "id": "raw-story-2024::000",
@@ -4986,8 +5616,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2024,
-  "x": 0.8371,
-  "y": -0.0192
+  "x": -0.543,
+  "y": -0.0764
  },
  {
   "id": "raw-story-2024::001",
@@ -4996,8 +5626,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2024,
-  "x": 0.8908,
-  "y": -0.0657
+  "x": -0.5898,
+  "y": -0.1034
  },
  {
   "id": "raw-story-2024::002",
@@ -5006,8 +5636,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2024,
-  "x": 0.8981,
-  "y": -0.0973
+  "x": -0.6203,
+  "y": -0.1012
  },
  {
   "id": "raw-story-2024::003",
@@ -5016,8 +5646,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2024,
-  "x": 0.9176,
-  "y": -0.0902
+  "x": -0.6177,
+  "y": -0.1093
  },
  {
   "id": "raw-story-2024::004",
@@ -5026,8 +5656,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2024,
-  "x": 0.9169,
-  "y": -0.0704
+  "x": -0.602,
+  "y": -0.1164
  },
  {
   "id": "raw-story-2024::005",
@@ -5036,8 +5666,8 @@
   "layer": "modern",
   "court": "nysd",
   "year": 2024,
-  "x": 0.9062,
-  "y": -0.0743
+  "x": -0.6027,
+  "y": -0.1089
  },
  {
   "id": "ross-2025::000",
@@ -5046,8 +5676,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2598,
-  "y": 0.1515
+  "x": 0.1256,
+  "y": 0.0844
  },
  {
   "id": "ross-2025::001",
@@ -5056,8 +5686,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.285,
-  "y": 0.1497
+  "x": 0.1366,
+  "y": 0.1007
  },
  {
   "id": "ross-2025::002",
@@ -5066,8 +5696,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2774,
-  "y": 0.1653
+  "x": 0.1456,
+  "y": 0.0925
  },
  {
   "id": "ross-2025::003",
@@ -5076,8 +5706,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.297,
-  "y": 0.1838
+  "x": 0.1639,
+  "y": 0.106
  },
  {
   "id": "ross-2025::004",
@@ -5086,8 +5716,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2891,
-  "y": 0.1697
+  "x": 0.1538,
+  "y": 0.1001
  },
  {
   "id": "ross-2025::005",
@@ -5096,8 +5726,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2963,
-  "y": 0.1536
+  "x": 0.145,
+  "y": 0.1086
  },
  {
   "id": "ross-2025::006",
@@ -5106,8 +5736,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.3121,
-  "y": 0.1494
+  "x": 0.1336,
+  "y": 0.1192
  },
  {
   "id": "ross-2025::007",
@@ -5116,8 +5746,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2405,
-  "y": 0.1626
+  "x": 0.1241,
+  "y": 0.0694
  },
  {
   "id": "ross-2025::008",
@@ -5126,8 +5756,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2444,
-  "y": 0.1447
+  "x": 0.137,
+  "y": 0.0684
  },
  {
   "id": "ross-2025::009",
@@ -5136,8 +5766,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2429,
-  "y": 0.1057
+  "x": 0.1609,
+  "y": 0.0496
  },
  {
   "id": "ross-2025::010",
@@ -5146,8 +5776,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2463,
-  "y": 0.1028
+  "x": 0.1632,
+  "y": 0.0515
  },
  {
   "id": "ross-2025::011",
@@ -5156,8 +5786,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2533,
-  "y": 0.1168
+  "x": 0.1569,
+  "y": 0.0617
  },
  {
   "id": "ross-2025::012",
@@ -5166,8 +5796,8 @@
   "layer": "modern",
   "court": "ded",
   "year": 2025,
-  "x": -0.2516,
-  "y": 0.1546
+  "x": 0.1319,
+  "y": 0.0766
  },
  {
   "id": "sega-accolade-1992::000",
@@ -5176,8 +5806,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1297,
-  "y": 0.2409
+  "x": -0.2777,
+  "y": 0.0595
  },
  {
   "id": "sega-accolade-1992::001",
@@ -5186,8 +5816,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1564,
-  "y": 0.2262
+  "x": -0.2887,
+  "y": 0.0378
  },
  {
   "id": "sega-accolade-1992::002",
@@ -5196,8 +5826,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1479,
-  "y": 0.2401
+  "x": -0.2897,
+  "y": 0.0509
  },
  {
   "id": "sega-accolade-1992::003",
@@ -5206,8 +5836,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0885,
-  "y": 0.1825
+  "x": -0.2245,
+  "y": 0.0393
  },
  {
   "id": "sega-accolade-1992::004",
@@ -5216,8 +5846,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0895,
-  "y": 0.1613
+  "x": -0.2152,
+  "y": 0.0249
  },
  {
   "id": "sega-accolade-1992::005",
@@ -5226,8 +5856,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0831,
-  "y": 0.1673
+  "x": -0.214,
+  "y": 0.0319
  },
  {
   "id": "sega-accolade-1992::006",
@@ -5236,8 +5866,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0771,
-  "y": 0.1923
+  "x": -0.2217,
+  "y": 0.0509
  },
  {
   "id": "sega-accolade-1992::007",
@@ -5246,8 +5876,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0747,
-  "y": 0.209
+  "x": -0.2279,
+  "y": 0.0632
  },
  {
   "id": "sega-accolade-1992::008",
@@ -5256,8 +5886,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.117,
-  "y": 0.2027
+  "x": -0.2527,
+  "y": 0.0397
  },
  {
   "id": "sega-accolade-1992::009",
@@ -5266,8 +5896,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1255,
-  "y": 0.2042
+  "x": -0.259,
+  "y": 0.0371
  },
  {
   "id": "sega-accolade-1992::010",
@@ -5276,8 +5906,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0354,
-  "y": 0.1777
+  "x": -0.1887,
+  "y": 0.0613
  },
  {
   "id": "sega-accolade-1992::011",
@@ -5286,8 +5916,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0945,
-  "y": 0.2265
+  "x": -0.2484,
+  "y": 0.0655
  },
  {
   "id": "sega-accolade-1992::012",
@@ -5296,8 +5926,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0999,
-  "y": 0.2098
+  "x": -0.2447,
+  "y": 0.0521
  },
  {
   "id": "sega-accolade-1992::013",
@@ -5306,8 +5936,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.0603,
-  "y": 0.1977
+  "x": -0.2138,
+  "y": 0.0631
  },
  {
   "id": "sega-accolade-1992::014",
@@ -5316,8 +5946,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1391,
-  "y": 0.2516
+  "x": -0.2884,
+  "y": 0.0623
  },
  {
   "id": "sega-accolade-1992::015",
@@ -5326,8 +5956,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1453,
-  "y": 0.2593
+  "x": -0.2956,
+  "y": 0.0649
  },
  {
   "id": "sega-accolade-1992::016",
@@ -5336,8 +5966,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1607,
-  "y": 0.2665
+  "x": -0.3091,
+  "y": 0.0645
  },
  {
   "id": "sega-accolade-1992::017",
@@ -5346,8 +5976,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1713,
-  "y": 0.2808
+  "x": -0.3221,
+  "y": 0.0705
  },
  {
   "id": "sega-accolade-1992::018",
@@ -5356,8 +5986,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.163,
-  "y": 0.2537
+  "x": -0.3056,
+  "y": 0.0544
  },
  {
   "id": "sega-accolade-1992::019",
@@ -5366,8 +5996,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.1018,
-  "y": 0.2376
+  "x": -0.2581,
+  "y": 0.0694
  },
  {
   "id": "sega-accolade-1992::020",
@@ -5376,8 +6006,8 @@
   "layer": "ancestor",
   "court": "ca9",
   "year": 1992,
-  "x": 0.177,
-  "y": 0.2391
+  "x": -0.3093,
+  "y": 0.0391
  },
  {
   "id": "sony-betamax-1984::000",
@@ -5386,8 +6016,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1073,
-  "y": 0.6108
+  "x": -0.0819,
+  "y": 0.5291
  },
  {
   "id": "sony-betamax-1984::001",
@@ -5396,8 +6026,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0865,
-  "y": 0.5912
+  "x": -0.0601,
+  "y": 0.5249
  },
  {
   "id": "sony-betamax-1984::002",
@@ -5406,8 +6036,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1617,
-  "y": 0.5846
+  "x": -0.1216,
+  "y": 0.5011
  },
  {
   "id": "sony-betamax-1984::003",
@@ -5416,8 +6046,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1898,
-  "y": 0.6209
+  "x": -0.1413,
+  "y": 0.5297
  },
  {
   "id": "sony-betamax-1984::004",
@@ -5426,8 +6056,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2456,
-  "y": 0.6032
+  "x": 0.1427,
+  "y": 0.4674
  },
  {
   "id": "sony-betamax-1984::005",
@@ -5436,8 +6066,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2853,
-  "y": 0.5697
+  "x": -0.2121,
+  "y": 0.4951
  },
  {
   "id": "sony-betamax-1984::006",
@@ -5446,8 +6076,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2844,
-  "y": 0.5374
+  "x": -0.2121,
+  "y": 0.4706
  },
  {
   "id": "sony-betamax-1984::007",
@@ -5456,8 +6086,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2455,
-  "y": 0.511
+  "x": -0.1812,
+  "y": 0.4474
  },
  {
   "id": "sony-betamax-1984::008",
@@ -5466,8 +6096,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0892,
-  "y": 0.5353
+  "x": -0.0237,
+  "y": 0.5115
  },
  {
   "id": "sony-betamax-1984::009",
@@ -5476,8 +6106,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1001,
-  "y": 0.4722
+  "x": -0.07,
+  "y": 0.4085
  },
  {
   "id": "sony-betamax-1984::010",
@@ -5486,8 +6116,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.093,
-  "y": 0.4979
+  "x": -0.0633,
+  "y": 0.4282
  },
  {
   "id": "sony-betamax-1984::011",
@@ -5496,8 +6126,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0698,
-  "y": 0.6062
+  "x": -0.0657,
+  "y": 0.5438
  },
  {
   "id": "sony-betamax-1984::012",
@@ -5506,8 +6136,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0285,
-  "y": 0.6341
+  "x": 0.0704,
+  "y": 0.465
  },
  {
   "id": "sony-betamax-1984::013",
@@ -5516,8 +6146,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.197,
-  "y": 0.5867
+  "x": 0.1192,
+  "y": 0.4349
  },
  {
   "id": "sony-betamax-1984::014",
@@ -5526,8 +6156,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.3278,
-  "y": 0.5775
+  "x": -0.2456,
+  "y": 0.5019
  },
  {
   "id": "sony-betamax-1984::015",
@@ -5536,8 +6166,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.3503,
-  "y": 0.5818
+  "x": -0.2621,
+  "y": 0.5081
  },
  {
   "id": "sony-betamax-1984::016",
@@ -5546,8 +6176,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2518,
-  "y": 0.6165
+  "x": -0.1874,
+  "y": 0.5321
  },
  {
   "id": "sony-betamax-1984::017",
@@ -5556,8 +6186,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1163,
-  "y": 0.6775
+  "x": -0.0197,
+  "y": 0.5571
  },
  {
   "id": "sony-betamax-1984::018",
@@ -5566,8 +6196,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2558,
-  "y": 0.4391
+  "x": 0.2302,
+  "y": 0.3216
  },
  {
   "id": "sony-betamax-1984::019",
@@ -5576,8 +6206,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.033,
-  "y": 0.5371
+  "x": 0.0193,
+  "y": 0.4345
  },
  {
   "id": "sony-betamax-1984::020",
@@ -5586,8 +6216,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0143,
-  "y": 0.5743
+  "x": 0.0014,
+  "y": 0.4729
  },
  {
   "id": "sony-betamax-1984::021",
@@ -5596,8 +6226,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1011,
-  "y": 0.5939
+  "x": -0.0692,
+  "y": 0.5132
  },
  {
   "id": "sony-betamax-1984::022",
@@ -5606,8 +6236,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0671,
-  "y": 0.6449
+  "x": -0.0818,
+  "y": 0.4951
  },
  {
   "id": "sony-betamax-1984::023",
@@ -5616,8 +6246,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1343,
-  "y": 0.551
+  "x": 0.1161,
+  "y": 0.3797
  },
  {
   "id": "sony-betamax-1984::024",
@@ -5626,8 +6256,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1717,
-  "y": 0.4771
+  "x": 0.1572,
+  "y": 0.328
  },
  {
   "id": "sony-betamax-1984::025",
@@ -5636,8 +6266,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1665,
-  "y": 0.567
+  "x": 0.1173,
+  "y": 0.4086
  },
  {
   "id": "sony-betamax-1984::026",
@@ -5646,8 +6276,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1807,
-  "y": 0.5628
+  "x": 0.1297,
+  "y": 0.4069
  },
  {
   "id": "sony-betamax-1984::027",
@@ -5656,8 +6286,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2971,
-  "y": 0.4063
+  "x": 0.2749,
+  "y": 0.3037
  },
  {
   "id": "sony-betamax-1984::028",
@@ -5666,8 +6296,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2513,
-  "y": 0.4138
+  "x": 0.2382,
+  "y": 0.303
  },
  {
   "id": "sony-betamax-1984::029",
@@ -5676,8 +6306,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.0009,
-  "y": 0.4944
+  "x": -0.0207,
+  "y": 0.4349
  },
  {
   "id": "sony-betamax-1984::030",
@@ -5686,8 +6316,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1311,
-  "y": 0.536
+  "x": -0.073,
+  "y": 0.4636
  },
  {
   "id": "sony-betamax-1984::031",
@@ -5696,8 +6326,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.3078,
-  "y": 0.5428
+  "x": -0.2308,
+  "y": 0.4743
  },
  {
   "id": "sony-betamax-1984::032",
@@ -5706,8 +6336,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2605,
-  "y": 0.5448
+  "x": -0.1928,
+  "y": 0.4744
  },
  {
   "id": "sony-betamax-1984::033",
@@ -5716,8 +6346,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1915,
-  "y": 0.5134
+  "x": -0.1364,
+  "y": 0.4488
  },
  {
   "id": "sony-betamax-1984::034",
@@ -5726,8 +6356,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1343,
-  "y": 0.4782
+  "x": -0.095,
+  "y": 0.4201
  },
  {
   "id": "sony-betamax-1984::035",
@@ -5736,8 +6366,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1441,
-  "y": 0.4934
+  "x": -0.0991,
+  "y": 0.4338
  },
  {
   "id": "sony-betamax-1984::036",
@@ -5746,8 +6376,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2245,
-  "y": 0.5786
+  "x": -0.1677,
+  "y": 0.5
  },
  {
   "id": "sony-betamax-1984::037",
@@ -5756,8 +6386,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1657,
-  "y": 0.6152
+  "x": 0.1643,
+  "y": 0.4229
  },
  {
   "id": "sony-betamax-1984::038",
@@ -5766,8 +6396,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2094,
-  "y": 0.4815
+  "x": 0.1817,
+  "y": 0.3441
  },
  {
   "id": "sony-betamax-1984::039",
@@ -5776,8 +6406,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1802,
-  "y": 0.4522
+  "x": 0.1733,
+  "y": 0.3119
  },
  {
   "id": "sony-betamax-1984::040",
@@ -5786,8 +6416,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1017,
-  "y": 0.6012
+  "x": 0.0813,
+  "y": 0.3599
  },
  {
   "id": "sony-betamax-1984::041",
@@ -5796,8 +6426,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1712,
-  "y": 0.5272
+  "x": 0.1439,
+  "y": 0.3768
  },
  {
   "id": "sony-betamax-1984::042",
@@ -5806,8 +6436,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2216,
-  "y": 0.5197
+  "x": 0.1771,
+  "y": 0.375
  },
  {
   "id": "sony-betamax-1984::043",
@@ -5816,8 +6446,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1756,
-  "y": 0.411
+  "x": 0.185,
+  "y": 0.2795
  },
  {
   "id": "sony-betamax-1984::044",
@@ -5826,8 +6456,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0389,
-  "y": 0.5031
+  "x": -0.0451,
+  "y": 0.4595
  },
  {
   "id": "sony-betamax-1984::045",
@@ -5836,8 +6466,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.3622,
-  "y": 0.6168
+  "x": -0.2661,
+  "y": 0.5375
  },
  {
   "id": "sony-betamax-1984::046",
@@ -5846,8 +6476,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2335,
-  "y": 0.5339
+  "x": -0.1709,
+  "y": 0.4651
  },
  {
   "id": "sony-betamax-1984::047",
@@ -5856,8 +6486,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1023,
-  "y": 0.5585
+  "x": -0.0437,
+  "y": 0.5019
  },
  {
   "id": "sony-betamax-1984::048",
@@ -5866,8 +6496,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0537,
-  "y": 0.5456
+  "x": 0.008,
+  "y": 0.5204
  },
  {
   "id": "sony-betamax-1984::049",
@@ -5876,8 +6506,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1136,
-  "y": 0.6241
+  "x": -0.0888,
+  "y": 0.5415
  },
  {
   "id": "sony-betamax-1984::050",
@@ -5886,8 +6516,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0916,
-  "y": 0.5977
+  "x": -0.0641,
+  "y": 0.527
  },
  {
   "id": "sony-betamax-1984::051",
@@ -5896,8 +6526,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1348,
-  "y": 0.5919
+  "x": -0.1016,
+  "y": 0.5094
  },
  {
   "id": "sony-betamax-1984::052",
@@ -5906,8 +6536,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1642,
-  "y": 0.6051
+  "x": -0.1224,
+  "y": 0.5156
  },
  {
   "id": "sony-betamax-1984::053",
@@ -5916,8 +6546,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2466,
-  "y": 0.6044
+  "x": 0.1419,
+  "y": 0.4692
  },
  {
   "id": "sony-betamax-1984::054",
@@ -5926,8 +6556,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2834,
-  "y": 0.5758
+  "x": -0.2104,
+  "y": 0.4998
  },
  {
   "id": "sony-betamax-1984::055",
@@ -5936,8 +6566,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2858,
-  "y": 0.5419
+  "x": -0.213,
+  "y": 0.4742
  },
  {
   "id": "sony-betamax-1984::056",
@@ -5946,8 +6576,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2459,
-  "y": 0.512
+  "x": -0.1811,
+  "y": 0.4481
  },
  {
   "id": "sony-betamax-1984::057",
@@ -5956,8 +6586,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0881,
-  "y": 0.5353
+  "x": -0.0232,
+  "y": 0.5121
  },
  {
   "id": "sony-betamax-1984::058",
@@ -5966,8 +6596,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.165,
-  "y": 0.5224
+  "x": -0.1145,
+  "y": 0.4581
  },
  {
   "id": "sony-betamax-1984::059",
@@ -5976,8 +6606,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0999,
-  "y": 0.4729
+  "x": -0.0698,
+  "y": 0.4088
  },
  {
   "id": "sony-betamax-1984::060",
@@ -5986,8 +6616,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0929,
-  "y": 0.4974
+  "x": -0.0632,
+  "y": 0.428
  },
  {
   "id": "sony-betamax-1984::061",
@@ -5996,8 +6626,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0928,
-  "y": 0.6146
+  "x": -0.0781,
+  "y": 0.5206
  },
  {
   "id": "sony-betamax-1984::062",
@@ -6006,8 +6636,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0683,
-  "y": 0.6442
+  "x": -0.082,
+  "y": 0.4956
  },
  {
   "id": "sony-betamax-1984::063",
@@ -6016,8 +6646,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1342,
-  "y": 0.5511
+  "x": 0.1161,
+  "y": 0.3799
  },
  {
   "id": "sony-betamax-1984::064",
@@ -6026,8 +6656,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1712,
-  "y": 0.4767
+  "x": 0.1569,
+  "y": 0.3275
  },
  {
   "id": "sony-betamax-1984::065",
@@ -6036,8 +6666,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1671,
-  "y": 0.565
+  "x": 0.1166,
+  "y": 0.4088
  },
  {
   "id": "sony-betamax-1984::066",
@@ -6046,8 +6676,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1816,
-  "y": 0.5575
+  "x": 0.1304,
+  "y": 0.4041
  },
  {
   "id": "sony-betamax-1984::067",
@@ -6056,8 +6686,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2974,
-  "y": 0.4079
+  "x": 0.2745,
+  "y": 0.3048
  },
  {
   "id": "sony-betamax-1984::068",
@@ -6066,8 +6696,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2498,
-  "y": 0.4136
+  "x": 0.2373,
+  "y": 0.3024
  },
  {
   "id": "sony-betamax-1984::069",
@@ -6076,8 +6706,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0049,
-  "y": 0.4909
+  "x": -0.0265,
+  "y": 0.436
  },
  {
   "id": "sony-betamax-1984::070",
@@ -6086,8 +6716,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1389,
-  "y": 0.5305
+  "x": -0.0817,
+  "y": 0.4605
  },
  {
   "id": "sony-betamax-1984::071",
@@ -6096,8 +6726,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.3182,
-  "y": 0.5397
+  "x": -0.2391,
+  "y": 0.4717
  },
  {
   "id": "sony-betamax-1984::072",
@@ -6106,8 +6736,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2147,
-  "y": 0.5494
+  "x": -0.1565,
+  "y": 0.4778
  },
  {
   "id": "sony-betamax-1984::073",
@@ -6116,8 +6746,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1415,
-  "y": 0.4768
+  "x": -0.1007,
+  "y": 0.4201
  },
  {
   "id": "sony-betamax-1984::074",
@@ -6126,8 +6756,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1563,
-  "y": 0.5007
+  "x": -0.1082,
+  "y": 0.4399
  },
  {
   "id": "sony-betamax-1984::075",
@@ -6136,8 +6766,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2062,
-  "y": 0.5925
+  "x": -0.1546,
+  "y": 0.511
  },
  {
   "id": "sony-betamax-1984::076",
@@ -6146,8 +6776,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0584,
-  "y": 0.6027
+  "x": -0.0607,
+  "y": 0.5519
  },
  {
   "id": "sony-betamax-1984::077",
@@ -6156,8 +6786,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2114,
-  "y": 0.5948
+  "x": 0.1219,
+  "y": 0.4469
  },
  {
   "id": "sony-betamax-1984::078",
@@ -6166,8 +6796,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.3113,
-  "y": 0.5792
+  "x": -0.2326,
+  "y": 0.5023
  },
  {
   "id": "sony-betamax-1984::079",
@@ -6176,8 +6806,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.3494,
-  "y": 0.5871
+  "x": -0.2611,
+  "y": 0.512
  },
  {
   "id": "sony-betamax-1984::080",
@@ -6186,8 +6816,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2523,
-  "y": 0.6168
+  "x": -0.1878,
+  "y": 0.5324
  },
  {
   "id": "sony-betamax-1984::081",
@@ -6196,8 +6826,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1162,
-  "y": 0.6818
+  "x": -0.0161,
+  "y": 0.5581
  },
  {
   "id": "sony-betamax-1984::082",
@@ -6206,8 +6836,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.257,
-  "y": 0.4385
+  "x": 0.2311,
+  "y": 0.3212
  },
  {
   "id": "sony-betamax-1984::083",
@@ -6216,8 +6846,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.0344,
-  "y": 0.5354
+  "x": 0.0196,
+  "y": 0.4331
  },
  {
   "id": "sony-betamax-1984::084",
@@ -6226,8 +6856,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.014,
-  "y": 0.5727
+  "x": 0.0036,
+  "y": 0.4748
  },
  {
   "id": "sony-betamax-1984::085",
@@ -6236,8 +6866,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0236,
-  "y": 0.5837
+  "x": -0.0088,
+  "y": 0.473
  },
  {
   "id": "sony-betamax-1984::086",
@@ -6246,8 +6876,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1666,
-  "y": 0.6145
+  "x": 0.1638,
+  "y": 0.4229
  },
  {
   "id": "sony-betamax-1984::087",
@@ -6256,8 +6886,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.211,
-  "y": 0.4805
+  "x": 0.1833,
+  "y": 0.3438
  },
  {
   "id": "sony-betamax-1984::088",
@@ -6266,8 +6896,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1802,
-  "y": 0.453
+  "x": 0.173,
+  "y": 0.3125
  },
  {
   "id": "sony-betamax-1984::089",
@@ -6276,8 +6906,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1015,
-  "y": 0.6013
+  "x": 0.0811,
+  "y": 0.3598
  },
  {
   "id": "sony-betamax-1984::090",
@@ -6286,8 +6916,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1722,
-  "y": 0.5275
+  "x": 0.1445,
+  "y": 0.3773
  },
  {
   "id": "sony-betamax-1984::091",
@@ -6296,8 +6926,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.2216,
-  "y": 0.5188
+  "x": 0.1774,
+  "y": 0.3743
  },
  {
   "id": "sony-betamax-1984::092",
@@ -6306,8 +6936,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": -0.1755,
-  "y": 0.4094
+  "x": 0.1853,
+  "y": 0.2784
  },
  {
   "id": "sony-betamax-1984::093",
@@ -6316,8 +6946,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.0394,
-  "y": 0.5026
+  "x": -0.0455,
+  "y": 0.4592
  },
  {
   "id": "sony-betamax-1984::094",
@@ -6326,8 +6956,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.3617,
-  "y": 0.6155
+  "x": -0.2659,
+  "y": 0.5364
  },
  {
   "id": "sony-betamax-1984::095",
@@ -6336,8 +6966,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.2339,
-  "y": 0.5359
+  "x": -0.1714,
+  "y": 0.4669
  },
  {
   "id": "sony-betamax-1984::096",
@@ -6346,8 +6976,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.1029,
-  "y": 0.5565
+  "x": -0.0427,
+  "y": 0.5008
  },
  {
   "id": "sony-betamax-1984::097",
@@ -6356,8 +6986,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 1984,
-  "x": 0.053,
-  "y": 0.5437
+  "x": 0.0085,
+  "y": 0.5196
  },
  {
   "id": "texaco-1995::000",
@@ -6366,8 +6996,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3211,
-  "y": -0.0494
+  "x": 0.3199,
+  "y": 0.135
  },
  {
   "id": "texaco-1995::001",
@@ -6376,8 +7006,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3545,
-  "y": -0.0519
+  "x": 0.3427,
+  "y": 0.1412
  },
  {
   "id": "texaco-1995::002",
@@ -6386,8 +7016,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3465,
-  "y": -0.0306
+  "x": 0.3321,
+  "y": 0.1555
  },
  {
   "id": "texaco-1995::003",
@@ -6396,8 +7026,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3503,
-  "y": -0.0458
+  "x": 0.3422,
+  "y": 0.146
  },
  {
   "id": "texaco-1995::004",
@@ -6406,8 +7036,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3624,
-  "y": -0.0787
+  "x": 0.3583,
+  "y": 0.1254
  },
  {
   "id": "texaco-1995::005",
@@ -6416,8 +7046,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3723,
-  "y": -0.1259
+  "x": 0.3819,
+  "y": 0.0959
  },
  {
   "id": "texaco-1995::006",
@@ -6426,8 +7056,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3955,
-  "y": -0.1339
+  "x": 0.4011,
+  "y": 0.099
  },
  {
   "id": "texaco-1995::007",
@@ -6436,8 +7066,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3829,
-  "y": -0.13
+  "x": 0.3908,
+  "y": 0.0975
  },
  {
   "id": "texaco-1995::008",
@@ -6446,8 +7076,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.2882,
-  "y": 0.3837
+  "x": 0.286,
+  "y": 0.2862
  },
  {
   "id": "texaco-1995::009",
@@ -6456,8 +7086,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3823,
-  "y": 0.0096
+  "x": 0.3326,
+  "y": 0.1977
  },
  {
   "id": "texaco-1995::010",
@@ -6466,8 +7096,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3786,
-  "y": 0.0046
+  "x": 0.3329,
+  "y": 0.1925
  },
  {
   "id": "texaco-1995::011",
@@ -6476,8 +7106,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3411,
-  "y": -0.0829
+  "x": 0.3443,
+  "y": 0.115
  },
  {
   "id": "texaco-1995::012",
@@ -6486,8 +7116,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3344,
-  "y": -0.0647
+  "x": 0.3341,
+  "y": 0.1265
  },
  {
   "id": "texaco-1995::013",
@@ -6496,8 +7126,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.2789,
-  "y": -0.0217
+  "x": 0.2462,
+  "y": 0.2562
  },
  {
   "id": "texaco-1995::014",
@@ -6506,8 +7136,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.2777,
-  "y": -0.0507
+  "x": 0.2895,
+  "y": 0.125
  },
  {
   "id": "texaco-1995::015",
@@ -6516,8 +7146,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.2851,
-  "y": -0.0654
+  "x": 0.2985,
+  "y": 0.1174
  },
  {
   "id": "texaco-1995::016",
@@ -6526,8 +7156,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.295,
-  "y": -0.1114
+  "x": 0.3209,
+  "y": 0.0789
  },
  {
   "id": "texaco-1995::017",
@@ -6536,8 +7166,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.284,
-  "y": -0.1534
+  "x": 0.3295,
+  "y": 0.0454
  },
  {
   "id": "texaco-1995::018",
@@ -6546,8 +7176,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.2865,
-  "y": -0.149
+  "x": 0.3288,
+  "y": 0.05
  },
  {
   "id": "texaco-1995::019",
@@ -6556,8 +7186,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.2683,
-  "y": -0.1365
+  "x": 0.3124,
+  "y": 0.0472
  },
  {
   "id": "texaco-1995::020",
@@ -6566,8 +7196,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.2526,
-  "y": -0.1338
+  "x": 0.3014,
+  "y": 0.0398
  },
  {
   "id": "texaco-1995::021",
@@ -6576,8 +7206,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3105,
-  "y": -0.0717
+  "x": 0.32,
+  "y": 0.1144
  },
  {
   "id": "texaco-1995::022",
@@ -6586,8 +7216,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3207,
-  "y": -0.1064
+  "x": 0.3368,
+  "y": 0.0915
  },
  {
   "id": "texaco-1995::023",
@@ -6596,8 +7226,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3192,
-  "y": -0.1248
+  "x": 0.3435,
+  "y": 0.0783
  },
  {
   "id": "texaco-1995::024",
@@ -6606,8 +7236,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3792,
-  "y": -0.0987
+  "x": 0.3762,
+  "y": 0.1166
  },
  {
   "id": "texaco-1995::025",
@@ -6616,8 +7246,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3638,
-  "y": -0.106
+  "x": 0.3679,
+  "y": 0.1059
  },
  {
   "id": "texaco-1995::026",
@@ -6626,8 +7256,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3502,
-  "y": -0.1563
+  "x": 0.3784,
+  "y": 0.066
  },
  {
   "id": "texaco-1995::027",
@@ -6636,8 +7266,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3599,
-  "y": -0.1368
+  "x": 0.3772,
+  "y": 0.0837
  },
  {
   "id": "texaco-1995::028",
@@ -6646,8 +7276,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3296,
-  "y": -0.1117
+  "x": 0.3461,
+  "y": 0.0916
  },
  {
   "id": "texaco-1995::029",
@@ -6656,8 +7286,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.2845,
-  "y": -0.0818
+  "x": 0.3025,
+  "y": 0.1018
  },
  {
   "id": "texaco-1995::030",
@@ -6666,8 +7296,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3201,
-  "y": -0.0898
+  "x": 0.3308,
+  "y": 0.1031
  },
  {
   "id": "texaco-1995::031",
@@ -6676,8 +7306,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": -0.3565,
-  "y": -0.1227
+  "x": 0.3691,
+  "y": 0.0917
  },
  {
   "id": "texaco-1995::032",
@@ -6686,8 +7316,288 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 1995,
-  "x": 0.5223,
-  "y": 0.2992
+  "x": -0.4274,
+  "y": 0.3424
+ },
+ {
+  "id": "thaler-perlmutter-2025::000",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": -0.0125,
+  "y": 0.2315
+ },
+ {
+  "id": "thaler-perlmutter-2025::001",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": 0.0408,
+  "y": 0.287
+ },
+ {
+  "id": "thaler-perlmutter-2025::002",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": 0.0005,
+  "y": 0.231
+ },
+ {
+  "id": "thaler-perlmutter-2025::003",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": -0.0099,
+  "y": 0.2445
+ },
+ {
+  "id": "thaler-perlmutter-2025::004",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": 0.0292,
+  "y": 0.2704
+ },
+ {
+  "id": "thaler-perlmutter-2025::005",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": 0.0237,
+  "y": 0.2567
+ },
+ {
+  "id": "thaler-perlmutter-2025::006",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": 0.0224,
+  "y": 0.261
+ },
+ {
+  "id": "thaler-perlmutter-2025::007",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": 0.0106,
+  "y": 0.2685
+ },
+ {
+  "id": "thaler-perlmutter-2025::008",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": 0.0132,
+  "y": 0.2293
+ },
+ {
+  "id": "thaler-perlmutter-2025::009",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": 0.0171,
+  "y": 0.2372
+ },
+ {
+  "id": "thaler-perlmutter-2025::010",
+  "case_id": "thaler-perlmutter-2025",
+  "case_name": "Thaler v. Perlmutter",
+  "layer": "modern",
+  "court": "cadc",
+  "year": 2025,
+  "x": -0.0032,
+  "y": 0.2385
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::000",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": -0.0065,
+  "y": 0.2224
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::001",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": 0.007,
+  "y": 0.2042
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::002",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": 0.0028,
+  "y": 0.1872
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::003",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": -0.2315,
+  "y": -0.141
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::004",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": 0.0184,
+  "y": 0.1966
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::005",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": 0.0531,
+  "y": 0.243
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::006",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": 0.0376,
+  "y": 0.2636
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::007",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": 0.0458,
+  "y": 0.2531
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::008",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": 0.0247,
+  "y": 0.2151
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::009",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": 0.0271,
+  "y": 0.1975
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023::010",
+  "case_id": "thaler-perlmutter-dc-2023",
+  "case_name": "Thaler v. Perlmutter (D.D.C.)",
+  "layer": "modern",
+  "court": "dcd",
+  "year": 2023,
+  "x": -0.0025,
+  "y": 0.1768
+ },
+ {
+  "id": "thaler-vidal-2022::000",
+  "case_id": "thaler-vidal-2022",
+  "case_name": "Thaler v. Vidal",
+  "layer": "modern",
+  "court": "cafc",
+  "year": 2022,
+  "x": -0.0545,
+  "y": 0.2316
+ },
+ {
+  "id": "thaler-vidal-2022::001",
+  "case_id": "thaler-vidal-2022",
+  "case_name": "Thaler v. Vidal",
+  "layer": "modern",
+  "court": "cafc",
+  "year": 2022,
+  "x": -0.0608,
+  "y": 0.2265
+ },
+ {
+  "id": "thaler-vidal-2022::002",
+  "case_id": "thaler-vidal-2022",
+  "case_name": "Thaler v. Vidal",
+  "layer": "modern",
+  "court": "cafc",
+  "year": 2022,
+  "x": -0.0677,
+  "y": 0.2343
+ },
+ {
+  "id": "thaler-vidal-2022::003",
+  "case_id": "thaler-vidal-2022",
+  "case_name": "Thaler v. Vidal",
+  "layer": "modern",
+  "court": "cafc",
+  "year": 2022,
+  "x": -0.0702,
+  "y": 0.2423
+ },
+ {
+  "id": "thaler-vidal-2022::004",
+  "case_id": "thaler-vidal-2022",
+  "case_name": "Thaler v. Vidal",
+  "layer": "modern",
+  "court": "cafc",
+  "year": 2022,
+  "x": -0.0659,
+  "y": 0.2427
+ },
+ {
+  "id": "thaler-vidal-2022::005",
+  "case_id": "thaler-vidal-2022",
+  "case_name": "Thaler v. Vidal",
+  "layer": "modern",
+  "court": "cafc",
+  "year": 2022,
+  "x": -0.0564,
+  "y": 0.245
  },
  {
   "id": "tveyes-2018::000",
@@ -6696,8 +7606,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.092,
-  "y": 0.0042
+  "x": 0.2928,
+  "y": -0.0951
  },
  {
   "id": "tveyes-2018::001",
@@ -6706,8 +7616,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.1063,
-  "y": 0.0034
+  "x": 0.3009,
+  "y": -0.1033
  },
  {
   "id": "tveyes-2018::002",
@@ -6716,8 +7626,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0864,
-  "y": -0.0965
+  "x": 0.2414,
+  "y": -0.1522
  },
  {
   "id": "tveyes-2018::003",
@@ -6726,8 +7636,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0538,
-  "y": -0.0409
+  "x": 0.2474,
+  "y": -0.1053
  },
  {
   "id": "tveyes-2018::004",
@@ -6736,8 +7646,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0816,
-  "y": -0.0786
+  "x": 0.2494,
+  "y": -0.1419
  },
  {
   "id": "tveyes-2018::005",
@@ -6746,8 +7656,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.1095,
-  "y": -0.0485
+  "x": 0.2794,
+  "y": -0.1348
  },
  {
   "id": "tveyes-2018::006",
@@ -6756,8 +7666,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0983,
-  "y": -0.0147
+  "x": 0.2874,
+  "y": -0.1099
  },
  {
   "id": "tveyes-2018::007",
@@ -6766,8 +7676,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0648,
-  "y": -0.002
+  "x": 0.2728,
+  "y": -0.0852
  },
  {
   "id": "tveyes-2018::008",
@@ -6776,8 +7686,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0322,
-  "y": -0.0238
+  "x": 0.2433,
+  "y": -0.082
  },
  {
   "id": "tveyes-2018::009",
@@ -6786,8 +7696,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0165,
-  "y": -0.047
+  "x": 0.2228,
+  "y": -0.0914
  },
  {
   "id": "tveyes-2018::010",
@@ -6796,8 +7706,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": 0.0003,
-  "y": -0.0521
+  "x": 0.2096,
+  "y": -0.0911
  },
  {
   "id": "tveyes-2018::011",
@@ -6806,8 +7716,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": 0.0308,
-  "y": -0.0133
+  "x": 0.1891,
+  "y": -0.0642
  },
  {
   "id": "tveyes-2018::012",
@@ -6816,8 +7726,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": 0.0358,
-  "y": 0.0041
+  "x": 0.1856,
+  "y": -0.0508
  },
  {
   "id": "tveyes-2018::013",
@@ -6826,8 +7736,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0076,
-  "y": -0.0832
+  "x": 0.2033,
+  "y": -0.1166
  },
  {
   "id": "tveyes-2018::014",
@@ -6836,8 +7746,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0099,
-  "y": 0.0182
+  "x": 0.2238,
+  "y": -0.0459
  },
  {
   "id": "tveyes-2018::015",
@@ -6846,8 +7756,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0997,
-  "y": 0.0463
+  "x": 0.3211,
+  "y": -0.0767
  },
  {
   "id": "tveyes-2018::016",
@@ -6856,8 +7766,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.1009,
-  "y": 0.0247
+  "x": 0.3092,
+  "y": -0.0887
  },
  {
   "id": "tveyes-2018::017",
@@ -6866,8 +7776,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.1168,
-  "y": 0.0557
+  "x": 0.3364,
+  "y": -0.0829
  },
  {
   "id": "tveyes-2018::018",
@@ -6876,8 +7786,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0953,
-  "y": 0.0171
+  "x": 0.3015,
+  "y": -0.0894
  },
  {
   "id": "tveyes-2018::019",
@@ -6886,8 +7796,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.119,
-  "y": 0.014
+  "x": 0.3138,
+  "y": -0.1045
  },
  {
   "id": "tveyes-2018::020",
@@ -6896,8 +7806,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0689,
-  "y": -0.0897
+  "x": 0.2348,
+  "y": -0.1397
  },
  {
   "id": "tveyes-2018::021",
@@ -6906,8 +7816,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0454,
-  "y": -0.0514
+  "x": 0.2373,
+  "y": -0.1079
  },
  {
   "id": "tveyes-2018::022",
@@ -6916,8 +7826,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0651,
-  "y": -0.0707
+  "x": 0.2431,
+  "y": -0.1278
  },
  {
   "id": "tveyes-2018::023",
@@ -6926,8 +7836,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.1004,
-  "y": -0.0717
+  "x": 0.2639,
+  "y": -0.1482
  },
  {
   "id": "tveyes-2018::024",
@@ -6936,8 +7846,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.1075,
-  "y": -0.0271
+  "x": 0.2876,
+  "y": -0.1214
  },
  {
   "id": "tveyes-2018::025",
@@ -6946,8 +7856,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0753,
-  "y": 0.0107
+  "x": 0.2856,
+  "y": -0.0825
  },
  {
   "id": "tveyes-2018::026",
@@ -6956,8 +7866,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0263,
-  "y": -0.0416
+  "x": 0.2329,
+  "y": -0.0898
  },
  {
   "id": "tveyes-2018::027",
@@ -6966,8 +7876,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.0219,
-  "y": -0.0274
+  "x": 0.2343,
+  "y": -0.0791
  },
  {
   "id": "tveyes-2018::028",
@@ -6976,8 +7886,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": -0.019,
-  "y": -0.0619
+  "x": 0.2183,
+  "y": -0.1025
  },
  {
   "id": "tveyes-2018::029",
@@ -6986,8 +7896,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": 0.0007,
-  "y": -0.0366
+  "x": 0.2144,
+  "y": -0.0788
  },
  {
   "id": "tveyes-2018::030",
@@ -6996,8 +7906,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": 0.0343,
-  "y": -0.0253
+  "x": 0.1858,
+  "y": -0.0735
  },
  {
   "id": "tveyes-2018::031",
@@ -7006,8 +7916,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": 0.0016,
-  "y": 0.0258
+  "x": 0.2144,
+  "y": -0.0392
  },
  {
   "id": "tveyes-2018::032",
@@ -7016,8 +7926,8 @@
   "layer": "ancestor",
   "court": "ca2",
   "year": 2018,
-  "x": 0.0391,
-  "y": 0.0045
+  "x": 0.1831,
+  "y": -0.05
  },
  {
   "id": "warhol-2023::000",
@@ -7026,8 +7936,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8025,
-  "y": -0.4356
+  "x": 0.7677,
+  "y": -0.2586
  },
  {
   "id": "warhol-2023::001",
@@ -7036,8 +7946,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7754,
-  "y": -0.3718
+  "x": 0.7329,
+  "y": -0.2155
  },
  {
   "id": "warhol-2023::002",
@@ -7046,8 +7956,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6634,
-  "y": -0.2236
+  "x": 0.6134,
+  "y": -0.1267
  },
  {
   "id": "warhol-2023::003",
@@ -7056,8 +7966,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7555,
-  "y": -0.4062
+  "x": 0.7253,
+  "y": -0.2461
  },
  {
   "id": "warhol-2023::004",
@@ -7066,8 +7976,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.798,
-  "y": -0.3876
+  "x": 0.7535,
+  "y": -0.2226
  },
  {
   "id": "warhol-2023::005",
@@ -7076,8 +7986,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7545,
-  "y": -0.5283
+  "x": 0.7531,
+  "y": -0.3384
  },
  {
   "id": "warhol-2023::006",
@@ -7086,8 +7996,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7538,
-  "y": -0.5259
+  "x": 0.752,
+  "y": -0.3367
  },
  {
   "id": "warhol-2023::007",
@@ -7096,8 +8006,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8001,
-  "y": -0.422
+  "x": 0.7628,
+  "y": -0.2484
  },
  {
   "id": "warhol-2023::008",
@@ -7106,8 +8016,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7996,
-  "y": -0.4066
+  "x": 0.7591,
+  "y": -0.2366
  },
  {
   "id": "warhol-2023::009",
@@ -7116,8 +8026,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8042,
-  "y": -0.4526
+  "x": 0.7723,
+  "y": -0.2717
  },
  {
   "id": "warhol-2023::010",
@@ -7126,8 +8036,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7822,
-  "y": -0.4152
+  "x": 0.7476,
+  "y": -0.2471
  },
  {
   "id": "warhol-2023::011",
@@ -7136,8 +8046,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8247,
-  "y": -0.3899
+  "x": 0.7745,
+  "y": -0.2183
  },
  {
   "id": "warhol-2023::012",
@@ -7146,8 +8056,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7747,
-  "y": -0.3608
+  "x": 0.7299,
+  "y": -0.2072
  },
  {
   "id": "warhol-2023::013",
@@ -7156,8 +8066,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7222,
-  "y": -0.3319
+  "x": 0.6828,
+  "y": -0.1963
  },
  {
   "id": "warhol-2023::014",
@@ -7166,8 +8076,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6765,
-  "y": -0.3079
+  "x": 0.641,
+  "y": -0.1877
  },
  {
   "id": "warhol-2023::015",
@@ -7176,8 +8086,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6761,
-  "y": -0.2829
+  "x": 0.6346,
+  "y": -0.1689
  },
  {
   "id": "warhol-2023::016",
@@ -7186,8 +8096,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6953,
-  "y": -0.3164
+  "x": 0.6579,
+  "y": -0.1905
  },
  {
   "id": "warhol-2023::017",
@@ -7196,8 +8106,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7427,
-  "y": -0.3497
+  "x": 0.7034,
+  "y": -0.2055
  },
  {
   "id": "warhol-2023::018",
@@ -7206,8 +8116,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8231,
-  "y": -0.4288
+  "x": 0.7815,
+  "y": -0.2486
  },
  {
   "id": "warhol-2023::019",
@@ -7216,8 +8126,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8193,
-  "y": -0.4087
+  "x": 0.7744,
+  "y": -0.234
  },
  {
   "id": "warhol-2023::020",
@@ -7226,8 +8136,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.775,
-  "y": -0.4288
+  "x": 0.745,
+  "y": -0.2592
  },
  {
   "id": "warhol-2023::021",
@@ -7236,8 +8146,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7751,
-  "y": -0.3936
+  "x": 0.7375,
+  "y": -0.2323
  },
  {
   "id": "warhol-2023::022",
@@ -7246,8 +8156,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8403,
-  "y": -0.4658
+  "x": 0.8031,
+  "y": -0.2714
  },
  {
   "id": "warhol-2023::023",
@@ -7256,8 +8166,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8384,
-  "y": -0.4605
+  "x": 0.8004,
+  "y": -0.2681
  },
  {
   "id": "warhol-2023::024",
@@ -7266,8 +8176,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6751,
-  "y": -0.3091
+  "x": 0.6401,
+  "y": -0.189
  },
  {
   "id": "warhol-2023::025",
@@ -7276,8 +8186,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6768,
-  "y": -0.2243
+  "x": 0.6225,
+  "y": -0.1301
  },
  {
   "id": "warhol-2023::026",
@@ -7286,8 +8196,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6718,
-  "y": -0.3416
+  "x": 0.6458,
+  "y": -0.2142
  },
  {
   "id": "warhol-2023::027",
@@ -7296,8 +8206,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7853,
-  "y": -0.4354
+  "x": 0.7543,
+  "y": -0.2619
  },
  {
   "id": "warhol-2023::028",
@@ -7306,8 +8216,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.8075,
-  "y": -0.3802
+  "x": 0.7592,
+  "y": -0.2145
  },
  {
   "id": "warhol-2023::029",
@@ -7316,8 +8226,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7136,
-  "y": -0.3749
+  "x": 0.6857,
+  "y": -0.2311
  },
  {
   "id": "warhol-2023::030",
@@ -7326,8 +8236,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7629,
-  "y": -0.3904
+  "x": 0.7275,
+  "y": -0.2322
  },
  {
   "id": "warhol-2023::031",
@@ -7336,8 +8246,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7506,
-  "y": -0.383
+  "x": 0.7164,
+  "y": -0.2295
  },
  {
   "id": "warhol-2023::032",
@@ -7346,8 +8256,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7236,
-  "y": -0.3566
+  "x": 0.6903,
+  "y": -0.215
  },
  {
   "id": "warhol-2023::033",
@@ -7356,8 +8266,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7364,
-  "y": -0.3747
+  "x": 0.7038,
+  "y": -0.2263
  },
  {
   "id": "warhol-2023::034",
@@ -7366,8 +8276,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7472,
-  "y": -0.4275
+  "x": 0.7235,
+  "y": -0.2641
  },
  {
   "id": "warhol-2023::035",
@@ -7376,8 +8286,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7272,
-  "y": -0.4374
+  "x": 0.7101,
+  "y": -0.2759
  },
  {
   "id": "warhol-2023::036",
@@ -7386,8 +8296,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6918,
-  "y": -0.4462
+  "x": 0.6852,
+  "y": -0.2904
  },
  {
   "id": "warhol-2023::037",
@@ -7396,8 +8306,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7524,
-  "y": -0.4871
+  "x": 0.739,
+  "y": -0.3088
  },
  {
   "id": "warhol-2023::038",
@@ -7406,8 +8316,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7945,
-  "y": -0.4775
+  "x": 0.77,
+  "y": -0.2921
  },
  {
   "id": "warhol-2023::039",
@@ -7416,8 +8326,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7735,
-  "y": -0.4779
+  "x": 0.7536,
+  "y": -0.2967
  },
  {
   "id": "warhol-2023::040",
@@ -7426,8 +8336,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7651,
-  "y": -0.4455
+  "x": 0.7409,
+  "y": -0.2741
  },
  {
   "id": "warhol-2023::041",
@@ -7436,8 +8346,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6353,
-  "y": -0.3725
+  "x": 0.6257,
+  "y": -0.247
  },
  {
   "id": "warhol-2023::042",
@@ -7446,8 +8356,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6271,
-  "y": -0.3008
+  "x": 0.6011,
+  "y": -0.1945
  },
  {
   "id": "warhol-2023::043",
@@ -7456,8 +8366,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6541,
-  "y": -0.2618
+  "x": 0.6109,
+  "y": -0.1607
  },
  {
   "id": "warhol-2023::044",
@@ -7466,8 +8376,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7417,
-  "y": -0.45
+  "x": 0.7241,
+  "y": -0.2825
  },
  {
   "id": "warhol-2023::045",
@@ -7476,8 +8386,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7509,
-  "y": -0.4704
+  "x": 0.7353,
+  "y": -0.2962
  },
  {
   "id": "warhol-2023::046",
@@ -7486,8 +8396,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6691,
-  "y": -0.4515
+  "x": 0.6682,
+  "y": -0.2985
  },
  {
   "id": "warhol-2023::047",
@@ -7496,8 +8406,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7283,
-  "y": -0.4059
+  "x": 0.7046,
+  "y": -0.2513
  },
  {
   "id": "warhol-2023::048",
@@ -7506,8 +8416,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7036,
-  "y": -0.3992
+  "x": 0.685,
+  "y": -0.2526
  },
  {
   "id": "warhol-2023::049",
@@ -7516,8 +8426,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6928,
-  "y": -0.4229
+  "x": 0.6805,
+  "y": -0.2727
  },
  {
   "id": "warhol-2023::050",
@@ -7526,8 +8436,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6322,
-  "y": -0.413
+  "x": 0.633,
+  "y": -0.2765
  },
  {
   "id": "warhol-2023::051",
@@ -7536,8 +8446,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6647,
-  "y": -0.3977
+  "x": 0.6553,
+  "y": -0.2563
  },
  {
   "id": "warhol-2023::052",
@@ -7546,8 +8456,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6702,
-  "y": -0.4104
+  "x": 0.6612,
+  "y": -0.2662
  },
  {
   "id": "warhol-2023::053",
@@ -7556,8 +8466,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6982,
-  "y": -0.4843
+  "x": 0.6983,
+  "y": -0.3178
  },
  {
   "id": "warhol-2023::054",
@@ -7566,8 +8476,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7168,
-  "y": -0.4951
+  "x": 0.7146,
+  "y": -0.3233
  },
  {
   "id": "warhol-2023::055",
@@ -7576,8 +8486,8 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.7175,
-  "y": -0.4562
+  "x": 0.7069,
+  "y": -0.2924
  },
  {
   "id": "warhol-2023::056",
@@ -7586,7 +8496,7 @@
   "layer": "ancestor",
   "court": "scotus",
   "year": 2023,
-  "x": -0.6981,
-  "y": -0.4402
+  "x": 0.6886,
+  "y": -0.2844
  }
 ]

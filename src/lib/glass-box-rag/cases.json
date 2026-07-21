@@ -5,6 +5,7 @@
   "court": "scotus",
   "year": 1994,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "510 U.S. 569",
   "judge": null
  },
@@ -14,6 +15,7 @@
   "court": "scotus",
   "year": 1985,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "471 U.S. 539",
   "judge": null
  },
@@ -23,6 +25,7 @@
   "court": "scotus",
   "year": 1984,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "464 U.S. 417",
   "judge": null
  },
@@ -32,6 +35,7 @@
   "court": "scotus",
   "year": 1991,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "499 U.S. 340",
   "judge": null
  },
@@ -41,6 +45,7 @@
   "court": "scotus",
   "year": 2021,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "593 U.S. 1",
   "judge": null
  },
@@ -50,6 +55,7 @@
   "court": "scotus",
   "year": 2023,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "598 U.S. 508",
   "judge": null
  },
@@ -59,6 +65,7 @@
   "court": "ca2",
   "year": 2015,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "804 F.3d 202",
   "judge": null
  },
@@ -68,6 +75,7 @@
   "court": "ca2",
   "year": 2014,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "755 F.3d 87",
   "judge": null
  },
@@ -77,6 +85,7 @@
   "court": "ca2",
   "year": 2018,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "883 F.3d 169",
   "judge": null
  },
@@ -86,6 +95,7 @@
   "court": "ca2",
   "year": 1995,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "60 F.3d 913",
   "judge": null
  },
@@ -95,6 +105,7 @@
   "court": "ca2",
   "year": 2024,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "115 F.4th 163",
   "judge": null
  },
@@ -104,6 +115,7 @@
   "court": "ca9",
   "year": 1992,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "977 F.2d 1510",
   "judge": null
  },
@@ -113,6 +125,7 @@
   "court": "ca9",
   "year": 2000,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "203 F.3d 596",
   "judge": null
  },
@@ -122,6 +135,7 @@
   "court": "ca9",
   "year": 2003,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "336 F.3d 811",
   "judge": null
  },
@@ -131,6 +145,7 @@
   "court": "ca9",
   "year": 2007,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "508 F.3d 1146",
   "judge": null
  },
@@ -140,6 +155,7 @@
   "court": "ca9",
   "year": 2001,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "239 F.3d 1004",
   "judge": null
  },
@@ -149,6 +165,7 @@
   "court": "cadc",
   "year": 2023,
   "layer": "ancestor",
+  "domain": "copyright",
   "citation": "82 F.4th 1262",
   "judge": null
  },
@@ -158,6 +175,7 @@
   "court": "ded",
   "year": 2025,
   "layer": "modern",
+  "domain": "copyright",
   "citation": "765 F. Supp. 3d 382",
   "judge": "Bibas"
  },
@@ -167,6 +185,7 @@
   "court": "cand",
   "year": 2025,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": "Alsup"
  },
@@ -176,6 +195,7 @@
   "court": "cand",
   "year": 2025,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": "Chhabria"
  },
@@ -185,6 +205,7 @@
   "court": "scotus",
   "year": 2026,
   "layer": "modern",
+  "domain": "copyright",
   "citation": "607 U.S. ___",
   "judge": "Thomas"
  },
@@ -194,6 +215,7 @@
   "court": "ca3",
   "year": 2026,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": null
  },
@@ -203,6 +225,7 @@
   "court": "nysd",
   "year": 2025,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": "Stein"
  },
@@ -212,6 +235,7 @@
   "court": "cand",
   "year": 2024,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": "Orrick"
  },
@@ -221,6 +245,7 @@
   "court": "cand",
   "year": 2025,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": "Lee"
  },
@@ -230,6 +255,7 @@
   "court": "nysd",
   "year": 2024,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": "McMahon"
  },
@@ -239,6 +265,7 @@
   "court": "nysd",
   "year": 2025,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": "Rakoff"
  },
@@ -248,7 +275,68 @@
   "court": "cand",
   "year": 2024,
   "layer": "modern",
+  "domain": "copyright",
   "citation": null,
   "judge": "Tigar"
+ },
+ {
+  "id": "lokken-2025",
+  "name": "Estate of Lokken v. UnitedHealth Group",
+  "court": "mnd",
+  "year": 2025,
+  "layer": "modern",
+  "domain": "insurance",
+  "citation": null,
+  "judge": "Tunheim"
+ },
+ {
+  "id": "barrows-2025",
+  "name": "Estate of Barrows v. Humana",
+  "court": "kywd",
+  "year": 2025,
+  "layer": "modern",
+  "domain": "insurance",
+  "citation": null,
+  "judge": "Jennings"
+ },
+ {
+  "id": "kisting-leung-2025",
+  "name": "Kisting-Leung v. Cigna",
+  "court": "caed",
+  "year": 2025,
+  "layer": "modern",
+  "domain": "insurance",
+  "citation": null,
+  "judge": "Drozd"
+ },
+ {
+  "id": "thaler-perlmutter-2025",
+  "name": "Thaler v. Perlmutter",
+  "court": "cadc",
+  "year": 2025,
+  "layer": "modern",
+  "domain": "authorship",
+  "citation": "130 F.4th 1039",
+  "judge": "Millett"
+ },
+ {
+  "id": "thaler-perlmutter-dc-2023",
+  "name": "Thaler v. Perlmutter (D.D.C.)",
+  "court": "dcd",
+  "year": 2023,
+  "layer": "modern",
+  "domain": "authorship",
+  "citation": "687 F. Supp. 3d 140",
+  "judge": "Howell"
+ },
+ {
+  "id": "thaler-vidal-2022",
+  "name": "Thaler v. Vidal",
+  "court": "cafc",
+  "year": 2022,
+  "layer": "modern",
+  "domain": "patent",
+  "citation": "43 F.4th 1207",
+  "judge": "Stark"
  }
 ]

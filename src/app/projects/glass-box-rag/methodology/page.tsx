@@ -176,6 +176,37 @@ export default function Methodology() {
         </div>
 
         <div>
+          <h2 className="mb-2 font-serif text-xl text-stone-900">
+            5b. A corpus that can grade itself is not a test
+          </h2>
+          <p>
+            The first version of this corpus was all fair use — 28 opinions arguing the same
+            doctrine. That is a problem for evaluation, not just for coverage: when every
+            document is about the same thing, high retrieval scores prove nothing, because
+            everything is plausibly relevant. A retriever that returns &ldquo;a fair-use
+            case&rdquo; for a fair-use question looks perfect whether or not it actually
+            understood the question.
+          </p>
+          <p className="mt-2">
+            So six deliberately unrelated AI cases were added as a control group: three on
+            algorithmic health-insurance denials (ERISA and Medicare-Act preemption), two on
+            whether an AI can hold a copyright or a patent, and their vocabularies share almost
+            nothing with fair use. Adding them dropped the corpus&apos;s mean inter-case
+            similarity from 0.27 to 0.24 — and, more to the point, gave every query something it
+            was supposed to <em>reject</em>.
+          </p>
+          <p className="mt-2">
+            The retriever passed. A patent-inventorship question returns the patent case first;
+            an insurance question returns the three insurance cases; the authorship question
+            ranks the AI-registration cases above the fair-use cases even though both are
+            copyright. And the fair-use questions stayed clean — asked about intermediate
+            copying, the system returned five fair-use cases and zero insurance or patent
+            distractors. That last result is the one that matters: it is the difference between a
+            retriever that discriminates and a corpus that was flattering itself.
+          </p>
+        </div>
+
+        <div>
           <h2 className="mb-2 font-serif text-xl text-stone-900">6. The agentic loop</h2>
           <p>
             After retrieving, the model is asked a narrow question: is this enough, or does it

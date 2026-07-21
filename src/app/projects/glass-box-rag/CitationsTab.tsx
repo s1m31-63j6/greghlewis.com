@@ -22,6 +22,7 @@ interface Case {
   court: string;
   year: number;
   layer: string;
+  domain: string;
   citation: string | null;
 }
 interface Edge {
@@ -75,7 +76,7 @@ export function CitationsTab({ trace }: { trace: Trace | null }) {
       <p className="mb-2 text-[11px] text-stone-500">
         {trace
           ? "Highlighted cases were retrieved for this question; amber edges were followed by the agent."
-          : "Modern AI decisions on the left, the fair-use lineage they argue over on the right. Line weight is citation frequency."}
+          : "Modern AI decisions on the left, the fair-use lineage they argue over on the right. Copper names are the non-copyright control group (insurance, patent, authorship) — note they form a separate cluster, barely citing the fair-use canon."}
       </p>
       <svg viewBox={`0 0 100 ${height}`} className="w-full" style={{ height }}>
         <text x="8" y="10" className="fill-stone-400" style={{ fontSize: 4 }}>
@@ -106,13 +107,20 @@ export function CitationsTab({ trace }: { trace: Trace | null }) {
           const p = pos.get(c.id)!;
           const on = retrieved.has(c.id);
           const deg = inDegree.get(c.id) ?? 0;
+          const control = c.domain !== "copyright";
+          const fill = on
+            ? control
+              ? "#9a3412"
+              : "#1c1917"
+            : control
+              ? "#c2884e"
+              : "#a8a29e";
           return (
             <g key={c.id}>
               <text
                 x={p.x}
                 y={p.y}
-                style={{ fontSize: 3.4, fontWeight: on ? 600 : 400 }}
-                className={on ? "fill-stone-900" : "fill-stone-400"}
+                style={{ fontSize: 3.4, fontWeight: on ? 600 : 400, fill }}
               >
                 {c.name.length > 34 ? `${c.name.slice(0, 33)}…` : c.name}
               </text>

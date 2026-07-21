@@ -128,3 +128,42 @@ questions:
       whether warhol-2023 is ABSENT — see `forbidden`.
     forbidden: [warhol-2023]
     as_of: 2015
+
+  # --- cross-domain: the whole point of the expansion ---
+  # These validate that retrieval DISCRIMINATES. If a non-copyright question
+  # returns copyright cases, or a copyright question starts pulling insurance/patent
+  # distractors, the corpus was gaming itself. `forbidden` on the copyright questions
+  # names the new distractors that must NOT appear.
+  - id: ai-insurance-denial
+    q: Can an insurer be liable for using an algorithm to deny Medicare Advantage claims, or does the Medicare Act preempt those claims?
+    gold: [lokken-2025, barrows-2025, kisting-leung-2025]
+    critical: [lokken-2025, barrows-2025]
+    note: nH Predict / PxDx algorithmic denial. Pure insurance/ERISA — zero fair-use overlap.
+
+  - id: unjust-enrichment-split
+    q: Does an unjust enrichment claim against an AI-driven insurance denial survive Medicare Act preemption?
+    gold: [barrows-2025, lokken-2025]
+    critical: [barrows-2025, lokken-2025]
+    note: The second doctrinal split — survived in Barrows, preempted in Lokken.
+
+  - id: ai-authorship
+    q: Can a work generated autonomously by an AI system be registered for copyright without a human author?
+    gold: [thaler-perlmutter-2025, thaler-perlmutter-dc-2023]
+    critical: [thaler-perlmutter-2025]
+    note: Copyright, but authorship not fair use. Must NOT return the fair-use cases as primary.
+
+  - id: ai-inventorship
+    q: Can an artificial intelligence be named as the inventor on a patent application?
+    gold: [thaler-vidal-2022]
+    critical: [thaler-vidal-2022]
+    note: Patent law. Maximally distant vocabulary — the cleanest discrimination test.
+
+  # Copyright questions that must REJECT the new distractors. If diversification or
+  # fusion starts surfacing insurance/patent cases for a fair-use query, the retriever
+  # is not discriminating and the expanded corpus is polluting rather than validating.
+  - id: fair-use-not-polluted
+    q: Is copying an entire work as an intermediate step to reach unprotected functional elements fair use?
+    gold: [sega-accolade-1992, connectix-2000, google-oracle-2021]
+    critical: [sega-accolade-1992, connectix-2000]
+    forbidden: [lokken-2025, barrows-2025, kisting-leung-2025, thaler-vidal-2022]
+    note: Same as intermediate-copying, but now scored on REJECTING the non-copyright distractors.

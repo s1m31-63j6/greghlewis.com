@@ -33,10 +33,14 @@ export default function Page() {
           citation.
         </p>
         <p className="mt-3 text-base leading-relaxed text-stone-600">
-          The corpus is 28 published U.S. opinions on AI and copyright fair use — the three
-          decisions that have actually reached the merits, and the doctrinal lineage they argue
-          over. It is a genuinely unsettled area of law, which makes it a good test: a retrieval
-          system that quietly returns only one side of a split gives a confident, wrong answer.
+          The heart of the corpus is 28 published U.S. opinions on AI and copyright fair use —
+          the three decisions that have actually reached the merits, and the doctrinal lineage
+          they argue over. It is a genuinely unsettled area of law, which makes it a good test: a
+          retrieval system that quietly returns only one side of a split gives a confident, wrong
+          answer. Six deliberately unrelated AI cases — algorithmic insurance denials, AI patent
+          inventorship — sit alongside them as a control group, so the retriever has to prove it
+          can tell different legal questions apart rather than just recognise &ldquo;a copyright
+          case.&rdquo;
         </p>
         <p className="mt-3 text-sm text-stone-500">
           <Link href="/projects/glass-box-rag/methodology" className="underline hover:text-stone-900">

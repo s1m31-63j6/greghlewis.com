@@ -50,8 +50,10 @@ class Opinion:
 COURT_LEVEL = {
     "scotus": "supreme",
     "ca2": "circuit", "ca3": "circuit", "ca9": "circuit", "cadc": "circuit",
+    "cafc": "circuit",
     "cand": "district", "ded": "district", "nysd": "district", "cacd": "district",
-    "mad": "district",
+    "mad": "district", "mnd": "district", "kywd": "district", "caed": "district",
+    "dcd": "district",
 }
 
 COURT_NAME = {
@@ -60,15 +62,23 @@ COURT_NAME = {
     "ca3": "U.S. Court of Appeals, Third Circuit",
     "ca9": "U.S. Court of Appeals, Ninth Circuit",
     "cadc": "U.S. Court of Appeals, D.C. Circuit",
+    "cafc": "U.S. Court of Appeals, Federal Circuit",
     "cand": "N.D. Cal.",
     "ded": "D. Del.",
     "nysd": "S.D.N.Y.",
     "cacd": "C.D. Cal.",
     "mad": "D. Mass.",
+    "mnd": "D. Minn.",
+    "kywd": "W.D. Ky.",
+    "caed": "E.D. Cal.",
+    "dcd": "D.D.C.",
 }
 
 # Which circuit each district sits in — needed to answer "is this binding here?"
-DISTRICT_CIRCUIT = {"cand": "ca9", "cacd": "ca9", "ded": "ca3", "nysd": "ca2", "mad": "ca1"}
+DISTRICT_CIRCUIT = {
+    "cand": "ca9", "cacd": "ca9", "caed": "ca9", "ded": "ca3", "nysd": "ca2",
+    "mad": "ca1", "mnd": "ca8", "kywd": "ca6", "dcd": "cadc",
+}
 
 
 def binds(authority_court: str, forum_court: str) -> bool:
@@ -85,7 +95,17 @@ def load_manifest() -> dict:
 
 
 def all_cases(manifest: dict) -> list[dict]:
-    return [*manifest.get("ancestors", []), *manifest.get("modern", [])]
+    # `expansion` holds non-copyright AI cases added to test whether retrieval
+    # actually discriminates — a monotone corpus can't tell you that. Each case
+    # carries a `domain`; copyright cases default to it when unset.
+    cases = [
+        *manifest.get("ancestors", []),
+        *manifest.get("modern", []),
+        *manifest.get("expansion", []),
+    ]
+    for c in cases:
+        c.setdefault("domain", "copyright")
+    return cases
 
 
 _WS = re.compile(r"[ \t]+")

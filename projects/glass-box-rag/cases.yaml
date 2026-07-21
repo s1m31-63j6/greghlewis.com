@@ -313,6 +313,116 @@ modern:
     govinfo_package: USCOURTS-cand-4_22-cv-06823   # verified: 4 granules (note 4_, not 3_)
     note: 1202(b) dismissed on identicality. 9th Cir. No. 24-7700 argued 2026-02-11, pending.
 
+# Expansion (2026-07-20): non-fair-use AI cases, added to test whether retrieval
+# actually DISCRIMINATES. A corpus where every document is about the same doctrine
+# can't tell you the retriever is good — everything scores relevant. These introduce
+# genuinely different legal language (ERISA, Medicare preemption, patent inventorship,
+# human-authorship doctrine) so a copyright query has something to reject. Copyright
+# stays the heart of the corpus; these are the control group.
+#
+# Every URL here was fetched and content-verified directly (not via CourtListener,
+# which was rate-limited). `domain` is the diversity axis.
+expansion:
+  - id: lokken-2025
+    name: Estate of Lokken v. UnitedHealth Group
+    docket: 0:23-cv-03514
+    court: mnd
+    year: 2025
+    date: 2025-02-13
+    judge: Tunheim
+    layer: modern
+    domain: insurance
+    source: url
+    url: https://www.govinfo.gov/content/pkg/USCOURTS-mnd-0_23-cv-03514/pdf/USCOURTS-mnd-0_23-cv-03514-1.pdf
+    note: |
+      nH Predict algorithm denying Medicare Advantage post-acute care. Breach of
+      contract + implied covenant survived; statutory + bad-faith claims preempted
+      by the Medicare Act. Verified: "nH Predict" x9, preemption x57.
+
+  - id: barrows-2025
+    name: Estate of Barrows v. Humana
+    docket: 3:23-cv-00654
+    court: kywd
+    year: 2025
+    date: 2025-08-14
+    judge: Jennings
+    layer: modern
+    domain: insurance
+    source: url
+    url: https://www.govinfo.gov/content/pkg/USCOURTS-kywd-3_23-cv-00654/pdf/USCOURTS-kywd-3_23-cv-00654-0.pdf
+    note: |
+      Same nH Predict algorithm as Lokken, broader survival set. SPLIT WITH LOKKEN:
+      unjust enrichment survived here, preempted in Minnesota — a second Bartz/Kadrey
+      -style contrast, in a different area of law. Verified: "nH Predict" x26.
+
+  - id: kisting-leung-2025
+    name: Kisting-Leung v. Cigna
+    docket: 2:23-cv-01477
+    court: caed
+    year: 2025
+    date: 2025-03-30
+    judge: Drozd
+    layer: modern
+    domain: insurance
+    source: url
+    url: https://www.govinfo.gov/content/pkg/USCOURTS-caed-2_23-cv-01477/pdf/USCOURTS-caed-2_23-cv-01477-8.pdf
+    note: |
+      PxDx algorithm, ERISA (not Medicare). Fiduciary-duty + Cal. UCL claims survived;
+      denial-of-benefits dismissed with leave. "A medical director pushes the button"
+      does not satisfy plan language. Verified: "PxDx" x43, ERISA x54.
+
+  - id: thaler-perlmutter-2025
+    name: Thaler v. Perlmutter
+    docket: 23-5233
+    citation: 130 F.4th 1039
+    court: cadc
+    year: 2025
+    date: 2025-03-18
+    judge: Millett
+    layer: modern
+    domain: authorship
+    source: url
+    url: https://media.cadc.uscourts.gov/opinions/docs/2025/03/23-5233.pdf
+    note: |
+      AI-authorship: the Copyright Act requires a human author, so a work generated
+      autonomously by AI cannot be registered. This IS copyright, but a different
+      question than fair use — keeps copyright central while adding doctrinal spread.
+      Verified: "human author" x16, "artificial intelligence" x19.
+
+  - id: thaler-perlmutter-dc-2023
+    name: Thaler v. Perlmutter (D.D.C.)
+    docket: 1:22-cv-01564
+    citation: 687 F. Supp. 3d 140
+    court: dcd
+    year: 2023
+    date: 2023-08-18
+    judge: Howell
+    layer: modern
+    domain: authorship
+    source: url
+    url: https://www.govinfo.gov/content/pkg/USCOURTS-dcd-1_22-cv-01564/pdf/USCOURTS-dcd-1_22-cv-01564-0.pdf
+    note: |
+      District-court predecessor to the D.C. Cir. opinion above — a natural
+      district→circuit pair (like Ross), and an agentic-hop target. Verified:
+      "human author" x8, copyright x117.
+
+  - id: thaler-vidal-2022
+    name: Thaler v. Vidal
+    docket: 2021-2347
+    citation: 43 F.4th 1207
+    court: cafc
+    year: 2022
+    date: 2022-08-05
+    judge: Stark
+    layer: modern
+    domain: patent
+    source: url
+    url: https://www.cafc.uscourts.gov/opinions-orders/21-2347.OPINION.8-5-2022_1988142.pdf
+    note: |
+      PATENT law, not copyright: the Patent Act's "individual" means a natural person,
+      so an AI (DABUS) cannot be a named inventor. Maximally distant vocabulary from
+      fair use. Verified: "inventor" x44, "patent" x42, "DABUS" x10.
+
 # Deliberately EXCLUDED — documented so the choice is legible on the methodology page.
 excluded:
   - name: Getty Images v. Stability AI

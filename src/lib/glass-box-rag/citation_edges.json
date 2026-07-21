@@ -225,6 +225,11 @@
   "weight": 3
  },
  {
+  "source": "thaler-perlmutter-2025",
+  "target": "sony-betamax-1984",
+  "weight": 3
+ },
+ {
   "source": "astm-upcodes-2026",
   "target": "sony-betamax-1984",
   "weight": 2
@@ -252,6 +257,11 @@
  {
   "source": "texaco-1995",
   "target": "feist-1991",
+  "weight": 2
+ },
+ {
+  "source": "thaler-perlmutter-2025",
+  "target": "google-oracle-2021",
   "weight": 2
  },
  {
