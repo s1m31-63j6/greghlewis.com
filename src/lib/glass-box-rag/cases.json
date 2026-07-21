@@ -170,6 +170,46 @@
   "judge": null
  },
  {
+  "id": "grokster-2005",
+  "name": "Metro-Goldwyn-Mayer Studios Inc. v. Grokster, Ltd.",
+  "court": "scotus",
+  "year": 2005,
+  "layer": "ancestor",
+  "domain": "copyright",
+  "citation": "545 U.S. 913",
+  "judge": null
+ },
+ {
+  "id": "gershwin-1971",
+  "name": "Gershwin Publishing Corp. v. Columbia Artists Management, Inc.",
+  "court": "ca2",
+  "year": 1971,
+  "layer": "ancestor",
+  "domain": "copyright",
+  "citation": "443 F.2d 1159",
+  "judge": null
+ },
+ {
+  "id": "iparadigms-2009",
+  "name": "A.V. ex rel. Vanderhye v. iParadigms, LLC",
+  "court": "ca4",
+  "year": 2009,
+  "layer": "ancestor",
+  "domain": "copyright",
+  "citation": "562 F.3d 630",
+  "judge": null
+ },
+ {
+  "id": "netcom-1995",
+  "name": "Religious Technology Center v. Netcom On-Line Communication Services, Inc.",
+  "court": "cand",
+  "year": 1995,
+  "layer": "ancestor",
+  "domain": "copyright",
+  "citation": "907 F. Supp. 1361",
+  "judge": null
+ },
+ {
   "id": "ross-2025",
   "name": "Thomson Reuters Enterprise Centre GmbH v. Ross Intelligence Inc.",
   "court": "ded",
@@ -338,5 +378,115 @@
   "domain": "patent",
   "citation": "43 F.4th 1207",
   "judge": "Stark"
+ },
+ {
+  "id": "midler-ford-1988",
+  "name": "Midler v. Ford Motor Co.",
+  "court": "ca9",
+  "year": 1988,
+  "layer": "ancestor",
+  "domain": "publicity",
+  "citation": "849 F.2d 460",
+  "judge": null
+ },
+ {
+  "id": "waits-fritolay-1992",
+  "name": "Waits v. Frito-Lay, Inc.",
+  "court": "ca9",
+  "year": 1992,
+  "layer": "ancestor",
+  "domain": "publicity",
+  "citation": "978 F.2d 1093",
+  "judge": null
+ },
+ {
+  "id": "lehrman-lovo-2025",
+  "name": "Lehrman v. Lovo, Inc.",
+  "court": "nysd",
+  "year": 2025,
+  "layer": "modern",
+  "domain": "publicity",
+  "citation": null,
+  "judge": "Oetken"
+ },
+ {
+  "id": "young-neocortext-2023",
+  "name": "Young v. NeoCortext, Inc.",
+  "court": "cacd",
+  "year": 2023,
+  "layer": "modern",
+  "domain": "publicity",
+  "citation": null,
+  "judge": "Hsu"
+ },
+ {
+  "id": "van-buren-2021",
+  "name": "Van Buren v. United States",
+  "court": "scotus",
+  "year": 2021,
+  "layer": "ancestor",
+  "domain": "scraping",
+  "citation": "593 U.S. 374",
+  "judge": null
+ },
+ {
+  "id": "hiq-linkedin-2022",
+  "name": "hiQ Labs, Inc. v. LinkedIn Corp.",
+  "court": "ca9",
+  "year": 2022,
+  "layer": "modern",
+  "domain": "scraping",
+  "citation": "31 F.4th 1180",
+  "judge": null
+ },
+ {
+  "id": "patel-facebook-2019",
+  "name": "Patel v. Facebook, Inc.",
+  "court": "ca9",
+  "year": 2019,
+  "layer": "ancestor",
+  "domain": "biometric",
+  "citation": "932 F.3d 1264",
+  "judge": null
+ },
+ {
+  "id": "clearview-2022",
+  "name": "In re Clearview AI, Inc. Consumer Privacy Litigation",
+  "court": "ilnd",
+  "year": 2022,
+  "layer": "modern",
+  "domain": "biometric",
+  "citation": null,
+  "judge": "Coleman"
+ },
+ {
+  "id": "mobley-workday-2024",
+  "name": "Mobley v. Workday, Inc.",
+  "court": "cand",
+  "year": 2024,
+  "layer": "modern",
+  "domain": "employment",
+  "citation": null,
+  "judge": "Lin"
+ },
+ {
+  "id": "garcia-character-2025",
+  "name": "Garcia v. Character Technologies, Inc.",
+  "court": "flmd",
+  "year": 2025,
+  "layer": "modern",
+  "domain": "product-liability",
+  "citation": null,
+  "judge": "Conway"
+ },
+ {
+  "id": "realpage-2023",
+  "name": "In re RealPage, Inc., Rental Software Antitrust Litigation",
+  "court": "tnmd",
+  "year": 2023,
+  "layer": "modern",
+  "domain": "antitrust",
+  "citation": null,
+  "judge": "Crenshaw"
  }
 ]

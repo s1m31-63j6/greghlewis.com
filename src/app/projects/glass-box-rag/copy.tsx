@@ -69,9 +69,9 @@ export const COPY: Record<string, Leveled> = {
   },
   chatEmpty: {
     grad:
-      "Answers are grounded only in 34 published U.S. opinions on AI — 28 on copyright and fair use, plus 6 deliberately unrelated cases (insurance, patents, authorship) kept as a control group. Where the courts disagree, the answer says so rather than picking a side.",
+      "Answers are grounded only in 49 published U.S. opinions on AI — 32 on copyright and fair use, plus 17 spanning deliberately different terrain (algorithmic insurance denials, AI voice cloning, data scraping, biometric privacy, algorithmic hiring, chatbot harm, price-fixing, patents, and authorship) kept as a control group so retrieval has to genuinely discriminate. Where the courts disagree, the answer says so rather than picking a side.",
     eli5:
-      "The robot only knows 34 real court cases about computers. Most are about copying; a few are about other things, on purpose, to keep it honest. If the judges didn't agree, it tells you both sides instead of guessing.",
+      "The robot only knows 49 real court cases about computers and AI. Most are about copying; a bunch are about very different things — fake voices, scraping, hiring robots — added on purpose to keep it honest. If the judges didn't agree, it tells you both sides instead of guessing.",
   },
   chatWorking: {
     grad: "Retrieving and reasoning — watch the pipeline →",

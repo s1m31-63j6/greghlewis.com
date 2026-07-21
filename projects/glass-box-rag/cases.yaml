@@ -160,6 +160,61 @@ ancestors:
     source: courtlistener
     note: Direct predecessor to the 3d Cir. UpCodes decision.
 
+  # --- secondary-liability + ingestion lineage (added 2026-07-21) ---
+  # Copyright ancestors that deepen the citation graph beyond the fair-use spine:
+  # the inducement/vicarious branch behind Cox/Napster, and the pre-AI machine-
+  # ingestion analogues the training cases actually reason from.
+  - id: grokster-2005
+    name: Metro-Goldwyn-Mayer Studios Inc. v. Grokster, Ltd.
+    citation: 545 U.S. 913
+    court: scotus
+    year: 2005
+    date: 2005-06-27
+    layer: ancestor
+    source: courtlistener
+    note: |
+      Inducement rule for secondary liability — distributing a tool with the object of
+      promoting infringement. The active-inducement pole against Sony Betamax's passive
+      safe harbor; Cox v. Sony (2026) reads both.
+
+  - id: gershwin-1971
+    name: Gershwin Publishing Corp. v. Columbia Artists Management, Inc.
+    citation: 443 F.2d 1159
+    court: ca2
+    year: 1971
+    layer: ancestor
+    source: courtlistener
+    note: |
+      Origin of the vicarious-liability test: right and ability to supervise + a direct
+      financial interest. Ancestor to Napster, Grokster, and Cox.
+
+  - id: iparadigms-2009
+    name: A.V. ex rel. Vanderhye v. iParadigms, LLC
+    citation: 562 F.3d 630
+    court: ca4
+    year: 2009
+    date: 2009-04-16
+    layer: ancestor
+    source: url
+    url: https://www.ca4.uscourts.gov/opinions/Published/081424.P.pdf
+    note: |
+      Turnitin's automated ingestion of student papers to build a plagiarism-detection
+      database held transformative fair use. The closest pre-AI analogue to training-data
+      ingestion — a fair-use case that SHOULD retrieve alongside Bartz/HathiTrust.
+
+  - id: netcom-1995
+    name: Religious Technology Center v. Netcom On-Line Communication Services, Inc.
+    citation: 907 F. Supp. 1361
+    court: cand
+    year: 1995
+    date: 1995-11-21
+    layer: ancestor
+    source: courtlistener
+    note: |
+      Origin of the "volitional conduct" requirement for direct infringement — an
+      intermediary that automatically copies user-transmitted material is not itself a
+      direct infringer. Load-bearing for output-infringement theories against generative models.
+
 modern:
   # --- Tier A: the only three actual fair-use merits rulings that exist ---
   - id: ross-2025
@@ -423,6 +478,184 @@ expansion:
       so an AI (DABUS) cannot be a named inventor. Maximally distant vocabulary from
       fair use. Verified: "inventor" x44, "patent" x42, "DABUS" x10.
 
+  # === Parity expansion (2026-07-21): 11 AI / AI-adjacent cases across six new
+  # domains, so a fair-use query must SELECT from a genuinely diverse pool rather
+  # than a room where everything is already relevant. Each pairs a modern AI case
+  # with its pre-AI doctrinal ancestor where one exists (voice, CFAA, biometric),
+  # mirroring the fair-use ancestor->modern structure. All located + source-verified
+  # 2026-07-21 via direct fetch. `domain` is the diversity axis.
+
+  # --- right of publicity / AI voice + likeness cloning ---
+  - id: midler-ford-1988
+    name: Midler v. Ford Motor Co.
+    citation: 849 F.2d 460
+    court: ca9
+    year: 1988
+    date: 1988-06-22
+    layer: ancestor
+    domain: publicity
+    source: courtlistener
+    note: |
+      Deliberate imitation of a singer's distinctive voice in an ad is actionable
+      misappropriation. The ancestor the AI-voice-cloning cases build on. Right of
+      publicity, not copyright — a fair-use query must reject it.
+
+  - id: waits-fritolay-1992
+    name: Waits v. Frito-Lay, Inc.
+    citation: 978 F.2d 1093
+    court: ca9
+    year: 1992
+    date: 1992-08-05
+    layer: ancestor
+    domain: publicity
+    source: courtlistener
+    note: Extends Midler; voice misappropriation as a publicity + Lanham Act tort. Ancestor to Lehrman.
+
+  - id: lehrman-lovo-2025
+    name: Lehrman v. Lovo, Inc.
+    docket: 1:24-cv-03770
+    court: nysd
+    year: 2025
+    date: 2025-07-10
+    judge: Oetken
+    layer: modern
+    domain: publicity
+    source: url
+    url: https://www.nysd.uscourts.gov/sites/default/files/2025-07/Lovo%20v%20Lehrman.pdf
+    note: |
+      AI voice-cloning startup (Genny text-to-speech) trained on voice actors' samples.
+      Right-of-publicity + contract claims survive; copyright-preemption analysis. SDNY
+      does not feed govinfo — court-site PDF, native text.
+
+  - id: young-neocortext-2023
+    name: Young v. NeoCortext, Inc.
+    docket: 2:23-cv-02496
+    court: cacd
+    year: 2023
+    date: 2023-09-05
+    judge: Hsu
+    layer: modern
+    domain: publicity
+    source: url
+    url: https://archive.org/download/gov.uscourts.cacd.880323/gov.uscourts.cacd.880323.50.0.pdf
+    note: |
+      Reface AI face-swap app; right-of-publicity (Cal. Civ. Code 3344) vs. the app's
+      fair-use / First Amendment (anti-SLAPP) defense. Copyright-preemption argument rejected.
+      Not packaged on govinfo (cacd MTD orders aren't fed to GPO); this is RECAP doc 50 (the
+      court's order, ~6k words) via the Internet Archive mirror.
+
+  # --- data scraping / CFAA: the legality of acquiring training data ---
+  - id: van-buren-2021
+    name: Van Buren v. United States
+    citation: 593 U.S. 374
+    court: scotus
+    year: 2021
+    date: 2021-06-03
+    layer: ancestor
+    domain: scraping
+    source: url
+    url: https://www.supremecourt.gov/opinions/20pdf/19-783_k53l.pdf
+    note: |
+      Narrows the CFAA's "exceeds authorized access" to a gates-up-or-down rule. Governs
+      whether scraping training data is a computer crime. Not copyright.
+
+  - id: hiq-linkedin-2022
+    name: hiQ Labs, Inc. v. LinkedIn Corp.
+    citation: 31 F.4th 1180
+    court: ca9
+    year: 2022
+    date: 2022-04-18
+    layer: modern
+    domain: scraping
+    source: url
+    url: https://cdn.ca9.uscourts.gov/datastore/opinions/2022/04/18/17-16783.pdf
+    note: |
+      Scraping publicly available data likely does not violate the CFAA. The data-acquisition
+      counterpart to the fair-use fight over training corpora.
+
+  # --- biometric privacy: scraping faces to train recognition models ---
+  - id: patel-facebook-2019
+    name: Patel v. Facebook, Inc.
+    citation: 932 F.3d 1264
+    court: ca9
+    year: 2019
+    date: 2019-08-08
+    layer: ancestor
+    domain: biometric
+    source: url
+    url: https://cdn.ca9.uscourts.gov/datastore/opinions/2019/08/08/18-15982.pdf
+    note: |
+      Collecting face templates without consent is a concrete Article III injury under
+      Illinois BIPA. Ancestor to the Clearview facial-recognition suits.
+
+  - id: clearview-2022
+    name: In re Clearview AI, Inc. Consumer Privacy Litigation
+    docket: 1:21-cv-00135
+    court: ilnd
+    year: 2022
+    date: 2022-02-14
+    judge: Coleman
+    layer: modern
+    domain: biometric
+    source: govinfo
+    govinfo_package: USCOURTS-ilnd-1_21-cv-00135
+    url: https://www.eff.org/files/2022/02/14/2022-02-14_-_in_re_clearview_ltgn_ndil_-_memorandum_opinion_and_order.pdf
+    note: |
+      Facial-recognition company scraped billions of photos to build faceprints; BIPA
+      claims survive dismissal, First Amendment defense rejected. MDL 2967.
+
+  # --- algorithmic employment discrimination ---
+  - id: mobley-workday-2024
+    name: Mobley v. Workday, Inc.
+    docket: 3:23-cv-00770
+    court: cand
+    year: 2024
+    date: 2024-07-12
+    judge: Lin
+    layer: modern
+    domain: employment
+    source: govinfo
+    govinfo_package: USCOURTS-cand-3_23-cv-00770
+    note: |
+      AI hiring-screening vendor can be liable as an employer's "agent" for disparate-impact
+      discrimination. First major ruling exposing an AI-tool provider to Title VII / ADEA / ADA
+      liability. Maximally distant vocabulary from fair use.
+
+  # --- AI chatbot product liability / consumer harm ---
+  - id: garcia-character-2025
+    name: Garcia v. Character Technologies, Inc.
+    docket: 6:24-cv-01903
+    court: flmd
+    year: 2025
+    date: 2025-05-21
+    judge: Conway
+    layer: modern
+    domain: product-liability
+    source: url
+    url: https://www.courthousenews.com/wp-content/uploads/2025/05/garcia-v-character-technologies-order.pdf
+    note: |
+      Wrongful-death suit after a teen's suicide following Character.AI chatbot use. Court
+      largely denies dismissal; chatbot output not First Amendment-protected at the pleading
+      stage; product-liability theory allowed to proceed. Novel AI-harm doctrine.
+
+  # --- algorithmic price-fixing / antitrust ---
+  - id: realpage-2023
+    name: In re RealPage, Inc., Rental Software Antitrust Litigation
+    docket: 3:23-md-03071
+    court: tnmd
+    year: 2023
+    date: 2023-12-28
+    judge: Crenshaw
+    layer: modern
+    domain: antitrust
+    source: url
+    url: https://www.tnmd.uscourts.gov/sites/tnmd/files/690.pdf
+    note: |
+      Landlords using a shared pricing algorithm (RealPage) plausibly conspired to fix rents
+      under Sherman Act section 1. Algorithmic-collusion doctrine. MDL 3071. Zero copyright overlap.
+      Doc 690 is the OMNIBUS "relates to all cases" opinion (~27k words); do NOT use the
+      same-day Doc 686, which dismisses a single defendant (TREV) and is not the landmark ruling.
+
 # Deliberately EXCLUDED — documented so the choice is legible on the methodology page.
 excluded:
   - name: Getty Images v. Stability AI
@@ -434,3 +667,10 @@ excluded:
     reason: No merits opinion — resolved commercially (settlements Oct-Nov 2025).
   - name: Disney & Universal v. Midjourney
     reason: Discovery rulings only, no merits opinion.
+  - name: Walters v. OpenAI
+    reason: |
+      The AI-defamation case (ChatGPT hallucinated a false embezzlement claim). Excluded on
+      two grounds: it is a Georgia STATE trial-court order, which the corpus's federal
+      binding-hierarchy model (common.binds) does not represent, and the only public copy is
+      an image-only scan with no machine-extractable text layer — OCR'ing one 3-page order is
+      not worth a new dependency. The AI-harms domain is carried by Mobley and Garcia instead.

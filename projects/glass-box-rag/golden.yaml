@@ -56,6 +56,11 @@ questions:
     q: Is training a large language model on copyrighted books fair use?
     gold: [bartz-2025, kadrey-2025, hathitrust-2014, authors-guild-google-2015]
     critical: [bartz-2025, kadrey-2025]
+    forbidden: [mobley-workday-2024, garcia-character-2025, clearview-2022, lehrman-lovo-2025, realpage-2023]
+    note: |
+      An AI-flavored query sits semantically near the other AI cases (hiring, chatbot,
+      face-scraping) that are NOT copyright. Retrieving them here means the model is keying
+      on "AI" rather than on the fair-use question.
 
   - id: output-substantial-similarity
     q: Can a generative model's outputs infringe when they reproduce protected expression?
@@ -165,5 +170,93 @@ questions:
     q: Is copying an entire work as an intermediate step to reach unprotected functional elements fair use?
     gold: [sega-accolade-1992, connectix-2000, google-oracle-2021]
     critical: [sega-accolade-1992, connectix-2000]
-    forbidden: [lokken-2025, barrows-2025, kisting-leung-2025, thaler-vidal-2022]
-    note: Same as intermediate-copying, but now scored on REJECTING the non-copyright distractors.
+    forbidden: [lokken-2025, barrows-2025, kisting-leung-2025, thaler-vidal-2022,
+                midler-ford-1988, waits-fritolay-1992, lehrman-lovo-2025, young-neocortext-2023,
+                van-buren-2021, hiq-linkedin-2022, patel-facebook-2019, clearview-2022,
+                mobley-workday-2024, garcia-character-2025, realpage-2023]
+    note: |
+      Same as intermediate-copying, but scored on REJECTING the full 17-case non-copyright
+      distractor pool (insurance, patent, publicity, CFAA, biometric, employment, product
+      liability, antitrust). If diversification or fusion starts surfacing any of these for a
+      fair-use query, the retriever is not discriminating and the corpus is polluting itself.
+
+  # =====================================================================================
+  # Parity-expansion discrimination set (2026-07-21). The corpus went 34 -> 49 cases and
+  # its non-copyright distractor pool 6 -> 17 across nine domains. These questions verify
+  # the retriever SELECTS the right domain rather than defaulting to the copyright plurality.
+  # Some also test the opposite: that genuine copyright BRIDGES (Turnitin/Netcom) still
+  # surface for AI-training questions. Doctrinal judgments — Reviewed by: (pending).
+  # =====================================================================================
+
+  # --- right of publicity: AI voice + likeness cloning ---
+  - id: ai-voice-likeness-publicity
+    q: Can imitating a person's distinctive voice or likeness with AI, without consent, violate their right of publicity?
+    gold: [lehrman-lovo-2025, young-neocortext-2023, midler-ford-1988, waits-fritolay-1992]
+    critical: [midler-ford-1988, lehrman-lovo-2025]
+    note: |
+      Right of publicity, not copyright. The Midler/Waits -> Lehrman lineage should surface
+      together (ancestor->modern within publicity). Must not return fair-use cases as primary.
+
+  # --- data scraping / CFAA: legality of acquiring training data ---
+  - id: scraping-cfaa
+    q: Does scraping publicly available website data without authorization violate the Computer Fraud and Abuse Act?
+    gold: [hiq-linkedin-2022, van-buren-2021]
+    critical: [hiq-linkedin-2022, van-buren-2021]
+    note: CFAA "exceeds authorized access", not copyright. Zero fair-use overlap.
+
+  # --- biometric privacy: scraping faces to train recognition models ---
+  - id: biometric-scraping-privacy
+    q: Does scraping facial images to build a facial-recognition database create a concrete privacy injury under biometric-privacy law?
+    gold: [clearview-2022, patel-facebook-2019]
+    critical: [patel-facebook-2019, clearview-2022]
+    note: Illinois BIPA. Patel -> Clearview lineage. Not copyright.
+
+  # --- algorithmic employment discrimination ---
+  - id: ai-hiring-agent-liability
+    q: Can a vendor of AI hiring-screening software be held liable as an employer's agent for discrimination?
+    gold: [mobley-workday-2024]
+    critical: [mobley-workday-2024]
+    note: Title VII / ADEA agent theory. Maximally distant vocabulary from fair use.
+
+  # --- AI chatbot product liability ---
+  - id: ai-chatbot-product-liability
+    q: Can the developer of an AI chatbot be liable under product-liability law for a user's harm, or is the output protected speech?
+    gold: [garcia-character-2025]
+    critical: [garcia-character-2025]
+    note: Product liability + First Amendment at the pleading stage. Not copyright.
+
+  # --- algorithmic price-fixing / antitrust ---
+  - id: algorithmic-price-fixing
+    q: Can competitors who set prices using a shared pricing algorithm be liable for antitrust price-fixing?
+    gold: [realpage-2023]
+    critical: [realpage-2023]
+    note: Sherman Act section 1 algorithmic collusion. Zero copyright overlap.
+
+  # --- secondary-liability lineage (copyright): must surface for infringement-tool questions ---
+  - id: inducement-secondary-liability
+    q: When does distributing a technology used for infringement amount to inducing that infringement?
+    gold: [grokster-2005, sony-betamax-1984, cox-sony-2026, napster-2001]
+    critical: [grokster-2005]
+    note: Grokster's active-inducement rule against Sony's passive safe harbor. Copyright.
+
+  - id: vicarious-liability
+    q: When is a defendant vicariously liable for another's infringement based on control and financial benefit?
+    gold: [gershwin-1971, napster-2001, cox-sony-2026]
+    critical: [gershwin-1971]
+    note: Gershwin's "right and ability to supervise" + financial-interest test. Copyright.
+
+  # --- pre-AI copyright BRIDGES: should retrieve WITH the AI-training cases, not be rejected ---
+  - id: automated-ingestion-detection
+    q: Is automatically ingesting copyrighted works to build a detection or matching system fair use?
+    gold: [iparadigms-2009, hathitrust-2014, authors-guild-google-2015, bartz-2025]
+    critical: [iparadigms-2009]
+    note: |
+      Turnitin (iParadigms) is the closest pre-AI analogue to training-data ingestion — a
+      fair-use case that SHOULD surface alongside the AI-training cases. Tests that the
+      retriever bridges WITHIN copyright, not only rejects ACROSS domains.
+
+  - id: volitional-conduct
+    q: Is an intermediary that automatically copies user-transmitted material itself a direct infringer?
+    gold: [netcom-1995, cox-sony-2026]
+    critical: [netcom-1995]
+    note: Netcom's volitional-conduct requirement. Underlies output-infringement theories against generative models.

@@ -49,17 +49,18 @@ class Opinion:
 # district court binds no one.
 COURT_LEVEL = {
     "scotus": "supreme",
-    "ca2": "circuit", "ca3": "circuit", "ca9": "circuit", "cadc": "circuit",
-    "cafc": "circuit",
+    "ca2": "circuit", "ca3": "circuit", "ca4": "circuit", "ca9": "circuit",
+    "cadc": "circuit", "cafc": "circuit",
     "cand": "district", "ded": "district", "nysd": "district", "cacd": "district",
     "mad": "district", "mnd": "district", "kywd": "district", "caed": "district",
-    "dcd": "district",
+    "dcd": "district", "ilnd": "district", "flmd": "district", "tnmd": "district",
 }
 
 COURT_NAME = {
     "scotus": "Supreme Court of the United States",
     "ca2": "U.S. Court of Appeals, Second Circuit",
     "ca3": "U.S. Court of Appeals, Third Circuit",
+    "ca4": "U.S. Court of Appeals, Fourth Circuit",
     "ca9": "U.S. Court of Appeals, Ninth Circuit",
     "cadc": "U.S. Court of Appeals, D.C. Circuit",
     "cafc": "U.S. Court of Appeals, Federal Circuit",
@@ -72,12 +73,16 @@ COURT_NAME = {
     "kywd": "W.D. Ky.",
     "caed": "E.D. Cal.",
     "dcd": "D.D.C.",
+    "ilnd": "N.D. Ill.",
+    "flmd": "M.D. Fla.",
+    "tnmd": "M.D. Tenn.",
 }
 
 # Which circuit each district sits in — needed to answer "is this binding here?"
 DISTRICT_CIRCUIT = {
     "cand": "ca9", "cacd": "ca9", "caed": "ca9", "ded": "ca3", "nysd": "ca2",
     "mad": "ca1", "mnd": "ca8", "kywd": "ca6", "dcd": "cadc",
+    "ilnd": "ca7", "flmd": "ca11", "tnmd": "ca6",
 }
 
 

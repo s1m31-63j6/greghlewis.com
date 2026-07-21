@@ -48,9 +48,12 @@ export default function Methodology() {
         <div>
           <h2 className="mb-2 font-serif text-xl text-slate-900">2. Building the corpus</h2>
           <p>
-            28 published opinions, ~415,000 words: the three decisions that have actually
+            49 published opinions, ~640,000 words: the three decisions that have actually
             reached the merits on AI training and fair use, the adjacent rulings on pleading
-            and DMCA §1202, and the doctrinal lineage they argue over.
+            and DMCA §1202, the doctrinal lineage they argue over, and — added later, and
+            explained in §5b — seventeen deliberately different AI cases spanning nine other
+            areas of law, from voice cloning to algorithmic hiring, that the retriever is
+            supposed to <em>reject</em> for a fair-use question.
           </p>
           <p className="mt-2">
             The awkward discovery was that these need <strong>two incompatible pipelines</strong>.
@@ -115,10 +118,11 @@ export default function Methodology() {
         <div>
           <h2 className="mb-2 font-serif text-xl text-slate-900">4. What the measurements said</h2>
           <p>
-            Scored against a 19-question golden set with case-level ground truth. The headline
-            metric is <strong>critical recall</strong> — the fraction of must-have cases
-            retrieved — because that is the one whose failure produces a confidently wrong
-            answer.
+            These are the results on the <em>first</em> corpus — 28 fair-use opinions, a
+            19-question golden set — before it was widened; §5b re-runs the same grid on the
+            full 49-case corpus and some of these findings move. The headline metric is{" "}
+            <strong>critical recall</strong> — the fraction of must-have cases retrieved —
+            because that is the one whose failure produces a confidently wrong answer.
           </p>
           <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[14px]">
             <li>
@@ -188,21 +192,49 @@ export default function Methodology() {
             understood the question.
           </p>
           <p className="mt-2">
-            So six deliberately unrelated AI cases were added as a control group: three on
-            algorithmic health-insurance denials (ERISA and Medicare-Act preemption), two on
-            whether an AI can hold a copyright or a patent, and their vocabularies share almost
-            nothing with fair use. Adding them dropped the corpus&apos;s mean inter-case
-            similarity from 0.27 to 0.24 — and, more to the point, gave every query something it
-            was supposed to <em>reject</em>.
+            So the corpus was widened in two steps. First, six unrelated AI cases as a small
+            control group. Then a full expansion to <strong>seventeen</strong> non-fair-use
+            opinions spanning <strong>nine</strong> areas of law — algorithmic insurance denials,
+            AI voice cloning, data scraping and the CFAA, biometric privacy, algorithmic hiring,
+            chatbot product liability, algorithmic price-fixing, patent inventorship, and AI
+            authorship. That took the corpus to 49 opinions and the golden set to 34 questions.
+            Several of the new domains ship with their own pre-AI ancestor, so the citation graph
+            grows real parallel lineages (Midler and Waits behind the voice-cloning case; Van
+            Buren behind the scraping case), not just isolated outliers. Across cases the mean
+            embedding similarity fell from 0.24 to 0.21 while within-case similarity held near
+            0.49 — more separated from each other, still coherent inside.
           </p>
           <p className="mt-2">
-            The retriever passed. A patent-inventorship question returns the patent case first;
-            an insurance question returns the three insurance cases; the authorship question
-            ranks the AI-registration cases above the fair-use cases even though both are
-            copyright. And the fair-use questions stayed clean — asked about intermediate
-            copying, the system returned five fair-use cases and zero insurance or patent
-            distractors. That last result is the one that matters: it is the difference between a
-            retriever that discriminates and a corpus that was flattering itself.
+            The retriever discriminates. Every cross-domain question returns its own domain —
+            hiring pulls the Workday case first, chatbot harm the Character.AI case, price-fixing
+            the RealPage case — and, the subtler test, a copyright <em>bridge</em> still bridges:
+            asked about ingesting copyrighted works to build a detection system, the retriever
+            surfaces Turnitin&apos;s plagiarism-scanner case <em>alongside</em> the AI-training
+            cases rather than rejecting it. A fair-use question now rejects sixteen of the
+            seventeen distractors.
+          </p>
+          <p className="mt-2">
+            One does leak, and it is worth showing rather than hiding. Asked whether training a
+            language model on books is fair use, the retriever pulls in an AI voice-cloning case
+            at rank six — because that case is itself about training a model on copyrighted
+            material and preemption, so the surface language genuinely overlaps. The evaluation
+            harness caught it only because the golden set names that case <em>forbidden</em> for
+            that question. And the fix is the technique §5 left in dispute: rewriting the query as
+            hypothetical judicial prose (HyDE) pulls it back toward fair-use vocabulary, drops the
+            leak entirely, and posts the best ranking of any configuration. HyDE looked marginal
+            on a corpus that was mostly one doctrine; on a corpus with real distractors, it earns
+            its keep.
+          </p>
+          <p className="mt-2">
+            Re-running the whole grid also settled the question §5 left open. The gap between BM25
+            and dense retrieval on critical recall narrowed from 0.106 to 0.030, and dense now
+            ranks the first correct case <em>higher</em> than BM25 does; on the data-scraping
+            question, dense retrieves the controlling cases that exact-term BM25 misses entirely.
+            Fusion, which diluted the sparse signal on the narrow corpus, now matches BM25 on
+            critical recall and beats it on overall recall. None of this dethrones BM25 — it still
+            edges critical recall on a corpus this size — but the case for semantic retrieval is
+            now evidence rather than conjecture: it pays off exactly as the corpus stops being
+            about a single thing.
           </p>
         </div>
 

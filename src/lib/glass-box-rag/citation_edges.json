@@ -45,6 +45,11 @@
   "weight": 12
  },
  {
+  "source": "iparadigms-2009",
+  "target": "campbell-1994",
+  "weight": 12
+ },
+ {
   "source": "perfect10-2007",
   "target": "campbell-1994",
   "weight": 12
@@ -75,6 +80,11 @@
   "weight": 10
  },
  {
+  "source": "perfect10-2007",
+  "target": "grokster-2005",
+  "weight": 10
+ },
+ {
   "source": "bartz-2025",
   "target": "campbell-1994",
   "weight": 8
@@ -110,9 +120,24 @@
   "weight": 7
  },
  {
+  "source": "hiq-linkedin-2022",
+  "target": "van-buren-2021",
+  "weight": 7
+ },
+ {
+  "source": "iparadigms-2009",
+  "target": "harper-row-1985",
+  "weight": 7
+ },
+ {
   "source": "perfect10-2007",
   "target": "sony-betamax-1984",
   "weight": 7
+ },
+ {
+  "source": "iparadigms-2009",
+  "target": "sony-betamax-1984",
+  "weight": 6
  },
  {
   "source": "ross-2025",
@@ -171,6 +196,11 @@
  },
  {
   "source": "nyt-openai-2025",
+  "target": "grokster-2005",
+  "weight": 4
+ },
+ {
+  "source": "nyt-openai-2025",
   "target": "warhol-2023",
   "weight": 4
  },
@@ -230,6 +260,11 @@
   "weight": 3
  },
  {
+  "source": "andersen-2024",
+  "target": "grokster-2005",
+  "weight": 2
+ },
+ {
   "source": "astm-upcodes-2026",
   "target": "sony-betamax-1984",
   "weight": 2
@@ -251,6 +286,16 @@
  },
  {
   "source": "connectix-2000",
+  "target": "harper-row-1985",
+  "weight": 2
+ },
+ {
+  "source": "netcom-1995",
+  "target": "sony-betamax-1984",
+  "weight": 2
+ },
+ {
+  "source": "netcom-1995",
   "target": "harper-row-1985",
   "weight": 2
  },
@@ -280,6 +325,16 @@
   "weight": 1
  },
  {
+  "source": "astm-prorg-2023",
+  "target": "van-buren-2021",
+  "weight": 1
+ },
+ {
+  "source": "concord-anthropic-2025",
+  "target": "grokster-2005",
+  "weight": 1
+ },
+ {
   "source": "connectix-2000",
   "target": "feist-1991",
   "weight": 1
@@ -287,6 +342,16 @@
  {
   "source": "doe-github-2024",
   "target": "harper-row-1985",
+  "weight": 1
+ },
+ {
+  "source": "garcia-character-2025",
+  "target": "warhol-2023",
+  "weight": 1
+ },
+ {
+  "source": "garcia-character-2025",
+  "target": "feist-1991",
   "weight": 1
  },
  {
@@ -305,8 +370,23 @@
   "weight": 1
  },
  {
+  "source": "iparadigms-2009",
+  "target": "feist-1991",
+  "weight": 1
+ },
+ {
   "source": "kelly-arriba-2003",
   "target": "harper-row-1985",
+  "weight": 1
+ },
+ {
+  "source": "lehrman-lovo-2025",
+  "target": "feist-1991",
+  "weight": 1
+ },
+ {
+  "source": "lehrman-lovo-2025",
+  "target": "campbell-1994",
   "weight": 1
  },
  {
