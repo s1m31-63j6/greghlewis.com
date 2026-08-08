@@ -38,6 +38,7 @@ export type Candidate = {
 
 export function useAnalysis() {
   const engineRef = useRef<StockfishEngine | null>(null);
+  const bootRef = useRef<Promise<StockfishEngine> | null>(null);
   // Guards against a slow analysis of an old position landing after a newer one.
   const requestRef = useRef(0);
 
@@ -66,10 +67,44 @@ export function useAnalysis() {
 
   const fen = board.fen();
 
+  /**
+   * Boot the engine once, no matter how many callers ask at once.
+   *
+   * The promise is memoised in a ref because `engineRef.current` is only set
+   * *after* the await, so without this a second caller arriving during the boot
+   * window starts a second engine — two workers, two downloads, and two
+   * interleaved progress streams fighting over the same state.
+   *
+   * That race had a nasty tail: the losing boot's final "ready" callback landed
+   * after the winner had already cleared the progress state, so the loading card
+   * reappeared and stayed up until the page was reloaded.
+   *
+   * On failure the ref is cleared so a later attempt can retry rather than
+   * re-awaiting a permanently rejected promise.
+   */
+  const ensureEngine = useCallback((): Promise<StockfishEngine> => {
+    if (engineRef.current) return Promise.resolve(engineRef.current);
+    if (!bootRef.current) {
+      bootRef.current = bootEngine(setBoot)
+        .then((engine) => {
+          engineRef.current = engine;
+          setBoot(null);
+          return engine;
+        })
+        .catch((cause) => {
+          bootRef.current = null;
+          setBoot(null);
+          throw cause;
+        });
+    }
+    return bootRef.current;
+  }, []);
+
   useEffect(() => {
     return () => {
       engineRef.current?.terminate();
       engineRef.current = null;
+      bootRef.current = null;
     };
   }, []);
 
@@ -82,15 +117,11 @@ export function useAnalysis() {
 
     const run = async () => {
       try {
-        if (!engineRef.current) {
-          const engine = await bootEngine(setBoot);
-          if (cancelled) {
-            engine.terminate();
-            return;
-          }
-          engineRef.current = engine;
-          setBoot(null);
-        }
+        // Never terminate here on cancel: the engine outlives any single
+        // analysis, and a cancelled run tearing it down would destroy the one
+        // the next run is about to use. Only unmount disposes of it.
+        const engine = await ensureEngine();
+        if (cancelled || ticket !== requestRef.current) return;
 
         const position = new Chess(fen);
         if (position.isGameOver()) {
@@ -98,7 +129,7 @@ export function useAnalysis() {
           return;
         }
 
-        const scored = await engineRef.current.analyse(fen, depth, CANDIDATE_COUNT);
+        const scored = await engine.analyse(fen, depth, CANDIDATE_COUNT);
         // A newer position was requested while this was searching — drop it.
         if (cancelled || ticket !== requestRef.current) return;
 
@@ -137,7 +168,7 @@ export function useAnalysis() {
     return () => {
       cancelled = true;
     };
-  }, [depth, fen]);
+  }, [depth, ensureEngine, fen]);
 
   const analysing = result?.fen !== fen;
   const candidates = result?.fen === fen ? result.candidates : [];

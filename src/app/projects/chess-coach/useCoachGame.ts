@@ -46,6 +46,7 @@ function readOutcome(game: Chess, playerColor: "w" | "b"): Outcome | null {
 export function useCoachGame(ladder: Ladder | null) {
   const gameRef = useRef(new Chess());
   const engineRef = useRef<StockfishEngine | null>(null);
+  const bootRef = useRef<Promise<StockfishEngine> | null>(null);
 
   const [fen, setFen] = useState(START_FEN);
   const [phase, setPhase] = useState<Phase>("idle");
@@ -89,13 +90,38 @@ export function useCoachGame(ladder: Ladder | null) {
    * most visitors read the page without ever starting a game — so it is fetched
    * on the first move, with progress reported so the wait is legible.
    */
-  const ensureEngine = useCallback(async (): Promise<StockfishEngine> => {
-    if (engineRef.current) return engineRef.current;
-    setPhase("loading");
-    const engine = await bootEngine(setBoot);
-    engineRef.current = engine;
-    setBoot(null);
-    return engine;
+  /**
+   * Boot the engine once, no matter how many callers ask at once.
+   *
+   * The promise is memoised in a ref because `engineRef.current` is only set
+   * *after* the await, so without this a second caller arriving during the boot
+   * window starts a second engine — two workers, two downloads, and two
+   * interleaved progress streams fighting over the same state.
+   *
+   * That race had a nasty tail: the losing boot's final "ready" callback landed
+   * after the winner had already cleared the progress state, so the loading card
+   * reappeared and stayed up until the page was reloaded.
+   *
+   * On failure the ref is cleared so a later attempt can retry rather than
+   * re-awaiting a permanently rejected promise.
+   */
+  const ensureEngine = useCallback((): Promise<StockfishEngine> => {
+    if (engineRef.current) return Promise.resolve(engineRef.current);
+    if (!bootRef.current) {
+      setPhase("loading");
+      bootRef.current = bootEngine(setBoot)
+        .then((engine) => {
+          engineRef.current = engine;
+          setBoot(null);
+          return engine;
+        })
+        .catch((cause) => {
+          bootRef.current = null;
+          setBoot(null);
+          throw cause;
+        });
+    }
+    return bootRef.current;
   }, []);
 
   /** Append an objective win-probability reading for the current position. */
