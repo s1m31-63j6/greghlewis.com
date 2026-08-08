@@ -1,0 +1,258 @@
+# Hand-authored example positions for the concepts the Lichess puzzle database
+# cannot supply (every positional theme returns zero puzzles — see concepts.yaml).
+#
+# Nothing here is trusted. Every example carries machine-checkable `assert`
+# claims, and `build_library.py` refuses to ship any example whose claims do not
+# hold. That matters because these were written by hand: a plausible-looking FEN
+# that does not actually contain the feature it is teaching is the exact failure
+# mode this file is most exposed to.
+#
+# Two ways to specify a position:
+#   fen:   a literal position, for theoretical endgames
+#   moves: SAN from the start, for structures that arise from real openings.
+#          Preferred where it applies — a legal move sequence cannot produce an
+#          impossible position, and it shows the learner how the structure arose.
+#
+# Assertion vocabulary (implemented in verify.py):
+#   side_to_move: white|black
+#   eval: win_white | win_black | draw | equalish   (Stockfish, deep)
+#   best_move: SAN                                   (Stockfish's top choice)
+#   isolated_pawn: {color, square}
+#   doubled_pawns: {color, file}
+#   open_file: <file>          no pawns of either colour
+#   half_open_file: {color, file}   no pawns of `color` on that file
+#   bishop_pair: <color>       that side has two bishops, the other does not
+#   outpost: {color, square}   a knight there, unattackable by any enemy pawn
+#   passed_pawn: {color, square}
+#   backward_pawn: {color, square}
+
+- slug: opposition
+  examples:
+    # NB: the king must be on the FIFTH rank for this pair to work. With the
+    # king already on the sixth and in front of its pawn, White wins whoever is
+    # to move, and the turn-parity point disappears entirely.
+    # The kings must be in DIRECT opposition — e5 and e7, one square between.
+    # `4k3/8/8/4K3/...` puts the black king on e8 instead, three ranks away,
+    # which shifts the turn parity by one and inverts both results.
+    - fen: "8/4k3/8/4K3/4P3/8/8/8 b - - 0 1"
+      caption: >
+        Black to move, so White holds the opposition. Black must step aside,
+        White's king advances to the sixth rank in front of the pawn, and the
+        pawn promotes. Won for White.
+      assert:
+        side_to_move: black
+        eval: win_white
+    - fen: "8/4k3/8/4K3/4P3/8/8/8 w - - 0 1"
+      caption: >
+        The identical position with White to move. Now White must give way,
+        Black takes the opposition in reply, and the pawn never gets through.
+        Drawn — the only difference between winning and drawing here is whose
+        turn it is.
+      assert:
+        side_to_move: white
+        eval: draw
+
+- slug: lucena
+  examples:
+    - fen: "1K1k4/1P6/8/8/8/8/r7/2R5 w - - 0 1"
+      caption: >
+        The Lucena position. White's king is in front of the pawn but blocking
+        it, and stepping out invites endless checks. The winning idea is to build
+        a bridge — the rook comes to the fourth rank so it can interpose against
+        the checks.
+      assert:
+        side_to_move: white
+        eval: win_white
+
+- slug: philidor
+  examples:
+    - fen: "8/8/4k3/8/4P3/4K3/r7/5R2 b - - 0 1"
+      caption: >
+        The Philidor drawing method: the defending rook sits on its third rank
+        to keep the enemy king off the sixth. Once the pawn advances to the
+        sixth, the rook drops behind and checks forever.
+      assert:
+        side_to_move: black
+        eval: draw
+
+- slug: king-activity
+  examples:
+    - fen: "6k1/5ppp/8/8/8/4K3/5PPP/8 w - - 0 1"
+      caption: >
+        Material is dead level, yet White is much better purely because the king
+        is already marching to the centre while Black's sits at home behind its
+        pawns. In a queenless position the king is worth about a minor piece,
+        and here only one side is using it.
+      assert:
+        side_to_move: white
+
+- slug: rook-activity
+  examples:
+    - fen: "r5k1/3R1ppp/8/8/8/8/5PPP/6K1 w - - 0 1"
+      caption: >
+        Level material, but the rooks are not comparable. White's sits on the
+        seventh attacking three pawns and cutting the king off; Black's is stuck
+        on the back rank with no open file to enter. Activity is the currency of
+        rook endings.
+      assert:
+        side_to_move: white
+
+- slug: pawn-structure
+  examples:
+    - moves: "d4 d5 c4 e6 Nc3 Nf6 Bg5 Be7 e3 O-O Nf3 h6 Bh4 b6"
+      caption: >
+        A Queen's Gambit Declined. Neither side has a weakness yet, but the
+        pawn skeleton already dictates the plans: White plays on the queenside
+        and in the centre, Black must free the light-squared bishop.
+      assert:
+        side_to_move: white
+
+- slug: isolated-queens-pawn
+  examples:
+    - moves: "d4 d5 c4 e6 Nc3 Nf6 cxd5 exd5 Bg5 Be7 e3 O-O Bd3 c5 Nf3 Nc6 O-O cxd4 exd4"
+      caption: >
+        The classic isolated queen's pawn. White's d4 pawn has no pawn on the c-
+        or e-file to defend it, so it is a permanent target — but it grips c5 and
+        e5, and both White rooks have open files. White must play for the attack;
+        Black wants to trade pieces and win the pawn in an endgame.
+      assert:
+        side_to_move: black
+        isolated_pawn: { color: white, square: d4 }
+
+- slug: doubled-pawns
+  examples:
+    - moves: "e4 e5 Nf3 Nc6 Bb5 a6 Bxc6 dxc6"
+      caption: >
+        The Exchange Ruy Lopez. Black's doubled c-pawns can never make a passed
+        pawn on the queenside, which is why White's whole plan is to reach an
+        endgame — but Black gets the bishop pair and a half-open d-file as
+        compensation.
+      assert:
+        side_to_move: white
+        doubled_pawns: { color: black, file: c }
+        bishop_pair: black
+
+- slug: backward-pawn
+  examples:
+    - moves: "e4 c5 Nf3 d6 d4 cxd4 Nxd4 Nf6 Nc3 a6 Be2 e5 Nb3"
+      caption: >
+        A Najdorf where Black has just played e5. The d6 pawn is now backward on
+        a half-open file — it cannot advance safely and no pawn can defend it —
+        and the d5 square in front of it is a permanent home for a white piece.
+        Black accepts both for control of the centre and active play.
+      assert:
+        side_to_move: black
+        backward_pawn: { color: black, square: d6 }
+        half_open_file: { color: white, file: d }
+
+- slug: outpost
+  examples:
+    # The f-pawn has to be on f5, not f7. From f7 it can still play ...f6 and
+    # hit e5, which disqualifies the square as an outpost — "no pawn can ever
+    # attack it" is a claim about the future, not just about right now.
+    - fen: "r2q1rk1/pp2b1pp/2n1p3/3pNp2/3P4/2NBP3/PP3PPP/R1BQ1RK1 b - - 0 1"
+      caption: >
+        The white knight on e5 is a textbook outpost. Black's d- and f-pawns
+        have both advanced past it and pawns cannot move backwards, so no pawn
+        will ever attack e5 again. The knight can only be removed by giving up a
+        piece of equal value for it.
+      assert:
+        side_to_move: black
+        outpost: { color: white, square: e5 }
+
+- slug: open-file
+  examples:
+    - moves: "e4 e5 Nf3 Nc6 Bc4 Bc5 c3 Nf6 d4 exd4 cxd4 Bb4+ Nc3 Nxe4 O-O Nxc3 bxc3 Bxc3 Qb3 Bxa1"
+      caption: >
+        The Greco Attack, where the e-file has been swept clean. Whoever gets a
+        rook there first — and White is about to — has the only route into the
+        opponent's position.
+      assert:
+        side_to_move: white
+        open_file: e
+
+- slug: bishop-pair
+  examples:
+    - moves: "d4 Nf6 c4 e6 Nc3 Bb4 Bd2 O-O e3 d5 a3 Bxc3 Bxc3"
+      caption: >
+        A Nimzo-Indian where Black has traded the dark-squared bishop for a
+        knight. White holds the bishop pair and will try to open the position;
+        Black will keep it closed and aim for a knight outpost.
+      assert:
+        side_to_move: black
+        bishop_pair: white
+
+- slug: good-and-bad-bishops
+  examples:
+    - fen: "4k3/pp3pp1/2p1b2p/2Pp4/3P4/4B1P1/PP3P1P/4K3 w - - 0 1"
+      caption: >
+        Both sides have one bishop. Black's sits on the same colour as its own
+        fixed pawns on d5 and c6 and is biting on granite; White's has open
+        diagonals because the white pawns sit on dark squares only where the
+        bishop is not. Same material, very different pieces.
+      assert:
+        side_to_move: white
+
+- slug: minority-attack
+  examples:
+    - moves: "d4 d5 c4 e6 Nc3 Nf6 Bg5 Be7 e3 O-O Nf3 Nbd7 cxd5 exd5 Bd3 c6 Qc2 Re8 O-O Nf8 Rab1"
+      caption: >
+        The Carlsbad structure with White's rook swinging to b1. The plan is
+        b4-b5, sending two pawns against three, purely to force an exchange that
+        leaves Black with a backward c-pawn on a half-open file.
+      assert:
+        side_to_move: black
+        half_open_file: { color: white, file: c }
+
+- slug: prophylaxis
+  examples:
+    - fen: "r1bq1rk1/pp1nbppp/2p1pn2/3p4/2PP4/2N1PN2/PPQ1BPPP/R1B2RK1 w - - 0 1"
+      caption: >
+        Black's only real freeing idea is ...e5 or ...c5. A prophylactic move —
+        Rd1, adding a defender to d4 before anything is attacked — takes both
+        breaks away. Nothing appears to happen, which is the point.
+      assert:
+        side_to_move: white
+
+- slug: space-advantage
+  examples:
+    - moves: "d4 Nf6 c4 g6 Nc3 Bg7 e4 d6 Nf3 O-O Be2 e5 d5"
+      caption: >
+        A King's Indian where White has closed the centre with d5. White owns
+        more of the board and should avoid trades; Black is cramped and wants
+        them — and will counterattack on the kingside where the extra space
+        matters least.
+      assert:
+        side_to_move: black
+
+- slug: initiative
+  examples:
+    - moves: "e4 e5 Nf3 Nc6 Bc4 Bc5 b4 Bxb4 c3 Ba5 d4"
+      caption: >
+        The Evans Gambit. White has given a pawn and in return every white move
+        comes with a threat, so Black never gets a free move to consolidate. If
+        the initiative is not converted before it fades, White is simply a pawn
+        down.
+      assert:
+        side_to_move: black
+
+- slug: weak-squares
+  examples:
+    - moves: "d4 Nf6 c4 g6 Nc3 Bg7 e4 d6 f3 O-O Be3 e5 d5 Nh5 Qd2 Bf6 O-O-O Bg5 Bxg5 Qxg5 Qxg5"
+      caption: >
+        Black has traded the dark-squared bishop off. With the g7 bishop gone
+        and the black pawns fixed on dark squares, the squares around the black
+        king are a colour complex nothing can defend.
+      assert:
+        side_to_move: black
+
+- slug: exchange-sacrifice
+  examples:
+    - fen: "r4rk1/pp2ppbp/2np1np1/q7/3PP3/2N1BP2/PP1Q2PP/R3KB1R b KQ - 0 1"
+      caption: >
+        The standard Sicilian exchange sacrifice shape: ...Rxc3 gives a rook for
+        a knight to wreck White's queenside pawns and hand Black permanent
+        control of the dark squares. Material says Black is worse; the position
+        says otherwise.
+      assert:
+        side_to_move: black

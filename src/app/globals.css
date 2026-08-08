@@ -10,6 +10,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  /* Chess Coach: playful rounded display face. */
+  --font-round: var(--font-nunito);
 }
 
 @media (prefers-color-scheme: dark) {

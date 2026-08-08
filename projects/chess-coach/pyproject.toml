@@ -1,0 +1,24 @@
+[project]
+name = "chess-coach"
+version = "0.1.0"
+description = "Chess Coach — human-like engine weakening, Elo calibration harness, tactics library authoring, and the coach-explanation evaluation harness."
+requires-python = ">=3.11"
+dependencies = [
+    # Engine driver + board/rules/PGN
+    "chess>=1.11",
+    # Bradley-Terry maximum-likelihood fit and its Hessian-derived standard errors
+    "numpy>=1.26",
+    "scipy>=1.13",
+    # Tournament progress over a multi-hour run
+    "rich>=13.7",
+    "pyyaml>=6.0.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.4",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

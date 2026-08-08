@@ -1,0 +1,7 @@
+Chess piece artwork: "rhosgfx" set by RhosGFX — https://rhosgfx.itch.io/
+Licensed CC0 1.0 Universal (public domain dedication):
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Obtained from the Lichess source tree (lichess-org/lila, public/piece/rhosgfx),
+whose COPYING.md records the licence. CC0 imposes no conditions — this credit is
+given because it is the decent thing to do, not because it is required.

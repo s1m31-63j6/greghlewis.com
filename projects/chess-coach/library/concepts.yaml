@@ -1,0 +1,880 @@
+# The tactics & strategy library.
+#
+# `source` decides where a concept's example positions come from, and it is not
+# a stylistic choice — it is forced by what the Lichess puzzle database actually
+# contains. A scan of all 6,057,356 puzzles found rich coverage of every
+# tactical motif and **zero** puzzles tagged with any positional concept:
+# outpost, bishopPair, minorityAttack, prophylaxis, openFile, isolatedPawn,
+# backwardPawn, spaceAdvantage, initiative, weakSquares — all return 0.
+#
+#   source: lichess   -> examples selected from the CC0 puzzle database by theme,
+#                        already vetted by rating, popularity, and play count.
+#   source: authored  -> positions written by hand. Every one still gets machine
+#                        checked in build_library.py (legal position, claimed
+#                        line legal, engine agrees with the claim).
+#
+# `lichess_theme` must be a real theme string; build_library.py fails on unknown
+# themes rather than silently producing a concept with no examples.
+#
+# `rating_band` bounds puzzle difficulty so a beginner concept does not get a
+# 2400-rated example. Ignored for authored concepts.
+
+- slug: fork
+  name: Fork
+  category: tactics
+  source: lichess
+  lichess_theme: fork
+  rating_band: [900, 1500]
+  one_liner: One piece attacks two things at once, and only one of them can run.
+  teaching: |
+    A fork is the simplest way to win material, and it is the first tactic most
+    players learn to see. One piece attacks two targets simultaneously; the
+    opponent can answer only one threat per move, so the other target falls.
+
+    Knights fork most famously, because their move is the one no other piece can
+    block or imitate — a knight on the right square attacks in a shape nothing
+    else covers. But every piece forks. Pawns fork by advancing into two
+    captures. Queens fork along two lines at once. Kings fork in the endgame,
+    which is part of why an active king matters so much once the queens leave.
+
+    The practical skill is not spotting a fork that already exists; it is
+    noticing that two enemy pieces *stand on a forkable geometry* and then
+    working out how to get a piece to that square with tempo.
+
+- slug: pin
+  name: Pin
+  category: tactics
+  source: lichess
+  lichess_theme: pin
+  rating_band: [900, 1500]
+  one_liner: A piece cannot move because something more valuable sits behind it.
+  teaching: |
+    A pin freezes a piece by putting something it must protect directly behind
+    it on the same line. Only the long-range pieces can pin: bishop, rook, queen.
+
+    The distinction that matters is between an *absolute* pin, where the piece
+    behind is the king and moving is therefore illegal, and a *relative* pin,
+    where moving is legal but loses material. Absolute pins are permanent until
+    the geometry changes. Relative pins can be broken whenever the owner decides
+    the cost is worth paying — which is exactly why a relative pin is a weaker
+    grip than it looks.
+
+    A pinned piece is a defender that cannot defend. The standard follow-up is
+    not to win the pinned piece directly but to pile more attackers onto it, or
+    to attack whatever it was guarding, since it can no longer step in.
+
+- slug: skewer
+  name: Skewer
+  category: tactics
+  source: lichess
+  lichess_theme: skewer
+  rating_band: [1000, 1600]
+  one_liner: A pin in reverse — the valuable piece is in front and must move.
+  teaching: |
+    A skewer attacks a valuable piece through to a lesser one behind it. The
+    front piece is forced to move, and the piece behind it is captured.
+
+    Geometrically it is identical to a pin; only the order of the targets is
+    swapped. That makes them easy to confuse and worth separating deliberately:
+    a pin *immobilises*, a skewer *forces movement*. A pin is a long-term
+    positional asset you can build on. A skewer usually resolves immediately.
+
+    The most common practical skewer is a check along a rank, file, or diagonal
+    that wins a rook or queen standing behind the king.
+
+- slug: discovered-attack
+  name: Discovered Attack
+  category: tactics
+  source: lichess
+  lichess_theme: discoveredAttack
+  rating_band: [1100, 1700]
+  one_liner: Move one piece out of the way and the piece behind it does the work.
+  teaching: |
+    A discovered attack unmasks a line. The piece that moves and the piece that
+    attacks are different, which is what makes these so easy to miss — you are
+    looking at the wrong piece.
+
+    Their power comes from a doubling of threats. The moving piece is free to
+    create a threat of its own while the unmasked piece creates another, so a
+    discovery generates two threats from one move. Nothing else in chess does
+    that as cheaply.
+
+    Because the moving piece is unconstrained, it can go somewhere apparently
+    absurd — including somewhere it can be captured — as long as the discovered
+    threat is bigger than whatever it gives up.
+
+- slug: discovered-check
+  name: Discovered Check
+  category: tactics
+  source: lichess
+  lichess_theme: discoveredCheck
+  rating_band: [1100, 1700]
+  one_liner: A discovery where the unmasked line gives check, so the reply is forced.
+  teaching: |
+    A discovered check is a discovered attack whose unmasked line hits the king.
+    That single detail changes everything, because check must be answered
+    immediately. The moving piece can therefore do something the opponent would
+    normally never permit — capture a defended queen, or step onto a square
+    attacked by three pieces — and there is nothing to be done about it that
+    turn.
+
+    This is the tactic that most often produces material gain that looks like it
+    should be impossible.
+
+- slug: double-check
+  name: Double Check
+  category: tactics
+  source: lichess
+  lichess_theme: doubleCheck
+  rating_band: [1200, 1900]
+  one_liner: Two pieces check at once, so only a king move can answer.
+  teaching: |
+    In a double check, the moving piece gives check *and* uncovers a second
+    checking piece. Both attack the king at once.
+
+    This matters because of a quirk of the rules: you may block a check or
+    capture the checking piece, but you cannot do either against two checkers on
+    two different lines with one move. The king *must* move. No block, no
+    capture, no interposition.
+
+    That is why double check is the engine behind so many famous mating
+    combinations — it strips the defender of every option except one, and if the
+    king has no squares, it is mate regardless of how much material is standing
+    around doing nothing.
+
+- slug: deflection
+  name: Deflection
+  category: tactics
+  source: lichess
+  lichess_theme: deflection
+  rating_band: [1200, 1800]
+  one_liner: Force a defender away from the job it is doing.
+  teaching: |
+    A defender is only a defender while it stays where it is. Deflection makes
+    it an offer it cannot refuse — usually a check or a capture of something
+    bigger — and once it has stepped away, whatever it was guarding falls.
+
+    The mental move is to stop looking at what you can capture and start asking
+    what is *holding the position together*. Identify the piece doing the
+    defensive work, then look for anything that makes it move.
+
+    Deflection and decoy are close relatives and often confused. Deflection
+    drags a piece *away from* a duty. Decoy lures a piece *onto* a specific
+    square.
+
+- slug: decoy
+  name: Decoy
+  category: tactics
+  source: lichess
+  lichess_theme: attraction
+  rating_band: [1200, 1800]
+  one_liner: Lure a piece onto a square where it can be hit.
+  teaching: |
+    A decoy — Lichess tags these as "attraction" — pulls an enemy piece onto a
+    particular square, usually with a sacrifice it is obliged to accept, so that
+    a follow-up tactic works against it there.
+
+    The classic pattern drags the king onto a square where a knight can fork it
+    against the queen, or onto an open file where a rook waits. The material
+    given up is irrelevant if the resulting geometry wins more.
+
+    Where deflection asks "what would make that defender leave?", decoy asks
+    "which square do I wish that piece were standing on?" and then works out
+    what price would put it there.
+
+- slug: clearance
+  name: Clearance
+  category: tactics
+  source: lichess
+  lichess_theme: clearance
+  rating_band: [1400, 2000]
+  one_liner: Vacate a square or line your own piece needs, often with tempo.
+  teaching: |
+    Sometimes the obstacle is your own. Clearance moves one of your pieces out
+    of the way — frequently sacrificing it — so that a square, file, or diagonal
+    opens for another of your pieces.
+
+    These are hard to see because the move looks like a blunder. A piece steps
+    onto a defended square, or is simply given away, and the point is not what
+    it does there but what it stops blocking.
+
+    Clearance almost always has to come with tempo. Give the opponent a free
+    move and they will use it to cover the square you just spent a piece to open.
+
+- slug: interference
+  name: Interference
+  category: tactics
+  source: lichess
+  lichess_theme: interference
+  rating_band: [1500, 2100]
+  one_liner: Cut the line between a defender and what it defends.
+  teaching: |
+    Interference plants a piece — usually a sacrificed one — directly on the
+    line between an enemy defender and the thing it is protecting. The defender
+    is still on the board and still pointing the right way, but the connection
+    is severed.
+
+    This is among the rarest and most beautiful tactics, because the
+    interfering piece is often *en prise* to two different pieces and it does
+    not matter: whichever one captures it, the other stops defending.
+
+    Interference is the mirror image of clearance. Clearance opens a line you
+    want; interference closes a line they need.
+
+- slug: x-ray
+  name: X-Ray
+  category: tactics
+  source: lichess
+  lichess_theme: xRayAttack
+  rating_band: [1500, 2100]
+  one_liner: A piece attacks or defends straight through another piece.
+  teaching: |
+    An x-ray is an attack or a defence that operates *through* an intervening
+    piece — the influence is latent, and becomes real the moment the piece in
+    between moves or is captured.
+
+    The defensive version is the more useful one to know. A rook can "defend"
+    a piece through an enemy rook: if the enemy captures, you recapture, because
+    your defence was pointing at the square all along.
+
+    Learning to see x-rays mostly means learning to evaluate captures on a
+    square by counting *every* piece pointed at it, not just the ones with a
+    clear path today.
+
+- slug: zwischenzug
+  name: Zwischenzug
+  category: tactics
+  source: lichess
+  lichess_theme: intermezzo
+  rating_band: [1400, 2000]
+  one_liner: Before recapturing, insert a bigger threat.
+  teaching: |
+    A zwischenzug — an in-between move — interrupts what looked like a forced
+    sequence. Instead of making the "obvious" recapture, you insert a move
+    carrying a larger threat, force a response, and only then go back and
+    recapture.
+
+    Every player has lost material to one, because exchanges feel automatic. He
+    takes, I take back. The zwischenzug exists precisely in that gap: the
+    recapture is not going anywhere, so if there is something more urgent
+    available first, play it first.
+
+    The habit worth building: before any recapture, ask once whether a check or
+    a bigger threat exists. It costs a second and it catches the whole family.
+
+- slug: back-rank-mate
+  name: Back-Rank Mate
+  category: tactics
+  source: lichess
+  lichess_theme: backRankMate
+  rating_band: [800, 1400]
+  one_liner: A king trapped behind its own unmoved pawns is mated on the first rank.
+  teaching: |
+    After castling, the king sits behind three pawns that have never moved. Very
+    comfortable — until a rook or queen arrives on the back rank, at which point
+    those pawns are a wall the king cannot climb.
+
+    The threat shapes far more games than the mate itself. Because back-rank
+    mate is always latent, defenders spend tempi on it: giving the king an
+    escape square, keeping a rook home, or having to answer a check they would
+    otherwise ignore. Attackers exploit it indirectly, since any defender on the
+    back rank is doing two jobs and can therefore be deflected.
+
+    The prophylactic move — pushing a rook's pawn one square to make an escape
+    hatch — is one of the highest-value non-moves in chess.
+
+- slug: smothered-mate
+  name: Smothered Mate
+  category: tactics
+  source: lichess
+  lichess_theme: smotheredMate
+  rating_band: [1100, 1800]
+  one_liner: A knight mates a king that its own pieces have boxed in.
+  teaching: |
+    A king surrounded entirely by its own pieces has no flight squares, and the
+    one piece that can reach it anyway is the knight, since it jumps.
+
+    The full pattern, Philidor's Legacy, is worth memorising as a unit: queen
+    checks on the diagonal, king goes to the corner, knight checks, king returns,
+    queen sacrifices herself on g8 to *force* the rook to capture and fill the
+    last escape square, and the knight delivers mate on f7. The queen sacrifice
+    is a decoy whose purpose is to make the defender block its own king.
+
+    It is the clearest illustration in chess that material and safety are
+    different things.
+
+- slug: removing-the-defender
+  name: Removing the Defender
+  category: tactics
+  source: lichess
+  lichess_theme: capturingDefender
+  rating_band: [1000, 1600]
+  one_liner: Capture the piece that was holding everything together.
+  teaching: |
+    The bluntest way to beat a defended target is to take the defender. No
+    finesse required — just recognition.
+
+    This is the concept that teaches the counting habit that underlies all
+    tactics. Before assessing whether a capture works, list every attacker and
+    every defender of the square, then ask what happens to that count if you
+    remove one of them.
+
+    Where deflection persuades a defender to leave and interference cuts it off,
+    this simply takes it. It is the most common of the three by a wide margin.
+
+- slug: hanging-piece
+  name: Hanging Piece
+  category: tactics
+  source: lichess
+  lichess_theme: hangingPiece
+  rating_band: [700, 1300]
+  one_liner: An undefended piece is a tactic waiting to happen.
+  teaching: |
+    A hanging piece is simply one that is undefended. Sometimes it can be taken
+    outright. Far more often, its real cost is indirect: an undefended piece is
+    what makes forks, skewers, discoveries, and in-between moves work.
+
+    The strongest players do not so much calculate tactics as notice that the
+    preconditions for one exist. Loose pieces are the single most reliable
+    precondition. There is an old coaching line for it — *loose pieces drop off*
+    — and it is less a joke than a search heuristic.
+
+    The practical version, for both sides: after every opponent move, note which
+    pieces on both sides are undefended. Most tactical opportunities and most
+    blunders live in that list.
+
+- slug: trapped-piece
+  name: Trapped Piece
+  category: tactics
+  source: lichess
+  lichess_theme: trappedPiece
+  rating_band: [1200, 1800]
+  one_liner: A piece with no safe squares can be hunted down at leisure.
+  teaching: |
+    A piece that has wandered too far, or been walled in by pawns, can be
+    attacked and won even though nothing is hanging right now — because it has
+    nowhere to go.
+
+    Bishops are the usual victims. A bishop that grabs a wing pawn frequently
+    finds the retreat squares covered by pawns that were always going to advance
+    anyway. Knights on the rim get trapped similarly.
+
+    Trapping is slower than most tactics, which is why it is missed: the win
+    takes two or three quiet moves rather than one forcing sequence. Look for it
+    whenever an enemy piece is deep in your position and its escape routes are
+    few.
+
+- slug: quiet-move
+  name: Quiet Move
+  category: tactics
+  source: lichess
+  lichess_theme: quietMove
+  rating_band: [1600, 2200]
+  one_liner: The winning move is not a check or a capture — it is a threat nothing can meet.
+  teaching: |
+    Most tactics are forcing. A quiet move is the exception that makes strong
+    players strong: no check, no capture, no immediate threat to anything, and
+    yet the position is now lost for the opponent because every answer fails.
+
+    They are hard for humans and were historically hard for engines, because
+    the natural search order examines checks and captures first. A quiet move is
+    invisible to that search.
+
+    Typically a quiet move creates an unstoppable threat, or removes the
+    opponent's only counterplay before cashing in. When a position feels winning
+    but every forcing line comes up short, the answer is usually a quiet move.
+
+- slug: underpromotion
+  name: Underpromotion
+  category: tactics
+  source: lichess
+  lichess_theme: underPromotion
+  rating_band: [1400, 2200]
+  one_liner: Sometimes a knight — or a rook — beats a queen.
+  teaching: |
+    Promoting to a queen is right almost always, which is exactly why the
+    exceptions are so easy to miss.
+
+    Two reasons to underpromote. First, the knight moves in a way the queen
+    cannot: promoting to a knight can deliver check or a fork that a new queen
+    simply does not attack. Second, avoiding stalemate: a new queen may leave
+    the enemy king with no legal move, throwing away a win, where a rook keeps
+    a square free and mates next move.
+
+    It is a small category, but it is the clearest demonstration that piece
+    value is contextual rather than absolute.
+
+- slug: en-passant
+  name: En Passant
+  category: tactics
+  source: lichess
+  lichess_theme: enPassant
+  rating_band: [1300, 2000]
+  one_liner: The capture that expires if you do not take it immediately.
+  teaching: |
+    When a pawn advances two squares and lands beside an enemy pawn, that pawn
+    may capture it as though it had advanced only one — but only on the very
+    next move. Wait, and the right is gone permanently.
+
+    The rule exists to close a loophole created when the two-square first move
+    was introduced: without it, a pawn could slip past an enemy pawn untouched.
+
+    It matters more than its rarity suggests, because it is the one capture
+    players forget exists. Defensive calculations quietly assume a pawn is safe
+    when it is not, and endgames turn on a capture nobody counted.
+
+- slug: sacrifice
+  name: Sacrifice
+  category: tactics
+  source: lichess
+  lichess_theme: sacrifice
+  rating_band: [1300, 1900]
+  one_liner: Give up material for something worth more than material.
+  teaching: |
+    A sacrifice trades material for something else: time, an open line, the
+    safety of the enemy king, a square. It is not generosity and it is not a
+    gamble — a sound sacrifice is a calculation whose payoff is simply denominated
+    in a different currency.
+
+    Worth separating the true sacrifice from the sham. A sham sacrifice is a
+    forced sequence that regains the material with interest — really just a
+    combination, and verifiable to the end. A true sacrifice cannot be
+    calculated to a clear conclusion, and rests on judgement about the resulting
+    position.
+
+    Almost every sacrifice you will actually play is a sham sacrifice. Those are
+    the ones worth training, because they can be checked.
+
+- slug: attacking-f7
+  name: The f7 Square
+  category: tactics
+  source: lichess
+  lichess_theme: attackingF2F7
+  rating_band: [800, 1400]
+  one_liner: f7 and f2 are defended only by the king, and every opening fight knows it.
+  teaching: |
+    At the start of the game, f7 for Black and f2 for White are defended by
+    exactly one piece: the king. Every other pawn near the king has support from
+    a piece; those two do not.
+
+    This asymmetry drives an enormous amount of opening theory. It is why the
+    bishop goes to c4, why the knight jumps to g5, why the Fried Liver exists,
+    and why a great many short games between beginners end the same way.
+
+    Understanding it defensively is worth more than the attacking patterns. Once
+    you know f7 is the target, the defensive moves stop looking arbitrary.
+
+- slug: opposition
+  name: Opposition
+  category: endgame
+  source: authored
+  one_liner: In king-and-pawn endings, the king that does not have to move wins the square.
+  teaching: |
+    When the two kings face each other with one square between them, whoever is
+    *to move* must give way. Having the opposition means it is the opponent's
+    turn in that standoff.
+
+    This is the fundamental idea of king-and-pawn endgames. It converts a
+    question about squares into a question about turn parity, and it decides an
+    enormous number of otherwise identical-looking positions.
+
+    Beyond the direct opposition there is distant opposition, where the kings
+    stand an odd number of squares apart on a file, rank, or diagonal — the same
+    parity argument at a distance.
+
+- slug: lucena
+  name: The Lucena Position
+  category: endgame
+  source: authored
+  one_liner: The winning technique in rook-and-pawn endings — build a bridge.
+  teaching: |
+    The most important winning position in rook endgames. Your pawn is on the
+    seventh, your king stands in front of it, and the enemy king is cut off — but
+    your own king is in the pawn's way and steps out into a barrage of checks.
+
+    The solution is "building a bridge": place your rook on the fourth rank so
+    that when the checks come, the rook can interpose and block one, ending the
+    checking sequence and freeing the king.
+
+    Rook endings are the most common endings in chess, and this is the position
+    they most often reduce to. Knowing it converts a large class of games that
+    otherwise drift into draws.
+
+- slug: philidor
+  name: The Philidor Position
+  category: endgame
+  source: authored
+  one_liner: The drawing technique in rook-and-pawn endings — hold the third rank.
+  teaching: |
+    The defensive counterpart to Lucena, and the more useful of the two, because
+    you will be worse more often than winning.
+
+    With your king in front of the enemy pawn, put your rook on your third rank
+    and keep it there. This stops the enemy king from advancing to the sixth. The
+    moment the pawn advances to the sixth itself, the rook swings to the eighth
+    rank and checks from behind — the pawn now blocks its own king from
+    sheltering, and the checks never end.
+
+    Two ideas, one rank each. Together they decide most rook endgames a club
+    player will ever reach.
+
+- slug: zugzwang
+  name: Zugzwang
+  category: endgame
+  source: lichess
+  lichess_theme: zugzwang
+  rating_band: [1500, 2200]
+  one_liner: Every legal move makes the position worse — and passing is not allowed.
+  teaching: |
+    Chess has no pass. Zugzwang is the situation where a player would be fine if
+    they could simply do nothing, but every available move loses.
+
+    It is mostly an endgame phenomenon, because with few pieces there are few
+    harmless moves. In the middlegame there is nearly always something neutral
+    to play; in a king-and-pawn ending there may be nothing at all.
+
+    Zugzwang is also why the opposition works — the losing side is in zugzwang
+    and must step aside. And it is the reason engines and humans evaluate some
+    positions so differently: an engine has no trouble seeing that a position is
+    lost only because it is your turn.
+
+- slug: passed-pawn
+  name: Passed Pawn
+  category: endgame
+  source: lichess
+  lichess_theme: advancedPawn
+  rating_band: [1200, 1800]
+  one_liner: A pawn with no enemy pawn able to stop it must be watched every move.
+  teaching: |
+    A passed pawn has no enemy pawn on its file or on either adjacent file. It
+    can only be stopped by a piece — which means it permanently ties down a
+    piece to babysit it.
+
+    Its value grows with every rank. On the fifth it is a nuisance, on the
+    seventh it decides games, and a piece that must sit and watch it is a piece
+    not participating anywhere else. That is the real point: a passed pawn wins
+    material indirectly by reducing the opponent's effective force.
+
+    Nimzowitsch's advice remains the best summary: a passed pawn is a criminal
+    that should be kept under lock and key — and, when it is yours, must be
+    pushed.
+
+- slug: king-activity
+  name: King Activity
+  category: endgame
+  source: authored
+  one_liner: Once the queens are gone, the king is a strong piece — use it.
+  teaching: |
+    Through the opening and middlegame the king is a liability to be hidden. In
+    the endgame that reverses completely: with few pieces left, the king is
+    worth roughly a minor piece in fighting strength, and the side whose king
+    reaches the centre first is usually just better.
+
+    This reversal is the single hardest habit for improving players to acquire,
+    because it directly contradicts everything correctly drilled about safety.
+    The tell is the queens coming off — after that, the king should be marching.
+
+    A great many endgames that look equal in material are decided entirely by
+    which king got to the centre first.
+
+- slug: pawn-endgame-technique
+  name: Pawn Endgame Technique
+  category: endgame
+  source: lichess
+  lichess_theme: pawnEndgame
+  rating_band: [1200, 1900]
+  one_liner: With only kings and pawns, calculation is exact and mistakes are fatal.
+  teaching: |
+    King-and-pawn endgames are the one part of chess where evaluation is often a
+    matter of counting rather than judgement. Positions are either won, drawn, or
+    lost, and the difference is frequently a single tempo.
+
+    That makes them unforgiving. There are no pieces left to generate
+    compensation, so an error is not something you play around — it is the
+    result.
+
+    It also makes them learnable in a way the middlegame is not. The square of
+    the pawn, opposition, key squares, and triangulation between them settle most
+    positions, and each is a rule rather than an instinct.
+
+- slug: rook-activity
+  name: Rook Activity
+  category: endgame
+  source: authored
+  one_liner: An active rook is worth a pawn — often more.
+  teaching: |
+    Rook endings are the most common endings in chess and the most frequently
+    misplayed. The governing principle is simple to state and hard to obey:
+    activity beats material.
+
+    A rook behind a passed pawn — yours or theirs — is doing real work. A rook
+    tied to defending a pawn is barely a piece at all. Given the choice between
+    holding a pawn passively and giving it up for an active rook on the seventh,
+    the active rook is usually correct.
+
+    This is why so many "winning" rook endings are drawn. The extra pawn was
+    bought with a passive rook, and the passive rook was worth more than the pawn.
+
+- slug: pawn-structure
+  name: Pawn Structure
+  category: strategy
+  source: authored
+  one_liner: Pawns cannot move backwards, so every pawn move is permanent.
+  teaching: |
+    Pawns are the only pieces that cannot retreat. Every pawn move is therefore
+    a permanent commitment, and the resulting structure is the most durable
+    feature of a position — pieces come and go, the structure persists.
+
+    It determines almost everything else: which files open for rooks, which
+    squares are permanently safe for knights, which bishop is good and which is
+    bad, and where each side should be trying to play.
+
+    Philidor's claim that pawns are the soul of chess is not romanticism. It is
+    a statement about permanence. Choose the structure and you have chosen the
+    plan.
+
+- slug: isolated-queens-pawn
+  name: The Isolated Queen's Pawn
+  category: strategy
+  source: authored
+  one_liner: A weakness in the endgame and an asset in the middlegame — the whole game turns on which.
+  teaching: |
+    An isolated pawn has no friendly pawns on adjacent files, so no pawn can ever
+    defend it. The isolated d-pawn is the most studied example in chess.
+
+    It is simultaneously a weakness and a strength, which is what makes it such a
+    good teacher. The pawn itself is a permanent target and the square in front
+    of it is a permanent outpost for the opponent. In exchange, it grips two
+    central squares, opens two files for the rooks, and gives its owner freer
+    piece play.
+
+    That produces one of the clearest strategic dichotomies in chess: the side
+    with the isolated pawn wants pieces on and must attack; the side against it
+    wants to trade everything and reach an endgame. Both sides are right.
+
+- slug: doubled-pawns
+  name: Doubled Pawns
+  category: strategy
+  source: authored
+  one_liner: Usually a weakness, sometimes exactly what you wanted.
+  teaching: |
+    Two pawns on the same file cannot defend each other and cannot easily create
+    a passed pawn. That is the standard case against them, and it is normally
+    right, especially heading into an endgame.
+
+    But they come with compensation that is easy to undervalue. Doubling
+    generally means capturing toward the centre, which opens a file for a rook
+    and adds central control. In several respectable openings a player accepts
+    doubled pawns deliberately for exactly that.
+
+    The useful question is never "are doubled pawns bad?" It is whether the
+    open file and the extra centre pawn are worth more than the structural
+    damage in the endgame you are heading for.
+
+- slug: backward-pawn
+  name: Backward Pawn
+  category: strategy
+  source: authored
+  one_liner: A pawn left behind on a half-open file is a target that cannot run.
+  teaching: |
+    A backward pawn has fallen behind its neighbours, cannot advance safely, and
+    cannot be defended by another pawn. When it sits on a half-open file it
+    becomes a long-term target, because rooks can be stacked against something
+    that is unable to move.
+
+    The square directly in front of it is often the bigger problem. That square
+    can never be attacked by a pawn, making it a permanent home for an enemy
+    knight.
+
+    Backward pawns are usually created voluntarily, in exchange for activity.
+    Whether that trade was good is one of the more genuinely difficult
+    evaluations in chess.
+
+- slug: outpost
+  name: Outpost
+  category: strategy
+  source: authored
+  one_liner: A square no enemy pawn can ever attack, ideally occupied by a knight.
+  teaching: |
+    An outpost is a square in or near enemy territory that cannot be challenged
+    by a pawn, because the pawns that would have done so are gone or have already
+    passed by.
+
+    A knight on a good outpost is often the strongest piece on the board. It
+    cannot be driven away by anything cheap, it attacks from a distance no other
+    piece can imitate, and it can only be dislodged by trading a piece of equal
+    or greater value — usually a concession in itself.
+
+    Finding them is a matter of reading the pawn structure rather than the
+    pieces. Look for squares the enemy pawns can no longer cover, then work out
+    how to get a knight there.
+
+- slug: open-file
+  name: The Open File
+  category: strategy
+  source: authored
+  one_liner: Rooks need open files, and the seventh rank is the reward.
+  teaching: |
+    Rooks are nearly worthless behind their own pawns and dominant on open
+    lines. Since an open file is usually the only route into the enemy position,
+    control of one is worth fighting for directly.
+
+    The fight is stereotyped enough to be a plan in itself: put a rook on the
+    file, double with the second rook or the queen, contest any enemy rook that
+    arrives, and use the file to invade — typically on the seventh rank, where a
+    rook attacks pawns still on their starting squares and confines the king.
+
+    Two rooks on the seventh are frequently decisive on their own, regardless of
+    material.
+
+- slug: bishop-pair
+  name: The Bishop Pair
+  category: strategy
+  source: authored
+  one_liner: Two bishops cover every square on the board; one covers half.
+  teaching: |
+    A single bishop is permanently confined to one colour. Two bishops between
+    them see everything, and the pair is generally reckoned worth about half a
+    pawn more than bishop-and-knight or two knights.
+
+    The advantage is positional and slow. It grows as the position opens and as
+    material comes off, because bishops gain range while knights lose their
+    footholds. In a blocked position with fixed pawns, the pair may be worth
+    nothing at all, and a knight with a good outpost may be the better piece.
+
+    So possessing the pair implies a plan: open the position, trade pawns, head
+    for an endgame. Playing for the pair and then keeping the position closed is
+    a common and self-defeating mistake.
+
+- slug: good-and-bad-bishops
+  name: Good and Bad Bishops
+  category: strategy
+  source: authored
+  one_liner: A bishop blocked by its own pawns is barely a piece.
+  teaching: |
+    A bishop is "bad" when its own pawns sit on its colour, blocking the
+    diagonals it needs. It is "good" when its pawns sit on the opposite colour,
+    leaving it free.
+
+    This is entirely a function of the pawn structure, which means it is
+    long-lasting and often decided many moves before anyone notices. It also
+    means it can be planned for: place your pawns on the colour opposite your
+    remaining bishop.
+
+    A worthwhile nuance — a bad bishop is not always a bad piece. If it is
+    defending the pawns that block it, it may be doing essential work. The
+    genuinely bad bishop is the one that is both blocked and useless, and the
+    standard remedy is to trade it or manoeuvre it outside the pawn chain.
+
+- slug: minority-attack
+  name: Minority Attack
+  category: strategy
+  source: authored
+  one_liner: Advance two pawns against three to manufacture a weakness.
+  teaching: |
+    It seems backwards: attacking with fewer pawns than the defender has. The
+    goal is not to win material or break through, but to force an exchange that
+    leaves the defender with a permanent weakness.
+
+    The standard setting is the Carlsbad structure, where White pushes the b-pawn
+    to b5 against Black's a-, b-, and c-pawns. When it is exchanged, Black is
+    left with a backward c-pawn on a half-open file — precisely the target from
+    the backward-pawn concept — and White has a clear plan for the next twenty
+    moves.
+
+    It is the cleanest demonstration in chess that a plan can be about creating
+    a target rather than attacking an existing one.
+
+- slug: prophylaxis
+  name: Prophylaxis
+  category: strategy
+  source: authored
+  one_liner: Ask what your opponent wants, then make sure they cannot have it.
+  teaching: |
+    Prophylaxis is preventing the opponent's plan rather than pursuing your own.
+    Nimzowitsch named it, and Karpov built a career on it.
+
+    In practice it is a question you ask every move: if it were their turn, what
+    would they play? Then consider stopping it. The resulting moves often look
+    like they do nothing — an unremarkable king move, a pawn nudge — and their
+    value is entirely in what never happens.
+
+    It is difficult to learn because there is no feedback. A prophylactic move
+    that works produces no visible event; the attack that was coming simply never
+    arrives, and it never looks like your move was the reason.
+
+- slug: space-advantage
+  name: Space
+  category: strategy
+  source: authored
+  one_liner: More space means more squares for your pieces and fewer for theirs.
+  teaching: |
+    Advanced pawns claim territory. Behind them your pieces manoeuvre freely
+    while the opponent's get in each other's way, and a cramped position is hard
+    to play precisely because good squares are scarce.
+
+    Two rules follow, and they are among the most reliable in chess. The side
+    with more space should avoid exchanges, since every trade relieves the
+    cramp and leaves the remaining defenders more room. The cramped side should
+    seek exchanges for exactly the same reason.
+
+    Space is also a liability if overextended: advanced pawns cannot retreat, and
+    the squares behind them are permanently weak. It is an advantage that must be
+    used before it becomes a target.
+
+- slug: initiative
+  name: The Initiative
+  category: strategy
+  source: authored
+  one_liner: Forcing the opponent to answer you is worth material.
+  teaching: |
+    The initiative belongs to the player making threats — the one whose opponent
+    must spend every move responding rather than doing what they want.
+
+    It is temporary, unlike a structural advantage, and that is the key to
+    handling it. An initiative that is not converted into something permanent —
+    material, structure, king safety — evaporates, and the tempo spent acquiring
+    it is gone. This is why sacrificing for the initiative demands urgency: the
+    clock is running from the moment the material leaves.
+
+    It also explains why the defender's best practical move is often a
+    counter-threat rather than a defence. Answering threats forever loses; the
+    way out is to hand the problem back.
+
+- slug: weak-squares
+  name: Weak Squares and Colour Complexes
+  category: strategy
+  source: authored
+  one_liner: A square no pawn can defend is a permanent hole.
+  teaching: |
+    A weak square is one that can no longer be attacked by any pawn. Because
+    pawns cannot move backwards, the weakness is permanent — nothing later in the
+    game can repair it.
+
+    Individual holes matter, but the important case is a whole colour complex.
+    When several squares of one colour go weak at once — usually after the
+    bishop of that colour has been traded and pawns have settled on the other
+    colour — enemy pieces get a network of safe squares to hop between, and the
+    defence has nothing that can touch them.
+
+    Fianchettoing and then trading the fianchettoed bishop is the most common way
+    players do this to themselves.
+
+- slug: exchange-sacrifice
+  name: The Exchange Sacrifice
+  category: strategy
+  source: authored
+  one_liner: Give a rook for a minor piece to win squares, structure, or a bishop.
+  teaching: |
+    Giving up a rook for a knight or bishop costs about a pawn and a half of
+    nominal material. It is a positional sacrifice: the return is not a
+    combination but a lasting feature of the position.
+
+    Typical reasons are worth listing, because they recur. Destroying the pawn
+    structure in front of a king. Eliminating a defender of a colour complex.
+    Winning a permanent outpost. Or simply that the rook had no open file and
+    the knight was the better piece anyway.
+
+    Petrosian made this an ordinary tool rather than a brilliancy, and his games
+    are the best demonstration that material tables are approximations rather
+    than facts.

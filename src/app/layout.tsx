@@ -5,6 +5,7 @@ import {
   Source_Serif_4,
   Inter,
   JetBrains_Mono,
+  Nunito,
 } from "next/font/google";
 import "./globals.css";
 
@@ -36,6 +37,14 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+// Playful rounded stack — used by Chess Coach, which deliberately opts out of
+// the editorial frame above in favour of a bright, game-like look.
+const nunito = Nunito({
+  variable: "--font-nunito",
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800", "900"],
+});
+
 export const metadata: Metadata = {
   title: "Greg Lewis",
   description: "Recent projects — ML systems, AWS-native AI infra, and applied analysis.",
@@ -49,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${nunito.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}
