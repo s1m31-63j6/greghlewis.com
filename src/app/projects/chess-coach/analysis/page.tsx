@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { LibraryBrowser } from "./LibraryBrowser";
+import { AnalysisBoard } from "./AnalysisBoard";
 
 export const metadata: Metadata = {
-  title: "Chess Library · Greg Lewis",
+  title: "Analysis Board · Greg Lewis",
   description:
-    "Forty-four chess ideas — tactics, endgames, and strategy — each with a plain-English explanation and positions you can play through.",
+    "Move either side, paste in a position from your own game, and see the engine's top choices with the odds attached.",
 };
 
 export default function Page() {
@@ -27,33 +27,36 @@ export default function Page() {
             ♟️ Play the coach
           </Link>
           <Link
-            href="/projects/chess-coach/analysis"
+            href="/projects/chess-coach/library"
             className="text-xs font-extrabold uppercase tracking-wide text-[#1CB0F6] transition hover:text-[#1899D6]"
           >
-            🔎 Analysis board
+            📚 The library
           </Link>
         </nav>
 
         <header className="mb-7">
           <h1 className="text-4xl font-black leading-tight text-[#4B4B4B] sm:text-5xl">
-            The Library 📚
+            Analysis Board 🔎
           </h1>
           <p className="mt-2 max-w-2xl text-lg font-bold text-[#777]">
-            Forty-four ideas worth knowing, in plain English — and for the tactical ones, a puzzle
-            to actually solve rather than a diagram to nod at.
+            Move either side, as often as you like. Paste in a position from your own game and the
+            engine shows its top four moves — with what each one does to your chances.
           </p>
         </header>
 
-        <LibraryBrowser />
+        <AnalysisBoard />
 
-        <footer className="mt-10 max-w-3xl text-[11px] font-bold leading-relaxed text-[#C4C4C4]">
-          Puzzles from the{" "}
-          <a href="https://database.lichess.org/" className="underline" target="_blank" rel="noreferrer">
-            Lichess puzzle database
+        <footer className="mt-10 max-w-3xl text-xs font-bold leading-relaxed text-[#C4C4C4]">
+          Runs entirely in your browser on{" "}
+          <a
+            href="https://github.com/official-stockfish/Stockfish"
+            className="underline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Stockfish
           </a>{" "}
-          (CC0), filtered by motif from 6,057,356 puzzles and replayed move by move before
-          shipping. Positional concepts have no puzzle equivalent in that data — not one is tagged —
-          so those positions are written by hand and machine-checked for the feature they teach.
+          compiled to WebAssembly — nothing is sent anywhere.
         </footer>
       </div>
     </main>

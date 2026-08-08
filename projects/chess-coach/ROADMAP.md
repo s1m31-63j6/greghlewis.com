@@ -11,10 +11,23 @@
 | Legal-move hints + square-control heatmap | `boardOverlays.ts` |
 | Post-game review with narration | `engine/review.ts`, `GameReview.tsx` |
 | Library: 44 concepts, 150 solvable puzzles | `library/`, `build_library.py` |
+| Analysis board: both sides + move suggestions | `analysis/` |
 
-## Next: Analysis Board ("Coach Me")
+## Built: Analysis Board ("Coach Me")
 
 **Play or arrange both sides, and get the best move suggested at every turn.**
+
+Shipped at `/projects/chess-coach/analysis`. Both-sides control, top-four
+candidates with arrows and win percentages, click-to-play, FEN/PGN loading, line
+navigation, adjustable depth, flip, plus the heatmap and move hints. Runs
+entirely on WASM — no backend, as predicted.
+
+**Still open here:** a drag-pieces-onto-an-empty-board editor. react-chessboard
+exports `SparePiece` for exactly this, but it needs the board's provider
+context, so it is a bit more than an afternoon. FEN and PGN cover the actual use
+case (you have the position from somewhere) so it was not worth blocking on.
+
+### Original scope, for reference
 
 The point is a sandbox rather than a game: set a position up, push the pieces
 around for either colour, and ask "what should I play here?" — the thing you

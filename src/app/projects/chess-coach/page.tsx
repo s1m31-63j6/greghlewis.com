@@ -26,6 +26,12 @@ export default function Page() {
           >
             📚 The library
           </Link>
+          <Link
+            href="/projects/chess-coach/analysis"
+            className="ml-4 text-xs font-extrabold uppercase tracking-wide text-[#1CB0F6] transition hover:text-[#1899D6]"
+          >
+            🔎 Analysis board
+          </Link>
         </nav>
 
         <header className="mb-7">
