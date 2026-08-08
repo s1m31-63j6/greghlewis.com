@@ -3,7 +3,8 @@
 import { Chess } from "chess.js";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { StockfishEngine } from "../engine/uci";
+import type { StockfishEngine } from "../engine/uci";
+import { bootEngine, type BootProgress } from "../engine/boot";
 import { winProbability } from "../engine/winProbability";
 
 /**
@@ -47,6 +48,7 @@ export function useAnalysis() {
   const [result, setResult] = useState<{ fen: string; candidates: Candidate[] } | null>(null);
   const [engineError, setEngineError] = useState<string | null>(null);
   const [held, setHeld] = useState<string | null>(null);
+  const [boot, setBoot] = useState<BootProgress | null>(null);
   const [flipped, setFlipped] = useState(false);
 
   /** The board as it stands at the current ply. */
@@ -81,13 +83,13 @@ export function useAnalysis() {
     const run = async () => {
       try {
         if (!engineRef.current) {
-          const engine = new StockfishEngine();
-          await engine.waitUntilReady();
+          const engine = await bootEngine(setBoot);
           if (cancelled) {
             engine.terminate();
             return;
           }
           engineRef.current = engine;
+          setBoot(null);
         }
 
         const position = new Chess(fen);
@@ -207,6 +209,7 @@ export function useAnalysis() {
   }, []);
 
   return {
+    boot,
     board,
     fen,
     moves,

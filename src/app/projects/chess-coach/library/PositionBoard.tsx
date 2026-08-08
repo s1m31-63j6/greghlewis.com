@@ -6,11 +6,12 @@ import { useMemo, useState } from "react";
 
 import { heatmap } from "../boardOverlays";
 import { cutePieces } from "../CutePieces";
+import { BoardSkeleton } from "../EngineLoading";
 import type { PositionExample } from "./types";
 
 const Chessboard = dynamic(() => import("react-chessboard").then((m) => m.Chessboard), {
   ssr: false,
-  loading: () => <div className="aspect-square w-full rounded-2xl bg-[#EDEDED]" />,
+  loading: () => <BoardSkeleton />,
 });
 
 const LIGHT_SQUARE = { backgroundColor: "#F4EFE2" };

@@ -80,7 +80,15 @@ export function LibraryBrowser() {
   if (error) {
     return <p className="font-bold text-[#FF4B4B]">Couldn&apos;t load the library: {error}</p>;
   }
-  if (!library) return <p className="font-bold text-[#777]">Loading…</p>;
+  if (!library) {
+    return (
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {Array.from({ length: 8 }, (_, i) => (
+          <div key={i} className="h-36 animate-pulse rounded-3xl bg-[#EDEDED]" />
+        ))}
+      </div>
+    );
+  }
 
   if (open) {
     return (

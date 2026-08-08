@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 
 import { heatmap, mergeOverlays, moveHints, HEAT_BLACK, HEAT_WHITE, TIERS } from "../boardOverlays";
 import { cutePieces } from "../CutePieces";
+import { BoardSkeleton, EngineLoading } from "../EngineLoading";
 import { material } from "../material";
 import { MaterialBar } from "../MaterialBar";
 import { PositionSetup } from "./PositionSetup";
@@ -12,7 +13,7 @@ import { CANDIDATE_COUNT, useAnalysis, type Candidate } from "./useAnalysis";
 
 const Chessboard = dynamic(() => import("react-chessboard").then((m) => m.Chessboard), {
   ssr: false,
-  loading: () => <div className="aspect-square w-full rounded-3xl bg-[#EDEDED]" />,
+  loading: () => <BoardSkeleton />,
 });
 
 const LIGHT_SQUARE = { backgroundColor: "#F4EFE2" };
@@ -215,7 +216,11 @@ export function AnalysisBoard() {
               </span>
             </div>
 
-            {analysis.engineError ? (
+            {analysis.boot ? (
+              <div className="mt-3">
+                <EngineLoading progress={analysis.boot} />
+              </div>
+            ) : analysis.engineError ? (
               <p className="mt-3 text-sm font-bold text-[#FF4B4B]">{analysis.engineError}</p>
             ) : over ? (
               <p className="mt-3 text-sm font-bold text-[#AFAFAF]">

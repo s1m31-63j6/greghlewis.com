@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { DEFAULT_MULTIPV, selectMove, type Ladder, type Rung } from "./engine/weakening";
 import { StockfishEngine } from "./engine/uci";
+import { bootEngine, type BootProgress } from "./engine/boot";
 import { winProbabilityFor } from "./engine/winProbability";
 import { reviewGame, type MoveReview, type ReviewProgress } from "./engine/review";
 import type { TrendPoint } from "./WinTrend";
@@ -55,6 +56,7 @@ export function useCoachGame(ladder: Ladder | null) {
   const [error, setError] = useState<string | null>(null);
   const [trend, setTrend] = useState<TrendPoint[]>([]);
   const [heldPiece, setHeldPiece] = useState<string | null>(null);
+  const [boot, setBoot] = useState<BootProgress | null>(null);
   const [review, setReview] = useState<MoveReview[] | null>(null);
   const [reviewProgress, setReviewProgress] = useState<ReviewProgress | null>(null);
 
@@ -82,13 +84,17 @@ export function useCoachGame(ladder: Ladder | null) {
     return false;
   }, [playerColor]);
 
-  /** Boot the engine on demand. 7 MB is not something to load speculatively. */
+  /**
+   * Boot the engine on demand. 7 MB is not something to load speculatively —
+   * most visitors read the page without ever starting a game — so it is fetched
+   * on the first move, with progress reported so the wait is legible.
+   */
   const ensureEngine = useCallback(async (): Promise<StockfishEngine> => {
     if (engineRef.current) return engineRef.current;
     setPhase("loading");
-    const engine = new StockfishEngine();
-    await engine.waitUntilReady();
+    const engine = await bootEngine(setBoot);
     engineRef.current = engine;
+    setBoot(null);
     return engine;
   }, []);
 
@@ -225,6 +231,7 @@ export function useCoachGame(ladder: Ladder | null) {
   }, [phase]);
 
   return {
+    boot,
     trend,
     review,
     reviewProgress,

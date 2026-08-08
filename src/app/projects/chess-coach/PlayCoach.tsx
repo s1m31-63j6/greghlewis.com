@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import { heatmap, mergeOverlays, moveHints, HEAT_BLACK, HEAT_WHITE, TIERS } from "./boardOverlays";
 import { cutePieces } from "./CutePieces";
+import { BoardSkeleton, EngineLoading } from "./EngineLoading";
 import type { Ladder } from "./engine/weakening";
 import { GameReview } from "./GameReview";
 import { material } from "./material";
@@ -15,7 +16,7 @@ import { WinTrend } from "./WinTrend";
 
 const Chessboard = dynamic(() => import("react-chessboard").then((m) => m.Chessboard), {
   ssr: false,
-  loading: () => <div className="aspect-square w-full rounded-3xl bg-[#EDEDED]" />,
+  loading: () => <BoardSkeleton />,
 });
 
 const LIGHT_SQUARE = { backgroundColor: "#F4EFE2" };
@@ -106,7 +107,14 @@ export function PlayCoach() {
     return <p className="font-bold text-[#FF4B4B]">Couldn&apos;t load the coach: {loadError}</p>;
   }
   if (!ladder || !game.rung) {
-    return <p className="font-bold text-[#777]">Loading…</p>;
+    return (
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <div className="mx-auto w-full max-w-2xl">
+          <BoardSkeleton label="Setting up the board…" />
+        </div>
+        <div className="h-32 rounded-3xl bg-[#EDEDED]" />
+      </div>
+    );
   }
 
   return (
@@ -196,12 +204,16 @@ export function PlayCoach() {
 
         {/* ---------------- side panel ---------------- */}
         <aside className="space-y-5">
-          <p
-            aria-live="polite"
-            className="rounded-3xl bg-white px-5 py-4 text-lg font-extrabold text-[#4B4B4B] shadow-[0_4px_0_0_#E5E5E5] ring-1 ring-[#E5E5E5]"
-          >
-            <Status game={game} />
-          </p>
+          {game.boot ? (
+            <EngineLoading progress={game.boot} />
+          ) : (
+            <p
+              aria-live="polite"
+              className="rounded-3xl bg-white px-5 py-4 text-lg font-extrabold text-[#4B4B4B] shadow-[0_4px_0_0_#E5E5E5] ring-1 ring-[#E5E5E5]"
+            >
+              <Status game={game} />
+            </p>
+          )}
 
           <WinTrend points={game.trend} thinking={game.phase === "thinking"} />
 
