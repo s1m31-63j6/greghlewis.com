@@ -69,10 +69,8 @@ export default function Page() {
           <a href="/chess-coach/engine/LICENSE-stockfish.txt" className="underline">
             GNU GPL v3
           </a>
-          .{" "}
-          <Link href="/projects/chess-coach/methodology" className="underline">
-            How the strength dial was measured
-          </Link>
+          . The strength dial was calibrated over 25,344 self-play games — every number on the
+          slider is measured, not assigned.
         </footer>
       </div>
     </main>
