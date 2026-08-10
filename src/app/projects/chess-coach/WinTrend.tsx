@@ -36,7 +36,23 @@ function path(points: TrendPoint[], width: number, height: number): string {
     .join(" ");
 }
 
-export function WinTrend({ points, thinking }: { points: TrendPoint[]; thinking: boolean }) {
+export function WinTrend({
+  points,
+  thinking,
+  title = "Your chances",
+  aheadLabel,
+  behindLabel,
+}: {
+  points: TrendPoint[];
+  thinking: boolean;
+  /** Heading above the number. */
+  title?: string;
+  /** Who the percentage belongs to, and who the other half belongs to. Supplying
+   *  both switches on a legend — needed when two humans are playing and neither
+   *  of them is "you". */
+  aheadLabel?: string;
+  behindLabel?: string;
+}) {
   const clipAbove = useId();
   const clipBelow = useId();
 
@@ -54,9 +70,7 @@ export function WinTrend({ points, thinking }: { points: TrendPoint[]; thinking:
   return (
     <section className="rounded-3xl bg-white p-5 shadow-[0_4px_0_0_#E5E5E5] ring-1 ring-[#E5E5E5]">
       <div className="flex items-baseline justify-between">
-        <h2 className="text-sm font-extrabold uppercase tracking-wide text-[#777]">
-          Your chances
-        </h2>
+        <h2 className="text-sm font-extrabold uppercase tracking-wide text-[#777]">{title}</h2>
         {points.length > 1 && (
           <span
             className="rounded-full px-2 py-0.5 text-xs font-extrabold"
@@ -149,10 +163,23 @@ export function WinTrend({ points, thinking }: { points: TrendPoint[]; thinking:
         )}
       </svg>
 
-      <div className="mt-1 flex justify-between text-[11px] font-bold text-[#999]">
-        <span>Start</span>
-        <span>{points.length ? `${points.length} moves in` : "Not started"}</span>
-      </div>
+      {aheadLabel && behindLabel ? (
+        <div className="mt-1 flex justify-between text-[11px] font-bold">
+          <span className="flex items-center gap-1.5" style={{ color: GOOD }}>
+            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: GOOD }} />
+            {aheadLabel} ahead
+          </span>
+          <span className="flex items-center gap-1.5" style={{ color: BAD }}>
+            <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: BAD }} />
+            {behindLabel} ahead
+          </span>
+        </div>
+      ) : (
+        <div className="mt-1 flex justify-between text-[11px] font-bold text-[#999]">
+          <span>Start</span>
+          <span>{points.length ? `${points.length} moves in` : "Not started"}</span>
+        </div>
+      )}
     </section>
   );
 }

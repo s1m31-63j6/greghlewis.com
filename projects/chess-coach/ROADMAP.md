@@ -12,6 +12,7 @@
 | Post-game review with narration | `engine/review.ts`, `GameReview.tsx` |
 | Library: 44 concepts, 150 solvable puzzles | `library/`, `build_library.py` |
 | Analysis board: both sides + move suggestions | `analysis/` |
+| Pass-and-play: two humans, one board | `pass-and-play/` |
 
 ## Built: Analysis Board ("Coach Me")
 

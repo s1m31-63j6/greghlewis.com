@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-import { AnalysisBoard } from "./AnalysisBoard";
+import { PassAndPlay } from "./PassAndPlay";
 
 export const metadata: Metadata = {
-  title: "Analysis Board · Greg Lewis",
+  title: "Play a Friend · Greg Lewis",
   description:
-    "Move either side, paste in a position from your own game, and see the engine's top choices with the odds attached.",
+    "Two players, one board, one screen. Take turns, take moves back, and watch who's winning as the game goes on.",
 };
 
 export default function Page() {
@@ -27,33 +27,34 @@ export default function Page() {
             ♟️ Play the coach
           </Link>
           <Link
-            href="/projects/chess-coach/pass-and-play"
-            className="text-xs font-extrabold uppercase tracking-wide text-[#1CB0F6] transition hover:text-[#1899D6]"
-          >
-            👥 Play a friend
-          </Link>
-          <Link
             href="/projects/chess-coach/library"
             className="text-xs font-extrabold uppercase tracking-wide text-[#1CB0F6] transition hover:text-[#1899D6]"
           >
             📚 The library
           </Link>
+          <Link
+            href="/projects/chess-coach/analysis"
+            className="text-xs font-extrabold uppercase tracking-wide text-[#1CB0F6] transition hover:text-[#1899D6]"
+          >
+            🔎 Analysis board
+          </Link>
         </nav>
 
         <header className="mb-7">
           <h1 className="text-4xl font-black leading-tight text-[#4B4B4B] sm:text-5xl">
-            Analysis Board 🔎
+            Play a Friend 👥
           </h1>
           <p className="mt-2 max-w-2xl text-lg font-bold text-[#777]">
-            Move either side, as often as you like. Paste in a position from your own game and the
-            engine shows its top four moves — with what each one does to your chances.
+            Two players, one board. Take turns, take moves back when someone wants a do-over, and
+            watch the bar to see who&apos;s winning. Nobody gets told what to play — that part is
+            still up to you.
           </p>
         </header>
 
-        <AnalysisBoard />
+        <PassAndPlay />
 
         <footer className="mt-10 max-w-3xl text-xs font-bold leading-relaxed text-[#C4C4C4]">
-          Runs entirely in your browser on{" "}
+          The odds are worked out by{" "}
           <a
             href="https://github.com/official-stockfish/Stockfish"
             className="underline"
@@ -62,7 +63,8 @@ export default function Page() {
           >
             Stockfish
           </a>{" "}
-          compiled to WebAssembly — nothing is sent anywhere.
+          running in your browser. It watches the game to tell you who&apos;s ahead, and that is all
+          — it never suggests a move.
         </footer>
       </div>
     </main>

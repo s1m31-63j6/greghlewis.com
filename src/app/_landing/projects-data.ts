@@ -18,7 +18,7 @@ export const projects: Project[] = [
     title: "Chess Coach — Play at Your Level",
     date: "2026-08-10",
     oneLiner:
-      "A chess app built to be enjoyed rather than survived — pick a difficulty that actually fits you, watch your win chances swing move by move, then walk back through the game to see exactly where it turned. Plus an analysis board that suggests the best move for either side, and 44 chess ideas with 150 puzzles to solve. Runs entirely in the browser.",
+      "A chess app built to be enjoyed rather than survived — pick a difficulty that actually fits you, watch your win chances swing move by move, then walk back through the game to see exactly where it turned. Plus a pass-and-play mode for two people at one board, an analysis board that suggests the best move for either side, and 44 chess ideas with 150 puzzles to solve. Runs entirely in the browser.",
     techStack: [
       "Stockfish WASM",
       "Web Workers",
@@ -48,6 +48,8 @@ export const projects: Project[] = [
       "Web Worker",
       "analysis board",
       "game review",
+      "two player",
+      "pass and play",
       "win probability",
       "Elo",
       "difficulty calibration",

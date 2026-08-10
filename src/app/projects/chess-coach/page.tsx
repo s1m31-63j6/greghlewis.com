@@ -21,6 +21,12 @@ export default function Page() {
             ← All projects
           </Link>
           <Link
+            href="/projects/chess-coach/pass-and-play"
+            className="ml-4 text-xs font-extrabold uppercase tracking-wide text-[#1CB0F6] transition hover:text-[#1899D6]"
+          >
+            👥 Play a friend
+          </Link>
+          <Link
             href="/projects/chess-coach/library"
             className="ml-4 text-xs font-extrabold uppercase tracking-wide text-[#1CB0F6] transition hover:text-[#1899D6]"
           >
