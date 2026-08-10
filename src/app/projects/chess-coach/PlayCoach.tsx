@@ -59,7 +59,7 @@ function Status({ game }: { game: ReturnType<typeof useCoachGame> }) {
   if (game.phase === "loading") return <>⏳ Waking up the coach…</>;
   if (game.phase === "thinking") return <>🤔 The coach is thinking…</>;
   if (game.phase === "playing") return <>✨ Your move!</>;
-  return <>👋 Pick a strength and jump in.</>;
+  return <>👋 Pick a difficulty and jump in.</>;
 }
 
 export function PlayCoach() {
@@ -121,7 +121,7 @@ export function PlayCoach() {
     <div className="font-round space-y-5">
       {provisional && (
         <p className="rounded-2xl bg-[#FFF3D6] px-4 py-3 text-sm font-bold text-[#8A6100]">
-          🚧 These strength numbers are a placeholder — the measurement run hasn&apos;t finished yet.
+          🚧 These difficulty numbers are a placeholder — the measurement run hasn&apos;t finished yet.
         </p>
       )}
 
@@ -235,15 +235,15 @@ export function PlayCoach() {
 
           <section className="rounded-3xl bg-white p-5 shadow-[0_4px_0_0_#E5E5E5] ring-1 ring-[#E5E5E5]">
             <div className="flex items-baseline justify-between">
-              <label htmlFor="strength" className="text-sm font-extrabold uppercase tracking-wide text-[#777]">
-                Coach strength
+              <label htmlFor="difficulty" className="text-sm font-extrabold uppercase tracking-wide text-[#777]">
+                Difficulty
               </label>
               <span className="font-round text-2xl font-black text-[#1CB0F6]">
                 {game.rung.label}
               </span>
             </div>
             <input
-              id="strength"
+              id="difficulty"
               type="range"
               min={0}
               max={ladder.rungs.length - 1}
