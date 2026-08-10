@@ -29,13 +29,23 @@ export type MoveReview = {
   /** Position before this move — what the board shows when reviewing it. */
   fenBefore: string;
   fenAfter: string;
-  /** Was this the human's move? Coach moves are shown but not judged. */
+  /** Which side made this move. */
+  mover: "w" | "b";
+  /** Whether this move gets a verdict. In two-player mode, every move does. */
+  judged: boolean;
+  /** Kept for the coach board, where only the human's moves are judged. */
   byPlayer: boolean;
-  /** Player-frame win %, before and after. */
+  /** Win %, in the perspective colour's frame. */
   winBefore: number;
   winAfter: number;
-  /** How much the mover's own chances moved. Negative is a loss. */
+  /** The same pair in the *mover's* frame — what this player's chances did.
+   *  Two humans want "Ada's move cost Ada 14 points", not the change to White. */
+  moverWinBefore: number;
+  moverWinAfter: number;
+  /** Change in the perspective colour's chances. */
   swing: number;
+  /** Change in the mover's own chances. Negative means they gave ground. */
+  moverSwing: number;
   /** The engine's preference in the position before the move. */
   bestSan: string | null;
   verdict: Verdict;
@@ -44,9 +54,24 @@ export type MoveReview = {
 
 export type ReviewProgress = { done: number; total: number };
 
+export type ReviewOptions = {
+  /** Whose frame the perspective percentages are quoted in. */
+  perspective: "w" | "b";
+  /**
+   * Display names for both sides. Supplying them switches on two-player mode:
+   * every move is judged, and narration stops calling one side "the coach".
+   */
+  names?: { w: string; b: string };
+};
+
 /** Win-percentage loss thresholds. Roughly the bands Lichess uses. */
 function classify(loss: number, playedWasBest: boolean): Verdict {
-  if (playedWasBest) return "best";
+  // "Played the top move" normally implies no loss, since the position's
+  // evaluation already assumes best play. The two come from separate searches
+  // though, so instability can leave a gap — and a move badged "Best move"
+  // sitting beside a double-digit drop reads as a bug to anyone looking at it.
+  // Trust the measured loss over the label when they disagree.
+  if (playedWasBest && loss < 10) return "best";
   if (loss >= 20) return "blunder";
   if (loss >= 10) return "mistake";
   if (loss >= 5) return "inaccuracy";
@@ -103,11 +128,11 @@ function narrate(
   san: string,
   winBefore: number,
   winAfter: number,
-  byPlayer: boolean,
+  judged: boolean,
   fenAfter: string,
   replySan: string | null,
 ): string {
-  if (!byPlayer) {
+  if (!judged) {
     const swing = winAfter - winBefore;
     if (swing > 4) return `The coach played ${san} — that one helps you.`;
     if (swing < -4) return `The coach played ${san}, and it puts you under pressure.`;
@@ -137,9 +162,11 @@ function narrate(
 export async function reviewGame(
   engine: StockfishEngine,
   history: string[],
-  playerColour: "w" | "b",
+  options: ReviewOptions,
   onProgress?: (progress: ReviewProgress) => void,
 ): Promise<MoveReview[]> {
+  const { perspective, names } = options;
+  const twoPlayer = Boolean(names);
   const board = new Chess();
 
   // Every position the game passed through, plus the final one.
@@ -195,7 +222,10 @@ export async function reviewGame(
   for (let i = 0; i < history.length; i++) {
     const before = new Chess(positions[i]);
     const mover = before.turn();
-    const byPlayer = mover === playerColour;
+    const byPlayer = mover === perspective;
+    // With two humans there is no "opponent" whose moves go unexamined — the
+    // point is for both of them to see where their own game turned.
+    const judged = twoPlayer || byPlayer;
 
     // Quote everything in the mover's frame so "you lost 14 points" is true for
     // whoever made the move, then present in the player's frame for display.
@@ -203,8 +233,8 @@ export async function reviewGame(
     const winAfterMover = winProbabilityFor(evals[i + 1], mover);
     const loss = winBeforeMover - winAfterMover;
 
-    const winBefore = winProbabilityFor(evals[i], playerColour);
-    const winAfter = winProbabilityFor(evals[i + 1], playerColour);
+    const winBefore = winProbabilityFor(evals[i], perspective);
+    const winAfter = winProbabilityFor(evals[i + 1], perspective);
 
     const bestSan = bests[i];
     const playedWasBest = bestSan === history[i];
@@ -215,18 +245,23 @@ export async function reviewGame(
       san: history[i],
       fenBefore: positions[i],
       fenAfter: positions[i + 1],
+      mover,
+      judged,
       byPlayer,
       winBefore,
       winAfter,
+      moverWinBefore: winBeforeMover,
+      moverWinAfter: winAfterMover,
       swing: winAfter - winBefore,
+      moverSwing: winAfterMover - winBeforeMover,
       bestSan,
       verdict,
       note: narrate(
         verdict,
         history[i],
-        winBefore,
-        winAfter,
-        byPlayer,
+        twoPlayer ? winBeforeMover : winBefore,
+        twoPlayer ? winAfterMover : winAfter,
+        judged,
         positions[i + 1],
         bests[i + 1],
       ),

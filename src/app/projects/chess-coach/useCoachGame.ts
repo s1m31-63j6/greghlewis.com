@@ -240,7 +240,7 @@ export function useCoachGame(ladder: Ladder | null) {
     if (!engine || moves.length === 0) return;
     setReviewProgress({ done: 0, total: moves.length + 1 });
     try {
-      const result = await reviewGame(engine, moves, playerColor, setReviewProgress);
+      const result = await reviewGame(engine, moves, { perspective: playerColor }, setReviewProgress);
       setReview(result);
     } catch (cause) {
       setError(cause instanceof Error ? cause.message : "The review failed.");

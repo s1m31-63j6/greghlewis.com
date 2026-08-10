@@ -50,6 +50,7 @@ export function GameReview({
   setIndex,
   onRun,
   canRun,
+  names,
 }: {
   review: MoveReview[] | null;
   progress: ReviewProgress | null;
@@ -57,7 +58,10 @@ export function GameReview({
   setIndex: (next: number) => void;
   onRun: () => void;
   canRun: boolean;
+  /** Two-player mode: label every move with who made it and score both sides. */
+  names?: { w: string; b: string };
 }) {
+  const twoPlayer = Boolean(names);
   // Arrow keys are the natural way to step through a game.
   useEffect(() => {
     if (!review) return;
@@ -102,34 +106,47 @@ export function GameReview({
   }
 
   const current = review[index];
-  const counts = review
-    .filter((m) => m.byPlayer)
-    .reduce<Record<string, number>>((acc, m) => {
+  const tally = (moves: MoveReview[]) =>
+    moves.reduce<Record<string, number>>((acc, m) => {
       acc[m.verdict] = (acc[m.verdict] ?? 0) + 1;
       return acc;
     }, {});
+  const counts = tally(review.filter((m) => m.byPlayer));
+  const perPlayer = names
+    ? ([
+        [names.w, tally(review.filter((m) => m.mover === "w"))],
+        [names.b, tally(review.filter((m) => m.mover === "b"))],
+      ] as const)
+    : null;
 
   return (
     <section className="space-y-4">
       {/* summary of the player's own moves */}
       <div className="rounded-3xl bg-white p-5 shadow-[0_4px_0_0_#E5E5E5] ring-1 ring-[#E5E5E5]">
         <h2 className="text-sm font-extrabold uppercase tracking-wide text-[#777]">
-          How you played
+          {perPlayer ? "How it went" : "How you played"}
         </h2>
-        <div className="mt-3 flex flex-wrap gap-2">
-          {(["best", "good", "inaccuracy", "mistake", "blunder"] as const).map((verdict) => (
-            <span
-              key={verdict}
-              className="rounded-2xl px-3 py-1.5 text-xs font-black"
-              style={{
-                color: VERDICT_STYLE[verdict].colour,
-                backgroundColor: `${VERDICT_STYLE[verdict].colour}1F`,
-              }}
-            >
-              {counts[verdict] ?? 0} {VERDICT_STYLE[verdict].label.toLowerCase()}
-            </span>
-          ))}
-        </div>
+        {(perPlayer ?? [["", counts] as const]).map(([who, sums]) => (
+          <div key={who} className="mt-3">
+            {who && (
+              <p className="mb-1.5 text-sm font-black text-[#4B4B4B]">{who}</p>
+            )}
+            <div className="flex flex-wrap gap-2">
+              {(["best", "good", "inaccuracy", "mistake", "blunder"] as const).map((verdict) => (
+                <span
+                  key={verdict}
+                  className="rounded-2xl px-3 py-1.5 text-xs font-black"
+                  style={{
+                    color: VERDICT_STYLE[verdict].colour,
+                    backgroundColor: `${VERDICT_STYLE[verdict].colour}1F`,
+                  }}
+                >
+                  {sums[verdict] ?? 0} {VERDICT_STYLE[verdict].label.toLowerCase()}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
 
       {/* the narration for the selected move */}
@@ -137,29 +154,34 @@ export function GameReview({
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-sm font-extrabold text-[#4B4B4B]">
             Move {Math.ceil(current.ply / 2)}
-            {current.byPlayer ? " · you" : " · coach"}
+            {names ? ` · ${names[current.mover]}` : current.byPlayer ? " · you" : " · coach"}
           </span>
-          {current.byPlayer && <Pill review={current} />}
-          <Swing swing={current.swing} />
+          {current.judged && <Pill review={current} />}
+          <Swing swing={twoPlayer ? current.moverSwing : current.swing} />
         </div>
 
         {/* The numbers live here rather than inside the sentence, so they can be
             scanned and compared without reading prose. */}
         <p className="mt-2 flex items-center gap-1.5 text-sm font-black tabular-nums text-[#AFAFAF]">
-          <span>{Math.round(current.winBefore)}%</span>
+          <span>{Math.round(twoPlayer ? current.moverWinBefore : current.winBefore)}%</span>
           <span aria-hidden="true">→</span>
-          <span style={{ color: current.swing >= 0 ? GOOD : BAD }}>
-            {Math.round(current.winAfter)}%
+          <span style={{ color: (twoPlayer ? current.moverSwing : current.swing) >= 0 ? GOOD : BAD }}>
+            {Math.round(twoPlayer ? current.moverWinAfter : current.winAfter)}%
           </span>
+          {names && (
+            <span className="ml-1 text-xs font-bold text-[#C4C4C4]">
+              for {names[current.mover]}
+            </span>
+          )}
         </p>
 
         <p className="mt-3 text-base font-bold leading-relaxed text-[#4B4B4B]">{current.note}</p>
 
-        {current.byPlayer && current.bestSan && current.verdict !== "best" && (
+        {current.judged && current.bestSan && current.verdict !== "best" && (
           <p className="mt-3 rounded-2xl bg-[#F4F9FF] px-4 py-2.5 text-sm font-bold text-[#1899D6]">
             ★ Better was <span className="font-black">{current.bestSan}</span>
             <span className="ml-1.5 font-black tabular-nums text-[#7FC4EC]">
-              ({Math.round(current.winBefore)}%)
+              ({Math.round(twoPlayer ? current.moverWinBefore : current.winBefore)}%)
             </span>
           </p>
         )}
@@ -201,8 +223,8 @@ export function GameReview({
                   selected ? "ring-2 ring-[#1CB0F6]" : ""
                 }`}
                 style={{
-                  color: move.byPlayer ? style.colour : "#AFAFAF",
-                  backgroundColor: move.byPlayer ? `${style.colour}1A` : "#F4F4F4",
+                  color: move.judged ? style.colour : "#AFAFAF",
+                  backgroundColor: move.judged ? `${style.colour}1A` : "#F4F4F4",
                 }}
               >
                 {move.san}

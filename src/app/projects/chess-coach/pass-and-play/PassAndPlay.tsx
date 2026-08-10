@@ -1,11 +1,13 @@
 "use client";
 
+import { Chess } from "chess.js";
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 
 import { heatmap, mergeOverlays, moveHints, HEAT_BLACK, HEAT_WHITE, TIERS } from "../boardOverlays";
 import { cutePieces } from "../CutePieces";
 import { BoardSkeleton, EngineLoading } from "../EngineLoading";
+import { GameReview } from "../GameReview";
 import { material } from "../material";
 import { MaterialBar } from "../MaterialBar";
 import { WinTrend } from "../WinTrend";
@@ -51,6 +53,7 @@ function NameField({
 
 export function PassAndPlay() {
   const game = useTwoPlayerGame();
+  const [reviewIndex, setReviewIndex] = useState(0);
   const [white, setWhite] = useState("Player 1");
   const [black, setBlack] = useState("Player 2");
   const [showHeat, setShowHeat] = useState(false);
@@ -62,16 +65,22 @@ export function PassAndPlay() {
   // natural thing when two people share one screen.
   const flipped = autoFlip ? game.turn === "b" : manualFlip;
 
+  // While reviewing, the board shows the position after the selected move.
+  const reviewing = game.review !== null;
+  const shownFen = reviewing ? game.review![reviewIndex].fenAfter : game.fen;
+
+  const reviewBoard = useMemo(() => new Chess(shownFen), [shownFen]);
+
   const squareStyles = useMemo(
     () =>
       mergeOverlays(
-        showHeat ? heatmap(game.board) : {},
-        showHints ? moveHints(game.board, game.held) : {},
+        showHeat ? heatmap(reviewBoard) : {},
+        showHints && !reviewing ? moveHints(reviewBoard, game.held) : {},
       ),
-    [game.board, game.held, showHeat, showHints],
+    [game.held, reviewBoard, reviewing, showHeat, showHints],
   );
 
-  const summary = useMemo(() => material(game.board), [game.board]);
+  const summary = useMemo(() => material(reviewBoard), [reviewBoard]);
   const toMoveName = game.turn === "w" ? white : black;
   const inCheck = game.board.inCheck();
 
@@ -92,10 +101,10 @@ export function PassAndPlay() {
             <Chessboard
               options={{
                 id: "pass-and-play-board",
-                position: game.fen,
+                position: shownFen,
                 pieces: cutePieces,
                 boardOrientation: flipped ? "black" : "white",
-                allowDragging: !game.outcome,
+                allowDragging: !game.outcome && !reviewing,
                 darkSquareStyle: DARK_SQUARE,
                 lightSquareStyle: LIGHT_SQUARE,
                 squareStyles,
@@ -210,6 +219,21 @@ export function PassAndPlay() {
           )}
 
           <MaterialBar summary={summary} playerColor="w" />
+
+          {game.outcome && game.moves.length > 0 && (
+            <GameReview
+              review={game.review}
+              progress={game.reviewProgress}
+              index={reviewIndex}
+              setIndex={setReviewIndex}
+              onRun={() => {
+                setReviewIndex(0);
+                void game.runReview({ w: white, b: black });
+              }}
+              canRun
+              names={{ w: white, b: black }}
+            />
+          )}
 
           <button
             onClick={game.reset}

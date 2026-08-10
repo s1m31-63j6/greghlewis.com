@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { bootEngine, type BootProgress } from "../engine/boot";
 import type { StockfishEngine } from "../engine/uci";
 import { winProbability } from "../engine/winProbability";
+import { reviewGame, type MoveReview, type ReviewProgress } from "../engine/review";
 import type { TrendPoint } from "../WinTrend";
 
 /**
@@ -44,6 +45,8 @@ export function useTwoPlayerGame() {
   const [trend, setTrend] = useState<TrendPoint[]>([{ ply: 0, winPct: 50 }]);
   const [boot, setBoot] = useState<BootProgress | null>(null);
   const [held, setHeld] = useState<string | null>(null);
+  const [review, setReview] = useState<MoveReview[] | null>(null);
+  const [reviewProgress, setReviewProgress] = useState<ReviewProgress | null>(null);
 
   const board = useMemo(() => {
     const game = new Chess();
@@ -149,16 +152,47 @@ export function useTwoPlayerGame() {
     [fen, outcome],
   );
 
+  /**
+   * Go back over the finished game, judging *both* players' moves and showing
+   * what each of them could have played instead — the "why" that makes a loss
+   * worth something.
+   */
+  const runReview = useCallback(
+    async (names: { w: string; b: string }) => {
+      if (moves.length === 0) return;
+      setReviewProgress({ done: 0, total: moves.length + 1 });
+      try {
+        const engine = await ensureEngine();
+        const result = await reviewGame(
+          engine,
+          moves,
+          { perspective: "w", names },
+          setReviewProgress,
+        );
+        setReview(result);
+      } catch {
+        // Leaving the review unavailable is better than breaking the board.
+      } finally {
+        setReviewProgress(null);
+      }
+    },
+    [ensureEngine, moves],
+  );
+
   /** Take back the last move. Indispensable when playing with a beginner. */
   const takeBack = useCallback(() => {
     setMoves((current) => current.slice(0, -1));
     setHeld(null);
+    // A review of a game that no longer exists would be worse than none.
+    setReview(null);
   }, []);
 
   const reset = useCallback(() => {
     setMoves([]);
     setTrend([{ ply: 0, winPct: 50 }]);
     setHeld(null);
+    setReview(null);
+    setReviewProgress(null);
   }, []);
 
   return {
@@ -174,5 +208,8 @@ export function useTwoPlayerGame() {
     move,
     takeBack,
     reset,
+    review,
+    reviewProgress,
+    runReview,
   };
 }
