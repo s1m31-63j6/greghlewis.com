@@ -1,0 +1,31 @@
+[project]
+name = "two-minute-drill"
+version = "0.1.0"
+description = "Two-Minute Drill — real NFL endgame scenarios, empirical outcome models, and the Monte Carlo rollout engine that grades your play calls."
+requires-python = ">=3.12"
+dependencies = [
+    # nflverse play-by-play access
+    "nflreadpy>=0.1.5",
+    # Frame wrangling for the fits. polars arrives transitively via nflreadpy;
+    # pandas is used here because the distribution fits are small and readable
+    # in pandas, and the pipeline is not performance-bound.
+    "pandas>=2.2",
+    "pyarrow>=16",
+    # Mirroring the nflverse release parquet into the local cache
+    "requests>=2.32",
+    # Logistic FG model, isotonic calibration, reliability curves
+    "numpy>=1.26",
+    "scipy>=1.13",
+    "scikit-learn>=1.5",
+    # Progress over the multi-season ingest
+    "rich>=13.7",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.4",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

@@ -1,0 +1,883 @@
+/*
+ * Two-Minute Drill.
+ *
+ * The reference is a broadcast scoreboard rather than a newspaper: club colour,
+ * team marks, condensed type, and a field that moves. Everything is one type
+ * family — Archivo, a variable font with a width axis — so the condensed
+ * scoreboard face and the body text are the same hand at different widths
+ * rather than two unrelated downloads.
+ *
+ * Numerals are tabular everywhere they change in place. A clock that reflows
+ * as it counts down is the fastest way to make an interface feel cheap.
+ *
+ * Motion vocabulary, extending the one precedent in the repo (`.gbr-hub` in
+ * globals.css): CSS transitions on SVG presentation attributes, 120–150ms for
+ * interface feedback, ~650ms for something travelling across the field. All of
+ * it collapses under prefers-reduced-motion at the bottom of this file.
+ */
+
+.tmd-page {
+  --paper: #f7f7f5;
+  --paper-shade: #eeeeeb;
+  --paper-sunk: #e3e3df;
+  --card: #ffffff;
+  --rule: #16181d;
+  --rule-soft: #dcdcd7;
+
+  --ink: #16181d;
+  --ink-soft: #3b3f47;
+  --ink-quiet: #6b7079;
+  --ink-meta: #969ba3;
+
+  --accent: #1b4f7a;
+  --accent-soft: #dbe7f2;
+
+  --positive: #1f7a52;
+  --positive-soft: #cfe6da;
+  --negative: #a52121;
+  --negative-soft: #f0d2d1;
+  /* Validated against the white panel surface with the dataviz checker;
+     see VERDICT_MARK in grade.ts for why these steps and not others. */
+  --warn: #c4860f;
+  --warn-soft: #f7e6c6;
+  --neutral-mark: #8b9098;
+
+  --turf: #2c5d40;
+  --turf-dark: #234c34;
+  --turf-line: rgba(255, 255, 255, 0.42);
+
+  /* Filled in per matchup from teams.json. */
+  --user-color: #1b4f7a;
+  --opp-color: #6b7079;
+
+  --sans: var(--font-archivo), system-ui, -apple-system, sans-serif;
+  --display: var(--font-archivo), system-ui, -apple-system, sans-serif;
+
+  --max-w: 1180px;
+  --shadow-sm: 0 1px 2px rgba(20, 22, 26, 0.06);
+  --shadow-md: 0 2px 10px rgba(20, 22, 26, 0.08);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-synthesis-weight: none;
+  min-height: 100vh;
+}
+
+.tmd-container {
+  margin: 0 auto;
+  max-width: var(--max-w);
+  padding: 1.25rem 1.25rem 5rem;
+}
+
+/* Condensed, uppercase, letterspaced — the scoreboard label idiom. */
+.tmd-label,
+.tmd-nav,
+.tmd-panel-head,
+.tmd-card-meta,
+.tmd-tag,
+.tmd-verdict,
+.tmd-btn,
+.tmd-toggle button,
+.tmd-thinking {
+  font-family: var(--display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.tmd-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.tmd-nav {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-meta);
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+}
+.tmd-nav a,
+.tmd-nav button {
+  color: var(--ink-meta);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  transition: color 0.14s;
+}
+.tmd-nav a:hover,
+.tmd-nav button:hover {
+  color: var(--ink);
+}
+.tmd-nav-sep {
+  color: var(--rule-soft);
+}
+
+/* -- mastheads ---------------------------------------------------------- */
+
+.tmd-masthead {
+  border-bottom: 3px solid var(--rule);
+  padding-bottom: 0.9rem;
+  margin: 1rem 0 1.4rem;
+}
+.tmd-masthead h1 {
+  font-family: var(--display);
+  font-stretch: 80%;
+  font-size: clamp(2rem, 5vw, 3.1rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.tmd-standfirst {
+  margin: 0.7rem 0 0;
+  max-width: 64ch;
+  color: var(--ink-soft);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+
+/* Game header: both marks, the matchup, the meta line. */
+.tmd-gamehead {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  border-bottom: 3px solid var(--rule);
+  padding-bottom: 0.9rem;
+  margin: 1rem 0 1.25rem;
+}
+.tmd-gamehead-marks {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.tmd-gamehead-title {
+  font-family: var(--display);
+  font-stretch: 80%;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+  line-height: 1;
+  margin: 0;
+}
+.tmd-gamehead-meta {
+  font-family: var(--display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-meta);
+  margin-top: 0.3rem;
+}
+
+/* -- team marks --------------------------------------------------------- */
+
+.tmd-logo {
+  display: inline-block;
+  object-fit: contain;
+  vertical-align: middle;
+  flex: none;
+}
+.tmd-logo-fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  color: #fff;
+  font-family: var(--display);
+  font-stretch: 74%;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  flex: none;
+}
+
+/* -- scoreboard --------------------------------------------------------- */
+
+.tmd-scoreboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  background: var(--rule);
+  color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.tmd-sb-team {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 1rem;
+  position: relative;
+}
+.tmd-sb-team.right {
+  flex-direction: row-reverse;
+}
+/* Club colour as a bar down the outer edge. */
+.tmd-sb-team::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  background: var(--bar, transparent);
+}
+.tmd-sb-team::before {
+  left: 0;
+}
+.tmd-sb-team.right::before {
+  left: auto;
+  right: 0;
+}
+.tmd-sb-id {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tmd-sb-abbr {
+  font-family: var(--display);
+  font-stretch: 76%;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 13px;
+  line-height: 1.1;
+}
+.tmd-sb-nick {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tmd-sb-you {
+  color: #8fc4ee;
+}
+.tmd-sb-score {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 800;
+  font-size: 2.6rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  margin-left: auto;
+}
+.tmd-sb-team.right .tmd-sb-score {
+  margin-left: 0;
+  margin-right: auto;
+}
+.tmd-sb-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1.4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+.tmd-sb-time {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 800;
+  font-size: 2.3rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+}
+.tmd-sb-time.stopped {
+  color: #f2c14e;
+}
+.tmd-sb-qtr {
+  font-family: var(--display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 9.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 0.35rem;
+  white-space: nowrap;
+}
+
+.tmd-situation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.5rem;
+  align-items: center;
+  padding: 0.7rem 0.15rem 0;
+  font-size: 13px;
+  color: var(--ink-quiet);
+}
+.tmd-situation strong {
+  font-family: var(--display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+  color: var(--ink);
+}
+.tmd-timeouts {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+.tmd-to {
+  width: 17px;
+  height: 5px;
+  border-radius: 1px;
+  background: var(--rule-soft);
+  transition: background 0.2s;
+}
+.tmd-to.on {
+  background: var(--pip, var(--accent));
+}
+
+/* -- field -------------------------------------------------------------- */
+
+.tmd-field {
+  position: relative;
+  margin-top: 0.9rem;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+  /* Fixed ratio so the club marks in the end zones are never distorted. */
+  aspect-ratio: 1000 / 300;
+  background: var(--turf);
+}
+.tmd-field-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/*
+ * Things that travel down the field. `will-change` keeps the ball on its own
+ * layer so a 650ms slide does not repaint the yard lines behind it.
+ */
+.tmd-slide {
+  transition: transform 650ms var(--ease-out);
+  will-change: transform;
+}
+
+/*
+ * The yards just covered: a wash that rises and leaves, at an opacity low
+ * enough to read as a highlight. An earlier version peaked at 0.85 across the
+ * full height of the field, which alongside the yellow chain marker made the
+ * whole thing strobe.
+ */
+@keyframes tmdGain {
+  0% { opacity: 0; }
+  8% { opacity: 0.45; }
+  62% { opacity: 0.45; }
+  100% { opacity: 0; }
+}
+.tmd-gain {
+  /* Rises quickly, then holds for well over a second before leaving. A short
+     flash registers as something going wrong rather than as a measurement, and
+     this bar is the only place the size of a play is shown. */
+  animation: tmdGain 2400ms var(--ease-out) forwards;
+  pointer-events: none;
+}
+
+/* A score lands: one white pulse over the end zone that was reached. */
+@keyframes tmdScoreFlash {
+  0% { opacity: 0; }
+  30% { opacity: 0.34; }
+  100% { opacity: 0; }
+}
+.tmd-score-flash {
+  animation: tmdScoreFlash 1000ms ease-in-out forwards;
+  pointer-events: none;
+}
+
+.tmd-field-tag {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-family: var(--display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* -- columns and panels ------------------------------------------------- */
+
+.tmd-columns {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.35rem;
+  margin-top: 1.35rem;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .tmd-columns {
+    grid-template-columns: 1fr;
+  }
+}
+
+.tmd-panel {
+  border: 1px solid var(--rule-soft);
+  border-radius: 4px;
+  background: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+.tmd-panel + .tmd-panel {
+  margin-top: 1rem;
+}
+.tmd-panel-head {
+  border-bottom: 1px solid var(--rule-soft);
+  padding: 0.6rem 0.9rem;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-meta);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+}
+.tmd-panel-body {
+  padding: 0.8rem 0.9rem 0.9rem;
+}
+
+/* -- the call sheet ----------------------------------------------------- */
+
+.tmd-choice {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--rule-soft);
+  border-left: 3px solid transparent;
+  border-radius: 4px;
+  background: var(--paper);
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.45rem;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: border-color 0.13s, background 0.13s, transform 0.07s, box-shadow 0.13s;
+}
+.tmd-choice:hover:not(:disabled) {
+  border-color: var(--accent);
+  border-left-color: var(--accent);
+  background: #fff;
+  box-shadow: var(--shadow-sm);
+}
+.tmd-choice:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.tmd-choice:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+/* The call the real coach made. */
+.tmd-choice.real {
+  border-left-color: var(--warn);
+}
+.tmd-choice-label {
+  font-size: 14.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+.tmd-choice-sub {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink-quiet);
+  font-weight: 400;
+  margin-top: 1px;
+  line-height: 1.4;
+}
+.tmd-choice-wp {
+  font-family: var(--display);
+  font-stretch: 76%;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  text-align: right;
+  white-space: nowrap;
+}
+.tmd-choice-wp em {
+  display: block;
+  font-style: normal;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink-meta);
+  letter-spacing: 0.04em;
+}
+
+.tmd-bar {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--rule-soft);
+  margin-top: 6px;
+  overflow: hidden;
+}
+.tmd-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s var(--ease-out);
+}
+
+.tmd-actions {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--rule-soft);
+}
+
+/* -- drive log ---------------------------------------------------------- */
+
+.tmd-log {
+  max-height: 360px;
+  overflow-y: auto;
+}
+.tmd-log-row {
+  border-bottom: 1px solid var(--paper-shade);
+  padding: 0.55rem 0;
+  font-size: 13.5px;
+}
+.tmd-log-row:last-child {
+  border-bottom: 0;
+}
+.tmd-log-meta {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-family: var(--display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink-meta);
+}
+.tmd-log-clock {
+  font-variant-numeric: tabular-nums;
+}
+.tmd-log-desc {
+  color: var(--ink-soft);
+  line-height: 1.5;
+  margin-top: 3px;
+}
+.tmd-tag {
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1.5px 5px;
+  border-radius: 2px;
+  border: 1px solid currentColor;
+  line-height: 1.35;
+}
+.tmd-tag.real {
+  color: var(--warn);
+}
+.tmd-tag.sim {
+  color: var(--accent);
+}
+
+/* -- verdicts ----------------------------------------------------------- */
+
+.tmd-verdict {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1.5px 6px;
+  border-radius: 2px;
+}
+.tmd-v-best { background: var(--positive-soft); color: var(--positive); }
+.tmd-v-fine { background: var(--paper-sunk); color: var(--ink-quiet); }
+.tmd-v-costly { background: var(--warn-soft); color: var(--warn); }
+.tmd-v-bad { background: var(--negative-soft); color: var(--negative); }
+.tmd-v-toss { background: var(--accent-soft); color: var(--accent); }
+
+/* -- chart key ---------------------------------------------------------- */
+
+.tmd-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1rem;
+  margin: 0.6rem 0 0;
+  padding: 0.6rem 0 0;
+  border-top: 1px solid var(--paper-shade);
+  list-style: none;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+.tmd-key li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  white-space: nowrap;
+}
+.tmd-key-note {
+  color: var(--ink-meta);
+  font-style: italic;
+  margin-left: auto;
+}
+@media (max-width: 560px) {
+  .tmd-key-note {
+    margin-left: 0;
+  }
+}
+
+/* -- picker ------------------------------------------------------------- */
+
+.tmd-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+.tmd-input,
+.tmd-select {
+  font: inherit;
+  font-size: 13.5px;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--ink);
+}
+.tmd-input {
+  min-width: 230px;
+}
+.tmd-input:focus-visible,
+.tmd-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.tmd-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(285px, 1fr));
+  gap: 0.85rem;
+}
+.tmd-card {
+  border: 1px solid var(--rule-soft);
+  border-radius: 4px;
+  background: var(--card);
+  overflow: hidden;
+  transition: border-color 0.13s, box-shadow 0.13s, transform 0.13s;
+}
+.tmd-card:hover {
+  border-color: var(--ink-quiet);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+/* Club colours as a strip across the top of the card. */
+.tmd-card-strip {
+  height: 4px;
+  display: flex;
+}
+.tmd-card-strip span {
+  flex: 1;
+}
+.tmd-card-body {
+  padding: 0.75rem 0.85rem 0.85rem;
+}
+.tmd-card-meta {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink-meta);
+}
+/* Playoff badge. The Super Bowl gets gold; the other rounds share one accent
+   so the hierarchy is round-vs-regular first and which-round second. */
+.tmd-round {
+  display: inline-block;
+  margin-left: 0.45rem;
+  padding: 1px 5px;
+  border-radius: 2px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  vertical-align: 1px;
+}
+.tmd-round.sb {
+  background: #b3860f;
+}
+
+.tmd-card-teams {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.5rem 0 0.55rem;
+}
+.tmd-card-vs {
+  font-family: var(--display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink-meta);
+}
+.tmd-card-abbr {
+  font-family: var(--display);
+  font-stretch: 76%;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+}
+.tmd-card-sit {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+.tmd-card-sit b {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+.tmd-card-take {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+}
+.tmd-take {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  font-family: var(--display);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: 3px;
+  background: #fff;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.13s, color 0.13s, background 0.13s;
+}
+.tmd-take:hover {
+  border-color: var(--take, var(--accent));
+  color: var(--take, var(--accent));
+  background: var(--paper);
+}
+
+/* -- misc --------------------------------------------------------------- */
+
+.tmd-btn {
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 0.45rem 0.75rem;
+  border: 1px solid var(--rule-soft);
+  border-radius: 3px;
+  background: #fff;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.13s, color 0.13s, background 0.13s;
+}
+.tmd-btn:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.tmd-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.tmd-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+.tmd-btn.primary:hover {
+  background: #163f61;
+  border-color: #163f61;
+  color: #fff;
+}
+
+.tmd-toggle {
+  display: inline-flex;
+  border: 1px solid var(--rule-soft);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.tmd-toggle button {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 0.35rem 0.6rem;
+  border: 0;
+  background: #fff;
+  color: var(--ink-quiet);
+  cursor: pointer;
+  transition: background 0.13s, color 0.13s;
+}
+.tmd-toggle button[aria-pressed="true"] {
+  background: var(--accent);
+  color: #fff;
+}
+
+.tmd-note {
+  font-size: 12.5px;
+  color: var(--ink-quiet);
+  line-height: 1.55;
+}
+.tmd-thinking {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.tmd-section-title {
+  font-family: var(--display);
+  font-stretch: 80%;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: 1.6rem;
+  line-height: 1.1;
+  margin: 2rem 0 0.5rem;
+}
+
+.tmd-slider {
+  flex: 1;
+  accent-color: var(--accent);
+}
+
+/*
+ * Everything above that moves, stops moving. The field still updates — the ball
+ * simply appears at its new spot rather than travelling there.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .tmd-page *,
+  .tmd-slide,
+  .tmd-ball-shadow {
+    transition: none !important;
+    animation: none !important;
+  }
+  .tmd-gain {
+    opacity: 0;
+  }
+}

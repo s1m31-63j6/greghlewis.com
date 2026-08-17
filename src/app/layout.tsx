@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import {
+  Archivo,
   Geist,
   Geist_Mono,
   Source_Serif_4,
@@ -37,6 +38,17 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+// Broadcast stack — used by Two-Minute Drill. Archivo is a variable font
+// carrying both a weight axis and a width axis (62–125), so the condensed
+// scoreboard face and the body text come from one family rather than two
+// downloads. The NFL's own Endzone Sans is proprietary; Archivo is the closest
+// free relative to the Klavika-ish forms it is drawn from.
+const archivo = Archivo({
+  variable: "--font-archivo",
+  subsets: ["latin"],
+  axes: ["wdth"],
+});
+
 // Playful rounded stack — used by Chess Coach, which deliberately opts out of
 // the editorial frame above in favour of a bright, game-like look.
 const nunito = Nunito({
@@ -58,7 +70,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${nunito.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${nunito.variable} ${archivo.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}

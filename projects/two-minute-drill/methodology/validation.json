@@ -1,0 +1,218 @@
+{
+  "seasons": [
+    2016,
+    2017,
+    2018,
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "n_states": 1500,
+  "n_games": 866,
+  "rollouts_per_state": 1200,
+  "brier": {
+    "engine": 0.1429000520663866,
+    "vegas_wp": 0.13568207989785427,
+    "base_rate": 0.24713733333333338
+  },
+  "skill_vs_base": 0.4217787732068543,
+  "agreement_with_vegas_wp": {
+    "pearson_r": 0.9563789905466501,
+    "mean_abs_diff": 0.06976923062558778
+  },
+  "reliability_engine": [
+    {
+      "bin": "0.0-0.1",
+      "n": 222,
+      "predicted": 0.0422,
+      "observed": 0.0495
+    },
+    {
+      "bin": "0.1-0.2",
+      "n": 159,
+      "predicted": 0.1478,
+      "observed": 0.1824
+    },
+    {
+      "bin": "0.2-0.3",
+      "n": 198,
+      "predicted": 0.2504,
+      "observed": 0.2904
+    },
+    {
+      "bin": "0.3-0.4",
+      "n": 145,
+      "predicted": 0.345,
+      "observed": 0.3586
+    },
+    {
+      "bin": "0.4-0.5",
+      "n": 100,
+      "predicted": 0.4502,
+      "observed": 0.345
+    },
+    {
+      "bin": "0.5-0.6",
+      "n": 201,
+      "predicted": 0.5498,
+      "observed": 0.5796
+    },
+    {
+      "bin": "0.6-0.7",
+      "n": 103,
+      "predicted": 0.647,
+      "observed": 0.7573
+    },
+    {
+      "bin": "0.7-0.8",
+      "n": 50,
+      "predicted": 0.7476,
+      "observed": 0.78
+    },
+    {
+      "bin": "0.8-0.9",
+      "n": 64,
+      "predicted": 0.8504,
+      "observed": 0.9531
+    },
+    {
+      "bin": "0.9-1.0",
+      "n": 258,
+      "predicted": 0.9697,
+      "observed": 0.9709
+    }
+  ],
+  "reliability_vegas": [
+    {
+      "bin": "0.0-0.1",
+      "n": 177,
+      "predicted": 0.0593,
+      "observed": 0.0367
+    },
+    {
+      "bin": "0.1-0.2",
+      "n": 207,
+      "predicted": 0.1497,
+      "observed": 0.1449
+    },
+    {
+      "bin": "0.2-0.3",
+      "n": 184,
+      "predicted": 0.2481,
+      "observed": 0.2283
+    },
+    {
+      "bin": "0.3-0.4",
+      "n": 155,
+      "predicted": 0.3477,
+      "observed": 0.329
+    },
+    {
+      "bin": "0.4-0.5",
+      "n": 110,
+      "predicted": 0.4514,
+      "observed": 0.4773
+    },
+    {
+      "bin": "0.5-0.6",
+      "n": 137,
+      "predicted": 0.5534,
+      "observed": 0.5657
+    },
+    {
+      "bin": "0.6-0.7",
+      "n": 112,
+      "predicted": 0.6485,
+      "observed": 0.7054
+    },
+    {
+      "bin": "0.7-0.8",
+      "n": 99,
+      "predicted": 0.7491,
+      "observed": 0.8182
+    },
+    {
+      "bin": "0.8-0.9",
+      "n": 57,
+      "predicted": 0.8589,
+      "observed": 0.9561
+    },
+    {
+      "bin": "0.9-1.0",
+      "n": 262,
+      "predicted": 0.9623,
+      "observed": 0.9733
+    }
+  ],
+  "known_answers": [
+    {
+      "check": "kneel-out wins when opponent has no timeouts",
+      "passed": true,
+      "detail": "best=kneel 0.999"
+    },
+    {
+      "check": "field goal when down 2 in range",
+      "passed": true,
+      "detail": "best=field_goal 0.864"
+    },
+    {
+      "check": "field goal rejected when down 4",
+      "passed": true,
+      "detail": "fg=0.002 pass=0.200"
+    },
+    {
+      "check": "onside beats deep kick when trailing late",
+      "passed": true,
+      "detail": "onside=0.0081 deep=0.0014"
+    },
+    {
+      "check": "deep kick beats onside when leading",
+      "passed": true,
+      "detail": "deep=0.9487 onside=0.8393"
+    },
+    {
+      "check": "spike wastes a down on 1st with timeouts left",
+      "passed": true,
+      "detail": "spike=0.057 pass=0.062"
+    },
+    {
+      "check": "25-yd FG improves 1999 -> 2012 -> 2025",
+      "passed": true,
+      "detail": "0.944 -> 0.966 -> 0.980"
+    },
+    {
+      "check": "35-yd FG improves 1999 -> 2012 -> 2025",
+      "passed": true,
+      "detail": "0.833 -> 0.894 -> 0.935"
+    },
+    {
+      "check": "45-yd FG improves 1999 -> 2012 -> 2025",
+      "passed": true,
+      "detail": "0.632 -> 0.745 -> 0.832"
+    },
+    {
+      "check": "55-yd FG improves 1999 -> 2012 -> 2025",
+      "passed": true,
+      "detail": "0.411 -> 0.543 -> 0.668"
+    },
+    {
+      "check": "62-yd FG improves 1999 -> 2012 -> 2025",
+      "passed": true,
+      "detail": "0.291 -> 0.410 -> 0.542"
+    },
+    {
+      "check": "1999->2025 gain is uniform in log-odds",
+      "passed": true,
+      "detail": "gains [1.06, 1.06, 1.06, 1.06], spread 0.0001"
+    },
+    {
+      "check": "season clamps to the fitted range",
+      "passed": true,
+      "detail": "1980 -> 1999, 2100 -> 2025"
+    }
+  ]
+}

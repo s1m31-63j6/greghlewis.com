@@ -52,4 +52,6 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .gbr-hub { transition: none; }
+  /* An infinite pulse is exactly what reduced-motion is asking us to stop. */
+  .gbr-pulse { animation: none; }
 }

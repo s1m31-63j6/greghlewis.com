@@ -12,6 +12,12 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Python virtualenvs under projects/ ship vendored JavaScript (sklearn's
+    // HTML repr, for one), which is not ours to lint.
+    "projects/**/.venv/**",
+    "infra/**/.venv/**",
+    // Generated runners for the two-minute-drill parity test.
+    "projects/**/results/**",
   ]),
 ]);
 

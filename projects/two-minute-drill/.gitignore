@@ -1,0 +1,8 @@
+# Mirrored nflverse parquet (~20 MB/season). Re-fetched on demand by pbp.py.
+data/
+# uv
+.venv/
+__pycache__/
+# Generated runners for the Python↔TypeScript parity test
+results/
+.env
