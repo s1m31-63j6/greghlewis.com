@@ -94,6 +94,37 @@ export function grade(evals: Evaluation[], action: Action): Graded {
   return { verdict, loss, chosen, best };
 }
 
+/**
+ * The engine's preferred call, and anything it cannot separate from it.
+ *
+ * Two tags rather than one, because a single tag could only be honest or
+ * useful, not both. These numbers come out of a Monte Carlo search and carry a
+ * standard error; at the rollout count the app runs, only about a fifth of real
+ * decisions have one option clearly ahead. A tag that refused to name a call
+ * whenever anything was close would therefore stay silent almost all the time,
+ * and a tag that named one anyway would be exactly the overconfidence this
+ * project spends a methodology page arguing against.
+ *
+ * So the top-ranked option is always marked — it genuinely is what the engine
+ * prefers — and every option within two standard errors of it is marked as
+ * indistinguishable. The claim "optimal" is then never overstated, because
+ * anything that might match it is labelled as such right alongside.
+ */
+export function optimal(evals: Evaluation[]): {
+  best: Action | null;
+  tied: Set<Action>;
+} {
+  if (!evals.length) return { best: null, tied: new Set() };
+  const top = evals.reduce((a, b) => (b.wp > a.wp ? b : a));
+  const tied = new Set<Action>();
+  for (const e of evals) {
+    if (e.action === top.action) continue;
+    const se = Math.sqrt(top.stderr ** 2 + e.stderr ** 2);
+    if (top.wp - e.wp <= 2 * se) tied.add(e.action);
+  }
+  return { best: top.action, tied };
+}
+
 /** Summed win probability given away across a game. */
 export function totalLoss(grades: Graded[]): number {
   return grades.reduce((sum, g) => sum + (g.verdict === "toss" ? 0 : g.loss), 0);

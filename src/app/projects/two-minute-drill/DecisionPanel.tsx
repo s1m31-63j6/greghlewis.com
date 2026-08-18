@@ -8,15 +8,19 @@
  * would rather explore than be tested, the same split the chess coach draws
  * between playing and the analysis board.
  *
- * What *is* shown either way is which option the real coach took, because being
- * able to follow the real game deliberately is half the point of playing a real
- * game. On offence that is simply the recorded play. On defence the recorded
+ * Two things are shown either way. Which option the real coach took, because
+ * being able to follow the real game deliberately is half the point of playing
+ * a real one — and which option the engine prefers, tagged as optimal. That
+ * second tag reveals nothing the panel was keeping back: `evaluate` returns its
+ * options already ranked, so the best call has always been sitting at the top
+ * of the list. The tag only says out loud what the ordering was implying. On offence that is simply the recorded play. On defence the recorded
  * play belongs to the other team, so the flag keys off whether the real defence
  * spent a timeout before that snap — which on that side of the ball is the
  * decision.
  */
 
 import { FG_SNAP_OVERHEAD } from "./engine/engine";
+import { optimal } from "./grade";
 import type { Action, Evaluation, GameState } from "./engine/types";
 import { realChoiceFor, type RealPlay } from "./scenarios";
 import type { Side } from "./useDrill";
@@ -106,6 +110,8 @@ export default function DecisionPanel({
   const worst = options.length ? options[options.length - 1].wp : 0;
   const span = Math.max(0.02, best - worst);
   const real = realChoiceFor(side, currentReal, userTeam);
+  // The engine's preferred call, plus anything it cannot separate from it.
+  const { best: optimalAction, tied: tiedActions } = optimal(options);
 
   return (
     <div className="tmd-panel">
@@ -119,16 +125,20 @@ export default function DecisionPanel({
         {options.map((e) => {
           const { title, sub } = label(e.action, state, fgProbability, onsideRate, opponent);
           const wasReal = real === e.action;
+          const isOptimal = optimalAction === e.action;
+          const isTied = tiedActions.has(e.action);
           return (
             <button
               key={e.action}
-              className={`tmd-choice${wasReal ? " real" : ""}`}
+              className={`tmd-choice${isOptimal ? " optimal" : ""}${wasReal ? " real" : ""}`}
               disabled={thinking}
               onClick={() => onDecide(e.action)}
             >
               <span>
                 <span className="tmd-choice-label">
                   {title}
+                  {isOptimal && <span className="tmd-tag best">optimal</span>}
+                  {isTied && <span className="tmd-tag close">too close to call</span>}
                   {wasReal && <span className="tmd-tag real">as played</span>}
                 </span>
                 <span className="tmd-choice-sub">{sub}</span>

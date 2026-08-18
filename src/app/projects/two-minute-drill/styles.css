@@ -490,7 +490,12 @@
   opacity: 0.5;
   cursor: default;
 }
-/* The call the real coach made. */
+/* The engine's preferred call, and the one the real coach made. A call can be
+   both; the amber wins, because "this is what actually happened" is the rarer
+   and more interesting fact once you already know the engine agreed. */
+.tmd-choice.optimal {
+  border-left-color: var(--positive);
+}
 .tmd-choice.real {
   border-left-color: var(--warn);
 }
@@ -598,6 +603,18 @@
 }
 .tmd-tag.sim {
   color: var(--accent);
+}
+/* Same steps as the post-game chart's verdict marks, so "optimal" here and
+   "best call" in the review are visibly the same statement. */
+.tmd-tag.best {
+  color: var(--positive);
+  border-color: var(--positive);
+  background: var(--positive-soft);
+}
+.tmd-tag.close {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 
 /* -- verdicts ----------------------------------------------------------- */
