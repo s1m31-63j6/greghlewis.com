@@ -264,7 +264,7 @@ export function PlayCoach() {
           </section>
 
           <section className="space-y-3">
-            <div className="flex gap-3">
+            <div className="flex gap-3" data-tel="chess-start">
               <Chunky onClick={() => void game.start("w")} tone="green" className="flex-1">
                 ♔ Play white
               </Chunky>

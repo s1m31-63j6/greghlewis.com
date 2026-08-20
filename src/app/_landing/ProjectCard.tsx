@@ -9,6 +9,7 @@ function formatDate(iso: string): string {
 
 export function ProjectCard({ project }: { project: Project }) {
   const {
+    id,
     title,
     date,
     oneLiner,
@@ -38,6 +39,8 @@ export function ProjectCard({ project }: { project: Project }) {
         {...thumbnailLinkProps}
         className="relative block aspect-[16/9] overflow-hidden border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900"
         aria-label={`Open ${title}`}
+        data-tel="project-open"
+        data-tel-project={id}
       >
         <Image
           src={thumbnail}
@@ -69,6 +72,8 @@ export function ProjectCard({ project }: { project: Project }) {
         <a
           href={liveUrl}
           {...liveExternalProps}
+          data-tel="project-open"
+          data-tel-project={id}
           className="font-medium text-[#1B4F7A] underline-offset-4 hover:underline dark:text-[#7BA8CB]"
         >
           {liveLabel}
@@ -78,6 +83,8 @@ export function ProjectCard({ project }: { project: Project }) {
             href={githubUrl!}
             target="_blank"
             rel="noopener noreferrer"
+            data-tel="outbound-github"
+            data-tel-project={id}
             className="text-neutral-600 underline-offset-4 hover:underline dark:text-neutral-400"
           >
             GitHub ↗

@@ -2,6 +2,7 @@ import { chatStream } from "@/lib/religious-voices/chat";
 import leadersJson from "@/lib/religious-voices/leaders.json";
 import { dedupeSources, retrieveForLeader } from "@/lib/religious-voices/retrieval";
 import { checkRateLimit } from "@/lib/religious-voices/rate-limit";
+import { clientIp } from "@/lib/client-ip";
 import { verifyTurnstile } from "@/lib/religious-voices/turnstile";
 import type { ChatStreamEvent, ChatTurn, Leader } from "@/lib/religious-voices/types";
 
@@ -17,12 +18,6 @@ interface ChatPayload {
   leaderId: string;
   history?: ChatTurn[];
   turnstileToken?: string | null;
-}
-
-function clientIp(req: Request): string {
-  const xff = req.headers.get("x-forwarded-for");
-  if (xff) return xff.split(",")[0].trim();
-  return req.headers.get("x-real-ip") ?? "unknown";
 }
 
 export async function POST(req: Request) {

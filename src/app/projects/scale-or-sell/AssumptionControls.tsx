@@ -34,7 +34,7 @@ type SliderProps = {
 
 function Slider({ label, value, display, min, max, step, onChange }: SliderProps) {
   return (
-    <div className="exit-control">
+    <div className="exit-control" data-tel="exit-adjust">
       <div className="exit-control-label">
         <span>{label}</span>
         <span className="val">{display}</span>

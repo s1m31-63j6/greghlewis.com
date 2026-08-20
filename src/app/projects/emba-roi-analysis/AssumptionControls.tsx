@@ -28,7 +28,7 @@ type SliderProps = {
 
 function Slider({ label, value, display, min, max, step, onChange }: SliderProps) {
   return (
-    <div className="emba-control">
+    <div className="emba-control" data-tel="emba-adjust">
       <div className="emba-control-label">
         <span>{label}</span>
         <span className="val">{display}</span>

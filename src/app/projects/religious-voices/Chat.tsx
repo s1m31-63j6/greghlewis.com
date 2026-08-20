@@ -169,6 +169,7 @@ export function Chat({ leader }: Props) {
           />
           <button
             type="submit"
+            data-tel="voices-chat"
             disabled={busy || !value.trim() || !hasTurnstileToken}
             title={
               !hasTurnstileToken

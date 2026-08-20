@@ -16,6 +16,13 @@ const nextConfig: NextConfig = {
       process.env.NEXT_PUBLIC_ADVENTUREWORKS_FUNCTION_URL,
     NEXT_PUBLIC_ADVENTUREWORKS_TURNSTILE_SITEKEY:
       process.env.NEXT_PUBLIC_ADVENTUREWORKS_TURNSTILE_SITEKEY,
+    // Site telemetry. Deliberately NOT NEXT_PUBLIC_ — these are read only in
+    // the /api/events route handler and the /telemetry server component, so
+    // they stay out of the client bundle. Prefixing any of them would inline
+    // the salt and dashboard key into JavaScript served to every visitor.
+    TELEMETRY_TABLE: process.env.TELEMETRY_TABLE,
+    TELEMETRY_SALT: process.env.TELEMETRY_SALT,
+    TELEMETRY_KEY: process.env.TELEMETRY_KEY,
   },
 };
 

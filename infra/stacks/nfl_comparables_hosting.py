@@ -41,6 +41,9 @@ class HostingStack(cdk.Stack):
         app_id: str,
         kb_id: str,
         account: str,
+        telemetry_table: str,
+        telemetry_salt: str,
+        telemetry_key: str,
         **kwargs,
     ) -> None:
         super().__init__(scope, construct_id, **kwargs)
@@ -88,13 +91,31 @@ class HostingStack(cdk.Stack):
             )
         )
 
+        # Exposed so other stacks can grant this role access to their
+        # resources (SiteTelemetry grants DynamoDB read/write).
+        self.compute_role = compute_role
+
         # AWS_REGION is set automatically by the Lambda runtime — and
         # Amplify rejects env vars with the reserved "AWS" prefix anyway.
         # Our rag.ts falls back to us-east-1 if AWS_REGION is unset, so
         # this is a no-op for the chat path.
+        # NOTE: this dict is the COMPLETE set of app-level environment
+        # variables sent to Amplify UpdateApp — the call replaces rather
+        # than merges. Anything set by hand in the Amplify console gets
+        # clobbered on the next `cdk deploy`, so new vars must be added
+        # here. They must also be re-exported through the `env` block in
+        # next.config.ts, because Amplify exposes app env vars at BUILD
+        # time only and they never reach the SSR Lambda otherwise.
         env_vars = {
             "NFLCOMPARABLES_KB_ID": kb_id,
             "NFLCOMPARABLES_AWS_ACCOUNT": account,
+            # Site telemetry. TELEMETRY_SALT seeds the daily-rotating
+            # visitor hash; TELEMETRY_KEY gates the /telemetry dashboard.
+            # Neither may ever be prefixed NEXT_PUBLIC_ — that would inline
+            # them into the client bundle.
+            "TELEMETRY_TABLE": telemetry_table,
+            "TELEMETRY_SALT": telemetry_salt,
+            "TELEMETRY_KEY": telemetry_key,
         }
         # Only the env-var update goes through the custom resource. The
         # compute role attachment is handled by the post-deploy script

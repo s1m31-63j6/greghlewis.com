@@ -156,6 +156,7 @@ export default function ChatBar({ onFocus }: Props) {
           </div>
           <button
             type="submit"
+            data-tel="nfl-chat"
             disabled={!value.trim()}
             className="absolute right-1.5 top-1/2 -translate-y-1/2 text-xs px-3 py-1.5 rounded-full bg-stone-900 hover:bg-stone-700 text-white transition disabled:opacity-50"
           >
@@ -199,6 +200,7 @@ export default function ChatBar({ onFocus }: Props) {
             </div>
             <button
               type="submit"
+              data-tel="nfl-chat"
               disabled={!value.trim()}
               className="absolute right-1.5 top-1/2 -translate-y-1/2 text-xs px-3 py-1.5 rounded-full bg-stone-900 hover:bg-stone-700 text-white transition disabled:opacity-50"
             >
@@ -278,6 +280,7 @@ export default function ChatBar({ onFocus }: Props) {
             </div>
             <button
               type="submit"
+              data-tel="nfl-chat"
               disabled={busy || !value.trim()}
               className="absolute right-1 top-1/2 -translate-y-1/2 text-xs px-3 py-1 rounded-full bg-stone-900 hover:bg-stone-700 text-white transition disabled:opacity-50"
             >

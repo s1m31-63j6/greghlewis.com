@@ -80,6 +80,7 @@ export default function RootLayout({
               href="https://github.com/s1m31-63j6"
               target="_blank"
               rel="noopener noreferrer"
+              data-tel="outbound-github-footer"
               className="underline-offset-4 hover:underline"
             >
               GitHub
@@ -88,6 +89,7 @@ export default function RootLayout({
               href="https://www.linkedin.com/in/greghlewis"
               target="_blank"
               rel="noopener noreferrer"
+              data-tel="outbound-linkedin"
               className="underline-offset-4 hover:underline"
             >
               Contact

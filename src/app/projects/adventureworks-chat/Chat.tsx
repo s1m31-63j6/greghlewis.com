@@ -126,6 +126,7 @@ export function Chat({ functionUrl }: Props) {
           />
           <button
             type="submit"
+            data-tel="aw-query"
             disabled={busy || !value.trim() || !hasTurnstileToken}
             title={
               !hasTurnstileToken

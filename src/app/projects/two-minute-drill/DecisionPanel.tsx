@@ -131,6 +131,7 @@ export default function DecisionPanel({
             <button
               key={e.action}
               className={`tmd-choice${isOptimal ? " optimal" : ""}${wasReal ? " real" : ""}`}
+              data-tel="drill-decision"
               disabled={thinking}
               onClick={() => onDecide(e.action)}
             >

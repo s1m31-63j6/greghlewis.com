@@ -62,6 +62,7 @@ export function ProjectShell({ functionUrl }: { functionUrl?: string }) {
           />
           <button
             type="submit"
+            data-tel="rag-query"
             disabled={busy || !value.trim()}
             className="rounded-lg bg-blue-700 px-4 py-2 text-[14px] font-medium text-white shadow-sm transition hover:bg-blue-600 disabled:opacity-40"
           >

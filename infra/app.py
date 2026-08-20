@@ -9,8 +9,25 @@ from stacks.nfl_comparables_hosting import HostingStack
 from stacks.nfl_comparables_kb import KbStack
 from stacks.glass_box_rag import GlassBoxRagStack
 from stacks.nfl_comparables_kb_db import KbDbStack
+from stacks.site_telemetry import SiteTelemetryStack
 
 app = cdk.App()
+
+# Site telemetry secrets are supplied at synth time rather than committed.
+# TELEMETRY_SALT seeds the daily-rotating visitor hash; TELEMETRY_KEY gates
+# the /telemetry dashboard. Both are pushed to Amplify as SSR environment
+# variables (see HostingStack), and that UpdateApp call REPLACES the app's
+# env vars — so synthesising with them unset would silently wipe the live
+# values. Fail loudly instead.
+TELEMETRY_TABLE = "site-telemetry"
+try:
+    TELEMETRY_SALT = os.environ["TELEMETRY_SALT"]
+    TELEMETRY_KEY = os.environ["TELEMETRY_KEY"]
+except KeyError as missing:
+    raise SystemExit(
+        f"{missing} is not set. Export TELEMETRY_SALT and TELEMETRY_KEY "
+        "before running cdk (see infra/stacks/site_telemetry.py)."
+    ) from None
 
 env = cdk.Environment(
     account=os.environ.get("CDK_DEFAULT_ACCOUNT", "397483229232"),
@@ -76,6 +93,9 @@ hosting_stack = HostingStack(
     app_id="dhpo309lbx6w7",
     kb_id="XQVEIGOLBO",
     account=env.account,
+    telemetry_table=TELEMETRY_TABLE,
+    telemetry_salt=TELEMETRY_SALT,
+    telemetry_key=TELEMETRY_KEY,
 )
 hosting_stack.add_dependency(kb_stack)
 
@@ -95,5 +115,21 @@ GlassBoxRagStack(
         "http://localhost:3000",
     ],
 )
+
+# SiteTelemetry depends on HostingStack for the SSR compute role it grants
+# table access to. The table NAME is a plain constant rather than a CDK
+# reference, which is what keeps that dependency one-directional — Hosting
+# needs the name for its env vars at the same time.
+telemetry_stack = SiteTelemetryStack(
+    app,
+    "SiteTelemetry",
+    env=env,
+    description=(
+        "DynamoDB table for first-party page/click telemetry on greghlewis.com"
+    ),
+    table_name=TELEMETRY_TABLE,
+    compute_role=hosting_stack.compute_role,
+)
+telemetry_stack.add_dependency(hosting_stack)
 
 app.synth()
