@@ -1,8 +1,9 @@
 """Bedrock Knowledge Base for NFL prospect scouting RAG.
 
-Architecture (two-tier storage, right-sized per workload):
-  - Comp engine kNN (~10k cohort vectors): RDS t4g.micro Postgres + pgvector
-    (NflComparablesDb stack, separate, untouched).
+Architecture:
+  - Comp engine kNN (~10k cohort vectors): computed offline; results are
+    baked into static JSON at build time. The RDS t4g.micro that once held
+    these vectors was retired Aug 2026 (see nfl_comparables_network.py).
   - Bedrock-managed RAG (~3.5k chunks): Aurora Serverless v2 PostgreSQL
     cluster with min ACU=0 (NflComparablesKbDb stack — separate because
     the schema must exist BEFORE this stack's KB resource is created, so

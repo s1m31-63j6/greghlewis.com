@@ -40,9 +40,10 @@ class KbDbStack(cdk.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # ---------- Aurora SG ----------
-        # Bedrock KB doesn't need TCP/5432 ingress — it queries via the RDS
-        # Data API (HTTPS). Only the dev laptop (schema bootstrap script)
-        # needs direct ingress.
+        # Nothing needs TCP/5432 ingress in the normal flow: Bedrock KB and
+        # the schema bootstrap script both go through the RDS Data API
+        # (HTTPS). The opt-in rule below is only for ad-hoc psql debugging,
+        # which also requires flipping the writer to publicly_accessible.
         aurora_sg = ec2.SecurityGroup(
             self,
             "AuroraSecurityGroup",
@@ -87,7 +88,10 @@ class KbDbStack(cdk.Stack):
             serverless_v2_max_capacity=2,
             writer=rds.ClusterInstance.serverless_v2(
                 "Writer",
-                publicly_accessible=True,
+                # No public IP: Bedrock and the bootstrap script reach this
+                # cluster over the Data API, not over TCP. A public IPv4 is
+                # billed hourly whether or not anything connects to it.
+                publicly_accessible=False,
             ),
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(subnet_type=ec2.SubnetType.PUBLIC),

@@ -4,7 +4,7 @@ import os
 import aws_cdk as cdk
 
 from stacks.nfl_comparables_data import DataStack
-from stacks.nfl_comparables_db import DbStack
+from stacks.nfl_comparables_network import NetworkStack
 from stacks.nfl_comparables_hosting import HostingStack
 from stacks.nfl_comparables_kb import KbStack
 from stacks.glass_box_rag import GlassBoxRagStack
@@ -24,25 +24,28 @@ data_stack = DataStack(
     description="Raw + curated S3 buckets and IAM policy for the NFL comparables engine",
 )
 
-db_stack = DbStack(
+# Stack ID stays "NflComparablesDb" even though the Postgres instance it was
+# named for is gone: NflComparablesKbDb imports this VPC through cross-stack
+# exports that embed the ID. Renaming it replaces the VPC and takes Aurora
+# down with it. See the module docstring.
+network_stack = NetworkStack(
     app,
     "NflComparablesDb",
     env=env,
-    description="RDS Postgres + pgvector for kNN comp queries",
+    description="Shared VPC for the NFL comparables data tier",
 )
 
 # NflComparablesKbDb provisions the Aurora SV2 cluster (Bedrock KB requires
-# a cluster ARN, not the RDS micro). Co-located in the DbStack VPC. The
-# RDS micro stays as-is for the comp-engine kNN — two-tier storage,
-# right-sized per workload.
+# a cluster ARN). It is the only remaining vector store — the comp-engine
+# RDS micro was retired Aug 2026 after 14 days of zero connections.
 kb_db_stack = KbDbStack(
     app,
     "NflComparablesKbDb",
     env=env,
     description="Aurora Serverless v2 + pgvector for the Bedrock Knowledge Base",
-    vpc=db_stack.vpc,
+    vpc=network_stack.vpc,
 )
-kb_db_stack.add_dependency(db_stack)
+kb_db_stack.add_dependency(network_stack)
 
 # NflComparablesKb is deployed AFTER schema bootstrap on Aurora — Bedrock KB
 # validates that the target table exists at create time.
