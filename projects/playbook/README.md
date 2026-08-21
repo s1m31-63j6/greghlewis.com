@@ -102,6 +102,29 @@ Only a hand-drawn path gives up its route identity, and only that one path.
   components are separate module graphs, so the API could write a playbook the
   print page then could not find.
 
+## Deploying
+
+```
+git push origin main          # Amplify builds in ~3 minutes
+```
+
+The DynamoDB table is separate and has to exist before a coach can save a
+playbook. With `TELEMETRY_SALT` and `TELEMETRY_KEY` exported:
+
+```
+cd infra && uv run cdk deploy NflComparablesHosting PlaybookData
+```
+
+`NflComparablesHosting` goes first or alongside: its `env_vars` dict is the
+**complete** set Amplify receives, and it is what sets `PLAYBOOK_TABLE`.
+
+Until that runs, `POST /api/playbook` returns 503 with a plain message rather
+than pretending to save. `storageAvailable()` allows the in-memory fallback only
+outside production — a save button that loses a coach's work between Lambda
+instances is worse than no save button. Everything else (library, search,
+animation, editing, print) works without the table, because the library is
+static JSON.
+
 ## Not built
 
 The league → team → coach → player permission tree, accounts, video, practice
