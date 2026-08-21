@@ -42,6 +42,7 @@ class HostingStack(cdk.Stack):
         kb_id: str,
         account: str,
         telemetry_table: str,
+        playbook_table: str,
         telemetry_salt: str,
         telemetry_key: str,
         **kwargs,
@@ -116,6 +117,10 @@ class HostingStack(cdk.Stack):
             "TELEMETRY_TABLE": telemetry_table,
             "TELEMETRY_SALT": telemetry_salt,
             "TELEMETRY_KEY": telemetry_key,
+            # Playbook storage. No secret in it — the share link is the access
+            # model — but it still must not be NEXT_PUBLIC_, because nothing in
+            # the browser has any business naming a DynamoDB table.
+            "PLAYBOOK_TABLE": playbook_table,
         }
         # Only the env-var update goes through the custom resource. The
         # compute role attachment is handled by the post-deploy script

@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "playbook:build": "node --experimental-strip-types projects/playbook/build.mts",
+    "playbook:check": "node --experimental-strip-types projects/playbook/results/search.mts && node --experimental-strip-types projects/playbook/results/copy-on-write.mts && node projects/playbook/results/render-all.cjs",
+    "playbook:preview": "node projects/playbook/results/render.cjs && node projects/playbook/results/print-preview.cjs"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-agent-runtime": "^3.1040.0",

@@ -10,6 +10,7 @@ from stacks.nfl_comparables_kb import KbStack
 from stacks.glass_box_rag import GlassBoxRagStack
 from stacks.nfl_comparables_kb_db import KbDbStack
 from stacks.site_telemetry import SiteTelemetryStack
+from stacks.playbook_data import PlaybookDataStack
 
 app = cdk.App()
 
@@ -20,6 +21,7 @@ app = cdk.App()
 # env vars — so synthesising with them unset would silently wipe the live
 # values. Fail loudly instead.
 TELEMETRY_TABLE = "site-telemetry"
+PLAYBOOK_TABLE = "playbook"
 try:
     TELEMETRY_SALT = os.environ["TELEMETRY_SALT"]
     TELEMETRY_KEY = os.environ["TELEMETRY_KEY"]
@@ -96,6 +98,7 @@ hosting_stack = HostingStack(
     telemetry_table=TELEMETRY_TABLE,
     telemetry_salt=TELEMETRY_SALT,
     telemetry_key=TELEMETRY_KEY,
+    playbook_table=PLAYBOOK_TABLE,
 )
 hosting_stack.add_dependency(kb_stack)
 
@@ -131,5 +134,19 @@ telemetry_stack = SiteTelemetryStack(
     compute_role=hosting_stack.compute_role,
 )
 telemetry_stack.add_dependency(hosting_stack)
+
+# Playbook storage. Same shape and the same reasoning as SiteTelemetry: a
+# fixed table name so the dependency on HostingStack stays one-directional.
+playbook_stack = PlaybookDataStack(
+    app,
+    "PlaybookData",
+    env=env,
+    description=(
+        "DynamoDB table for user-created football playbooks on greghlewis.com"
+    ),
+    table_name=PLAYBOOK_TABLE,
+    compute_role=hosting_stack.compute_role,
+)
+playbook_stack.add_dependency(hosting_stack)
 
 app.synth()

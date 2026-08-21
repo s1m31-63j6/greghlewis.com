@@ -1,0 +1,875 @@
+/*
+ * Playbook — "Night Draw".
+ *
+ * The reference is a broadcast telestrator crossed with a CAD app, not a
+ * website. This page deliberately opts out of the site's editorial-light frame:
+ * every token below is scoped to `.pb-page` so nothing leaks either direction.
+ *
+ * THE ONE DECISION ABOUT A DARK FIELD. A dark field is not a light field with
+ * the lights off. Invert a standard diagram and you get glaring white lines
+ * competing with white player glyphs — and the glyphs are the actual subject.
+ * So the turf is near-black with a green cast, the lines are dark and
+ * structural, and the players are the only bright things on it. Brightness is
+ * rationed in strict order: glyphs and routes, then the LOS, then yard numbers,
+ * then five-yard lines, then hashes.
+ *
+ * The turf is hue-shifted green while every panel around it is hue-shifted
+ * blue. Eight degrees of separation reads as "different material" without a
+ * single saturated pixel.
+ *
+ * CONTRAST RULE, and it is load-bearing: --turf-line-10 (3.1:1) is the dimmest
+ * value allowed to carry information. Anything dimmer is texture and must never
+ * be the only way to read something. --ink-meta (4.9:1) is the floor for text.
+ *
+ * Motion vocabulary, extending two-minute-drill's: 130ms for interface
+ * feedback, 240ms for a panel, 320ms for a camera move. Play animation is
+ * driven by requestAnimationFrame rather than CSS, because a scrub bar needs to
+ * seek and a transition cannot. Everything collapses at the bottom of the file
+ * under prefers-reduced-motion.
+ */
+
+.pb-page {
+  color-scheme: dark;
+
+  /* ---- surfaces: blue-cast near-black ---- */
+  --void: #05070a;
+  --surface-0: #0a0d12;
+  --surface-1: #10141b;
+  --surface-2: #171c25;
+  --surface-3: #1f2631;
+  --hairline: #232b37;
+  --hairline-bright: #33404f;
+
+  /* ---- ink: ratios against --surface-1 ---- */
+  --ink: #f2f5f8;        /* 17.5:1 */
+  --ink-soft: #c2cbd6;   /* 11.1:1 */
+  --ink-quiet: #8b97a6;  /*  6.1:1 */
+  --ink-meta: #78859a;   /*  4.9:1 — the floor, do not go dimmer */
+
+  /* ---- the field: ratios against --turf ---- */
+  --turf: #0a0f0c;
+  --turf-band: #0d130f;       /* 1.1:1 — texture only */
+  --turf-hash: #2c3a33;       /* 1.6:1 — decorative */
+  --turf-line-5: #3a4c42;     /* 2.1:1 — decorative */
+  --turf-line-10: #4e655a;    /* 3.1:1 — the information floor */
+  --turf-edge: #5e7a6e;       /* 4.0:1 */
+  --turf-number: #33453c;
+  --turf-nrz: rgba(245, 165, 36, 0.07);
+
+  /* ---- semantics on the field ---- */
+  --off: #ffffff;        /* 19.1:1 on turf */
+  --def: #ff4757;        /*  5.8:1 */
+  --ball: #f5a524;       /*  9.5:1 */
+  --motion: #a78bfa;     /*  7.2:1 */
+  --block: #c2cbd6;      /* deliberately dimmer than a route */
+  --ghost: rgba(255, 255, 255, 0.22);
+  --zone-stroke: rgba(255, 71, 87, 0.62);
+  --zone-fill: rgba(255, 71, 87, 0.055);
+
+  /* ---- ui ---- */
+  --accent: #22d3ee;     /* 10.1:1 */
+  --accent-sunk: #0e3a44;
+  --good: #34d399;
+  --warn: #fbbf24;
+  --danger: #f43f5e;
+
+  /* ---- type: all three faces are already loaded in layout.tsx ---- */
+  --display: var(--font-archivo), system-ui, -apple-system, sans-serif;
+  --prose: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --num: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* ---- space, 4px base ---- */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 20px;
+  --s6: 24px; --s7: 32px; --s8: 40px; --s9: 56px; --s10: 72px;
+
+  /* ---- radius: sharp means nothing rounder than 4px ---- */
+  --r0: 0; --r1: 2px; --r2: 3px; --r3: 4px; --r-pill: 999px;
+
+  /* ---- elevation: hairlines and an inner highlight, not blur ---- */
+  --lift: inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  --overlay: 0 16px 48px rgba(0, 0, 0, 0.62), 0 0 0 1px var(--hairline-bright);
+
+  /* ---- motion ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-snap: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 130ms;
+  --t-mid: 240ms;
+  --t-cam: 320ms;
+
+  --bar-h: 48px;
+  --rail-w: 64px;
+  --inspector-w: 300px;
+  --facets-w: 240px;
+
+  background: var(--void);
+  color: var(--ink);
+  font-family: var(--display);
+  font-synthesis-weight: none;
+  min-height: 100vh;
+}
+
+/* ── type system ─────────────────────────────────────────────────────────────
+   Uppercase + condensed + wide tracking means "this is a label". Mixed case at
+   normal width means "this is content". That binary is the whole system. */
+
+.pb-label {
+  font-family: var(--display);
+  font-stretch: 70%;
+  font-weight: 700;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-meta);
+}
+
+.pb-label-mid {
+  font-family: var(--display);
+  font-stretch: 74%;
+  font-weight: 600;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.pb-panel-title {
+  font-family: var(--display);
+  font-stretch: 82%;
+  font-weight: 700;
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink);
+}
+
+.pb-h2 {
+  font-family: var(--display);
+  font-stretch: 80%;
+  font-weight: 800;
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+/* Heavy, condensed, and NEGATIVE tracking — that is what sharp means
+   typographically. */
+.pb-h1 {
+  font-family: var(--display);
+  font-stretch: 78%;
+  font-weight: 800;
+  font-size: clamp(28px, 4.2vw, 46px);
+  line-height: 0.94;
+  text-transform: uppercase;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+/* Archivo's x-height loses at running-text sizes. Inter is already in the
+   bundle, so using it for prose costs nothing. */
+.pb-prose {
+  font-family: var(--prose);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* A readout that reflows as it counts is the fastest way to make a tool feel
+   cheap. */
+.pb-num {
+  font-family: var(--num);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  letter-spacing: 0.01em;
+}
+
+/* ── chrome ──────────────────────────────────────────────────────────────── */
+
+.pb-bar {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+  height: var(--bar-h);
+  padding: 0 var(--s4);
+  background: var(--surface-0);
+  border-bottom: 2px solid var(--hairline);
+  box-shadow: var(--lift);
+}
+
+/* The offense/defense switch is a MODE, not a filter: it recolors this rule. */
+.pb-bar[data-side="offense"] { border-bottom-color: var(--off); }
+.pb-bar[data-side="defense"] { border-bottom-color: var(--def); }
+
+.pb-wordmark {
+  font-family: var(--display);
+  font-stretch: 74%;
+  font-weight: 800;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s2);
+  text-decoration: none;
+}
+
+.pb-wordmark span[aria-hidden] { color: var(--accent); }
+
+.pb-back {
+  font-family: var(--display);
+  font-stretch: 74%;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-quiet);
+  text-decoration: none;
+  transition: color var(--t-fast);
+}
+.pb-back:hover { color: var(--ink); }
+
+.pb-container {
+  margin: 0 auto;
+  max-width: 1440px;
+  padding: var(--s6) var(--s4) var(--s10);
+}
+
+/* ── controls ────────────────────────────────────────────────────────────── */
+
+.pb-seg {
+  display: inline-flex;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r0);
+  overflow: hidden;
+  background: var(--surface-1);
+}
+
+.pb-seg button {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 700;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 7px 12px;
+  background: transparent;
+  color: var(--ink-quiet);
+  border: 0;
+  border-right: 1px solid var(--hairline);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.pb-seg button:last-child { border-right: 0; }
+.pb-seg button:hover { background: var(--surface-2); color: var(--ink-soft); }
+.pb-seg button[aria-pressed="true"] {
+  background: var(--accent);
+  color: var(--void);
+}
+
+.pb-btn {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 700;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 7px 12px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r1);
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast);
+}
+.pb-btn:hover { border-color: var(--hairline-bright); color: var(--ink); }
+.pb-btn--primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--void);
+}
+.pb-btn--primary:hover { color: var(--void); filter: brightness(1.08); }
+.pb-btn--danger { color: var(--danger); }
+
+.pb-input {
+  font-family: var(--display);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 10px;
+  width: 100%;
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r1);
+}
+.pb-input::placeholder { color: var(--ink-meta); }
+.pb-input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-color: var(--hairline-bright);
+}
+
+.pb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding: 4px 7px;
+  background: var(--accent-sunk);
+  color: var(--accent);
+  border: 1px solid transparent;
+  border-radius: var(--r1);
+  cursor: pointer;
+}
+.pb-chip:hover { border-color: var(--accent); }
+
+.pb-panel {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r3);
+  box-shadow: var(--lift);
+}
+
+.pb-page :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ── the field ───────────────────────────────────────────────────────────── */
+
+.pb-field {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--turf);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r2);
+  /* A 5-yard out with a rounded corner is a different play. */
+  stroke-linejoin: miter;
+  stroke-miterlimit: 4;
+  stroke-linecap: butt;
+  touch-action: none;
+}
+
+.pb-field text { user-select: none; }
+
+.pb-yardnum {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 76%;
+  fill: var(--turf-number);
+}
+
+.pb-glyph-label {
+  font-family: var(--display);
+  font-weight: 800;
+  font-stretch: 70%;
+  letter-spacing: 0.02em;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.pb-zone-label {
+  font-family: var(--display);
+  font-weight: 700;
+  font-stretch: 70%;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  fill: var(--zone-stroke);
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+
+.pb-cond-label {
+  font-family: var(--display);
+  font-weight: 700;
+  font-stretch: 70%;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  fill: var(--ink-quiet);
+  pointer-events: none;
+}
+
+.pb-grid-line { stroke: var(--accent); stroke-opacity: 0.14; }
+
+/* ── reduced motion ──────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .pb-page *,
+  .pb-page *::before,
+  .pb-page *::after {
+    transition-duration: 1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ── layout ──────────────────────────────────────────────────────────────── */
+
+.pb-bar-spacer { flex: 1; }
+.pb-saving { color: var(--accent); }
+
+.pb-browse {
+  display: grid;
+  grid-template-columns: var(--facets-w) minmax(0, 1fr);
+  gap: var(--s5);
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: var(--s5) var(--s4) var(--s10);
+}
+
+.pb-rail-facets {
+  position: sticky;
+  top: calc(var(--bar-h) + var(--s4));
+  align-self: start;
+  max-height: calc(100vh - var(--bar-h) - var(--s7));
+  overflow-y: auto;
+  padding-right: var(--s2);
+}
+
+.pb-facet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s3);
+  padding-bottom: var(--s2);
+  border-bottom: 2px solid var(--hairline-bright);
+  margin-bottom: var(--s4);
+}
+
+.pb-facet-group { margin-bottom: var(--s5); }
+.pb-facet-group h4 { margin-bottom: var(--s2); }
+.pb-facet-group ul { list-style: none; margin: 0; padding: 0; }
+
+.pb-facet {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: 5px 7px;
+  background: transparent;
+  border: 0;
+  border-left: 2px solid transparent;
+  border-radius: var(--r0);
+  color: var(--ink-soft);
+  font-family: var(--display);
+  font-size: 12.5px;
+  text-align: left;
+  text-transform: capitalize;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+.pb-facet:hover { background: var(--surface-2); color: var(--ink); }
+.pb-facet[aria-pressed="true"] {
+  background: var(--surface-2);
+  border-left-color: var(--accent);
+  color: var(--accent);
+}
+.pb-facet-count { color: var(--ink-meta); font-size: 10.5px; }
+
+/* ── results ─────────────────────────────────────────────────────────────── */
+
+.pb-searchbar {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-bottom: var(--s3);
+}
+.pb-searchbar .pb-input { flex: 1; }
+
+.pb-count { margin-bottom: var(--s4); color: var(--ink-meta); }
+.pb-error { color: var(--danger); }
+.pb-empty { padding: var(--s8) 0; color: var(--ink-quiet); text-align: center; }
+
+.pb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: var(--s4);
+}
+
+.pb-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r3);
+  box-shadow: var(--lift);
+  overflow: hidden;
+  transition: border-color var(--t-fast), transform var(--t-fast);
+}
+.pb-card:hover { border-color: var(--hairline-bright); }
+
+.pb-card-diagram {
+  display: block;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--hairline);
+  cursor: pointer;
+}
+.pb-card-diagram .pb-field { border: 0; border-radius: 0; }
+
+.pb-card-body { padding: var(--s3); flex: 1; }
+.pb-card-title {
+  font-family: var(--display);
+  font-stretch: 80%;
+  font-weight: 700;
+  font-size: 13.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  margin: 0 0 2px;
+}
+.pb-card-sub {
+  font-family: var(--display);
+  font-size: 11.5px;
+  color: var(--ink-quiet);
+  text-transform: capitalize;
+  margin: 0 0 6px;
+}
+.pb-card-meta { text-transform: uppercase; }
+
+.pb-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s2);
+  padding: var(--s2) var(--s3) var(--s3);
+}
+.pb-card-variants { color: var(--ink-meta); }
+
+/* ── dense table ─────────────────────────────────────────────────────────── */
+
+.pb-dense { width: 100%; border-collapse: collapse; font-family: var(--display); font-size: 12.5px; }
+.pb-dense th { text-align: left; padding: 6px 8px; border-bottom: 2px solid var(--hairline-bright); }
+.pb-dense td { padding: 7px 8px; border-bottom: 1px solid var(--hairline); color: var(--ink-soft); text-transform: capitalize; }
+.pb-dense tr:hover td { background: var(--surface-1); }
+
+.pb-linkish {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--accent);
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.pb-linkish:hover { text-decoration: underline; }
+
+/* ── detail ──────────────────────────────────────────────────────────────── */
+
+.pb-detail { max-width: 1400px; margin: 0 auto; padding: var(--s5) var(--s4) var(--s10); }
+.pb-detail-head {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--s4);
+  padding-bottom: var(--s3);
+  border-bottom: 2px solid var(--hairline-bright);
+  margin-bottom: var(--s5);
+  flex-wrap: wrap;
+}
+.pb-detail-head h2 { margin: 0; }
+.pb-detail-actions { margin-left: auto; display: flex; gap: var(--s2); align-items: center; flex-wrap: wrap; }
+
+.pb-detail-body { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: var(--s6); }
+.pb-detail-field { min-width: 0; }
+.pb-detail-side section { margin-bottom: var(--s5); }
+.pb-detail-side h4 { margin-bottom: var(--s2); }
+
+.pb-reads { list-style: none; margin: 0; padding: 0; font-family: var(--prose); font-size: 13px; color: var(--ink-soft); }
+.pb-reads li { padding: 5px 0; border-bottom: 1px solid var(--hairline); text-transform: capitalize; }
+.pb-reads .pb-num { color: var(--ball); font-weight: 700; }
+
+.pb-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.pb-tag {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 700;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 6px;
+  background: var(--accent-sunk);
+  color: var(--accent);
+  border-radius: var(--r1);
+}
+.pb-tag--quiet { background: var(--surface-2); color: var(--ink-quiet); }
+
+.pb-warnings { border-left: 2px solid var(--warn); padding-left: var(--s3); }
+.pb-warnings ul { list-style: none; margin: 0; padding: 0; font-family: var(--prose); font-size: 12.5px; color: var(--ink-soft); }
+.pb-warnings li { padding: 4px 0; }
+.pb-warn-tag { color: var(--warn); margin-right: 4px; }
+
+/* ── transport ───────────────────────────────────────────────────────────── */
+
+.pb-transport {
+  margin-top: var(--s3);
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r3);
+  padding: var(--s3);
+}
+.pb-transport-row { display: flex; align-items: center; gap: var(--s3); flex-wrap: wrap; }
+
+.pb-play {
+  width: 38px; height: 28px;
+  background: var(--accent); color: var(--void);
+  border: 0; border-radius: var(--r1);
+  font-size: 12px; cursor: pointer;
+}
+.pb-icon-btn {
+  min-width: 28px; height: 28px;
+  background: var(--surface-2); color: var(--ink-soft);
+  border: 1px solid var(--hairline); border-radius: var(--r1);
+  cursor: pointer;
+}
+.pb-icon-btn:hover { border-color: var(--hairline-bright); color: var(--ink); }
+.pb-icon-btn:disabled { opacity: 0.35; cursor: default; }
+
+.pb-time { font-size: 12px; color: var(--ink); }
+.pb-time-total { color: var(--ink-meta); }
+
+.pb-chip-toggle {
+  font-family: var(--display);
+  font-stretch: 72%; font-weight: 700; font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.09em;
+  padding: 5px 8px;
+  background: transparent; color: var(--ink-quiet);
+  border: 1px solid var(--hairline); border-radius: var(--r1);
+  cursor: pointer;
+}
+.pb-chip-toggle[aria-pressed="true"] { background: var(--accent-sunk); color: var(--accent); border-color: var(--accent); }
+
+.pb-scrub {
+  position: relative;
+  height: 6px;
+  margin: var(--s4) 0 var(--s2);
+  background: var(--surface-3);
+  border-radius: var(--r-pill);
+  cursor: pointer;
+}
+.pb-scrub::before { content: ""; position: absolute; inset: -12px 0; }
+.pb-scrub-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent); border-radius: var(--r-pill); }
+.pb-presnap { position: absolute; inset: 0 auto 0 0; background: color-mix(in oklab, var(--motion) 14%, transparent); }
+/* A 3px bar, not a circle. It reads as a playhead. */
+.pb-playhead {
+  position: absolute; top: -6px; width: 3px; height: 18px;
+  margin-left: -1.5px; background: var(--ink); border-radius: 1px;
+  pointer-events: none;
+}
+.pb-snap-mark { position: absolute; top: -14px; bottom: -4px; width: 2px; background: var(--ball); pointer-events: none; }
+.pb-snap-mark .pb-label { position: absolute; top: -12px; left: 4px; color: var(--ball); }
+
+.pb-lanes { margin-top: var(--s4); border-top: 1px solid var(--hairline); padding-top: var(--s3); }
+.pb-lane { display: grid; grid-template-columns: 34px minmax(0, 1fr) 48px; align-items: center; gap: var(--s2); height: 20px; }
+.pb-lane-name { color: var(--ink-soft); }
+.pb-lane-track { position: relative; height: 10px; background: var(--surface-2); border-radius: var(--r1); }
+.pb-lane-bar { position: absolute; top: 0; bottom: 0; background: var(--off); border-radius: var(--r1); opacity: 0.75; }
+.pb-lane-bar--ball { background: var(--ball); }
+.pb-lane-bar--motion { background: var(--motion); }
+.pb-lane-bar--blitz { background: var(--def); }
+.pb-lane-bar--carry { background: var(--off); }
+.pb-lane-delay { position: absolute; inset: -4px 0; width: 100%; opacity: 0; cursor: ew-resize; }
+.pb-lane-num { color: var(--ink-meta); font-size: 10px; text-align: right; }
+
+/* ── editor ──────────────────────────────────────────────────────────────── */
+
+.pb-editor { display: flex; flex-direction: column; min-height: 100vh; }
+.pb-editor-bar {
+  display: flex; align-items: center; gap: var(--s3);
+  height: var(--bar-h); padding: 0 var(--s4);
+  background: var(--surface-0); border-bottom: 2px solid var(--hairline);
+}
+.pb-title-input { max-width: 320px; }
+.pb-editor-actions { margin-left: auto; display: flex; gap: var(--s2); }
+
+.pb-editor-body {
+  display: grid;
+  grid-template-columns: var(--rail-w) minmax(0, 1fr) var(--inspector-w);
+  gap: var(--s4);
+  padding: var(--s4);
+  align-items: start;
+}
+
+.pb-rail { display: flex; flex-direction: column; gap: 2px; }
+.pb-tool {
+  width: var(--rail-w); height: 38px;
+  background: transparent; color: var(--ink-quiet);
+  border: 0; border-left: 2px solid transparent;
+  font-family: var(--display); font-weight: 800; font-size: 12px;
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+.pb-tool:hover { background: var(--surface-2); color: var(--ink); }
+.pb-tool[aria-pressed="true"] { background: var(--surface-2); border-left-color: var(--accent); color: var(--accent); }
+.pb-rail-sep { height: 1px; background: var(--hairline); margin: var(--s2) 6px; }
+
+.pb-canvas { min-width: 0; }
+.pb-camera-bar {
+  display: flex; align-items: center; gap: var(--s2);
+  margin-top: var(--s2); padding: var(--s2);
+  background: var(--surface-1); border: 1px solid var(--hairline); border-radius: var(--r3);
+}
+.pb-zoom { font-size: 11px; color: var(--ink-quiet); min-width: 42px; text-align: center; }
+.pb-hint { margin-left: auto; color: var(--ink-meta); }
+
+.pb-inspector {
+  background: var(--surface-1);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r3);
+  padding: var(--s4);
+  position: sticky;
+  top: var(--s4);
+}
+.pb-inspector h3 { margin: 0 0 2px; }
+.pb-field-row { display: flex; align-items: center; gap: var(--s3); margin-top: var(--s3); }
+.pb-field-row .pb-input { flex: 1; }
+.pb-field-row--stack { flex-direction: column; align-items: stretch; gap: 5px; }
+.pb-field-row > .pb-label { min-width: 52px; }
+
+/* ── drawer and modal ────────────────────────────────────────────────────── */
+
+.pb-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0;
+  width: min(440px, 100vw);
+  z-index: 60;
+  background: var(--surface-1);
+  border-left: 1px solid var(--hairline-bright);
+  box-shadow: var(--overlay);
+  padding: var(--s4);
+  overflow-y: auto;
+}
+.pb-drawer-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--s3); }
+.pb-drawer-actions { display: flex; flex-wrap: wrap; gap: var(--s2); margin: var(--s4) 0; }
+.pb-drawer-foot { margin-top: var(--s6); color: var(--ink-meta); }
+
+.pb-book-list { list-style: none; margin: 0; padding: 0; }
+.pb-book-section { margin-bottom: var(--s4); }
+.pb-book-section h4 { padding-bottom: 4px; border-bottom: 1px solid var(--hairline); margin-bottom: var(--s2); }
+.pb-book-section ul { list-style: none; margin: 0; padding: 0; }
+.pb-book-row {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 104px auto;
+  align-items: center; gap: var(--s2);
+  padding: 4px 0;
+}
+.pb-call-number { padding: 4px 6px; text-align: center; }
+.pb-section-select { padding: 4px 6px; font-size: 11px; }
+.pb-book-move { display: flex; gap: 2px; }
+
+.pb-modal {
+  position: fixed; inset: 0; z-index: 70;
+  display: grid; place-items: center;
+  background: rgba(5, 7, 10, 0.72);
+  padding: var(--s4);
+}
+.pb-modal-card { width: min(480px, 100%); padding: var(--s6); box-shadow: var(--overlay); }
+.pb-modal-actions { display: flex; justify-content: flex-end; gap: var(--s2); margin-top: var(--s5); }
+
+/* ── responsive: on a phone this is a reader, not an editor ──────────────── */
+
+@media (max-width: 1080px) {
+  .pb-browse { grid-template-columns: 1fr; }
+  .pb-rail-facets { position: static; max-height: none; }
+  .pb-detail-body { grid-template-columns: 1fr; }
+  .pb-editor-body { grid-template-columns: var(--rail-w) minmax(0, 1fr); }
+  .pb-inspector { grid-column: 1 / -1; position: static; }
+}
+
+@media (max-width: 620px) {
+  .pb-bar { gap: var(--s2); padding: 0 var(--s2); overflow-x: auto; }
+  .pb-grid { grid-template-columns: 1fr; }
+  .pb-searchbar { flex-wrap: wrap; }
+  .pb-detail-actions { width: 100%; margin-left: 0; }
+}
+
+/* The one state where a play has given up part of its compositional identity.
+   Worth saying out loud rather than leaving the inspector to claim otherwise. */
+.pb-hand-drawn {
+  margin-top: var(--s3);
+  padding: var(--s3);
+  background: var(--surface-2);
+  border-left: 2px solid var(--warn);
+  border-radius: var(--r1);
+}
+.pb-hand-drawn .pb-prose { font-size: 12.5px; margin: 0 0 var(--s2); }
+
+/* ── the field fits the screen ────────────────────────────────────────────────
+   The diagram is capped so the editor and the play view do not need scrolling
+   to see the whole thing. The SVG letterboxes inside its own box and
+   `.pb-field`'s turf background fills the remainder, so there is no seam. This
+   matters more than it sounds: page scroll and the camera were fighting each
+   other, and the field appeared to resize whenever you used the wheel. */
+
+.pb-canvas .pb-field {
+  max-height: calc(100vh - 190px);
+}
+
+.pb-detail-field .pb-field {
+  max-height: calc(100vh - 320px);
+}
+
+@media (max-width: 1080px) {
+  .pb-canvas .pb-field,
+  .pb-detail-field .pb-field { max-height: none; }
+}
+
+/* Build-your-own: a dashed outline against the solid play cards, so it reads
+   as an empty slot rather than as another play. */
+.pb-card--new {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--s2);
+  min-height: 232px;
+  padding: var(--s5);
+  background: transparent;
+  border: 1px dashed var(--hairline-bright);
+  color: var(--ink-soft);
+  cursor: pointer;
+  text-align: left;
+}
+.pb-card--new:hover {
+  border-color: var(--accent);
+  background: var(--surface-1);
+}
+.pb-card-new-mark {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--accent);
+}
+.pb-card--new .pb-prose { font-size: 12.5px; margin: 0; }
+
+/* What the search understood. Showing the parse is what makes a smart search
+   trustworthy — otherwise it is guessing at you. */
+.pb-understood {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: var(--s3);
+}
+.pb-understood .pb-label { color: var(--ink-meta); margin-right: 2px; }
+.pb-chip--text {
+  background: var(--surface-2);
+  color: var(--ink-quiet);
+  cursor: default;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}

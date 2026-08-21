@@ -9,6 +9,11 @@
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
+    // The playbook engine is imported both by Next and by the offline build
+    // script, which runs under `node --experimental-strip-types` and has no
+    // tsconfig path mapping. Explicit .ts extensions are what let one set of
+    // modules serve both. Legal here because noEmit is already set.
+    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "react-jsx",

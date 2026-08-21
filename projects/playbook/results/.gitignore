@@ -1,0 +1,2 @@
+# Rendered previews are build artifacts — regenerate with npm run playbook:preview.
+out/

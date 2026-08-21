@@ -1,0 +1,278 @@
+/*
+ * Print sheets.
+ *
+ * THE PALETTE FLIPS. Nobody prints a black field, so every token is redefined
+ * on paper. Defence prints BLACK rather than red by default: most coaches print
+ * monochrome, and a mid-red photocopies to a mid-grey that destroys the
+ * offence/defence distinction entirely. The glyph shape carries it instead —
+ * which is a second argument for the filled diamond over an X, since an X at
+ * under a point collapses into a smudge while a filled shape holds its
+ * silhouette. `.pb-print-color` opts back into colour for a colour laser.
+ *
+ * Zebra striping is 4%, not 10%. Four per cent survives a photocopier; ten
+ * becomes a grey smear that eats the text.
+ *
+ * Every sheet is designed to be readable if the printer drops backgrounds
+ * entirely, which is why the reversed-out wristband number also has a border.
+ */
+
+.pb-print {
+  --void: #fff; --surface-0: #fff; --surface-1: #fff; --surface-2: #fff; --surface-3: #fff;
+  --hairline: #b9c0c8; --hairline-bright: #8b949e;
+  --ink: #000; --ink-soft: #333; --ink-quiet: #555; --ink-meta: #666;
+  --turf: #fff; --turf-band: #fff;
+  --turf-hash: #e2e6ea; --turf-line-5: #d5dae0; --turf-line-10: #b9c0c8;
+  --turf-edge: #8b949e; --turf-number: #dde2e7; --turf-nrz: transparent;
+  --off: #000; --block: #3a3a3a; --def: #000; --ball: #000; --motion: #555;
+  --accent: #000; --ghost: #ccc;
+  --zone-stroke: #555; --zone-fill: transparent;
+  background: #fff;
+  color: #000;
+}
+
+.pb-print.pb-print-color {
+  --def: #c81e2d;
+  --ball: #d97706;
+  --motion: #6d28d9;
+}
+
+.pb-print .pb-field { border: 0; background: #fff; }
+
+/* The root layout renders a footer under every page. It has no business on a
+   printed call sheet. */
+@media print {
+  body:has(.pb-print) > footer { display: none !important; }
+  .pb-print { margin: 0; }
+}
+
+.pb-sheet {
+  box-sizing: border-box;
+  margin: 0 auto 16px;
+  background: #fff;
+  break-after: page;
+}
+.pb-sheet:last-child { break-after: auto; }
+
+/* Letter portrait, 0.4in margins -> 7.70 x 10.20in printable. */
+.pb-sheet--portrait { width: 7.7in; min-height: 10.2in; padding: 0; }
+/* Letter landscape, 0.35in margins -> 10.30 x 7.80in printable. */
+.pb-sheet--landscape { width: 10.3in; min-height: 7.8in; padding: 0; }
+
+/* `@page` cannot be scoped by selector, so the orientation is switched by
+   swapping which rule is live — the call sheet route sets the landscape flag on
+   the document element. */
+@page { size: Letter portrait; margin: 0.4in; }
+:root[data-print="landscape"] { }
+@media print {
+  :root[data-print="landscape"] { --page-orientation: landscape; }
+}
+
+.pb-sheet-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  height: 0.42in;
+  align-items: center;
+  font-family: var(--display);
+  font-stretch: 68%;
+  font-weight: 700;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 1px solid #b9c0c8;
+}
+
+.pb-sheet-foot {
+  height: 0.22in;
+  display: flex;
+  align-items: center;
+  font-family: var(--display);
+  font-stretch: 68%;
+  font-size: 7pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666;
+  border-top: 0.5pt solid #b9c0c8;
+  margin-top: 6px;
+}
+
+/* ── 12-up playbook ──────────────────────────────────────────────────────────
+   3 columns x 4 rows, 0.14in gutters:
+     cell width  = (7.70 - 2 x 0.14) / 3 = 2.473in
+     cell height = (9.56 - 3 x 0.14) / 4 = 2.285in                            */
+
+.pb-grid12 {
+  display: grid;
+  grid-template-columns: repeat(3, 2.473in);
+  grid-auto-rows: 2.285in;
+  gap: 0.14in;
+  height: 9.56in;
+  align-content: start;
+}
+
+.pb-cell {
+  border: 0.5pt solid #b9c0c8;
+  padding: 0.06in;
+  display: flex;
+  flex-direction: column;
+  break-inside: avoid;
+  overflow: hidden;
+}
+
+.pb-cell-head {
+  height: 0.2in;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--display);
+  font-stretch: 62%;
+  text-transform: uppercase;
+}
+.pb-cell-head strong { font-weight: 700; font-size: 8.5pt; letter-spacing: 0.06em; }
+.pb-cell-head span { font-weight: 500; font-size: 6.5pt; color: #666; white-space: nowrap; }
+
+/* 2.353 x 1.765in, which is 4:3. */
+.pb-cell-diagram { width: 2.353in; height: 1.765in; overflow: hidden; }
+.pb-cell-diagram svg { width: 100%; height: 100%; }
+
+.pb-cell-meta {
+  height: 0.16in;
+  display: flex;
+  align-items: center;
+  font-family: var(--display);
+  font-stretch: 66%;
+  font-size: 6pt;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #666;
+}
+
+/* ── call sheet ───────────────────────────────────────────────────────────── */
+
+.pb-callsheet {
+  display: grid;
+  grid-template-columns: repeat(4, 2.47in);
+  gap: 0.12in;
+  align-content: start;
+  min-height: 6.6in;
+}
+
+.pb-call-block { break-inside: avoid; border: 0.5pt solid #b9c0c8; }
+.pb-call-block h3 {
+  margin: 0;
+  height: 0.16in;
+  display: flex;
+  align-items: center;
+  padding: 0 5px;
+  background: #000;
+  color: #fff;
+  font-family: var(--display);
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+.pb-call-block ol { list-style: none; margin: 0; padding: 0; }
+.pb-call-block li {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+  height: 0.19in;
+  padding: 0 5px;
+  font-family: var(--display);
+  font-stretch: 68%;
+  font-size: 8pt;
+}
+/* 4%, not 10%. Ten becomes a smear on a photocopier. */
+.pb-call-block li:nth-child(even) { background: #f2f4f6; print-color-adjust: exact; }
+.pb-call-num { font-family: var(--num); font-size: 7pt; color: #666; min-width: 14px; }
+.pb-call-name { font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; }
+
+.pb-notes-area {
+  height: 0.5in;
+  margin-top: 8px;
+  border-top: 0.5pt solid #b9c0c8;
+  padding-top: 3px;
+  font-family: var(--display);
+  font-stretch: 66%;
+  font-size: 7pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666;
+  background-image: repeating-linear-gradient(
+    to bottom, transparent 0 15px, #dde2e7 15px 15.25px
+  );
+}
+
+/* ── wristbands ───────────────────────────────────────────────────────────────
+   3.00 x 1.60in strips, 2 columns x 5 rows:
+     width  = 2 x 3.00 + 0.25 gutter = 6.25in  (fits 7.80)
+     height = 5 x 1.60 + 4 x 0.15    = 8.60in  (fits 10.20)                   */
+
+.pb-wristbands {
+  display: grid;
+  grid-template-columns: repeat(2, 3in);
+  grid-auto-rows: 1.6in;
+  gap: 0.15in 0.25in;
+  justify-content: center;
+  padding-top: 0.2in;
+}
+
+.pb-strip {
+  border: 0.25pt dashed #9aa3ad;
+  padding: 0.05in;
+  display: flex;
+  flex-direction: column;
+  break-inside: avoid;
+}
+.pb-strip > header {
+  height: 0.14in;
+  font-family: var(--display);
+  font-stretch: 62%;
+  font-weight: 700;
+  font-size: 6pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 0.5pt solid #000;
+}
+.pb-strip ol { list-style: none; margin: 0; padding: 0; flex: 1; }
+.pb-strip li {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 0.26in;
+}
+
+/* Reversed out and bordered: the number has to be legible at arm's length
+   through a plastic window, and it has to survive a printer that drops
+   background fills. */
+.pb-strip-num {
+  width: 0.22in;
+  height: 0.2in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  color: #fff;
+  border: 0.5pt solid #000;
+  font-family: var(--num);
+  font-weight: 700;
+  font-size: 9pt;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+.pb-strip-name {
+  flex: 1;
+  font-family: var(--display);
+  font-stretch: 62%;
+  font-weight: 700;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.pb-strip-glyph { width: 0.24in; height: 0.2in; overflow: hidden; }
+.pb-strip-glyph svg { width: 100%; height: 100%; }

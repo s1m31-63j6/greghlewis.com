@@ -23,6 +23,9 @@ const nextConfig: NextConfig = {
     TELEMETRY_TABLE: process.env.TELEMETRY_TABLE,
     TELEMETRY_SALT: process.env.TELEMETRY_SALT,
     TELEMETRY_KEY: process.env.TELEMETRY_KEY,
+    // Playbook storage. Read only in the /api/playbook route handlers and the
+    // print and share server components.
+    PLAYBOOK_TABLE: process.env.PLAYBOOK_TABLE,
   },
 };
 
