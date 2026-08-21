@@ -103,5 +103,45 @@ check("the library play document is STILL unchanged after both resolves", JSON.s
 const afterAll = JSON.stringify(JSON.parse(readFileSync(LIBRARY, "utf8")));
 check("the library file on disk is unchanged", afterAll === JSON.stringify(specs));
 
+console.log("\nmoving a player re-derives his route");
+
+// The bug a coach found first: drag a receiver across the ball and his route
+// kept the handedness it had from his old spot, so an in-breaking route ran
+// straight into the sideline. Handedness comes from where he is STANDING, so
+// the move has to land before the route resolves.
+for (const [id, slot, note] of [
+  ["ar-92-mesh", "X", "positional handedness"],
+  ["ar-91-shallow-cross", "X", "authored toSide, overridden by crossing the ball"],
+] as const) {
+  const s2 = specs.find((x) => x.id === id)!;
+  const travel = (p: Play) => {
+    const out = resolvePlay(p, VARIANT, false, DEFAULT_STYLE);
+    const path = out.paths.find((x) => x.slot === slot)!;
+    return path.points.at(-1)!.x - path.points[0].x;
+  };
+  const before = travel({ spec: s2 });
+  const after = travel({
+    spec: s2,
+    overrides: { authoredVariant: VARIANT, players: { [slot]: { dx: 34, dy: 0 } } },
+  });
+  check(`${id}: ${slot} mirrors when dragged across the ball (${note})`,
+    Math.sign(before) !== Math.sign(after) && Math.abs(after) > 5,
+    `${before.toFixed(1)} -> ${after.toFixed(1)}`);
+}
+
+// Staying on the same side must NOT flip him.
+const mesh = specs.find((x) => x.id === "ar-92-mesh")!;
+const nudged = resolvePlay(
+  { spec: mesh, overrides: { authoredVariant: VARIANT, players: { X: { dx: 2, dy: 0 } } } },
+  VARIANT, false, DEFAULT_STYLE,
+);
+const plain = resolvePlay({ spec: mesh }, VARIANT, false, DEFAULT_STYLE);
+const dx = (p: typeof plain) => {
+  const path = p.paths.find((x) => x.slot === "X")!;
+  return path.points.at(-1)!.x - path.points[0].x;
+};
+check("a nudge on the same side leaves the route alone",
+  Math.sign(dx(nudged)) === Math.sign(dx(plain)));
+
 console.log(failures ? `\n${failures} failure(s)\n` : "\ncopy-on-write holds\n");
 process.exit(failures ? 1 : 0);

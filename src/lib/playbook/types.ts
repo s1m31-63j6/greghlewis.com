@@ -251,6 +251,13 @@ export interface MotionSpec {
   type: "jet" | "orbit" | "shift" | "across" | "return";
   toSplit?: SplitName;
   toSide?: Side;
+  /**
+   * A drawn motion path, in field yards. When present it is used verbatim and
+   * the player's post-snap route starts from its last point — which is how a
+   * coach designs jet motion, an orbit, or a shift that goes somewhere the
+   * canned types cannot describe.
+   */
+  path?: Vec[];
   /** Motion lives in negative time; the snap is t = 0. */
   startMsBeforeSnap: number;
   atSnap: "moving" | "set";

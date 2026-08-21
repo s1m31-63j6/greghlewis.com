@@ -31,6 +31,17 @@ function Frame({ children }: { children: ReactNode }) {
   );
 }
 
+/** A player being placed — the circle plus a cross. */
+export function PlayerIcon() {
+  return (
+    <Frame>
+      <circle {...S} cx={6.6} cy={9.2} r={4.2} />
+      <path {...S} d="M12.4 3.2 L12.4 8" />
+      <path {...S} d="M10 5.6 L14.8 5.6" />
+    </Frame>
+  );
+}
+
 export function SelectIcon() {
   return (
     <Frame>

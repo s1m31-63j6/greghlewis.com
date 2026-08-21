@@ -121,6 +121,32 @@ function resolveOffensivePlay(
   const { players, omitted, points } = resolveFormation(
     formation, variantId, flip, style.glyphs, assigned,
   );
+
+  // Move people FIRST. Every route's handedness is read off where its player
+  // is standing, so this has to happen before a single assignment resolves.
+  const alignedX = new Map<string, number>(players.map((p) => [p.slot, p.at.x]));
+  applyPlayerOverrides(play, players, points, variantId, v);
+
+  /**
+   * Who was dragged across the ball. A library play can pin a route to a side
+   * with `toSide` — "this concept works to the field" — and that is the
+   * author's intent right up until a coach moves the man to the other side of
+   * the formation, at which point the authored side describes nowhere. Those
+   * routes fall back to deriving handedness from where he is now.
+   */
+  const crossed = new Set<string>(
+    players
+      .filter((p) => {
+        const before = alignedX.get(p.slot);
+        return (
+          before !== undefined &&
+          Math.abs(before) > 0.75 &&
+          Math.abs(p.at.x) > 0.75 &&
+          Math.sign(before) !== Math.sign(p.at.x)
+        );
+      })
+      .map((p) => p.slot),
+  );
   const present = new Set(players.map((p) => p.slot));
   const strengthSign: 1 | -1 = flip
     ? (formation.strength === "R" ? -1 : 1)
@@ -150,16 +176,21 @@ function resolveOffensivePlay(
     if (motion) {
       // Motion lives in negative time. One timeline expresses shift, motion,
       // snap and play without a separate pre-snap mode.
-      // toSide is absolute, so it has to flip with the play. Without this the
-      // motion travels the same way on both versions of a mirrored call, which
-      // the build harness catches as a mirroring failure.
-      const toSide = motion.motion.toSide;
-      const absolute = toSide ? (toSide === "R" ? 1 : -1) : -Math.sign(start.x || 1);
-      const dir = toSide && flip ? -absolute : absolute;
-      const end = clampToField({ x: start.x + dir * 6 * v.widthScale, y: start.y }, v);
+      const drawn = motion.motion.path;
+      const points0 = drawn?.length
+        ? [start, ...drawn.map((p) => clampToField(p, v))]
+        : (() => {
+            // No drawn path: fall back to a canned slide across the formation.
+            const toSide = motion.motion.toSide;
+            const absolute = toSide ? (toSide === "R" ? 1 : -1) : -Math.sign(start.x || 1);
+            const dir = toSide && flip ? -absolute : absolute;
+            return [start, clampToField({ x: start.x + dir * 6 * v.widthScale, y: start.y }, v)];
+          })();
+
+      const end = points0[points0.length - 1];
       preSnap.push({
         slot: rawSlot,
-        points: [start, end],
+        points: points0,
         curve: "polyline",
         style: "zigzag",
         cap: "arrow",
@@ -179,7 +210,7 @@ function resolveOffensivePlay(
     const from = points[rawSlot]!;
     const mods = a.kind === "route" ? a.mods : undefined;
     const out = outSign(from, strengthSign);
-    const prefer = preferredDir(mods, strengthSign, flip);
+    const prefer = crossed.has(rawSlot) ? null : preferredDir(mods, strengthSign, flip);
     const t = "timing" in a ? a.timing : undefined;
 
     if (a.kind === "route") {
@@ -324,7 +355,7 @@ function resolveOffensivePlay(
     if (p) p.isPrimary = true;
   }
 
-  applyOverrides(play, players, paths, variantId, v, warnings);
+  applyPathOverrides(play, players, paths, variantId, v, warnings);
   clampPaths(paths, v);
 
   const ball = deriveBallPath(play, players, paths);
@@ -403,7 +434,8 @@ function resolveDefensivePlay(
   const rushing = new Set(blitzes.map((b) => b.slot));
   const paths = [...drops.filter((d) => !rushing.has(d.slot)), ...manLines, ...blitzes];
 
-  applyOverrides(play, players, paths, variantId, v, warnings);
+  applyPlayerOverrides(play, players, {}, variantId, v);
+  applyPathOverrides(play, players, paths, variantId, v, warnings);
   clampPaths(paths, v);
 
   return {
@@ -421,11 +453,68 @@ function resolveDefensivePlay(
 // ─── overrides ──────────────────────────────────────────────────────────────
 
 /**
- * The sparse patch. Player deltas are rescaled between the variant the edit was
- * made on and the one being rendered, which is what keeps a nudge made on a
- * 7-man field looking right on an 11-man field.
+ * Player position overrides, applied BEFORE any assignment resolves.
+ *
+ * The order matters more than it looks. A route's handedness comes from where
+ * the player is standing — `outSign` reads his x — so moving him afterwards and
+ * translating the path left the route running the way it did from his OLD spot.
+ * Drag X across the formation and his shallow kept working outward, straight
+ * into the sideline. Now the move happens first and every route re-derives.
+ *
+ * Deltas, never absolutes: the formation identity stays searchable, and the
+ * edit rescales between field sizes.
  */
-function applyOverrides(
+function applyPlayerOverrides(
+  play: Play,
+  players: ResolvedPlayer[],
+  points: Partial<Record<SlotId, Vec>>,
+  variantId: FieldVariantId,
+  v: FieldVariant,
+): void {
+  const o = play.overrides;
+  if (!o) return;
+  const from = variantOf(o.authoredVariant);
+
+  if (o.removed?.length) {
+    const gone = new Set(o.removed);
+    for (let i = players.length - 1; i >= 0; i--) {
+      if (gone.has(players[i].slot as SlotId)) players.splice(i, 1);
+    }
+    for (const slot of gone) delete points[slot];
+  }
+
+  for (const [slot, d] of Object.entries(o.players ?? {})) {
+    if (!d) continue;
+    const p = players.find((x) => x.slot === slot);
+    if (!p) continue;
+    const s = o.authoredVariant === variantId ? d : rescaleDelta(d, from, v);
+    const moved = clampToField({ x: p.at.x + s.dx, y: p.at.y + s.dy }, v);
+    p.at = moved;
+    points[slot as SlotId] = moved;
+  }
+
+  for (const add of o.added ?? []) {
+    const at = clampToField(add.at, v);
+    players.push({
+      slot: add.id,
+      label: add.label,
+      at,
+      glyph: "circle",
+      role: "receiver",
+      isPrimary: false,
+    });
+    points[add.id as SlotId] = at;
+  }
+}
+
+/**
+ * Path overrides, applied after the paths exist.
+ *
+ * Three levels, and only the third gives anything up: a depth change is a mod
+ * on the spec, a dragged break point is a delta that still rescales across
+ * variants, and a hand-drawn line replaces the points for that ONE path.
+ */
+function applyPathOverrides(
   play: Play,
   players: ResolvedPlayer[],
   paths: ResolvedPath[],
@@ -437,68 +526,24 @@ function applyOverrides(
   if (!o) return;
   const from = variantOf(o.authoredVariant);
 
-  if (o.players) {
-    for (const [slot, d] of Object.entries(o.players)) {
-      if (!d) continue;
-      const p = players.find((x) => x.slot === slot);
-      if (!p) continue;
-      const s = o.authoredVariant === variantId ? d : rescaleDelta(d, from, v);
-      const moved = clampToField({ x: p.at.x + s.dx, y: p.at.y + s.dy }, v);
-      const shift = { dx: moved.x - p.at.x, dy: moved.y - p.at.y };
-      p.at = moved;
-      // The path has to follow the player, or the route detaches from him.
-      const path = paths.find((x) => x.slot === slot);
-      if (path) {
-        path.points = path.points.map((pt) => ({ x: pt.x + shift.dx, y: pt.y + shift.dy }));
-      }
-    }
-  }
-
-  if (o.paths) {
-    for (const [slot, ov] of Object.entries(o.paths)) {
-      if (!ov) continue;
-      const path = paths.find((x) => x.slot === slot);
-      if (!path) continue;
-      if (ov.mode === "adjust") {
-        // Route identity survives: this is a nudge to a break point, not a
-        // replacement, and it rescales across variants like a player delta.
-        for (const d of ov.pointDeltas) {
-          const pt = path.points[d.i];
-          if (!pt) continue;
-          const s = o.authoredVariant === variantId ? d : rescaleDelta(d, from, v);
-          path.points[d.i] = clampToField({ x: pt.x + s.dx, y: pt.y + s.dy }, v);
-        }
-      } else {
-        // The only place a play loses compositional identity, and it loses it
-        // for exactly one path.
-        path.points = ov.points.map((p) => clampToField(p, v));
-        path.curve = ov.curve;
-        path.cap = ov.cap;
-        path.style = ov.style;
-        path.routeId = undefined;
-      }
-    }
-  }
-
   if (o.removed?.length) {
     const gone = new Set(o.removed);
-    for (let i = players.length - 1; i >= 0; i--) if (gone.has(players[i].slot as SlotId)) players.splice(i, 1);
-    for (let i = paths.length - 1; i >= 0; i--) if (gone.has(paths[i].slot as SlotId)) paths.splice(i, 1);
+    for (let i = paths.length - 1; i >= 0; i--) {
+      if (gone.has(paths[i].slot as SlotId)) paths.splice(i, 1);
+    }
   }
 
-  for (const add of o.added ?? []) {
-    players.push({
-      slot: add.id,
-      label: add.label,
-      at: clampToField(add.at, v),
-      glyph: "circle",
-      role: "receiver",
-      isPrimary: false,
-    });
-    if (add.path?.length) {
-      paths.push({
-        slot: add.id,
-        points: add.path.map((p) => clampToField(p, v)),
+  for (const [slot, ov] of Object.entries(o.paths ?? {})) {
+    if (!ov) continue;
+    let path = paths.find((x) => x.slot === slot);
+
+    // A hand-drawn line for somebody who has no assignment yet — a player you
+    // just placed on an empty field, which is the whole point of building a
+    // play from zero. There is nothing to override, so the drawing IS the path.
+    if (!path && ov.mode === "freehand" && players.some((pl) => pl.slot === slot)) {
+      path = {
+        slot,
+        points: [],
         curve: "polyline",
         style: "solid",
         cap: "arrow",
@@ -509,8 +554,45 @@ function applyOverrides(
         priorityOrder: 60,
         role: "route",
         phase: "post-snap",
-      });
+      };
+      paths.push(path);
     }
+    if (!path) continue;
+
+    if (ov.mode === "adjust") {
+      for (const d of ov.pointDeltas) {
+        const pt = path.points[d.i];
+        if (!pt) continue;
+        const s = o.authoredVariant === variantId ? d : rescaleDelta(d, from, v);
+        path.points[d.i] = clampToField({ x: pt.x + s.dx, y: pt.y + s.dy }, v);
+      }
+    } else {
+      // The only place a play loses compositional identity, and it loses it
+      // for exactly one path.
+      path.points = ov.points.map((pt) => clampToField(pt, v));
+      path.curve = ov.curve;
+      path.cap = ov.cap;
+      path.style = ov.style;
+      path.routeId = undefined;
+    }
+  }
+
+  for (const add of o.added ?? []) {
+    if (!add.path?.length) continue;
+    paths.push({
+      slot: add.id,
+      points: add.path.map((p) => clampToField(p, v)),
+      curve: "polyline",
+      style: "solid",
+      cap: "arrow",
+      corner: "sharp",
+      branches: [],
+      startDelayMs: 0,
+      durationMs: 1500,
+      priorityOrder: 60,
+      role: "route",
+      phase: "post-snap",
+    });
   }
 
   if (o.authoredVariant !== variantId && o.paths) {

@@ -60,7 +60,10 @@
   --off: #ffffff;        /* 19.1:1 on turf */
   --def: #ff4757;        /*  5.8:1 */
   --ball: #f5a524;       /*  9.5:1 */
-  --motion: #a78bfa;     /*  7.2:1 */
+  /* Pre-snap motion. Green reads as unmistakably "before the snap" against
+     white routes and a red defence, and the turf is near-black rather than
+     actually green, so it holds at 11.4:1. */
+  --motion: #4ade80;     /* 11.4:1 */
   --block: #c2cbd6;      /* deliberately dimmer than a route */
   --ghost: rgba(255, 255, 255, 0.22);
   --zone-stroke: rgba(255, 71, 87, 0.62);
@@ -873,3 +876,14 @@
   text-transform: none;
   letter-spacing: 0.02em;
 }
+
+/* Pre-snap motion in the inspector — same shape as the hand-drawn notice,
+   green because that is what the line on the field is. */
+.pb-hand-drawn--motion { border-left-color: var(--motion); }
+
+.pb-inspector-foot {
+  margin-top: var(--s4);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--hairline);
+}
+.pb-inspector-foot .pb-btn { width: 100%; }

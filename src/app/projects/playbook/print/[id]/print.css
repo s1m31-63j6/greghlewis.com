@@ -32,8 +32,8 @@
 
 .pb-print.pb-print-color {
   --def: #c81e2d;
-  --ball: #d97706;
-  --motion: #6d28d9;
+  --ball: #111;
+  --motion: #15803d;
 }
 
 .pb-print .pb-field { border: 0; background: #fff; }

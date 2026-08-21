@@ -112,6 +112,16 @@ export function validate(
     }
   }
 
+  // ── roster size, now that players can be placed by hand ──────────────────
+  if (resolved.players.length > v.playersPerSide) {
+    out.push({
+      code: "body-budget",
+      message:
+        `${resolved.players.length} players on the field; ${v.label} allows ` +
+        `${v.playersPerSide}.`,
+    });
+  }
+
   // ── geometry sanity, which is what catches library bugs ──────────────────
   const halfW = Math.min(v.widthYd, v.viewWidthYd) / 2;
   for (const p of resolved.players) {

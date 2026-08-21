@@ -20,11 +20,12 @@ import Field from "./Field";
 import PlayDiagram from "./PlayDiagram";
 import { usePlayHistory } from "./usePlayHistory";
 import {
-  BlockIcon, EraseIcon, LinemanIcon, MotionIcon, RouteIcon, SelectIcon,
+  BlockIcon, EraseIcon, LinemanIcon, MotionIcon, PlayerIcon, RouteIcon, SelectIcon,
 } from "./ToolIcons";
 import { useCamera, usePlayerDrag, toModel } from "./usePointerDrag";
 import { resolvePlay } from "@/lib/playbook/resolve";
 import { fromSvg, svgX, svgY, variant as variantOf } from "@/lib/playbook/field";
+import { formationsFor } from "@/lib/playbook/formations";
 import { ROUTES, routeById } from "@/lib/playbook/routes";
 import { validate, WARNING_LABEL } from "@/lib/playbook/validate";
 import type {
@@ -90,7 +91,19 @@ function straighten(pts: Vec[]): Vec[] {
   return out;
 }
 
-type Tool = "select" | "route" | "block" | "motion" | "erase";
+type Tool = "select" | "player" | "route" | "block" | "motion" | "erase";
+
+/**
+ * Position labels a new player can take, in the order they get handed out.
+ * Real slots rather than anonymous ids, so a player you place yourself carries
+ * routes, can be the primary read, and is searchable by intended target.
+ */
+const PLACEABLE: SlotId[] = ["X", "Z", "Y", "H", "F", "V", "RB", "FB", "A1", "A2"];
+
+interface Stroke {
+  kind: "route" | "motion";
+  points: Vec[];
+}
 
 /**
  * The rail. Every one of these does something when you click a player — a
@@ -105,9 +118,10 @@ const TOOLS: {
   Icon: () => React.ReactElement;
 }[] = [
   { id: "select", key: "V", label: "Select", title: "Select and move", Icon: SelectIcon },
+  { id: "player", key: "P", label: "Player", title: "Click open grass to add a player", Icon: PlayerIcon },
   { id: "route", key: "R", label: "Route", title: "Drag from a player to draw a route", Icon: RouteIcon },
   { id: "block", key: "B", label: "Block", title: "Click a player to give him a block", Icon: BlockIcon },
-  { id: "motion", key: "M", label: "Motion", title: "Click a player to send him in motion", Icon: MotionIcon },
+  { id: "motion", key: "M", label: "Motion", title: "Drag from a player to draw pre-snap motion", Icon: MotionIcon },
   { id: "erase", key: "E", label: "Erase", title: "Click a player to clear his assignment", Icon: EraseIcon },
 ];
 
@@ -116,13 +130,18 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
   const { play, commit, undo, redo, reset, seal, canUndo, canRedo, dirty } = usePlayHistory(initial);
   const [tool, setTool] = useState<Tool>("select");
   const [selected, setSelected] = useState<string | null>(null);
-  const [drawing, setDrawing] = useState<Vec[] | null>(null);
+  /**
+   * The stroke in progress. A route and a pre-snap motion are drawn with the
+   * same gesture and land in completely different places, so which tool started
+   * it is part of the stroke rather than something to look up afterwards.
+   */
+  const [drawing, setDrawing] = useState<Stroke | null>(null);
   // Mirrored in a ref: the first pointermoves arrive before React has
   // re-rendered with the new state, and reading the stale closure dropped them.
-  const drawingRef = useRef<Vec[] | null>(null);
-  const setDraw = useCallback((pts: Vec[] | null) => {
-    drawingRef.current = pts;
-    setDrawing(pts);
+  const drawingRef = useRef<Stroke | null>(null);
+  const setDraw = useCallback((stroke: Stroke | null) => {
+    drawingRef.current = stroke;
+    setDrawing(stroke);
   }, []);
   const [lineman, setLineman] = useState(false);
   const camRef = useRef<SVGGElement>(null);
@@ -227,6 +246,101 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
     [play.spec.assignments, setAssignment],
   );
 
+  /**
+   * Put a new player on the field. He takes the next unused position label, so
+   * he is a first-class slot from the moment he lands — he can carry a route,
+   * be the primary read, and show up in search by target.
+   */
+  const addPlayer = useCallback(
+    (at: Vec) => {
+      const taken = new Set(resolved.players.map((x) => x.slot));
+      const free = PLACEABLE.find((slot) => !taken.has(slot));
+      if (!free) return;
+      commit(
+        (pl) => ({
+          ...pl,
+          overrides: {
+            ...(pl.overrides ?? { authoredVariant: variant }),
+            authoredVariant: pl.overrides?.authoredVariant ?? variant,
+            added: [...(pl.overrides?.added ?? []), { id: free, label: free, at }],
+            // Adding back someone who was removed is an un-remove, not a
+            // second copy of him.
+            removed: (pl.overrides?.removed ?? []).filter((r) => r !== free),
+          },
+        }),
+        `add ${free}`,
+        null,
+      );
+      setSelected(free);
+    },
+    [commit, resolved.players, variant],
+  );
+
+  /** Take a player off the field, whether the formation put him there or you did. */
+  const removePlayer = useCallback(
+    (slot: SlotId) => {
+      commit(
+        (pl) => {
+          const added = (pl.overrides?.added ?? []).filter((a) => a.id !== slot);
+          const wasAdded = added.length !== (pl.overrides?.added ?? []).length;
+          const assignments = { ...pl.spec.assignments };
+          delete assignments[slot];
+          const paths = { ...(pl.overrides?.paths ?? {}) };
+          delete paths[slot];
+          const players = { ...(pl.overrides?.players ?? {}) };
+          delete players[slot];
+          return {
+            ...pl,
+            spec: { ...pl.spec, assignments, primary: pl.spec.primary === slot ? undefined : pl.spec.primary },
+            overrides: {
+              ...(pl.overrides ?? { authoredVariant: variant }),
+              authoredVariant: pl.overrides?.authoredVariant ?? variant,
+              added,
+              players,
+              paths,
+              // Someone the formation supplied has to be explicitly removed;
+              // someone you added just stops existing.
+              removed: wasAdded
+                ? (pl.overrides?.removed ?? [])
+                : [...new Set([...(pl.overrides?.removed ?? []), slot])],
+            },
+          };
+        },
+        `remove ${slot}`,
+        null,
+      );
+      setSelected(null);
+    },
+    [commit, variant],
+  );
+
+  /** Swap the whole formation under the play, keeping the assignments. */
+  const setFormation = useCallback(
+    (formationId: string) => {
+      commit(
+        (pl) => ({
+          ...pl,
+          spec: { ...pl.spec, formationId },
+          // Position deltas were measured against the old alignment and mean
+          // nothing against the new one.
+          overrides: pl.overrides ? { ...pl.overrides, players: {} } : undefined,
+        }),
+        "formation",
+        null,
+      );
+      setSelected(null);
+    },
+    [commit],
+  );
+
+  /** Make a player the primary read — the amber route. */
+  const setPrimary = useCallback(
+    (slot: SlotId | undefined) => {
+      commit((pl) => ({ ...pl, spec: { ...pl.spec, primary: slot } }), "primary", null);
+    },
+    [commit],
+  );
+
   /** Clear a player's job, and any hand-drawn path that went with it. */
   const clearAssignment = useCallback(
     (slot: SlotId) => {
@@ -279,9 +393,44 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
 
   /** Freehand drawing. Sample, simplify, straighten, store as a path override. */
   const finishDraw = useCallback(
-    (slot: string, raw: Vec[]) => {
-      if (raw.length < 2) return;
-      const clean = straighten(simplify(raw, 0.3));
+    (slot: string, stroke: Stroke) => {
+      if (stroke.points.length < 2) return;
+      const clean = straighten(simplify(stroke.points, 0.3));
+
+      if (stroke.kind === "motion") {
+        // A drawn motion wraps whatever he was already doing, and his route
+        // then starts from wherever the motion put him.
+        commit(
+          (p) => {
+            const cur = p.spec.assignments[slot as SlotId] ?? { kind: "none" as const };
+            const inner = cur.kind === "motion" ? cur.then : cur;
+            return {
+              ...p,
+              spec: {
+                ...p.spec,
+                assignments: {
+                  ...p.spec.assignments,
+                  [slot]: {
+                    kind: "motion",
+                    motion: {
+                      type: "jet",
+                      startMsBeforeSnap: 1400,
+                      atSnap: "moving",
+                      // Drop the leading point: it is where he already stands.
+                      path: clean.slice(1),
+                    },
+                    then: inner,
+                  },
+                },
+              },
+            };
+          },
+          `motion ${slot}`,
+          null,
+        );
+        return;
+      }
+
       commit(
         (p) => ({
           ...p,
@@ -311,7 +460,9 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
         e.preventDefault();
         // Undo while a path is being drawn drops the last point rather than the
         // whole path — what every drawing tool does and every clone gets wrong.
-        if (drawing && drawing.length > 1) setDraw(drawing.slice(0, -1));
+        if (drawing && drawing.points.length > 1) {
+          setDraw({ ...drawing, points: drawing.points.slice(0, -1) });
+        }
         else if (e.shiftKey) redo();
         else undo();
         return;
@@ -319,6 +470,7 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
       if (mod) return;
       const map: Record<string, () => void> = {
         v: () => setTool("select"),
+        p: () => setTool("player"),
         r: () => setTool("route"),
         b: () => setTool("block"),
         m: () => setTool("motion"),
@@ -434,26 +586,32 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
             onWheel={(e) => camera.onWheel(e, camRef.current)}
             onPointerDown={(e) => {
               if (tool === "select") camera.startPan(e);
+              if (tool === "player" && !readOnly) {
+                const m = toModel(e, camRef.current);
+                if (m) addPlayer(fromSvg(m.x, m.y, v));
+              }
             }}
             onPointerMove={(e) => {
               drag.move(e, others);
               camera.movePan(e);
-              const pts = drawingRef.current;
-              if (!pts) return;
+              const stroke = drawingRef.current;
+              if (!stroke) return;
               const m = toModel(e, camRef.current);
               if (!m) return;
               const p = fromSvg(m.x, m.y, v);
-              const last = pts[pts.length - 1];
+              const last = stroke.points[stroke.points.length - 1];
               // Sample every 0.8 yards. Fine enough to keep the shape, coarse
               // enough that the simplifier has something to work with.
-              if (Math.hypot(p.x - last.x, p.y - last.y) > 0.8) setDraw([...pts, p]);
+              if (Math.hypot(p.x - last.x, p.y - last.y) > 0.8) {
+                setDraw({ ...stroke, points: [...stroke.points, p] });
+              }
             }}
             onPointerUp={(e) => {
               drag.end(e, svgRef.current);
               camera.endPan(e);
-              const pts = drawingRef.current;
-              if (pts && selected) {
-                finishDraw(selected, pts);
+              const stroke = drawingRef.current;
+              if (stroke && selected) {
+                finishDraw(selected, stroke);
                 setDraw(null);
               }
             }}
@@ -483,9 +641,9 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
                 if (readOnly) return;
                 const p = resolved.players.find((x) => x.slot === slot);
                 if (!p) return;
-                if (tool === "route") {
+                if (tool === "route" || tool === "motion") {
                   setSelected(slot);
-                  setDraw([p.at]);
+                  setDraw({ kind: tool === "motion" ? "motion" : "route", points: [p.at] });
                   try {
                     svgRef.current?.setPointerCapture(e.pointerId);
                   } catch {
@@ -494,10 +652,9 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
                   e.stopPropagation();
                   return;
                 }
-                if (tool === "block" || tool === "motion" || tool === "erase") {
+                if (tool === "block" || tool === "erase") {
                   setSelected(slot);
                   if (tool === "block") setBlock(slot as SlotId);
-                  if (tool === "motion") toggleMotion(slot as SlotId);
                   if (tool === "erase") clearAssignment(slot as SlotId);
                   e.stopPropagation();
                   return;
@@ -506,11 +663,11 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
               }}
             />
 
-            {drawing && drawing.length > 1 && (
+            {drawing && drawing.points.length > 1 && (
               <polyline
-                points={drawing.map((p) => `${svgX(p.x, v)},${svgY(p.y, v)}`).join(" ")}
+                points={drawing.points.map((p) => `${svgX(p.x, v)},${svgY(p.y, v)}`).join(" ")}
                 fill="none"
-                stroke="var(--accent)"
+                stroke={drawing.kind === "motion" ? "var(--motion)" : "var(--accent)"}
                 strokeWidth={2.2}
                 vectorEffect="non-scaling-stroke"
               />
@@ -548,6 +705,22 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
                   onChange={(e) => movePlayer(selectedPlayer.slot, { ...selectedPlayer.at, y: Number(e.target.value) })}
                 />
               </label>
+
+              {selectedAssignment?.kind === "motion" && (
+                <div className="pb-hand-drawn pb-hand-drawn--motion">
+                  <p className="pb-prose">
+                    Goes in motion before the snap
+                    {selectedAssignment.motion.path?.length ? ", along a path you drew" : ""}.
+                  </p>
+                  <button
+                    className="pb-btn"
+                    disabled={readOnly}
+                    onClick={() => toggleMotion(selectedPlayer.slot as SlotId)}
+                  >
+                    Remove the motion
+                  </button>
+                </div>
+              )}
 
               {handDrawn && (
                 <div className="pb-hand-drawn">
@@ -596,6 +769,18 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
                 </>
               )}
 
+              <label className="pb-field-row">
+                <span className="pb-label">Primary</span>
+                <input
+                  type="checkbox"
+                  disabled={readOnly}
+                  checked={play.spec.primary === selectedPlayer.slot}
+                  onChange={(e) =>
+                    setPrimary(e.target.checked ? (selectedPlayer.slot as SlotId) : undefined)
+                  }
+                />
+              </label>
+
               {selectedAssignment && selectedAssignment.kind !== "motion" && selectedAssignment.kind !== "none" && (
                 <>
                   <label className="pb-field-row">
@@ -620,7 +805,23 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
           ) : (
             <>
               <h3 className="pb-panel-title">Play</h3>
-              <p className="pb-prose">{play.spec.coaching.commentary ?? "Select a player to edit their assignment."}</p>
+              <p className="pb-prose">
+                {play.spec.coaching.commentary ?? "Select a player to edit their assignment, or use the Player tool to add one."}
+              </p>
+
+              <label className="pb-field-row">
+                <span className="pb-label">Formation</span>
+                <select
+                  className="pb-input"
+                  disabled={readOnly}
+                  value={play.spec.formationId}
+                  onChange={(e) => setFormation(e.target.value)}
+                >
+                  {formationsFor(variant).map((f) => (
+                    <option key={f.id} value={f.id}>{f.name}</option>
+                  ))}
+                </select>
+              </label>
               <label className="pb-field-row pb-field-row--stack">
                 <span className="pb-label">Notes — searchable</span>
                 <textarea
@@ -631,6 +832,17 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
                 />
               </label>
             </>
+          )}
+
+          {selectedPlayer && !readOnly && (
+            <div className="pb-inspector-foot">
+              <button
+                className="pb-btn pb-btn--danger"
+                onClick={() => removePlayer(selectedPlayer.slot as SlotId)}
+              >
+                Remove {selectedPlayer.label} from the field
+              </button>
+            </div>
           )}
 
           {warnings.length > 0 && (
