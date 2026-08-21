@@ -24,14 +24,17 @@ entry = {'play': {'spec': spec, 'lineage': {'rootId': spec['id'], 'parentId': sp
 print(json.dumps({'entry': entry}))
 " > /tmp/pb_entry.json
   PLAYID=$(python3 -c "import json;print(json.load(open('/tmp/pb_entry.json'))['entry']['play']['spec']['id'])")
-  curl -s -X PUT "$BASE/api/playbook/$ID/play/$PLAYID" \
+  CODE=$(curl -s -o /dev/null -w '%{http_code}' -X PUT "$BASE/api/playbook/$ID/play/$PLAYID" \
     -H 'content-type: application/json' -H "x-playbook-token: $TOKEN" \
-    -d @/tmp/pb_entry.json > /dev/null
-  echo "  added $PLAYID"
+    -d @/tmp/pb_entry.json)
+  echo "  added $PLAYID -> $CODE"
+  [ "$CODE" = "200" ] || { echo "  FAIL: the write was rejected"; exit 1; }
 done
 
 echo "== read back =="
-curl -s "$BASE/api/playbook/$ID" > /tmp/pb_book.json
+CODE=$(curl -s -o /tmp/pb_book.json -w '%{http_code}' "$BASE/api/playbook/$ID")
+echo "  GET -> $CODE"
+[ "$CODE" = "200" ] || { echo "  FAIL: could not read the playbook back"; head -c 200 /tmp/pb_book.json; exit 1; }
 python3 projects/playbook/results/check_book.py /tmp/pb_book.json
 
 echo "== write without the token must be refused =="

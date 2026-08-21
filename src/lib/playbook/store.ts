@@ -139,14 +139,24 @@ interface PlayItem {
 export async function getPlaybook(id: string): Promise<Playbook | null> {
   if (!configured()) return memory.get(id) ?? null;
 
-  const res = await client().send(
-    new QueryCommand({
-      TableName: TABLE_NAME,
-      KeyConditionExpression: "pk = :pk AND begins_with(sk, :sk)",
-      ExpressionAttributeValues: { ":pk": pk(id), ":sk": "" },
-    }),
-  );
-  const items = res.Items ?? [];
+  // The whole partition, in one condition. `begins_with(sk, "")` looks
+  // harmless and is rejected outright by DynamoDB — an empty string is not a
+  // legal attribute value in a key condition — which the in-memory development
+  // fallback could never have shown. Filtering by sk prefix happens below.
+  const items: Record<string, unknown>[] = [];
+  let startKey: Record<string, unknown> | undefined;
+  do {
+    const res = await client().send(
+      new QueryCommand({
+        TableName: TABLE_NAME,
+        KeyConditionExpression: "pk = :pk",
+        ExpressionAttributeValues: { ":pk": pk(id) },
+        ExclusiveStartKey: startKey,
+      }),
+    );
+    items.push(...(res.Items ?? []));
+    startKey = res.LastEvaluatedKey;
+  } while (startKey);
   const meta = items.find((i) => i.sk === "meta") as (MetaItem & { sk: string }) | undefined;
   if (!meta) return null;
 
