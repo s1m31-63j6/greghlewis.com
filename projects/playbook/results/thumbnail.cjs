@@ -56,7 +56,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
   <text x="${PAD + 40}" y="60" fill="#f2f5f8" font-size="34" font-weight="800"
         letter-spacing="5" font-family="Helvetica,Arial">PLAYBOOK</text>
   <text x="${PAD}" y="98" fill="#78859a" font-size="20" letter-spacing="3.2"
-        font-family="Helvetica,Arial">202 PLAYS &#183; 5, 7 AND 11-MAN &#183; OFFENSE AND DEFENSE</text>
+        font-family="Helvetica,Arial">367 PLAYS &#183; 5, 7 AND 11-MAN &#183; OFFENSE AND DEFENSE</text>
   ${panel(a, PAD, "92 MESH", "AIR RAID &#183; 11-MAN")}
   ${panel(b, PAD + panelW + GAP, "MESH", "FLAG &#183; 5-ON-5")}
 </svg>`;
