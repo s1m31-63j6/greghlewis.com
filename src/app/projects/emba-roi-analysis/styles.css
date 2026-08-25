@@ -474,3 +474,25 @@
     font-size: 24px;
   }
 }
+
+/* Kicker line and the "Want more?" link share a row above the headline. */
+.emba-kicker-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.emba-want-more {
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  opacity: 0.65;
+  transition: opacity 160ms ease;
+}
+.emba-want-more:hover { opacity: 1; }

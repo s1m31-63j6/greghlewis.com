@@ -11,6 +11,7 @@ import { ScenariosChart } from "./ScenariosChart";
 import { SensitivityChart } from "./SensitivityChart";
 import { MethodDocs } from "./MethodDocs";
 import { formatDollarsK, formatSignedDollarsK, formatPercent } from "./format";
+import WantMore from "@/app/_subscribe/WantMore";
 
 type TabId = "calculator" | "scenarios" | "sensitivity" | "method";
 
@@ -101,7 +102,10 @@ export default function EmbaSimulator() {
 
       <header className="emba-masthead">
         <div className="emba-masthead-inner">
-          <p className="emba-kicker">Decision analysis · 2024</p>
+          <div className="emba-kicker-row">
+            <p className="emba-kicker">Decision analysis · 2024</p>
+            <WantMore project="emba-roi-analysis" className="emba-want-more" />
+          </div>
           <h1 className="emba-h1">Is the EMBA Worth It?</h1>
           <p className="emba-dek">
             A scenario calculator for a mid-career professional weighing

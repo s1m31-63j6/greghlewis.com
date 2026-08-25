@@ -898,3 +898,19 @@
     opacity: 0;
   }
 }
+
+/* The masthead title and the "Want more?" link share a row, so the ask sits at
+   eye level with the title rather than below the standfirst. */
+.tmd-masthead-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.tmd-btn-ghost {
+  flex-shrink: 0;
+  background: transparent;
+  text-decoration: none;
+  white-space: nowrap;
+}

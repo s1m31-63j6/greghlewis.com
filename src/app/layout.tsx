@@ -9,7 +9,6 @@ import {
   Nunito,
 } from "next/font/google";
 import "./globals.css";
-import KeepMeUpdated from "./_subscribe/KeepMeUpdated";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -75,10 +74,6 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        {/* Picks its own copy from the pathname, and renders nothing on the
-            pages where a signup form does not belong (print sheets, shared
-            links, the telemetry dashboard). */}
-        <KeepMeUpdated />
         <footer className="mx-auto w-full max-w-6xl px-6 pb-10 pt-8">
           <div className="flex items-center gap-5 border-t border-neutral-200 pt-6 font-mono text-[11px] uppercase tracking-[0.12em] text-neutral-500 dark:border-neutral-800 dark:text-neutral-500">
             <a

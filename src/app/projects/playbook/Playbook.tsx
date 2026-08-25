@@ -26,6 +26,7 @@ import { usePlaybook } from "./usePlaybook";
 import { MVP_VARIANTS, variant as variantOf } from "@/lib/playbook/field";
 import { blankPlay } from "@/lib/playbook/blank";
 import type { FieldVariantId, Play, PlaySpec } from "@/lib/playbook/types";
+import WantMore from "@/app/_subscribe/WantMore";
 
 type View = { kind: "library" } | { kind: "play"; id: string } | { kind: "edit"; id: string };
 
@@ -147,6 +148,8 @@ export default function Playbook() {
         </div>
 
         <span className="pb-bar-spacer" />
+
+        <WantMore project="playbook" className="pb-btn pb-btn-ghost" />
 
         <button
           className="pb-btn"

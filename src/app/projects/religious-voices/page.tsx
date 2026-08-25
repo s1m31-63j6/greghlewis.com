@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ProjectShell } from "./ProjectShell";
 import type { Leader } from "@/lib/religious-voices/types";
+import WantMore from "@/app/_subscribe/WantMore";
 
 export const metadata: Metadata = {
   title: "Religious Voices · Greg Lewis",
@@ -37,13 +38,14 @@ export default async function Page() {
 
   return (
     <main className="max-w-3xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
-      <nav className="mb-8">
+      <nav className="mb-8 flex items-center justify-between gap-4">
         <Link
           href="/"
           className="text-xs uppercase tracking-wider text-stone-500 hover:text-stone-900 transition"
         >
           ← All projects
         </Link>
+        <WantMore project="religious-voices" />
       </nav>
 
       <header className="mb-8">

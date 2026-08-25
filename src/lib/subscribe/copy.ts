@@ -1,5 +1,5 @@
 /**
- * What the signup block says, per page.
+ * What the signup page says, per source.
  *
  * The whole reason this table stores a source is that the intent behind a
  * signup is completely different depending on where it was made. Somebody who
@@ -13,8 +13,9 @@
  * most, since it is really "what would you tell me if I asked the right
  * question".
  *
- * `id` doubles as the stored source value, so the dashboard reads back in the
- * same vocabulary the pages use.
+ * `id` doubles as the stored source value and as the `?from=` parameter on
+ * /updates, so the button, the page and the dashboard all read back in one
+ * vocabulary.
  */
 
 export interface SignupCopy {
@@ -31,99 +32,99 @@ export interface SignupCopy {
 const HOME: SignupCopy = {
   id: "home",
   label: "Landing page",
-  headline: "Keep me updated",
+  headline: "Get more like this when it comes",
   blurb:
-    "A new project lands here every few weeks. Leave an address and I will send a note when the next one does.",
-  notePrompt: "Anything to share right now?",
-  cta: "Keep me updated",
+    "A new project lands here every few weeks — a model, a tool, or an analysis worth reading. Leave an address and I will send a note when the next one does.",
+  notePrompt: "What do you want to see next?",
+  cta: "Send me updates",
 };
 
 /**
  * The playbook speaks as a product rather than as a portfolio piece, because
- * it is one: this is the only page whose signups are customers rather than
+ * it is one: this is the only source whose signups are customers rather than
  * readers.
  */
 const BY_PROJECT: Record<string, SignupCopy> = {
   playbook: {
     id: "playbook",
     label: "Playbook",
-    headline: "Get playbook updates",
+    headline: "Send me playbook updates",
     blurb:
-      "This is an early build. Tell us where to send the next version, and what your team would need before it is worth using on a Saturday.",
-    notePrompt: "What size team do you coach, and what is missing here?",
-    cta: "Keep me posted",
+      "This is an early build, and it is getting better every week. Tell us where to send the next version, and what your team would need before it is worth using on a Saturday.",
+    notePrompt: "What do you want to see next? What size team do you coach?",
+    cta: "Send me updates",
   },
   "two-minute-drill": {
     id: "two-minute-drill",
     label: "Two-Minute Drill",
-    headline: "More like this",
+    headline: "Send me more like this",
     blurb:
-      "The engine behind this is getting new situations and new seasons. Leave an address if you want to know when they land.",
-    notePrompt: "An endgame you want modelled? A call you disagreed with?",
-    cta: "Keep me updated",
+      "The engine behind this keeps getting new situations, new seasons, and new ways to be wrong in public. Leave an address if you want to know when they land.",
+    notePrompt: "What do you want to see next? An endgame worth modelling?",
+    cta: "Send me updates",
   },
   "chess-coach": {
     id: "chess-coach",
     label: "Chess Coach",
-    headline: "Keep me updated",
+    headline: "Send me more like this",
     blurb:
-      "New review features and stronger analysis are on the way. I will write when there is something worth opening.",
-    notePrompt: "What would help you or your player most?",
-    cta: "Keep me updated",
+      "Stronger analysis, better review, and more ways to see where a game turned. I will write when there is something worth opening.",
+    notePrompt: "What do you want to see next? What would help your game most?",
+    cta: "Send me updates",
   },
   "glass-box-rag": {
     id: "glass-box-rag",
     label: "Glass Box RAG",
-    headline: "Retrieval, in the open",
+    headline: "Send me the retrieval write-ups",
     blurb:
-      "I write up the retrieval and evaluation work as it develops, including the parts that did not work. Leave an address to get those.",
-    notePrompt: "Working on something similar? Say what.",
-    cta: "Send me the write-ups",
+      "I write up the retrieval and evaluation work as it develops, including the parts that did not work and the numbers that made me change my mind.",
+    notePrompt: "What do you want to see next? Building something similar?",
+    cta: "Send me updates",
   },
   "nfl-prospect-comparables": {
     id: "nfl-prospect-comparables",
     label: "NFL Comparables",
-    headline: "Keep me updated",
+    headline: "Send me more like this",
     blurb:
-      "The comparables engine gets a new draft class and new features every cycle. I will send a note when it does.",
-    notePrompt: "A prospect or a position group you want run through it?",
-    cta: "Keep me updated",
+      "The comparables engine gets a new draft class, new features, and a fresh set of arguments every cycle. I will send a note when it does.",
+    notePrompt: "What do you want to see next? A prospect worth running?",
+    cta: "Send me updates",
   },
   "religious-voices": {
     id: "religious-voices",
     label: "Religious Voices",
-    headline: "Keep me updated",
+    headline: "Send me more like this",
     blurb:
-      "The corpus and the retrieval behind this keep growing. Leave an address if you want to hear about the next version.",
-    notePrompt: "A voice or a tradition you would want included?",
-    cta: "Keep me updated",
+      "The corpus behind this keeps growing, and so does the retrieval that reads it. Leave an address to hear about the next version.",
+    notePrompt: "What do you want to see next? A voice worth including?",
+    cta: "Send me updates",
   },
   "adventureworks-chat": {
     id: "adventureworks-chat",
     label: "AdventureWorks Chat",
-    headline: "Keep me updated",
+    headline: "Send me more like this",
     blurb:
-      "More work on natural-language querying over real warehouses is coming. I will write when it is worth your time.",
-    notePrompt: "What would you point this at in your own stack?",
-    cta: "Keep me updated",
+      "More work on asking real warehouses real questions in plain language. I will write when there is something worth your time.",
+    notePrompt: "What do you want to see next? What would you point this at?",
+    cta: "Send me updates",
   },
   "emba-roi-analysis": {
     id: "emba-roi-analysis",
     label: "EMBA ROI",
-    headline: "Keep me updated",
+    headline: "Send me more like this",
     blurb:
-      "New analyses land here regularly. Leave an address and I will send the next one.",
-    notePrompt: "A question you would want run the same way?",
-    cta: "Keep me updated",
+      "New decision analyses land here regularly — the same treatment applied to whatever question is worth the arithmetic next.",
+    notePrompt: "What do you want to see next? A decision worth modelling?",
+    cta: "Send me updates",
   },
   "scale-or-sell": {
     id: "scale-or-sell",
     label: "Scale or Sell",
-    headline: "Keep me updated",
+    headline: "Send me more like this",
     blurb:
-      "New analyses land here regularly. Leave an address and I will send the next one.",
-    notePrompt: "A decision you are weighing? I read every one of these.",
-    cta: "Keep me updated",
+      "New decision analyses land here regularly — the same treatment applied to whatever question is worth the arithmetic next.",
+    notePrompt: "What do you want to see next? A decision you are weighing?",
+    cta: "Send me updates",
   },
 };
 
@@ -135,21 +136,12 @@ export const SOURCE_LABELS: Record<string, string> = Object.fromEntries(
 );
 
 /**
- * Which copy a path gets, and whether it gets any at all.
- *
- * Print sheets, share links and the telemetry dashboard return null: a
- * subscribe form has no business on a page that is about to go through a
- * printer, on a link a coach forwarded to his staff, or on Greg's own numbers.
+ * Copy for a `?from=` value. An unknown or missing source falls back to the
+ * generic page rather than 404ing — somebody who hand-edited the URL or lost
+ * the parameter to a redirect should still be able to sign up.
  */
-export function copyForPath(pathname: string): SignupCopy | null {
-  if (pathname === "/") return HOME;
-  if (pathname.startsWith("/telemetry")) return null;
-
-  const match = /^\/projects\/([^/]+)(\/.*)?$/.exec(pathname);
-  if (!match) return null;
-
-  const [, slug, rest = ""] = match;
-  if (rest.startsWith("/print") || rest.startsWith("/share")) return null;
-
-  return BY_PROJECT[slug] ?? null;
+export function copyForSource(source: string | undefined): SignupCopy {
+  if (!source) return HOME;
+  if (source === HOME.id) return HOME;
+  return BY_PROJECT[source] ?? HOME;
 }

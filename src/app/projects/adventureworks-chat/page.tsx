@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Chat } from "./Chat";
 import { SchemaOverview } from "./SchemaOverview";
+import WantMore from "@/app/_subscribe/WantMore";
 
 export const metadata: Metadata = {
   title: "AdventureWorks Chat-Based Reporting · Greg Lewis",
@@ -14,13 +15,14 @@ export default function Page() {
 
   return (
     <main className="max-w-3xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
-      <nav className="mb-8">
+      <nav className="mb-8 flex items-center justify-between gap-4">
         <Link
           href="/"
           className="text-xs uppercase tracking-wider text-stone-500 hover:text-stone-900 transition"
         >
           ← All projects
         </Link>
+        <WantMore project="adventureworks-chat" />
       </nav>
 
       <header className="mb-6">

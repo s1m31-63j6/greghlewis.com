@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import type { Project } from "./projects-data";
 import { ProjectCard } from "./ProjectCard";
+import WantMore from "@/app/_subscribe/WantMore";
 
 const MONTH_NAMES_LONG = [
   "january",
@@ -84,9 +85,12 @@ export function Gallery({ projects }: { projects: Project[] }) {
           aria-label="Filter projects"
           className="w-full border-0 border-b border-neutral-300 bg-transparent py-3 font-mono text-sm text-neutral-900 placeholder:text-neutral-400 focus:border-[#1B4F7A] focus:outline-none dark:border-neutral-700 dark:text-neutral-100 dark:placeholder:text-neutral-500 dark:focus:border-[#7BA8CB]"
         />
-        <span className="mt-2 block font-mono text-[10.5px] uppercase tracking-[0.12em] text-neutral-400 dark:text-neutral-500">
-          {filtered.length} of {projects.length} project{projects.length === 1 ? "" : "s"}
-        </span>
+        <div className="mt-2 flex items-center justify-between gap-4">
+          <span className="font-mono text-[10.5px] uppercase tracking-[0.12em] text-neutral-400 dark:text-neutral-500">
+            {filtered.length} of {projects.length} project{projects.length === 1 ? "" : "s"}
+          </span>
+          <WantMore project="home" />
+        </div>
       </div>
 
       <div className="mt-10 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-10 md:gap-y-12 lg:grid-cols-3">

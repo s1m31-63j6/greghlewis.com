@@ -16,6 +16,7 @@ import {
   formatPercent,
   formatSignedDollarsM,
 } from "./format";
+import WantMore from "@/app/_subscribe/WantMore";
 
 type TabId = "calculator" | "scenarios" | "sensitivity" | "method";
 
@@ -115,7 +116,10 @@ export default function ExitSimulator() {
 
       <header className="exit-masthead">
         <div className="exit-masthead-inner">
-          <p className="exit-kicker">Strategic analysis · 2025</p>
+          <div className="exit-kicker-row">
+            <p className="exit-kicker">Strategic analysis · 2025</p>
+            <WantMore project="scale-or-sell" className="exit-want-more" />
+          </div>
           <h1 className="exit-h1">Sell now, or build to sell?</h1>
           <p className="exit-dek">
             A founder-led B2B services firm at $25M ARR, doubling year over

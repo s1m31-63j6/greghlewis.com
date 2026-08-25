@@ -887,3 +887,18 @@
   border-top: 1px solid var(--hairline);
 }
 .pb-inspector-foot .pb-btn { width: 100%; }
+
+/* "Want more?" in the top bar. A ghost of .pb-btn: same geometry, no fill, so
+   it reads as secondary next to the playbook button it sits beside. It is a
+   link rather than a button, hence the explicit text-decoration reset. */
+.pb-btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.pb-btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: transparent;
+}

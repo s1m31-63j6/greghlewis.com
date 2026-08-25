@@ -16,6 +16,7 @@ import {
 } from "./scenarios";
 import { TeamLogo, teamOf, useTeams } from "./teams";
 import { useDrill } from "./useDrill";
+import WantMore from "@/app/_subscribe/WantMore";
 
 /**
  * Field goal probability straight from the shipped surface, so the field and
@@ -151,7 +152,10 @@ export default function Drill() {
         <div className="tmd-container">
           {back}
           <header className="tmd-masthead">
-            <h1>Two-Minute Drill</h1>
+            <div className="tmd-masthead-row">
+              <h1>Two-Minute Drill</h1>
+              <WantMore project="two-minute-drill" className="tmd-btn tmd-btn-ghost" />
+            </div>
             <p className="tmd-standfirst">
               Three hundred real NFL games, picked up with under two minutes left and the score
               inside one possession. Take either sideline and make the calls. While your calls

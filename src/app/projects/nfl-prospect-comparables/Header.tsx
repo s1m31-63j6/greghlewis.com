@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { POSITION_COLORS, type Position } from "./types";
+import WantMore from "@/app/_subscribe/WantMore";
 
 export type FilterMode = "ALL" | Position;
 
@@ -60,7 +61,13 @@ export default function Header({ filter, onFilterChange }: Props) {
               </Link>
             </p>
           </div>
-          {chips}
+          <div className="pointer-events-auto flex items-center gap-2">
+            {chips}
+            <WantMore
+              project="nfl-prospect-comparables"
+              className="inline-flex shrink-0 items-center rounded-full border border-stone-200 bg-white/70 px-3 py-1 text-xs font-medium text-stone-500 shadow-sm backdrop-blur-sm transition-colors hover:text-stone-900"
+            />
+          </div>
         </div>
       </header>
 

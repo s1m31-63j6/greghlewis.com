@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { COPY, ReadingLevelToggle, Term, useLevel } from "./copy";
 import { Glossary } from "./Glossary";
+import WantMore from "@/app/_subscribe/WantMore";
 
 /**
  * The page header: title, the methodology link and reading controls pulled up
@@ -32,6 +33,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <ReadingLevelToggle />
           <Glossary />
+          <WantMore project="glass-box-rag" />
         </div>
       </div>
 
