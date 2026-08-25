@@ -899,18 +899,19 @@
   }
 }
 
-/* The masthead title and the "Want more?" link share a row, so the ask sits at
-   eye level with the title rather than below the standfirst. */
-.tmd-masthead-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-.tmd-btn-ghost {
+/* "Want more?" rides the breadcrumb nav rather than the masthead, because that
+   nav is the one piece of chrome shared by the scenario picker and the live
+   game — one placement instead of two that have to be kept in step. */
+/* Specific enough to beat `.tmd-nav a`, which zeroes border and padding for
+   every other link in this bar. */
+.tmd-nav a.tmd-nav-want-more {
+  margin-left: auto;
   flex-shrink: 0;
-  background: transparent;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.1rem 0.6rem;
   text-decoration: none;
-  white-space: nowrap;
+  opacity: 0.7;
+  transition: opacity 160ms ease;
 }
+.tmd-nav a.tmd-nav-want-more:hover { opacity: 1; }

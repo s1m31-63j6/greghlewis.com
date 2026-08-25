@@ -1,4 +1,5 @@
 import Link from "next/link";
+import WantMore from "@/app/_subscribe/WantMore";
 
 export const metadata = {
   title: "Methodology — NFL Prospect Comparables",
@@ -8,12 +9,15 @@ export default function MethodologyPage() {
   return (
     <main className="min-h-screen bg-stone-50 text-stone-900">
       <div className="mx-auto max-w-2xl px-6 py-16">
-        <Link
-          href="/projects/nfl-prospect-comparables"
-          className="text-xs text-stone-500 hover:text-stone-900 transition-colors"
-        >
-          ← back to the graph
-        </Link>
+        <div className="flex items-center justify-between gap-4">
+          <Link
+            href="/projects/nfl-prospect-comparables"
+            className="text-xs text-stone-500 hover:text-stone-900 transition-colors"
+          >
+            ← back to the graph
+          </Link>
+          <WantMore project="nfl-prospect-comparables" />
+        </div>
 
         <h1 className="mt-8 text-3xl font-semibold tracking-tight">
           Methodology

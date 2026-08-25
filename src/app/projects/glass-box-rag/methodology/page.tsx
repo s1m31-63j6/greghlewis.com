@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import WantMore from "@/app/_subscribe/WantMore";
 
 export const metadata: Metadata = {
   title: "Glass Box RAG — Methodology · Greg Lewis",
@@ -10,13 +11,14 @@ export const metadata: Metadata = {
 export default function Methodology() {
   return (
     <main className="mx-auto max-w-3xl px-5 py-10 sm:px-8 sm:py-14">
-      <nav className="mb-8">
+      <nav className="mb-8 flex items-center justify-between gap-4">
         <Link
           href="/projects/glass-box-rag"
           className="text-xs uppercase tracking-wider text-slate-500 transition hover:text-slate-900"
         >
           ← Back to the demo
         </Link>
+        <WantMore project="glass-box-rag" />
       </nav>
 
       <header className="mb-8">

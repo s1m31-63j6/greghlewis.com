@@ -141,6 +141,7 @@ export default function Drill() {
       )}
       <span className="tmd-nav-sep">/</span>
       <Link href="/projects/two-minute-drill/methodology">Methodology</Link>
+      <WantMore project="two-minute-drill" className="tmd-nav-want-more" />
     </nav>
   );
 
@@ -152,10 +153,7 @@ export default function Drill() {
         <div className="tmd-container">
           {back}
           <header className="tmd-masthead">
-            <div className="tmd-masthead-row">
-              <h1>Two-Minute Drill</h1>
-              <WantMore project="two-minute-drill" className="tmd-btn tmd-btn-ghost" />
-            </div>
+            <h1>Two-Minute Drill</h1>
             <p className="tmd-standfirst">
               Three hundred real NFL games, picked up with under two minutes left and the score
               inside one possession. Take either sideline and make the calls. While your calls

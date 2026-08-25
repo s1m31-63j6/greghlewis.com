@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import WantMore from "@/app/_subscribe/WantMore";
 
 export const metadata: Metadata = {
   title: "AdventureWorks Chat — Methodology · Greg Lewis",
@@ -10,13 +11,14 @@ export const metadata: Metadata = {
 export default function Methodology() {
   return (
     <main className="max-w-3xl mx-auto px-5 sm:px-8 py-10 sm:py-14">
-      <nav className="mb-8">
+      <nav className="mb-8 flex items-center justify-between gap-4">
         <Link
           href="/projects/adventureworks-chat"
           className="text-xs uppercase tracking-wider text-stone-500 hover:text-stone-900 transition"
         >
           ← Back to chat
         </Link>
+        <WantMore project="adventureworks-chat" />
       </nav>
 
       <header className="mb-8">

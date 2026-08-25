@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { AnalysisBoard } from "./AnalysisBoard";
+import WantMore from "@/app/_subscribe/WantMore";
 
 export const metadata: Metadata = {
   title: "Analysis Board · Greg Lewis",
@@ -13,7 +14,7 @@ export default function Page() {
   return (
     <main className="font-round min-h-screen bg-[#FBFBF7]">
       <div className="mx-auto max-w-[1400px] px-5 py-8 sm:px-8">
-        <nav className="mb-6 flex flex-wrap gap-4">
+        <nav className="mb-6 flex flex-wrap items-center gap-4">
           <Link
             href="/"
             className="text-xs font-extrabold uppercase tracking-wide text-[#AFAFAF] transition hover:text-[#4B4B4B]"
@@ -38,6 +39,10 @@ export default function Page() {
           >
             📚 The library
           </Link>
+          <WantMore
+            project="chess-coach"
+            className="ml-auto rounded-full border-2 border-[#E5E5E5] px-3 py-1 text-xs font-extrabold uppercase tracking-wide text-[#AFAFAF] transition hover:border-[#1CB0F6] hover:text-[#1CB0F6]"
+          />
         </nav>
 
         <header className="mb-7">

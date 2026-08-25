@@ -28,6 +28,7 @@ import { fromSvg, svgX, svgY, variant as variantOf } from "@/lib/playbook/field"
 import { formationsFor } from "@/lib/playbook/formations";
 import { ROUTES, routeById } from "@/lib/playbook/routes";
 import { validate, WARNING_LABEL } from "@/lib/playbook/validate";
+import WantMore from "@/app/_subscribe/WantMore";
 import type {
   Assignment,
   BookStyle,
@@ -540,6 +541,10 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
           >
             Save as new
           </button>
+          {/* Last in the row and styled as a ghost: the editor is a working
+              surface, so the ask should be reachable without competing with
+              Save for the same glance. */}
+          <WantMore project="playbook" className="pb-btn pb-btn-ghost" />
         </div>
       </header>
 
