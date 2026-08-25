@@ -4,13 +4,18 @@
 // else 404s, so the route never advertises that it exists. That's deliberately
 // the smallest possible gate — no login form, no session, no middleware (note
 // that Next 16 renamed `middleware` to `proxy`, and this repo has neither).
-// The tradeoff is that the key sits in browser history on Greg's own machine,
-// which is an acceptable price for a personal dashboard with no PII behind it.
+// The tradeoff is that the key sits in browser history on Greg's own machine.
+// That was an easy trade when this page held nothing but counts. It now also
+// lists signups, which are real email addresses and real notes people wrote,
+// so the same gate is protecting personal data. Worth revisiting the moment
+// the list is worth anything to anyone else.
 
 import { timingSafeEqual } from "node:crypto";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ENGAGED_MS, loadRange, summarize } from "@/lib/telemetry/query";
+import { SOURCE_LABELS } from "@/lib/subscribe/copy";
+import { listSignups } from "@/lib/subscribe/store";
 import type { Summary } from "@/lib/telemetry/query";
 import { TrendChart } from "./TrendChart";
 
@@ -64,7 +69,15 @@ export default async function TelemetryPage({
   if (!expected || !k || !keyMatches(k, expected)) notFound();
 
   const days = Math.min(90, Math.max(1, Number(d) || 30));
-  const summary = summarize(await loadRange(days), days);
+  const [events, signups] = await Promise.all([loadRange(days), listSignups()]);
+  const summary = summarize(events, days);
+
+  // Grouped by source so the question the table answers is "which project is
+  // actually generating leads", which is the only reason to collect a source.
+  const bySource = new Map<string, number>();
+  for (const s of signups) bySource.set(s.source, (bySource.get(s.source) ?? 0) + 1);
+  const sourceRows = [...bySource.entries()].sort((a, b) => b[1] - a[1]);
+  const withNotes = signups.filter((s) => s.note);
   const maxFunnel = summary.funnel[0]?.sessions || 1;
 
   return (
@@ -255,6 +268,69 @@ export default async function TelemetryPage({
           )}
         </section>
       </div>
+
+      <section className="mt-12">
+        <h2 className="font-[family-name:var(--font-source-serif)] text-xl text-neutral-900 dark:text-neutral-100">
+          Signups
+        </h2>
+        <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
+          {signups.length === 0
+            ? "Nobody has signed up yet."
+            : `${signups.length} signup${signups.length === 1 ? "" : "s"} all time, `
+              + `${withNotes.length} with a note. This list is not limited to the ${days}-day window above.`}
+        </p>
+
+        {sourceRows.length > 0 && (
+          <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+            {sourceRows.map(([source, count]) => (
+              <li key={source} className="text-[13px]">
+                <span className="text-neutral-700 dark:text-neutral-300">
+                  {SOURCE_LABELS[source] ?? source}
+                </span>{" "}
+                <span className="font-[family-name:var(--font-jetbrains-mono)] text-[12px] text-neutral-900 dark:text-neutral-100">
+                  {count}
+                </span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {signups.length > 0 && (
+          <div className="mt-5 overflow-x-auto">
+            <table className="w-full min-w-[40rem] border-collapse text-left text-[13px]">
+              <thead>
+                <tr className="border-b border-neutral-200 font-mono text-[11px] uppercase tracking-[0.12em] text-neutral-500 dark:border-neutral-800">
+                  <th className="py-2 pr-4 font-normal">Date</th>
+                  <th className="py-2 pr-4 font-normal">Email</th>
+                  <th className="py-2 pr-4 font-normal">From</th>
+                  <th className="py-2 font-normal">Note</th>
+                </tr>
+              </thead>
+              <tbody>
+                {signups.map((s) => (
+                  <tr
+                    key={`${s.email}-${s.createdAt}`}
+                    className="border-b border-neutral-100 align-top dark:border-neutral-900"
+                  >
+                    <td className="whitespace-nowrap py-2 pr-4 font-[family-name:var(--font-jetbrains-mono)] text-[12px] text-neutral-500">
+                      {s.createdAt.slice(0, 10)}
+                    </td>
+                    <td className="py-2 pr-4 text-neutral-900 dark:text-neutral-100">
+                      <a href={`mailto:${s.email}`} className="underline-offset-4 hover:underline">
+                        {s.email}
+                      </a>
+                    </td>
+                    <td className="whitespace-nowrap py-2 pr-4 text-neutral-600 dark:text-neutral-400">
+                      {SOURCE_LABELS[s.source] ?? s.source}
+                    </td>
+                    <td className="py-2 text-neutral-700 dark:text-neutral-300">{s.note ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </section>
     </main>
   );
 }

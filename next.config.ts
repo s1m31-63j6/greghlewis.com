@@ -26,6 +26,9 @@ const nextConfig: NextConfig = {
     // Playbook storage. Read only in the /api/playbook route handlers and the
     // print and share server components.
     PLAYBOOK_TABLE: process.env.PLAYBOOK_TABLE,
+    // Lead capture. Read only in the /api/subscribe route handler and the
+    // /telemetry dashboard.
+    SUBSCRIBERS_TABLE: process.env.SUBSCRIBERS_TABLE,
   },
 };
 

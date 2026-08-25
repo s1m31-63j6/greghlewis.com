@@ -11,6 +11,7 @@ from stacks.glass_box_rag import GlassBoxRagStack
 from stacks.nfl_comparables_kb_db import KbDbStack
 from stacks.site_telemetry import SiteTelemetryStack
 from stacks.playbook_data import PlaybookDataStack
+from stacks.subscribers import SubscribersStack
 
 app = cdk.App()
 
@@ -22,6 +23,7 @@ app = cdk.App()
 # values. Fail loudly instead.
 TELEMETRY_TABLE = "site-telemetry"
 PLAYBOOK_TABLE = "playbook"
+SUBSCRIBERS_TABLE = "subscribers"
 try:
     TELEMETRY_SALT = os.environ["TELEMETRY_SALT"]
     TELEMETRY_KEY = os.environ["TELEMETRY_KEY"]
@@ -99,6 +101,7 @@ hosting_stack = HostingStack(
     telemetry_salt=TELEMETRY_SALT,
     telemetry_key=TELEMETRY_KEY,
     playbook_table=PLAYBOOK_TABLE,
+    subscribers_table=SUBSCRIBERS_TABLE,
 )
 hosting_stack.add_dependency(kb_stack)
 
@@ -148,5 +151,19 @@ playbook_stack = PlaybookDataStack(
     compute_role=hosting_stack.compute_role,
 )
 playbook_stack.add_dependency(hosting_stack)
+
+# Lead capture. Same fixed-name pattern again, and the only table on the site
+# holding personal data — see the stack docstring for why it has no TTL.
+subscribers_stack = SubscribersStack(
+    app,
+    "Subscribers",
+    env=env,
+    description=(
+        "DynamoDB table for 'keep me updated' signups on greghlewis.com"
+    ),
+    table_name=SUBSCRIBERS_TABLE,
+    compute_role=hosting_stack.compute_role,
+)
+subscribers_stack.add_dependency(hosting_stack)
 
 app.synth()
