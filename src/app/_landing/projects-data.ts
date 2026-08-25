@@ -18,7 +18,7 @@ export const projects: Project[] = [
     title: "Playbook — A Book of Plays for Any Size of Team",
     date: "2026-08-21",
     oneLiner:
-      "A searchable, editable book of football plays that works the same for a five-on-five flag team, a seven-on-seven passing squad, and a full eleven-man roster. Plays are never stored as coordinates \u2014 each one is written as a formation, a set of assignments, and a handful of tags, and the geometry is derived, so the same authored play resolves onto three different field sizes and mirrors left or right for free. Ships with 316 pre-built plays across eight offensive philosophies and a 51-play peer defensive library of fronts, coverages and pressures. Drag a player and the play records the change as an offset rather than losing its identity, so it stays searchable as the formation it came from. Animates on a scrubable timeline with per-player timing, and prints as a twelve-up playbook, a call sheet, or quarterback wristbands that share their numbering with the sheet.",
+      "A searchable, editable book of 367 football plays for flag, seven-on-seven and eleven-man teams \u2014 none of them stored as coordinates, so one authored play resolves onto every field size and prints as a call sheet or a wristband.",
     techStack: [
       "TypeScript",
       "Next.js 16",
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     title: "Two-Minute Drill — Coach the Endgame",
     date: "2026-08-17",
     oneLiner:
-      "Three hundred real NFL games, picked up with under two minutes left and the score inside one possession. Take either sideline and make the calls — go or kick, spike or throw to the sideline, spend a timeout, wave them into the end zone. While your calls match the ones actually made, the real game plays out; the moment you choose differently a simulator takes over and you own what follows. Afterwards it grades every decision against a Monte Carlo engine and shows you where you left the real game behind.",
+      "Three hundred real NFL endgames, picked up with under two minutes left and one score in it \u2014 make the calls yourself, and the moment you diverge from what was actually done, a simulator takes over and you own what follows.",
     techStack: [
       "Monte Carlo simulation",
       "Web Workers",
@@ -124,7 +124,7 @@ export const projects: Project[] = [
     title: "Chess Coach — Play at Your Level",
     date: "2026-08-10",
     oneLiner:
-      "A chess app built to be enjoyed rather than survived — pick a difficulty that actually fits you, watch your win chances swing move by move, then walk back through the game to see exactly where it turned. Plus a pass-and-play mode for two people at one board, an analysis board that suggests the best move for either side, and 44 chess ideas with 150 puzzles to solve. Runs entirely in the browser.",
+      "A chess app built to be enjoyed rather than survived \u2014 a difficulty that actually fits you, win chances that swing move by move, and a walk back through the game to the moment it turned.",
     techStack: [
       "Stockfish WASM",
       "Web Workers",
