@@ -276,3 +276,47 @@
 }
 .pb-strip-glyph { width: 0.24in; height: 0.2in; overflow: hidden; }
 .pb-strip-glyph svg { width: 100%; height: 100%; }
+
+/* ── the preview toolbar ─────────────────────────────────────────────────────
+   Screen only. The page no longer fires window.print() on arrival, so this is
+   how a coach looks at a sheet, switches between the three, flips to colour,
+   and then commits paper to it. */
+
+.pb-print-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: 10.3in;
+  margin: 0 auto 14px;
+  padding: 10px 4px;
+  border-bottom: 1px solid #b9c0c8;
+  background: #fff;
+}
+.pb-print-bar-spacer { flex: 1; }
+.pb-print-bar .pb-back,
+.pb-print-bar .pb-label { color: #333; }
+.pb-print-bar .pb-seg { border-color: #b9c0c8; background: #fff; }
+.pb-print-bar .pb-seg a {
+  font-family: var(--display);
+  font-stretch: 72%;
+  font-weight: 700;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 7px 12px;
+  color: #555;
+  text-decoration: none;
+  border-right: 1px solid #b9c0c8;
+}
+.pb-print-bar .pb-seg a:last-child { border-right: 0; }
+.pb-print-bar .pb-seg a[aria-current="true"] { background: #000; color: #fff; }
+.pb-print-bar .pb-chip-toggle { color: #333; border-color: #b9c0c8; }
+.pb-print-bar .pb-btn--primary { background: #000; border-color: #000; color: #fff; }
+
+@media print {
+  .pb-print-bar { display: none !important; }
+}

@@ -16,7 +16,7 @@
  * most expensive mistake a playbook tool can make on a Friday night.
  */
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import "../../styles.css";
 import "./print.css";
@@ -34,6 +34,12 @@ interface Props {
   layout: "grid12" | "callsheet" | "wristband";
   color: boolean;
 }
+
+const LAYOUT_LABEL: Record<Props["layout"], string> = {
+  grid12: "Playbook",
+  callsheet: "Call sheet",
+  wristband: "Wristbands",
+};
 
 const PER_PAGE = 12;
 const STRIPS_PER_PAGE = 10;
@@ -60,14 +66,20 @@ function Diagram({ entry, book, density }: { entry: BookEntry; book: Playbook; d
   );
 }
 
-export default function PrintSheet({ book, layout, color }: Props) {
+export default function PrintSheet({ book, layout, color: initialColor }: Props) {
   const today = useMemo(
     () => new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "2-digit" }),
     [],
   );
+  const [color, setColor] = useState(initialColor);
 
-  // Coaches arrive here from a "Print" button, so open the dialog for them —
-  // after a beat, so the diagrams have laid out first.
+  /**
+   * This page used to fire `window.print()` on arrival. It meant nobody could
+   * look at a sheet before committing paper to it — and two pages of diagrams
+   * is exactly the thing you want to check first. It also made the page
+   * impossible to inspect or share, since the browser sat behind its own modal.
+   * The sheet renders; you press Print when you have looked at it.
+   */
   useEffect(() => {
     // @page cannot be selected by class, so the orientation is injected. The
     // call sheet is the only landscape sheet.
@@ -77,11 +89,7 @@ export default function PrintSheet({ book, layout, color }: Props) {
         ? "@page { size: Letter landscape; margin: 0.35in; }"
         : "@page { size: Letter portrait; margin: 0.4in; }";
     document.head.appendChild(style);
-    const t = setTimeout(() => window.print(), 700);
-    return () => {
-      clearTimeout(t);
-      style.remove();
-    };
+    return () => style.remove();
   }, [layout]);
 
   const sections = useMemo(() => {
@@ -95,10 +103,40 @@ export default function PrintSheet({ book, layout, color }: Props) {
 
   const cls = `pb-page pb-print pb-print--${layout}${color ? " pb-print-color" : ""}`;
 
+  const bar = (
+    <div className="pb-print-bar">
+      <a className="pb-back" href="/projects/playbook">‹ {PRODUCT.name}</a>
+      <span className="pb-label">
+        {book.name} · {LAYOUT_LABEL[layout]} · {book.entries.length} plays
+      </span>
+      <span className="pb-print-bar-spacer" />
+      <div className="pb-seg">
+        {(["grid12", "callsheet", "wristband"] as const).map((l) => (
+          <a key={l} href={`?layout=${l}${color ? "&color=1" : ""}`} aria-current={l === layout}>
+            {LAYOUT_LABEL[l]}
+          </a>
+        ))}
+      </div>
+      <label className="pb-chip-toggle" aria-pressed={color}>
+        <input
+          type="checkbox"
+          checked={color}
+          onChange={(e) => setColor(e.target.checked)}
+          style={{ marginRight: 5 }}
+        />
+        Colour
+      </label>
+      <button className="pb-btn pb-btn--primary" onClick={() => window.print()}>
+        Print
+      </button>
+    </div>
+  );
+
   if (layout === "grid12") {
     const pages = chunk(book.entries, PER_PAGE);
     return (
       <main className={cls}>
+        {bar}
         {pages.map((page, pi) => (
           <section className="pb-sheet pb-sheet--portrait" key={pi}>
             <header className="pb-sheet-head">
@@ -140,6 +178,7 @@ export default function PrintSheet({ book, layout, color }: Props) {
   if (layout === "callsheet") {
     return (
       <main className={cls}>
+        {bar}
         <section className="pb-sheet pb-sheet--landscape">
           <header className="pb-sheet-head">
             <span>{book.name} · {today}</span>
@@ -172,6 +211,7 @@ export default function PrintSheet({ book, layout, color }: Props) {
   const pages = chunk(strips, STRIPS_PER_PAGE);
   return (
     <main className={cls}>
+      {bar}
       {pages.map((page, pi) => (
         <section className="pb-sheet pb-sheet--portrait" key={pi}>
           <div className="pb-wristbands">
