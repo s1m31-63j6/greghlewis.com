@@ -169,7 +169,9 @@ export type RouteId =
   | "out" | "dig" | "corner" | "post" | "go"
   | "shallow" | "mesh" | "wheel" | "whip" | "bubble" | "swing" | "sail"
   | "drag" | "seam" | "stick" | "glance" | "chair" | "pivot" | "arrow"
-  | "texas" | "stalk" | "crack" | "screen" | "checkdown" | "wall";
+  | "texas" | "stalk" | "crack" | "screen" | "checkdown" | "wall"
+  | "spot" | "over" | "under" | "sluggo" | "post-corner" | "angle"
+  | "fade" | "pop" | "jerk" | "shovel";
 
 export interface RouteDef {
   id: RouteId;

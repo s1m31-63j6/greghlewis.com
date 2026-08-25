@@ -169,6 +169,44 @@ export const ROUTES: RouteDef[] = [
   R("checkdown", "Checkdown", [{ x: 1.5, y: 0 }, { x: 4, y: 2.5 }], 2.5, 1.3, {
     tags: ["back", "outlet"],
   }),
+  // ── added for the deeper library ─────────────────────────────────────────
+  R("spot", "Spot", [{ x: 0, y: 5 }, { x: -2.5, y: 5.5 }], 5, 1.5, {
+    cap: "dot",
+    tags: ["quick", "settle", "snag", "zone-beater"],
+  }),
+  R("over", "Over", [{ x: 0, y: 6 }, { x: -14, y: 17 }], 17, 2.9, {
+    curve: "spline",
+    tags: ["crosser", "deep", "man-beater", "levels"],
+  }),
+  R("under", "Under", [{ x: 0, y: 2 }, { x: -16, y: 5 }], 5, 2.0, {
+    tags: ["crosser", "shallow", "man-beater", "rub"],
+  }),
+  R("sluggo", "Slant & Go", [{ x: 0, y: 2 }, { x: -3, y: 4.5 }, { x: -1, y: 18 }], 18, 2.9, {
+    curve: "spline",
+    tags: ["double-move", "shot", "vs-cover-2", "man-beater"],
+  }),
+  R("post-corner", "Post-Corner", [{ x: 0, y: 10 }, { x: -3, y: 13 }, { x: 6, y: 18 }], 10, 2.9, {
+    tags: ["double-move", "shot", "outbreaking", "vs-cover-1"],
+  }),
+  R("angle", "Angle", [{ x: 1.5, y: 1 }, { x: 5, y: 3 }, { x: -3, y: 5 }], 5, 1.9, {
+    cap: "dot",
+    tags: ["back", "double-move", "man-beater", "checkdown"],
+  }),
+  R("fade", "Fade", [{ x: 1.5, y: 4 }, { x: 3, y: 9 }], 9, 1.9, {
+    curve: "spline",
+    tags: ["vertical", "red-zone", "back-shoulder", "vs-man"],
+  }),
+  R("pop", "Pop", [{ x: 0.5, y: 8 }], 8, 1.5, {
+    tags: ["seam", "rpo", "vacated-window", "quick"],
+  }),
+  R("jerk", "Jerk", [{ x: 0, y: 4 }, { x: -2.5, y: 5 }, { x: 2, y: 7 }], 7, 2.1, {
+    cap: "dot",
+    tags: ["double-move", "man-beater", "shallow"],
+  }),
+  R("shovel", "Shovel", [{ x: -3, y: -0.5 }, { x: -6, y: 1.5 }], 1.5, 1.2, {
+    curve: "spline",
+    tags: ["shovel", "behind-los", "trick", "quick"],
+  }),
   R("wall", "Wall", [{ x: 0, y: 5 }, { x: -8, y: 7 }], 7, 2.0, {
     cap: "tbar",
     tags: ["screen", "block", "downfield"],

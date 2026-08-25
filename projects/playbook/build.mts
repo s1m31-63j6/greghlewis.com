@@ -21,7 +21,7 @@ import { writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { FORMATIONS } from "../../src/lib/playbook/formations.ts";
+import { FORMATIONS, resolveFormation } from "../../src/lib/playbook/formations.ts";
 import { ROUTES } from "../../src/lib/playbook/routes.ts";
 import { SCHEMES } from "../../src/lib/playbook/blocking.ts";
 import { COVERAGES, FRONTS, PRESSURES } from "../../src/lib/playbook/defense.ts";
@@ -94,6 +94,56 @@ for (const p of PLAYS) {
   if (!p.variantScope.length) errors.push(`${p.id}: empty variantScope`);
   for (const v of p.variantScope) {
     if (!MVP_VARIANTS.includes(v)) notes.push(`${p.id}: scoped to ${v}, which is not an MVP variant`);
+  }
+}
+
+// ── every formation, not just the ones plays happen to use ──────────────────
+// A formation nobody has written a play for yet is still offered in the
+// editor's formation picker, so it has to stand up on its own.
+for (const f of FORMATIONS) {
+  for (const vid of (f.variantScope ?? MVP_VARIANTS) as FieldVariantId[]) {
+    if (!MVP_VARIANTS.includes(vid)) continue;
+    const v = variantOf(vid);
+    const { players, omitted } = resolveFormation(f, vid, false, "solid");
+
+    if (players.length < 3) {
+      errors.push(`formation ${f.id} @ ${vid}: only ${players.length} players`);
+    }
+    if (players.length > v.playersPerSide) {
+      errors.push(`formation ${f.id} @ ${vid}: ${players.length} players, max ${v.playersPerSide}`);
+    }
+
+    const half = Math.min(v.widthYd, v.viewWidthYd) / 2;
+    for (const pl of players) {
+      if (Math.abs(pl.at.x) > half) {
+        errors.push(`formation ${f.id} @ ${vid}: ${pl.label} is off the frame`);
+      }
+    }
+
+    // Nobody may occupy the same blade of grass as somebody else.
+    for (let i = 0; i < players.length; i++) {
+      for (let j = i + 1; j < players.length; j++) {
+        const a = players[i];
+        const b = players[j];
+        if (Math.hypot(a.at.x - b.at.x, a.at.y - b.at.y) < 0.6) {
+          errors.push(`formation ${f.id} @ ${vid}: ${a.label} and ${b.label} overlap`);
+        }
+      }
+    }
+
+    // Seven on the line is a rule, not a preference.
+    const need = { "11man": 7, "9man": 5, "8man": 5 }[vid as string];
+    if (need !== undefined) {
+      const onLine =
+        v.line.count +
+        f.receivers.filter((r) => r.onLine && players.some((pl) => pl.slot === r.slot)).length;
+      if (onLine < need) {
+        errors.push(`formation ${f.id} @ ${vid}: ${onLine} on the line, needs ${need}`);
+      }
+    }
+    if (omitted.length && !f.variantOverrides?.[vid]) {
+      notes.push(`formation ${f.id} @ ${vid}: ${omitted.join(", ")} dropped by the body budget`);
+    }
   }
 }
 

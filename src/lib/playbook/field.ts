@@ -137,7 +137,7 @@ export const VARIANTS: Record<FieldVariantId, FieldVariant> = {
     widthScale: 0.58,
     maxRouteDepthYd: 15,
     hashSeparationYd: null,
-    splits: { wide: 11, plus: 8.5, slot: 5.5, nasty: 3.6, wing: 2.8, tight: 2.2, attached: 1.8 },
+    splits: { wide: 11, plus: 8.5, slot: 5.5, nasty: 3.9, wing: 2.6, tight: 1.5, attached: 1.1 },
     presumedFront: "1-rusher",
     blockingLegal: false,
     defaultSpeedYps: 7.0,

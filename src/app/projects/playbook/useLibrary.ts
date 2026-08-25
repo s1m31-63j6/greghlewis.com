@@ -4,7 +4,7 @@
  * Library loading and search state.
  *
  * The library is static JSON under `public/playbook/`, fetched once. Only a
- * coach's own playbooks touch DynamoDB — the 127 library plays never do, which
+ * coach's own playbooks touch DynamoDB — the 202 library plays never do, which
  * keeps the browse experience instant and free.
  *
  * The index is rebuilt for user plays through the SAME `buildIndexEntry` the
