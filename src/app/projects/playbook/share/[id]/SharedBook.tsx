@@ -19,10 +19,17 @@ import PlayDetail from "../../PlayDetail";
 import { PRODUCT } from "../../product";
 import { resolvePlay } from "@/lib/playbook/resolve";
 import { variant as variantOf } from "@/lib/playbook/field";
-import { formationById } from "@/lib/playbook/formations";
+import { formationById, registerCustomFormations } from "@/lib/playbook/formations";
 import type { Playbook } from "@/lib/playbook/types";
 
 export default function SharedBook({ book }: { book: Playbook }) {
+  // A shared book carries its own formations, and this page never goes through
+  // usePlaybook — so without this the resolver would fall back to the shipped
+  // library and quietly draw the wrong shape for every play built on one of
+  // the author's own formations. Registered during render rather than in an
+  // effect, because the first paint has to be right.
+  registerCustomFormations(book.formations ?? []);
+
   const [openId, setOpenId] = useState<string | null>(null);
   const open = book.entries.find((e) => e.play.spec.id === openId);
 

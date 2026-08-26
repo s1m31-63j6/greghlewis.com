@@ -61,6 +61,8 @@ interface Props {
   onPointerMove?: React.PointerEventHandler<SVGSVGElement>;
   onPointerUp?: React.PointerEventHandler<SVGSVGElement>;
   onPointerCancel?: React.PointerEventHandler<SVGSVGElement>;
+  /** Mounted on the <svg> for the same reason the pointer handlers are. */
+  onDoubleClick?: React.MouseEventHandler<SVGSVGElement>;
   onWheel?: React.WheelEventHandler<SVGSVGElement>;
   cameraRef?: React.Ref<SVGGElement>;
   svgRef?: React.Ref<SVGSVGElement>;
@@ -90,6 +92,7 @@ export default function Field({
   onPointerMove,
   onPointerUp,
   onPointerCancel,
+  onDoubleClick,
   onWheel,
   cameraRef,
   svgRef,
@@ -118,6 +121,7 @@ export default function Field({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerCancel}
+      onDoubleClick={onDoubleClick}
       onWheel={onWheel}
     >
       <defs>

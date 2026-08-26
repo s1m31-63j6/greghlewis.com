@@ -45,7 +45,7 @@ const LINE_NAMES: Record<number, SlotId[]> = {
   5: ["LT", "LG", "C", "RG", "RT"],
 };
 
-const QB_DEPTH: Record<Formation["qb"]["align"], number> = {
+export const QB_DEPTH: Record<Formation["qb"]["align"], number> = {
   under: -1.2,
   pistol: -3.5,
   gun: -5.0,
@@ -65,7 +65,7 @@ function roleFor(slot: SlotId): PlayerRole {
 }
 
 /** Where a back sits, relative to the QB. */
-function backPoint(spot: BackSpot, qb: Vec, v: FieldVariant): Vec {
+export function backPoint(spot: BackSpot, qb: Vec, v: FieldVariant): Vec {
   const s = spot.side === "mid" ? 0 : sideSign(spot.side);
   const d = v.depthScale;
   const w = v.widthScale;
@@ -185,6 +185,36 @@ export function resolveFormation(
 // ─── the formation library ──────────────────────────────────────────────────
 
 const F = (f: Formation): Formation => f;
+
+/**
+ * Formations a coach built, laid over the shipped library.
+ *
+ * BROWSER-ONLY STATE, and the reason that is safe is worth stating: every
+ * consumer of `formationById` — the cards, the detail view, the editor, the
+ * print sheet, the share page — is a client component, so this map lives in one
+ * tab alongside the one playbook that tab has open. A server component that
+ * ever needs to resolve a custom formation must be handed the formation
+ * explicitly instead, because a module-level singleton on the server would be
+ * shared between concurrent requests for different books.
+ *
+ * The overlay is REPLACED rather than merged on each registration, so closing a
+ * book takes its formations with it.
+ */
+const CUSTOM = new Map<string, Formation>();
+
+export function registerCustomFormations(list: readonly Formation[]): void {
+  CUSTOM.clear();
+  for (const f of list) CUSTOM.set(f.id, f);
+}
+
+export function customFormations(): Formation[] {
+  return [...CUSTOM.values()];
+}
+
+/** True for anything a coach made, which the UI labels and lets them edit. */
+export function isCustomFormation(id: string): boolean {
+  return CUSTOM.has(id);
+}
 
 export const FORMATIONS: Formation[] = [
   // ── spread / gun, the modern default ─────────────────────────────────────
@@ -977,7 +1007,10 @@ export const FORMATIONS: Formation[] = [
 const BY_ID = new Map(FORMATIONS.map((f) => [f.id, f]));
 
 export function formationById(id: string): Formation | undefined {
-  return BY_ID.get(id);
+  // A coach's own formation wins on an id collision, which is the behaviour a
+  // duplicate-and-rename flow needs: the copy shadows nothing, but a formation
+  // saved under a shipped id would otherwise be invisible.
+  return CUSTOM.get(id) ?? BY_ID.get(id);
 }
 
 /**
@@ -985,5 +1018,7 @@ export function formationById(id: string): Formation | undefined {
  * universal, which is the common case.
  */
 export function formationsFor(v: FieldVariantId): Formation[] {
-  return FORMATIONS.filter((f) => !f.variantScope || f.variantScope.includes(v));
+  const fits = (f: Formation) => !f.variantScope || f.variantScope.includes(v);
+  // A coach's own first: they are the ones being iterated on.
+  return [...customFormations().filter(fits), ...FORMATIONS.filter(fits)];
 }

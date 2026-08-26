@@ -48,6 +48,40 @@ CODE=$(curl -s -o /dev/null -w '%{http_code}' "$BASE/api/playbook/$ID")
 echo "  GET    with no token   -> $CODE (expect 200 — reads are open)"
 [ "$CODE" = "200" ] || { echo "  FAIL: reading a shared book required a token"; exit 1; }
 
+echo "== a formation the coach built survives the round trip =="
+FORM='{"formation":{"id":"u_form_rt01","name":"Roundtrip Trips","aliases":[],"strength":"L","qb":{"align":"gun"},"backs":[{"slot":"RB","align":"offset","side":"R","priority":1}],"receivers":[{"slot":"Z","side":"L","order":1,"split":"wide","onLine":true,"priority":2},{"slot":"H","side":"L","order":2,"split":"slot","onLine":false,"priority":3},{"slot":"X","side":"R","order":1,"split":"wide","onLine":true,"priority":4}],"tags":["custom"]}}'
+CODE=$(curl -s -o /dev/null -w '%{http_code}' -X PUT "$BASE/api/playbook/$ID/formation/u_form_rt01" \
+  -H 'content-type: application/json' -H "x-playbook-token: $TOKEN" -d "$FORM")
+echo "  PUT formation          -> $CODE (expect 200)"
+[ "$CODE" = "200" ] || { echo "  FAIL: could not save a formation"; exit 1; }
+
+READ=$(curl -s "$BASE/api/playbook/$ID" | python3 -c "
+import sys, json
+fs = json.load(sys.stdin)['book'].get('formations', [])
+f = next((x for x in fs if x['id'] == 'u_form_rt01'), None)
+print(f\"{len(fs)} {f['name'] if f else 'MISSING'} {len(f['receivers']) if f else 0}\")
+")
+echo "  read back              -> $READ (expect '1 Roundtrip Trips 3')"
+[ "$READ" = "1 Roundtrip Trips 3" ] || { echo "  FAIL: formation did not survive"; exit 1; }
+
+# The same token rule the plays get.
+CODE=$(curl -s -o /dev/null -w '%{http_code}' -X PUT "$BASE/api/playbook/$ID/formation/u_form_rt01" \
+  -H 'content-type: application/json' -d "$FORM")
+echo "  PUT with no token      -> $CODE (expect 403)"
+[ "$CODE" = "403" ] || { echo "  FAIL: a formation could be written without the token"; exit 1; }
+
+# A formation nothing can draw is refused rather than stored.
+CODE=$(curl -s -o /dev/null -w '%{http_code}' -X PUT "$BASE/api/playbook/$ID/formation/u_form_rt02" \
+  -H 'content-type: application/json' -H "x-playbook-token: $TOKEN" \
+  -d '{"formation":{"id":"u_form_rt02","name":"","aliases":[],"strength":"X","qb":{"align":"nope"},"backs":[],"receivers":[],"tags":[]}}')
+echo "  PUT malformed          -> $CODE (expect 400)"
+[ "$CODE" = "400" ] || { echo "  FAIL: a malformed formation was accepted"; exit 1; }
+
+CODE=$(curl -s -o /dev/null -w '%{http_code}' -X DELETE "$BASE/api/playbook/$ID/formation/u_form_rt01" -H "x-playbook-token: $TOKEN")
+LEFT=$(curl -s "$BASE/api/playbook/$ID" | python3 -c "import sys,json;print(len(json.load(sys.stdin)['book'].get('formations',[])))")
+echo "  DELETE                 -> $CODE, $LEFT left (expect 200, 0)"
+[ "$CODE" = "200" ] && [ "$LEFT" = "0" ] || { echo "  FAIL: formation delete"; exit 1; }
+
 echo "== share and print routes actually render the book =="
 # A 200 is not enough: a missing playbook also renders a 200 saying so.
 for path in "/projects/playbook/share/$ID" "/projects/playbook/print/$ID?layout=grid12" \

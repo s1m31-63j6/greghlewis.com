@@ -12,10 +12,11 @@
  */
 
 import { variant as variantOf } from "./field.ts";
-import { formationById } from "./formations.ts";
+import { formationById, resolveFormation } from "./formations.ts";
 import { pathLengthYd } from "./routes.ts";
 import type {
   FieldVariantId,
+  Formation,
   Play,
   ResolvedPlay,
   ValidationWarning,
@@ -155,3 +156,101 @@ export const WARNING_LABEL: Record<ValidationWarning["code"], string> = {
   "unknown-reference": "Reference",
   "body-budget": "Roster",
 };
+
+
+// ─── formations a coach built ───────────────────────────────────────────────
+
+const SPLIT_NAMES = new Set([
+  "wide", "plus", "slot", "nasty", "wing", "tight", "attached",
+]);
+const BACK_ALIGNS = new Set([
+  "i", "offset", "dot", "split", "wing", "slot", "diamond", "pistol",
+]);
+const QB_ALIGNS = new Set(["under", "gun", "pistol"]);
+const MAX_SKILL = 8;
+
+/**
+ * Hard structural checks on a user-authored formation.
+ *
+ * Distinct from `validate` above, which produces coaching warnings and never
+ * blocks. These are the things that would make a formation un-drawable rather
+ * than merely unusual, and the API refuses them: a formation is the first
+ * user-authored object the resolver reads STRUCTURALLY — a play's overrides
+ * are just numbers, but a formation decides how many players exist and where
+ * each one aligns, so a malformed one breaks every play that references it,
+ * not only itself.
+ */
+export function validateFormation(f: Formation): string[] {
+  const problems: string[] = [];
+
+  if (!f.id || typeof f.id !== "string") problems.push("The formation has no id.");
+  if (!f.name || !f.name.trim()) problems.push("Give the formation a name.");
+  if (f.name && f.name.length > 60) problems.push("That name is too long.");
+  if (!QB_ALIGNS.has(f.qb?.align)) problems.push("The quarterback needs a real alignment.");
+  if (f.strength !== "L" && f.strength !== "R") problems.push("Strength must be left or right.");
+
+  const backs = Array.isArray(f.backs) ? f.backs : [];
+  const receivers = Array.isArray(f.receivers) ? f.receivers : [];
+
+  if (backs.length + receivers.length === 0) {
+    problems.push("A formation needs at least one player besides the line.");
+  }
+  if (backs.length + receivers.length > MAX_SKILL) {
+    problems.push(`That is ${backs.length + receivers.length} skill players; the most any variant fields is ${MAX_SKILL}.`);
+  }
+
+  const seen = new Set<string>();
+  for (const p of [...backs, ...receivers]) {
+    if (!p.slot) problems.push("A player is missing its position.");
+    else if (seen.has(p.slot)) problems.push(`Two players are both ${p.slot}.`);
+    else seen.add(p.slot);
+    if (p.depthYd !== undefined && (!Number.isFinite(p.depthYd) || p.depthYd > 2 || p.depthYd < -15)) {
+      problems.push(`${p.slot ?? "A player"} is off the drawable field.`);
+    }
+  }
+
+  for (const b of backs) {
+    if (!BACK_ALIGNS.has(b.align)) problems.push(`${b.slot} has an alignment nothing can draw.`);
+  }
+  for (const r of receivers) {
+    if (!SPLIT_NAMES.has(r.split)) problems.push(`${r.slot} has a split nothing can draw.`);
+    if (r.side !== "L" && r.side !== "R") problems.push(`${r.slot} is on neither side of the ball.`);
+  }
+
+  return problems;
+}
+
+/**
+ * Soft advice on a formation, in the spirit of the warnings above: a coach
+ * drawing something unusual is usually right, so these are shown and never
+ * enforced. Two glyphs on top of each other is the one that actually bit us —
+ * a shipped flag formation drew H and Y 0.6 yards apart for weeks.
+ */
+export function formationWarnings(f: Formation, variantId: FieldVariantId): string[] {
+  const out: string[] = [];
+  const v = variantOf(variantId);
+  const { players, omitted } = resolveFormation(f, variantId, false);
+
+  const need = LOS_REQUIRED[variantId];
+  if (need !== undefined) {
+    const onLine = v.line.count + f.receivers.filter((r) => r.onLine).length;
+    if (onLine < need) {
+      out.push(`${onLine} on the line of scrimmage; ${v.label} needs ${need}.`);
+    }
+  }
+
+  for (let i = 0; i < players.length; i++) {
+    for (let j = i + 1; j < players.length; j++) {
+      const a = players[i], b = players[j];
+      if (Math.hypot(a.at.x - b.at.x, a.at.y - b.at.y) < 0.6) {
+        out.push(`${a.slot} and ${b.slot} are drawn on top of each other.`);
+      }
+    }
+  }
+
+  if (omitted.length > 0) {
+    out.push(`${v.label} has room for ${v.skillCount}: ${omitted.join(", ")} would sit out.`);
+  }
+
+  return out;
+}

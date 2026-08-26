@@ -16,11 +16,13 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { registerCustomFormations } from "@/lib/playbook/formations";
 import { DEFAULT_STYLE } from "@/lib/playbook/resolve";
 import type {
   BookEntry,
   BookStyle,
   FieldVariantId,
+  Formation,
   Play,
   PlaySpec,
   Playbook,
@@ -70,6 +72,13 @@ export function usePlaybook() {
 
   const setBook = useCallback((next: Playbook | null) => {
     bookRef.current = next;
+    // The resolver reads custom formations through a module-level overlay
+    // rather than a prop threaded through ten call sites, so it has to be
+    // refreshed wherever the book changes. Doing it here rather than in an
+    // effect means the very next render already resolves against them; an
+    // effect would draw one frame of every play falling back to its shipped
+    // formation, which looks exactly like data loss.
+    registerCustomFormations(next?.formations ?? []);
     setState((s) => ({ ...s, book: next }));
   }, []);
 
@@ -90,6 +99,7 @@ export function usePlaybook() {
       const token = read(LS_TOKEN + id);
       write(LS_BOOK, id);
       bookRef.current = book;
+      registerCustomFormations(book.formations ?? []);
       setState({ book, token, readOnly: !token, loading: false, error: null, saving: false });
     } catch (e) {
       setState((s) => ({ ...s, loading: false, error: (e as Error).message }));
@@ -143,6 +153,55 @@ export function usePlaybook() {
       }
     },
     [headers],
+  );
+
+  /**
+   * Save one formation into the open book. Optimistic: the overlay and the
+   * book state update first so the field redraws immediately, and a failed
+   * write surfaces as an error rather than a silent revert — the coach is
+   * looking at the shape they just drew, and yanking it back under them is
+   * worse than telling them it did not save.
+   */
+  const saveFormation = useCallback(
+    async (formation: Formation) => {
+      const book = bookRef.current;
+      if (!book) return;
+      const rest = (book.formations ?? []).filter((f) => f.id !== formation.id);
+      setBook({ ...book, formations: [...rest, formation].sort((a, b) => a.name.localeCompare(b.name)) });
+      setState((s) => ({ ...s, saving: true }));
+      try {
+        const res = await fetch(`/api/playbook/${book.id}/formation/${formation.id}`, {
+          method: "PUT",
+          headers: headers(),
+          body: JSON.stringify({ formation }),
+        });
+        if (!res.ok) {
+          const body = (await res.json().catch(() => null)) as { error?: string } | null;
+          setState((s) => ({ ...s, error: body?.error ?? "Could not save that formation" }));
+        }
+      } finally {
+        setState((s) => ({ ...s, saving: false }));
+      }
+    },
+    [headers, setBook],
+  );
+
+  const removeFormation = useCallback(
+    async (formationId: string) => {
+      const book = bookRef.current;
+      if (!book) return;
+      setBook({ ...book, formations: (book.formations ?? []).filter((f) => f.id !== formationId) });
+      setState((s) => ({ ...s, saving: true }));
+      try {
+        await fetch(`/api/playbook/${book.id}/formation/${formationId}`, {
+          method: "DELETE",
+          headers: headers(),
+        });
+      } finally {
+        setState((s) => ({ ...s, saving: false }));
+      }
+    },
+    [headers, setBook],
   );
 
   const saveBook = useCallback(
@@ -302,5 +361,6 @@ export function usePlaybook() {
   return {
     ...state, style,
     load, create, addFromLibrary, removeEntry, commitEdit, reorder, update, setEntry,
+    saveFormation, removeFormation,
   };
 }

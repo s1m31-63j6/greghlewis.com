@@ -565,6 +565,12 @@ export interface Playbook {
   updatedAt: string;
   /** Optional display-name layer over the canonical position labels. */
   roster?: Partial<Record<SlotId, { name: string; number?: string }>>;
+  /**
+   * Formations this book's author built. They live with the book rather than
+   * in the shipped library, so they travel with the share link and a staff
+   * opening that link sees the same shapes the plays were drawn from.
+   */
+  formations?: Formation[];
   entries: BookEntry[];
 }
 

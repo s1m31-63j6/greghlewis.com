@@ -26,7 +26,7 @@ import PlayDiagram from "../../PlayDiagram";
 import { PRODUCT } from "../../product";
 import { resolvePlay } from "@/lib/playbook/resolve";
 import { variant as variantOf } from "@/lib/playbook/field";
-import { formationById } from "@/lib/playbook/formations";
+import { formationById, registerCustomFormations } from "@/lib/playbook/formations";
 import type { BookEntry, Playbook } from "@/lib/playbook/types";
 
 interface Props {
@@ -67,6 +67,12 @@ function Diagram({ entry, book, density }: { entry: BookEntry; book: Playbook; d
 }
 
 export default function PrintSheet({ book, layout, color: initialColor }: Props) {
+  // Same reason as SharedBook: this page is handed a book rather than loading
+  // one through usePlaybook, so it has to register that book's own formations
+  // before anything resolves. A printed sheet drawn from the wrong formation is
+  // the kind of mistake that only surfaces on a Friday night.
+  registerCustomFormations(book.formations ?? []);
+
   const today = useMemo(
     () => new Date().toLocaleDateString("en-US", { month: "2-digit", day: "2-digit", year: "2-digit" }),
     [],

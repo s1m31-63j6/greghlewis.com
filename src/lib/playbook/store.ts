@@ -4,6 +4,7 @@
  *   pk = "pb#<id>"                 id = 12-char Crockford base32
  *   sk = "meta"                    the playbook header
  *   sk = "play#<pos>#<playId>"     pos zero-padded, gap-10 (0010, 0020, ...)
+ *   sk = "form#<formationId>"      a formation the coach built
  *   sk = "rev#<playId>#<rev>"      capped revision history, TTL'd
  *
  * PER-PLAY ITEMS, not one blob. A hundred compositional plays would fit inside
@@ -35,7 +36,7 @@ import {
 import { fromIni, fromNodeProviderChain } from "@aws-sdk/credential-providers";
 
 import { deriveFacets } from "./search.ts";
-import type { BookEntry, BookStyle, Play, Playbook } from "./types.ts";
+import type { BookEntry, BookStyle, Formation, Play, Playbook } from "./types.ts";
 
 const REGION = process.env.AWS_REGION ?? "us-east-1";
 export const TABLE_NAME = process.env.PLAYBOOK_TABLE ?? "";
@@ -113,6 +114,7 @@ export async function hashToken(token: string): Promise<string> {
 const pk = (id: string) => `pb#${id}`;
 const pos = (n: number) => String(n).padStart(4, "0");
 const playSk = (position: number, playId: string) => `play#${pos(position)}#${playId}`;
+const formSk = (formationId: string) => `form#${formationId}`;
 const expiry = () => Math.floor(Date.now() / 1000) + TTL_DAYS * 86_400;
 
 // ── read ────────────────────────────────────────────────────────────────────
@@ -125,6 +127,12 @@ interface MetaItem {
   updatedAt: string;
   roster?: Playbook["roster"];
   editTokenHash?: string;
+}
+
+interface FormationItem {
+  sk: string;
+  formationId: string;
+  doc: string;
 }
 
 interface PlayItem {
@@ -173,6 +181,11 @@ export async function getPlaybook(id: string): Promise<Playbook | null> {
     })
     .sort((a, b) => a.position - b.position);
 
+  const formations = items
+    .filter((i) => typeof i.sk === "string" && i.sk.startsWith("form#"))
+    .map((i) => JSON.parse((i as unknown as FormationItem).doc) as Formation)
+    .sort((a, b) => a.name.localeCompare(b.name));
+
   return {
     id,
     name: meta.name,
@@ -181,6 +194,7 @@ export async function getPlaybook(id: string): Promise<Playbook | null> {
     createdAt: meta.createdAt,
     updatedAt: meta.updatedAt,
     roster: meta.roster,
+    formations,
     entries,
   };
 }
@@ -201,6 +215,13 @@ export async function getEditTokenHash(id: string): Promise<string | null> {
 // ── write ───────────────────────────────────────────────────────────────────
 
 function playItem(id: string, e: BookEntry) {
+  // These facet columns are written for a future index and are not what the UI
+  // searches — useLibrary rebuilds the index in the browser through the same
+  // buildIndexEntry. That distinction matters for one case: a play built on a
+  // coach's own formation resolves its name from the browser-side overlay,
+  // which does not exist here, so `formationName` on THIS item falls back to
+  // the raw id. Harmless while nothing reads it; worth remembering before
+  // anything does.
   const f = deriveFacets(e.play);
   return {
     pk: pk(id),
@@ -284,6 +305,47 @@ export async function deletePlay(id: string, position: number, playId: string): 
   }
   await client().send(
     new DeleteCommand({ TableName: TABLE_NAME, Key: { pk: pk(id), sk: playSk(position, playId) } }),
+  );
+}
+
+/**
+ * Save one formation. Same shape as putPlay: a single small item, so editing a
+ * formation never rewrites the book around it.
+ */
+export async function putFormation(id: string, formation: Formation): Promise<void> {
+  if (!configured()) {
+    const book = memory.get(id);
+    if (!book) return;
+    const rest = (book.formations ?? []).filter((f) => f.id !== formation.id);
+    memory.set(id, { ...book, formations: [...rest, formation] });
+    return;
+  }
+  await client().send(
+    new PutCommand({
+      TableName: TABLE_NAME,
+      Item: {
+        pk: pk(id),
+        sk: formSk(formation.id),
+        formationId: formation.id,
+        doc: JSON.stringify(formation),
+        exp: expiry(),
+      },
+    }),
+  );
+}
+
+export async function deleteFormation(id: string, formationId: string): Promise<void> {
+  if (!configured()) {
+    const book = memory.get(id);
+    if (!book) return;
+    memory.set(id, {
+      ...book,
+      formations: (book.formations ?? []).filter((f) => f.id !== formationId),
+    });
+    return;
+  }
+  await client().send(
+    new DeleteCommand({ TableName: TABLE_NAME, Key: { pk: pk(id), sk: formSk(formationId) } }),
   );
 }
 

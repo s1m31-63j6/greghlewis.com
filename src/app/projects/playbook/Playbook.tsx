@@ -21,14 +21,21 @@ import PlayCard from "./PlayCard";
 import PlayDetail from "./PlayDetail";
 import PlayEditor from "./PlayEditor";
 import { PRODUCT } from "./product";
+import FormationBuilder from "./FormationBuilder";
 import { useLibrary, useSearch } from "./useLibrary";
 import { usePlaybook } from "./usePlaybook";
 import { MVP_VARIANTS, variant as variantOf } from "@/lib/playbook/field";
 import { blankPlay } from "@/lib/playbook/blank";
+import { formationById } from "@/lib/playbook/formations";
 import type { FieldVariantId, Play, PlaySpec } from "@/lib/playbook/types";
 import WantMore from "@/app/_subscribe/WantMore";
 
-type View = { kind: "library" } | { kind: "play"; id: string } | { kind: "edit"; id: string };
+type View =
+  | { kind: "library" }
+  | { kind: "play"; id: string }
+  | { kind: "edit"; id: string }
+  /** `id` is null for a new formation, or an existing one being reworked. */
+  | { kind: "formation"; id: string | null };
 
 export default function Playbook() {
   const lib = useLibrary();
@@ -92,6 +99,18 @@ export default function Playbook() {
     [],
   );
 
+  /**
+   * Formations live in the book, so building one needs a book the same way
+   * saving a play does. Same gate, same dialog.
+   */
+  const startFormation = useCallback((id: string | null) => {
+    if (!book.book) {
+      setShowBook(true);
+      return;
+    }
+    setView({ kind: "formation", id });
+  }, [book.book]);
+
   const startBlank = useCallback(() => {
     if (!book.book) {
       setShowBook(true);
@@ -102,7 +121,37 @@ export default function Playbook() {
     setView({ kind: "edit", id: play.spec.id });
   }, [book.book, side]);
 
-  const active = view.kind === "library" ? null : findPlay(view.id);
+  const active = view.kind === "library" || view.kind === "formation" ? null : findPlay(view.id);
+
+  if (view.kind === "formation") {
+    const existing = view.id
+      ? (book.book?.formations ?? []).find((f) => f.id === view.id) ?? formationById(view.id) ?? null
+      : null;
+    return (
+      <main className="pb-page">
+        <FormationBuilder
+          key={view.id ?? "new"}
+          initial={existing}
+          variant={bookVariant}
+          style={book.style}
+          readOnly={!book.book || book.readOnly}
+          onSave={(f) => {
+            void book.saveFormation(f);
+            setView({ kind: "library" });
+          }}
+          onCancel={() => setView({ kind: "library" })}
+          onDelete={
+            view.id && (book.book?.formations ?? []).some((f) => f.id === view.id)
+              ? () => {
+                  void book.removeFormation(view.id as string);
+                  setView({ kind: "library" });
+                }
+              : undefined
+          }
+        />
+      </main>
+    );
+  }
 
   if (view.kind === "edit" && active) {
     return (
@@ -150,6 +199,15 @@ export default function Playbook() {
         <span className="pb-bar-spacer" />
 
         <WantMore project="playbook" className="pb-btn pb-btn-ghost" />
+
+        <button
+          className="pb-btn"
+          onClick={() => startFormation(null)}
+          data-tel="pb-new-formation"
+          data-tel-project="playbook"
+        >
+          ＋ Formation
+        </button>
 
         <button
           className="pb-btn"

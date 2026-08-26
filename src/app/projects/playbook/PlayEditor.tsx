@@ -25,7 +25,7 @@ import {
 import { useCamera, usePlayerDrag, toModel } from "./usePointerDrag";
 import { resolvePlay } from "@/lib/playbook/resolve";
 import { fromSvg, svgX, svgY, variant as variantOf } from "@/lib/playbook/field";
-import { formationsFor } from "@/lib/playbook/formations";
+import { formationsFor, isCustomFormation } from "@/lib/playbook/formations";
 import { ROUTES, routeById } from "@/lib/playbook/routes";
 import { validate, WARNING_LABEL } from "@/lib/playbook/validate";
 import WantMore from "@/app/_subscribe/WantMore";
@@ -823,7 +823,9 @@ export default function PlayEditor({ play: initial, variant, style, readOnly, on
                   onChange={(e) => setFormation(e.target.value)}
                 >
                   {formationsFor(variant).map((f) => (
-                    <option key={f.id} value={f.id}>{f.name}</option>
+                    <option key={f.id} value={f.id}>
+                      {isCustomFormation(f.id) ? `${f.name} — yours` : f.name}
+                    </option>
                   ))}
                 </select>
               </label>
