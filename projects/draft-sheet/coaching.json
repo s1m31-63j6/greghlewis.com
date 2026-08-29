@@ -1,0 +1,506 @@
+{
+  "_note": "HAND-AUTHORED, with sources. No free structured source covers 2026 offensive coordinators, and the one that carries head coaches misses several 2026 hires and misspells others. `impact`/`posImpact` are editorial judgements in [-2, 2], capped so they move an arrow but never overrule the roster. `major` gates whether the card shows coaching at ALL: most drafters do not need to read about a coordinator swap that changes nothing, so only genuinely production-shifting changes are surfaced. Every team still carries its staff and impact, so the arrows stay honest.",
+  "_schema": "TEAM: { HC|OC: {in, out?, new?}, playCaller, playCallerNew?, major?, impact?, posImpact?, note?, source? }",
+  "BUF": {
+    "HC": {
+      "in": "Joe Brady",
+      "out": "Sean McDermott",
+      "new": true
+    },
+    "OC": {
+      "in": "Pete Carmichael Jr.",
+      "out": "Joe Brady",
+      "new": true
+    },
+    "playCaller": "HC",
+    "impact": 0,
+    "posImpact": {
+      "WR": 1,
+      "TE": 1
+    },
+    "source": "buffalobills.com; Buffalo Rumblings"
+  },
+  "MIA": {
+    "HC": {
+      "in": "Jeff Hafley",
+      "out": "Mike McDaniel",
+      "new": true
+    },
+    "OC": {
+      "in": "Bobby Slowik",
+      "out": "Frank Smith",
+      "new": true
+    },
+    "playCaller": "OC",
+    "impact": -1,
+    "posImpact": {
+      "RB": 1,
+      "TE": 1,
+      "WR": -1
+    },
+    "note": "Losing Mike McDaniel costs Miami one of the league's better offensive minds; reporting points to a ground-heavier, 12-personnel offense.",
+    "source": "miamidolphins.com; ESPN",
+    "playCallerNew": true,
+    "major": true
+  },
+  "NE": {
+    "HC": {
+      "in": "Mike Vrabel"
+    },
+    "OC": {
+      "in": "Josh McDaniels"
+    },
+    "playCaller": "OC",
+    "source": "patriots.com"
+  },
+  "NYJ": {
+    "HC": {
+      "in": "Aaron Glenn"
+    },
+    "OC": {
+      "in": "Frank Reich",
+      "out": "Tanner Engstrand",
+      "new": true
+    },
+    "playCaller": "OC",
+    "impact": 1,
+    "posImpact": {
+      "TE": 1
+    },
+    "source": "ESPN; newyorkjets.com",
+    "playCallerNew": true
+  },
+  "BAL": {
+    "HC": {
+      "in": "Jesse Minter",
+      "out": "John Harbaugh",
+      "new": true
+    },
+    "OC": {
+      "in": "Declan Doyle",
+      "out": "Todd Monken",
+      "new": true
+    },
+    "playCaller": "OC",
+    "impact": 0,
+    "posImpact": {
+      "RB": 1,
+      "TE": 1
+    },
+    "source": "baltimoreravens.com; ESPN; The Baltimore Banner",
+    "playCallerNew": true
+  },
+  "CIN": {
+    "HC": {
+      "in": "Zac Taylor"
+    },
+    "OC": {
+      "in": "Dan Pitcher"
+    },
+    "playCaller": "HC",
+    "source": "bengals.com; SI"
+  },
+  "CLE": {
+    "HC": {
+      "in": "Todd Monken",
+      "out": "Kevin Stefanski",
+      "new": true
+    },
+    "OC": {
+      "in": "Travis Switzer",
+      "out": "Tommy Rees",
+      "new": true
+    },
+    "playCaller": "HC",
+    "impact": 1,
+    "posImpact": {
+      "WR": 1,
+      "TE": 1,
+      "RB": -1
+    },
+    "note": "Todd Monken keeps the calls. Downfield throwing and a very low running-back target share follow him everywhere.",
+    "source": "clevelandbrowns.com; CBS Sports",
+    "playCallerNew": true,
+    "major": true
+  },
+  "PIT": {
+    "HC": {
+      "in": "Mike McCarthy",
+      "out": "Mike Tomlin",
+      "new": true
+    },
+    "OC": {
+      "in": "Brian Angelichio",
+      "out": "Arthur Smith",
+      "new": true
+    },
+    "playCaller": "HC",
+    "impact": 0,
+    "posImpact": {
+      "WR": 1,
+      "TE": -1
+    },
+    "source": "NFL.com; Steelers Depot",
+    "playCallerNew": true
+  },
+  "HOU": {
+    "HC": {
+      "in": "DeMeco Ryans"
+    },
+    "OC": {
+      "in": "Nick Caley"
+    },
+    "playCaller": "OC",
+    "source": "ESPN; Click2Houston"
+  },
+  "IND": {
+    "HC": {
+      "in": "Shane Steichen"
+    },
+    "OC": {
+      "in": "Jim Bob Cooter"
+    },
+    "playCaller": "HC",
+    "source": "colts.com; Stampede Blue"
+  },
+  "JAX": {
+    "HC": {
+      "in": "Liam Coen"
+    },
+    "OC": {
+      "in": "Grant Udinski"
+    },
+    "playCaller": "HC",
+    "source": "jaguars.com"
+  },
+  "TEN": {
+    "HC": {
+      "in": "Robert Saleh",
+      "out": "Brian Callahan",
+      "new": true
+    },
+    "OC": {
+      "in": "Brian Daboll",
+      "out": "Nick Holz",
+      "new": true
+    },
+    "playCaller": "OC",
+    "impact": 1,
+    "posImpact": {
+      "QB": 2,
+      "TE": 1
+    },
+    "note": "Brian Daboll arrives with near-total autonomy over the offense and over Cam Ward's development.",
+    "source": "tennesseetitans.com; ESPN",
+    "playCallerNew": true,
+    "major": true
+  },
+  "DEN": {
+    "HC": {
+      "in": "Sean Payton"
+    },
+    "OC": {
+      "in": "Davis Webb",
+      "out": "Joe Lombardi",
+      "new": true
+    },
+    "playCaller": "OC",
+    "impact": 0,
+    "note": "Sean Payton hands off play-calling for the first time since 2006. Same system, new voice, and the biggest unknown in the conference.",
+    "source": "NFL.com; ESPN; 9News",
+    "playCallerNew": true,
+    "major": true
+  },
+  "KC": {
+    "HC": {
+      "in": "Andy Reid"
+    },
+    "OC": {
+      "in": "Eric Bieniemy",
+      "out": "Matt Nagy",
+      "new": true
+    },
+    "playCaller": "HC",
+    "impact": 0,
+    "source": "chiefs.com; CBS Sports"
+  },
+  "LV": {
+    "HC": {
+      "in": "Klint Kubiak",
+      "out": "Pete Carroll",
+      "new": true
+    },
+    "OC": {
+      "in": "Andrew Janocko",
+      "out": "Chip Kelly",
+      "new": true
+    },
+    "playCaller": "HC",
+    "impact": 1,
+    "posImpact": {
+      "RB": 2,
+      "TE": 1,
+      "WR": -1
+    },
+    "note": "Klint Kubiak calls plays for a wide-zone, jumbo-personnel offense — historically excellent for a lead back, hard on slot receivers.",
+    "source": "ESPN; raiders.com; Las Vegas Sun",
+    "playCallerNew": true,
+    "major": true
+  },
+  "LAC": {
+    "HC": {
+      "in": "Jim Harbaugh"
+    },
+    "OC": {
+      "in": "Mike McDaniel",
+      "out": "Greg Roman",
+      "new": true
+    },
+    "playCaller": "OC",
+    "impact": 2,
+    "posImpact": {
+      "WR": 2,
+      "RB": 1
+    },
+    "note": "Mike McDaniel — an elite play-caller and former head coach — replaces Greg Roman, with four of his Miami assistants following him.",
+    "source": "NFL.com; chargers.com; CBS Sports",
+    "playCallerNew": true,
+    "major": true
+  },
+  "DAL": {
+    "HC": {
+      "in": "Brian Schottenheimer"
+    },
+    "OC": {
+      "in": "Klayton Adams"
+    },
+    "playCaller": "HC",
+    "source": "dallascowboys.com; Yahoo Sports"
+  },
+  "NYG": {
+    "HC": {
+      "in": "John Harbaugh",
+      "out": "Brian Daboll",
+      "new": true
+    },
+    "OC": {
+      "in": "Matt Nagy",
+      "out": "Brian Daboll",
+      "new": true
+    },
+    "playCaller": "OC",
+    "playCallerNew": true,
+    "impact": 1,
+    "posImpact": {
+      "QB": 1
+    },
+    "source": "giants.com; NFL.com"
+  },
+  "PHI": {
+    "HC": {
+      "in": "Nick Sirianni"
+    },
+    "OC": {
+      "in": "Sean Mannion",
+      "out": "Kevin Patullo",
+      "new": true
+    },
+    "playCaller": "OC",
+    "playCallerNew": true,
+    "impact": -1,
+    "note": "A fifth coordinator in five years, and the least experienced: Sean Mannion has never called plays.",
+    "source": "philadelphiaeagles.com; NBC Sports Philadelphia",
+    "major": true,
+    "firstTimeCaller": true
+  },
+  "WSH": {
+    "HC": {
+      "in": "Dan Quinn"
+    },
+    "OC": {
+      "in": "David Blough",
+      "out": "Kliff Kingsbury",
+      "new": true
+    },
+    "playCaller": "OC",
+    "playCallerNew": true,
+    "impact": 0,
+    "posImpact": {
+      "QB": -1,
+      "RB": 1
+    },
+    "note": "Jayden Daniels goes under center far more often — which trims the designed-run usage that is the core of his fantasy value.",
+    "source": "NFL.com; CBS Sports",
+    "major": true,
+    "firstTimeCaller": true
+  },
+  "CHI": {
+    "HC": {
+      "in": "Ben Johnson"
+    },
+    "OC": {
+      "in": "Press Taylor",
+      "out": "Declan Doyle",
+      "new": true
+    },
+    "playCaller": "HC",
+    "impact": 0,
+    "posImpact": {
+      "TE": 1
+    },
+    "source": "NFL.com; chicagobears.com"
+  },
+  "DET": {
+    "HC": {
+      "in": "Dan Campbell"
+    },
+    "OC": {
+      "in": "Drew Petzing",
+      "out": "John Morton",
+      "new": true
+    },
+    "playCaller": "OC",
+    "playCallerNew": true,
+    "impact": 0,
+    "posImpact": {
+      "RB": 1,
+      "TE": 1,
+      "WR": -1
+    },
+    "source": "detroitlions.com; ESPN"
+  },
+  "GB": {
+    "HC": {
+      "in": "Matt LaFleur"
+    },
+    "OC": {
+      "in": "Adam Stenavich"
+    },
+    "playCaller": "HC",
+    "source": "packers.com; Wikipedia"
+  },
+  "MIN": {
+    "HC": {
+      "in": "Kevin O'Connell"
+    },
+    "OC": {
+      "in": "Wes Phillips"
+    },
+    "playCaller": "HC",
+    "source": "NBC Sports; Star Tribune"
+  },
+  "ATL": {
+    "HC": {
+      "in": "Kevin Stefanski",
+      "out": "Raheem Morris",
+      "new": true
+    },
+    "OC": {
+      "in": "Tommy Rees",
+      "out": "Zac Robinson",
+      "new": true
+    },
+    "playCaller": "OC",
+    "playCallerNew": true,
+    "impact": 1,
+    "source": "atlantafalcons.com; NBC Sports"
+  },
+  "CAR": {
+    "HC": {
+      "in": "Dave Canales"
+    },
+    "OC": {
+      "in": "Brad Idzik"
+    },
+    "playCaller": "OC",
+    "playCallerNew": true,
+    "impact": 0,
+    "note": "No title changed, but the calls did — Dave Canales handed play-calling to Brad Idzik, whose first regular-season assignment this is.",
+    "source": "panthers.com; ESPN",
+    "major": true,
+    "firstTimeCaller": true
+  },
+  "NO": {
+    "HC": {
+      "in": "Kellen Moore"
+    },
+    "OC": {
+      "in": "Doug Nussmeier"
+    },
+    "playCaller": "HC",
+    "source": "neworleanssaints.com"
+  },
+  "TB": {
+    "HC": {
+      "in": "Todd Bowles"
+    },
+    "OC": {
+      "in": "Zac Robinson",
+      "out": "Josh Grizzard",
+      "new": true
+    },
+    "playCaller": "OC",
+    "playCallerNew": true,
+    "impact": 0,
+    "posImpact": {
+      "RB": 1
+    },
+    "source": "NFL.com; buccaneers.com"
+  },
+  "ARI": {
+    "HC": {
+      "in": "Mike LaFleur",
+      "out": "Jonathan Gannon",
+      "new": true
+    },
+    "OC": {
+      "in": "Nathaniel Hackett",
+      "out": "Drew Petzing",
+      "new": true
+    },
+    "playCaller": "HC",
+    "playCallerNew": true,
+    "impact": 1,
+    "source": "NFL.com; SI"
+  },
+  "LAR": {
+    "HC": {
+      "in": "Sean McVay"
+    },
+    "OC": {
+      "in": "Nate Scheelhaase",
+      "out": "Mike LaFleur",
+      "new": true
+    },
+    "playCaller": "HC",
+    "impact": 0,
+    "source": "ESPN; NFL.com"
+  },
+  "SF": {
+    "HC": {
+      "in": "Kyle Shanahan"
+    },
+    "OC": {
+      "in": "Klay Kubiak"
+    },
+    "playCaller": "HC",
+    "source": "ESPN; NBC Sports"
+  },
+  "SEA": {
+    "HC": {
+      "in": "Mike Macdonald"
+    },
+    "OC": {
+      "in": "Brian Fleury",
+      "out": "Klint Kubiak",
+      "new": true
+    },
+    "playCaller": "OC",
+    "playCallerNew": true,
+    "impact": -1,
+    "note": "A first-time coordinator replaces the play-caller of a Super Bowl winner. The system should carry over; the situational aggression may not.",
+    "source": "seahawks.com; NFL.com",
+    "major": true,
+    "firstTimeCaller": true
+  }
+}

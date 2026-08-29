@@ -1,0 +1,307 @@
+/*
+ * The printed sheet.
+ *
+ * THE PALETTE FLIPS. Nobody prints a broadcast interface, so every token is
+ * redefined on paper. Team color goes to a thin gray edge and position is
+ * carried by the block header and the rule weight instead — four editorial
+ * hues photocopy to four indistinguishable grays, so color is never the only
+ * channel.
+ *
+ * Zebra striping is 4%, not 10%. Four per cent survives a photocopier; ten
+ * becomes a gray smear that eats the text. At 0.13in rows that matters more
+ * here than anywhere.
+ *
+ * THE ARITHMETIC, portrait Letter at 0.4in margins -> 7.70 x 10.20in printable:
+ *   head 0.42 + foot 0.22 + 0.10 pad          -> body 9.46in
+ *   rows at 7.5pt/9pt leading = 0.13in        -> 72 rows per column
+ *   column = bracket .16 + rank .10 + name .59 + team/bye .25
+ *          + adp .16 + spread .12 + pad/gaps .16 = 1.54in, set to 1.72in
+ *   4 x 1.72 + 3 x 0.06 = 7.06in                fits 7.70 with slack
+ * That is 288 slots, about 267 player rows after headers and tier rules — more
+ * than the 192 picks a 12-team 16-round draft consumes, at a size that is
+ * readable in a dim basement rather than squint-and-guess.
+ */
+
+.ds-print {
+  --paper: #fff;
+  --card: #fff;
+  --ink: #000;
+  --ink-soft: #222;
+  --ink-quiet: #444;
+  --ink-meta: #666;
+  --hairline: #c8ccd0;
+  --rule-soft: #b9c0c8;
+  --rule: #000;
+  --accent: #000;
+  --star: #000;
+  --num: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --sans: var(--font-archivo), system-ui, sans-serif;
+
+  background: #fff;
+  color: #000;
+  font-family: var(--sans);
+}
+
+@page { size: Letter portrait; margin: 0.4in; }
+
+@media print {
+  /* The root layout renders a footer under every page. It has no business on a
+     draft sheet. */
+  body:has(.ds-print) > footer { display: none !important; }
+  .ds-print { margin: 0; }
+  .ds-print-bar { display: none !important; }
+}
+
+/* FIXED height, not min-height, and a flex column.
+   The first version used min-height and gave `.ds-cols` a hard 9.46in. Once the
+   pick tracker was added underneath, the sheet measured 10.72in against a
+   10.20in printable area and silently spilled onto a second page — which
+   defeats the entire point of the sheet. Fixing the height and letting the
+   column block take `flex: 1` means the columns absorb whatever the header,
+   tracker and footer leave behind, whatever they are. */
+.ds-sheet {
+  box-sizing: border-box;
+  margin: 0 auto 16px;
+  background: #fff;
+  break-after: page;
+  display: flex;
+  flex-direction: column;
+}
+.ds-sheet:last-child { break-after: auto; }
+.ds-sheet--portrait { width: 7.7in; height: 10.2in; }
+.ds-sheet--landscape { width: 10.3in; height: 7.8in; }
+
+.ds-sheet-head {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  height: 0.42in;
+  font-stretch: 68%;
+  font-weight: 700;
+  font-size: 8.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-bottom: 1.5pt solid #000;
+}
+.ds-sheet-head .ds-sheet-cfg { font-weight: 500; color: #444; letter-spacing: 0.06em; }
+
+.ds-sheet-foot {
+  flex: 0 0 auto;
+  height: 0.22in;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-stretch: 68%;
+  font-size: 6.5pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #666;
+  border-top: 0.5pt solid #b9c0c8;
+  margin-top: 0.06in;
+}
+
+.ds-cols {
+  display: grid;
+  /* Three columns, not four: the consensus rank and four platform figures need
+     the width, and one position per column is worth a second page. */
+  grid-template-columns: repeat(3, 2.5in);
+  gap: 0.08in;
+  align-content: start;
+  /* Takes exactly the space the fixed-height furniture leaves. `min-height: 0`
+     is required or a grid child refuses to shrink below its content; the
+     overflow guard makes a packing mistake visible as a clip rather than as a
+     surprise second page. */
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+.ds-sheet--landscape .ds-cols {
+  grid-template-columns: repeat(4, 2.5in);
+}
+
+.ds-pcol { break-inside: avoid; }
+
+.ds-pcol-head {
+  height: 0.19in;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.04in;
+  background: #000;
+  color: #fff;
+  font-stretch: 62%;
+  font-weight: 800;
+  font-size: 8pt;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  /* Reversed out AND bordered: it has to survive a printer that drops fills. */
+  border: 0.5pt solid #000;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+.ds-pcol-head span { font-weight: 600; font-size: 6pt; letter-spacing: 0.06em; }
+.ds-pcol { break-inside: avoid; }
+
+.ds-ptier { display: grid; grid-template-columns: 0.11in minmax(0, 1fr); }
+.ds-ptier + .ds-ptier { border-top: 0.75pt solid #666; }
+
+.ds-ptier-bracket { position: relative; }
+.ds-ptier-bracket::before {
+  content: "";
+  position: absolute;
+  left: 0.035in; top: 0.02in; bottom: 0.02in;
+  width: 0.012in;
+  background: #000;
+}
+.ds-ptier-num {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--num);
+  font-size: 5.5pt;
+  color: #666;
+  background: #fff;
+}
+
+.ds-prow {
+  display: grid;
+  grid-template-columns:
+    0.06in 0.16in minmax(0, 1fr) 0.26in 0.18in repeat(4, 0.17in) 0.09in;
+  gap: 0.022in;
+  align-items: center;
+  height: 0.13in;
+  padding: 0 0.03in;
+  font-size: 7.5pt;
+  line-height: 1;
+  border-bottom: 0.25pt solid #d8dbde;
+}
+/* 4%, not 10%. Ten becomes a smear. */
+.ds-prow:nth-child(even) {
+  background: #f2f4f6;
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+.ds-prow.is-last { border-bottom: 0.75pt solid #000; }
+/* A star has to survive the trip to paper. Bold alone at 7.5pt is close to
+   invisible, so a starred player also gets a solid left edge — a border prints
+   on every printer, including the ones that drop background fills. */
+/* The star lives in its own cell to the LEFT of the name. Appended after the
+   name it was the first thing the ellipsis ate on a long one. */
+.ds-prow.is-star { font-weight: 800; }
+.ds-pstar {
+  font-size: 6.5pt;
+  line-height: 1;
+  text-align: center;
+}
+
+.ds-prank { font-family: var(--num); font-size: 5.5pt; color: #666; text-align: right; }
+.ds-pname {
+  font-stretch: 62%;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ds-pteam { font-family: var(--num); font-size: 5pt; color: #444; white-space: nowrap; }
+.ds-pecr {
+  font-family: var(--num); font-size: 6.5pt; font-weight: 700; text-align: right;
+}
+.ds-pcell {
+  font-family: var(--num); font-size: 6pt; color: #333; text-align: right;
+}
+/* Weight, not tint: bold survives a photocopier and a colour fill does not. */
+.ds-pcell.is-value { font-weight: 800; color: #000; }
+.ds-pmove { font-size: 6pt; text-align: center; color: #333; }
+
+/* The little key under each position header, naming the numeric columns. */
+.ds-pkey {
+  display: grid;
+  grid-template-columns:
+    0.06in 0.16in minmax(0, 1fr) 0.26in 0.18in repeat(4, 0.17in) 0.09in;
+  gap: 0.022in;
+  height: 0.13in;
+  align-items: center;
+  padding: 0 0.03in;
+  font-family: var(--num);
+  font-size: 5pt;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #666;
+  text-align: right;
+  border-bottom: 0.5pt solid #b9c0c8;
+}
+.ds-pkey span:last-child { text-align: center; }
+
+/* The tracker grid — the thing people actually scribble on. */
+.ds-tracker {
+  flex: 0 0 auto;
+  height: 0.5in;
+  margin-top: 0.06in;
+  border-top: 0.5pt solid #b9c0c8;
+  padding-top: 0.03in;
+  display: flex;
+  flex-direction: column;
+  gap: 0.02in;
+}
+.ds-tracker-label {
+  font-stretch: 66%; font-size: 6pt; text-transform: uppercase;
+  letter-spacing: 0.1em; color: #666;
+}
+.ds-tracker-grid { display: grid; gap: 0.02in; }
+.ds-tracker-cell {
+  border: 0.25pt solid #b9c0c8;
+  height: 0.16in;
+  font-family: var(--num);
+  font-size: 5pt;
+  color: #999;
+  padding-left: 1pt;
+}
+
+/* ── the screen-only preview toolbar ──────────────────────────────────────── */
+
+.ds-print-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: 10.3in;
+  margin: 0 auto 14px;
+  padding: 10px 4px;
+  border-bottom: 1px solid #b9c0c8;
+  background: #fff;
+  font-family: var(--sans);
+}
+.ds-print-bar .ds-print-spacer { flex: 1; }
+.ds-print-bar a,
+.ds-print-bar button,
+.ds-print-bar label {
+  font-stretch: 72%;
+  font-weight: 700;
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #333;
+  text-decoration: none;
+  cursor: pointer;
+}
+.ds-print-seg { display: inline-flex; border: 1px solid #b9c0c8; }
+.ds-print-seg a { padding: 6px 11px; border-right: 1px solid #b9c0c8; }
+.ds-print-seg a:last-child { border-right: 0; }
+.ds-print-seg a[aria-current="true"] { background: #000; color: #fff; }
+/* Scoped to the bar so it outranks `.ds-print-bar button { color: #333 }`,
+   which was painting this near-black text on a black button. */
+.ds-print-bar .ds-print-go {
+  background: #000;
+  color: #fff;
+  border: 1px solid #000;
+  padding: 6px 12px;
+}
+.ds-print-bar .ds-print-go:hover { background: #1b4f7a; border-color: #1b4f7a; }
+.ds-print-note { font-size: 11px; color: #555; text-transform: none; letter-spacing: 0; }

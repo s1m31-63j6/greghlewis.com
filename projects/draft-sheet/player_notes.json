@@ -1,0 +1,12 @@
+{
+  "_note": "HAND-AUTHORED player notes, for the things no feed carries. Everything else in a blurb is composed from data; these are written. An entry REPLACES the generated opening and is always shown first, so only write what is actually known. `why` records the basis so a future rebuild can check it is still true. Keyed by FantasyPros player_id.",
+  "_schema": "PLAYER_ID: { note: '<one sentence>', why: '<basis>' }",
+  "22968": {
+    "note": "Detroit's staff have been open about wanting to hand him a record-breaking workload, and the schedule sets up for it about as well as anyone's in the league.",
+    "why": "Reported coaching intent, plus Detroit grades out with one of the easiest schedules on our own strength-of-schedule measure."
+  },
+  "20111": {
+    "note": "The concussion history is the live worry, and it is the kind that prices a receiver below his talent.",
+    "why": "Repeated concussions are widely reported and are carried in no injury feed we ingest."
+  }
+}

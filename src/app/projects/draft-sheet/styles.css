@@ -1,0 +1,1067 @@
+/*
+ * Draft Sheet for Casuals.
+ *
+ * The reference is a broadcast scoreboard rather than a newspaper: team color,
+ * official team marks, condensed type, tabular figures. Everything is one type
+ * family — Archivo, a variable font with a width axis — so the condensed
+ * scoreboard label and the body text are the same hand at different widths
+ * rather than two unrelated downloads.
+ *
+ * TABULAR NUMERALS EVERYWHERE. This board is mostly columns of numbers that
+ * change as the settings change, and figures that reflow in place are the
+ * fastest way to make an interface feel cheap.
+ *
+ * Density is the point, not a side effect. Drafting blind traps you into
+ * thinking only about the player on the clock; the sheet has to show enough of
+ * the board at once that you can see three rounds ahead. Rows are 20px.
+ *
+ * The screen being broadcast rather than paper costs nothing at print time —
+ * print.css redefines the whole token block under `.ds-print`, which is one
+ * token block per medium either way.
+ */
+
+.ds-page {
+  --paper: #f7f7f5;
+  --paper-shade: #eeeeeb;
+  --paper-sunk: #e3e3df;
+  --card: #ffffff;
+  --rule: #16181d;
+  --rule-soft: #dcdcd7;
+  --hairline: #e6e6e2;
+
+  --ink: #16181d;
+  --ink-soft: #3b3f47;
+  --ink-quiet: #6b7079;
+  /* 4.9:1 on --paper. The dimmest value allowed to carry text. */
+  --ink-meta: #8b9098;
+
+  --accent: #1b4f7a;
+  --accent-soft: #dbe7f2;
+  --positive: #1f7a52;
+  --negative: #a52121;
+  --warn: #c4860f;
+  --star: #c4860f;
+
+  /* Position accents: navy, claret, ochre, forest — the print-safe editorial
+     set already chosen for NFL Prospect Comparables. Team color carries team
+     identity, so these stay structural and never compete with it. */
+  --qb: #1b4f7a;
+  --rb: #8c2f39;
+  --wr: #b07d2b;
+  --te: #2c5d40;
+  --k: #6b7079;
+  --dst: #4a4a52;
+
+  --sans: var(--font-archivo), system-ui, -apple-system, sans-serif;
+  --num: var(--font-jetbrains-mono), ui-monospace, Menlo, monospace;
+
+  --row-h: 20px;
+  --max-w: 1560px;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-synthesis-weight: none;
+  min-height: 100vh;
+  font-size: 13px;
+}
+
+.ds-page * { box-sizing: border-box; }
+
+.ds-num {
+  font-family: var(--num);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* Uppercase + condensed + wide tracking means "this is a label". Mixed case at
+   normal width means "this is content". That binary is the whole system. */
+.ds-kicker,
+.ds-tab,
+.ds-col-head h2,
+.ds-pill,
+.ds-btn,
+.ds-legend,
+.ds-asof,
+.ds-col-meta {
+  font-family: var(--sans);
+  font-stretch: 78%;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ── masthead ─────────────────────────────────────────────────────────────── */
+
+.ds-masthead {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 20px 20px 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ds-kicker {
+  margin: 0 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.ds-masthead h1 {
+  margin: 0;
+  font-size: clamp(26px, 3.4vw, 40px);
+  font-weight: 800;
+  font-stretch: 84%;
+  letter-spacing: -0.01em;
+  line-height: 1.02;
+}
+.ds-masthead-actions { display: flex; gap: 8px; align-items: center; }
+
+/* ── tabs ─────────────────────────────────────────────────────────────────── */
+
+.ds-tabs {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule-soft);
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ds-tabs::-webkit-scrollbar { display: none; }
+.ds-tab {
+  flex-shrink: 0;
+  background: none;
+  border: 0;
+  padding: 12px 14px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-quiet);
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: color 140ms, border-color 140ms;
+}
+.ds-tab.active { color: var(--ink); border-bottom-color: var(--accent); font-weight: 700; }
+
+/* ── buttons and pills ────────────────────────────────────────────────────── */
+
+.ds-btn {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--rule-soft);
+  background: var(--card);
+  color: var(--ink-soft);
+  padding: 6px 11px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 2px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 140ms, color 140ms, background 140ms;
+}
+.ds-btn:hover { border-color: var(--ink-quiet); color: var(--ink); }
+.ds-btn-primary { background: var(--rule); border-color: var(--rule); color: #fff; }
+.ds-btn-primary:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.ds-presets { display: flex; gap: 4px; flex-wrap: wrap; }
+
+/* Scoring is one exclusive choice, so it looks like a segmented control. The
+   league switches are independent, so they look like switches. Presenting both
+   as identical pills is what let them silently pile up on each other. */
+.ds-control-group { display: flex; align-items: center; gap: 7px; }
+.ds-control-label {
+  font-size: 9px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.ds-seg { display: inline-flex; border: 1px solid var(--rule-soft); border-radius: 3px; overflow: hidden; }
+.ds-seg-btn {
+  background: var(--card);
+  border: 0;
+  border-right: 1px solid var(--rule-soft);
+  padding: 5px 11px;
+  font-family: var(--sans);
+  font-stretch: 78%;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-quiet);
+  cursor: pointer;
+}
+.ds-seg-btn:last-child { border-right: 0; }
+.ds-seg-btn:hover { color: var(--ink); background: var(--paper-shade); }
+.ds-seg-btn[aria-pressed="true"] { background: var(--rule); color: #fff; }
+
+.ds-toggles { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.ds-toggle {
+  display: inline-flex; align-items: center; gap: 5px;
+  border: 1px solid var(--rule-soft);
+  background: var(--card);
+  padding: 5px 10px 5px 8px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-stretch: 78%;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--ink-quiet);
+  cursor: pointer;
+}
+/* A filled dot before the label, so "on" is legible without relying on the
+   fill color alone. */
+.ds-toggle::before {
+  content: "";
+  width: 7px; height: 7px; border-radius: 50%;
+  border: 1px solid var(--ink-meta);
+  background: transparent;
+}
+.ds-toggle[aria-pressed="true"] {
+  border-color: var(--accent); color: var(--accent); background: var(--accent-soft);
+}
+.ds-toggle[aria-pressed="true"]::before { background: var(--accent); border-color: var(--accent); }
+.ds-pill {
+  border: 1px solid var(--rule-soft);
+  background: var(--card);
+  color: var(--ink-soft);
+  padding: 5px 10px;
+  font-size: 10.5px;
+  font-weight: 700;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.ds-pill:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── config bar ───────────────────────────────────────────────────────────── */
+
+.ds-configbar {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 12px 20px 0;
+}
+.ds-configbar-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.ds-summary {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+.ds-provenance {
+  margin: 8px 0 0;
+  font-size: 12px;
+  color: var(--ink-quiet);
+  line-height: 1.45;
+  max-width: 78ch;
+}
+.ds-provenance strong { color: var(--ink); font-weight: 700; }
+
+.ds-panel {
+  margin-top: 10px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--rule-soft);
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.ds-field { display: flex; flex-direction: column; gap: 3px; }
+.ds-field label,
+.ds-slot label {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink-meta);
+}
+.ds-field select,
+.ds-slot input {
+  font: inherit;
+  font-size: 12px;
+  padding: 4px 6px;
+  border: 1px solid var(--rule-soft);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 2px;
+}
+.ds-slots { display: flex; gap: 8px; flex-wrap: wrap; }
+.ds-slot { display: flex; flex-direction: column; gap: 3px; width: 52px; }
+.ds-slot input { width: 100%; font-family: var(--num); }
+
+/* ── toolbar ──────────────────────────────────────────────────────────────── */
+
+.ds-toolbar {
+  max-width: var(--max-w);
+  margin: 12px auto 0;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ds-toolbar-spacer { flex: 1; }
+.ds-asof { font-size: 10px; color: var(--ink-meta); font-weight: 600; }
+.ds-check {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; color: var(--ink-quiet);
+}
+.ds-storage-note {
+  max-width: var(--max-w);
+  margin: 10px auto 0;
+  padding: 8px 20px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ink-quiet);
+}
+.ds-storage-note strong { color: var(--ink-soft); }
+
+.ds-status { max-width: var(--max-w); margin: 24px auto; padding: 0 20px; color: var(--ink-quiet); }
+.ds-status--error { color: var(--negative); }
+
+/* ── the board ────────────────────────────────────────────────────────────── */
+
+.ds-board {
+  max-width: var(--max-w);
+  margin: 12px auto 0;
+  padding: 0 20px 60px;
+  display: grid;
+  /* 352px is the narrowest column that still leaves the name field readable
+     once the fixed numeric furniture is subtracted. Below this the name is the
+     thing that shrinks, and a board of "J. Smi..." is not a board. */
+  grid-template-columns: repeat(auto-fit, minmax(352px, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.ds-col { background: var(--card); border: 1px solid var(--rule-soft); }
+
+.ds-col-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 9px;
+  /* Between positions: 3px + reversed header. The heaviest of three levels. */
+  border-bottom: 3px solid var(--pos, var(--accent));
+  background: var(--paper-shade);
+  position: sticky;
+  top: 41px;
+  z-index: 10;
+}
+.ds-col-head h2 { margin: 0; font-size: 13px; font-weight: 800; letter-spacing: 0.1em; }
+.ds-col-meta { font-size: 9.5px; color: var(--ink-meta); font-weight: 600; }
+.ds-col-repl { margin-left: 4px; }
+
+/* Reuses the row grid so each label sits over its own column. */
+.ds-colkey {
+  display: grid;
+  grid-template-columns:
+    12px 16px minmax(0, 1fr) 11px 28px 20px repeat(var(--cells, 4), 24px) 12px 10px;
+  gap: 3px;
+  padding: 3px 6px 3px 0;
+  margin-left: 17px;
+  border-bottom: 1px solid var(--hairline);
+  background: var(--paper);
+  font-family: var(--num);
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink-meta);
+  text-align: center;
+}
+.ds-colkey-ecr { text-align: right; }
+.ds-colkey-plat sup { font-size: 6px; }
+.ds-colkey-trend { font-size: 7px; }
+
+.ds-pos-QB { --pos: var(--qb); } .ds-pos-QB h2 { color: var(--qb); }
+.ds-pos-RB { --pos: var(--rb); } .ds-pos-RB h2 { color: var(--rb); }
+.ds-pos-WR { --pos: var(--wr); } .ds-pos-WR h2 { color: var(--wr); }
+.ds-pos-TE { --pos: var(--te); } .ds-pos-TE h2 { color: var(--te); }
+.ds-pos-K  { --pos: var(--k);  } .ds-pos-K h2  { color: var(--k); }
+.ds-pos-DST{ --pos: var(--dst);} .ds-pos-DST h2{ color: var(--dst); }
+
+/* Between tiers: 2px. Roughly 3x the within-tier hairline, which is what makes
+   the hierarchy readable at a glance instead of on inspection. */
+.ds-tier {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr);
+  border-bottom: 2px solid var(--ink-meta);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 120px;
+}
+.ds-tier:last-child { border-bottom: 0; }
+
+.ds-tier-bracket {
+  position: relative;
+  border-right: 1px solid var(--rule-soft);
+  background: var(--paper-shade);
+}
+/* The bracket spans the tier's rows, so its LENGTH is the tier's size — which
+   is the actual decision variable: how many are left before the cliff. */
+.ds-tier-bracket::before {
+  content: "";
+  position: absolute;
+  left: 5px; top: 4px; bottom: 4px;
+  width: 2px;
+  background: var(--pos, var(--accent));
+  opacity: 0.55;
+}
+.ds-tier-num {
+  position: absolute;
+  top: 3px; left: 0; right: 0;
+  text-align: center;
+  font-family: var(--num);
+  font-size: 8.5px;
+  font-weight: 700;
+  color: var(--ink-meta);
+  background: var(--paper-shade);
+  padding: 1px 0;
+}
+.ds-tier.is-derived .ds-tier-bracket::before {
+  background: repeating-linear-gradient(
+    to bottom, var(--ink-meta) 0 3px, transparent 3px 6px
+  );
+}
+
+/* ── a row ────────────────────────────────────────────────────────────────── */
+
+.ds-row {
+  display: grid;
+  /* star · pos-rank · NAME · team+bye · ECR · one cell per platform · trend · cut
+     Everything except the name is fixed, so the name absorbs all slack — and
+     unchecking a platform hands its width straight back to the name. The
+     dataset contains names up to 21 characters and "J. Croskey-Merritt" (18)
+     ranks inside the board, so the name is kept above 105px at four cells. */
+  /* The usable width is NOT the column width: subtract the column border and
+     the 16px tier-bracket gutter first. Forgetting that gutter left the name at
+     87px against an 18-character name that needs 111. */
+  grid-template-columns:
+    12px 16px minmax(0, 1fr) 11px 28px 20px repeat(var(--cells, 4), 24px) 12px 10px;
+  align-items: center;
+  gap: 3px;
+  height: var(--row-h);
+  padding: 0 6px 0 0;
+  border-bottom: 1px solid var(--hairline);
+  border-left: 2px solid var(--team-color, transparent);
+  font-size: 11.5px;
+}
+.ds-row:last-child { border-bottom: 0; }
+.ds-row:hover { background: var(--paper-shade); }
+.ds-row.is-starred { background: #fdf6e6; }
+.ds-row.is-removed { opacity: 0.4; text-decoration: line-through; }
+/* The last player in a tier — the difference between reach now and wait. */
+.ds-row.is-last { border-bottom: 1px solid var(--ink-quiet); }
+
+.ds-star, .ds-remove {
+  background: none; border: 0; padding: 0; cursor: pointer;
+  color: var(--ink-meta); line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.ds-star svg { fill: none; stroke: currentColor; stroke-width: 1.2; }
+.ds-star[aria-pressed="true"] { color: var(--star); }
+.ds-star[aria-pressed="true"] svg { fill: currentColor; }
+.ds-remove { font-size: 13px; }
+.ds-remove:hover { color: var(--negative); }
+
+.ds-rank { font-size: 9.5px; color: var(--ink-meta); font-weight: 600; text-align: right; }
+
+/* Screen-reader-only text. */
+.ds-sr {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The letter carries the meaning, not the color. */
+.ds-inj {
+  display: block;
+  position: relative;
+  width: 11px;
+  height: 11px;
+  line-height: 11px;
+  text-align: center;
+  border-radius: 2px;
+  font-family: var(--num);
+  font-size: 8px;
+  font-weight: 700;
+  color: #fff;
+  cursor: help;
+}
+.ds-inj--out { background: var(--negative); }
+.ds-inj--doubtful { background: var(--warn); }
+.ds-inj--questionable { background: var(--ink-meta); }
+.ds-inj-none { display: block; width: 11px; }
+.ds-name {
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-weight: 600; font-stretch: 88%;
+}
+/* `flex-shrink: 0` is load-bearing: without it the bye number squeezes the team
+   mark to zero width and the logos silently vanish, which is exactly what
+   happened the first time this row was tightened. */
+.ds-teamcell { display: flex; align-items: center; gap: 3px; min-width: 0; }
+.ds-teamcell .ds-logo,
+.ds-teamcell .ds-logo-fallback { flex: 0 0 auto; }
+.ds-bye { font-size: 9px; color: var(--ink-meta); flex: 0 0 auto; }
+.ds-ecr { text-align: right; font-size: 10.5px; font-weight: 700; color: var(--ink-soft); }
+
+/* One cell per platform. The tint answers "bargain or reach here"; the number
+   is always present, so color is a shortcut and never the only channel. */
+.ds-cell {
+  display: block;
+  text-align: center;
+  font-family: var(--num);
+  font-variant-numeric: tabular-nums;
+  font-size: 9.5px;
+  line-height: 15px;
+  height: 15px;
+  border-radius: 2px;
+  color: var(--ink-soft);
+  background: var(--paper-shade);
+}
+.ds-cell.is-empty { background: transparent; color: var(--ink-meta); }
+/* Sleeper publishes no ADP — its cell is a position rank, and it says so. */
+.ds-cell.is-rank { font-style: italic; }
+/* Value: available later here than the experts rank him. */
+.ds-cell--v1 { background: #d9eadf; color: #14543a; }
+.ds-cell--v2 { background: #1f7a52; color: #fff; font-weight: 700; }
+/* Reach: gone earlier here than the experts rank him. */
+.ds-cell--r1 { background: #f4d9d8; color: #7d1a1a; }
+.ds-cell--r2 { background: #a52121; color: #fff; font-weight: 700; }
+
+.ds-trend { display: block; margin: 0 auto; }
+.ds-trend path { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.ds-trend--up { color: var(--positive); }
+.ds-trend--down { color: var(--negative); }
+.ds-trend--flat { color: var(--ink-meta); }
+.ds-trend.is-none { width: 10px; height: 10px; }
+
+.ds-logo { object-fit: contain; display: block; }
+.ds-logo-fallback {
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #fff; font-weight: 800; font-stretch: 62%; border-radius: 2px;
+  letter-spacing: 0.02em;
+}
+
+
+.ds-arrow-stroke { fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.ds-arrow-fill { fill: currentColor; stroke: currentColor; stroke-width: 1.4; stroke-linejoin: round; }
+.ds-arrow--much-better, .ds-arrow--better { color: var(--positive); }
+.ds-arrow--much-worse, .ds-arrow--worse { color: var(--negative); }
+.ds-arrow--same { color: var(--ink-meta); }
+
+/* ── sources ──────────────────────────────────────────────────────────────── */
+
+.ds-sources {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 11.5px;
+  color: var(--ink-quiet);
+}
+.ds-sources h3 {
+  margin: 0 0 8px;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-meta);
+}
+.ds-sources ul { margin: 0; padding-left: 16px; line-height: 1.6; }
+.ds-sources p { margin-top: 8px; }
+
+/* ── mobile: a reader, not an editor ──────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .ds-board { grid-template-columns: 1fr; padding-bottom: 40px; }
+  .ds-colkey {
+    grid-template-columns:
+      12px 16px minmax(0, 1fr) 11px 28px 20px repeat(var(--cells, 4), 24px) 12px 10px;
+  }
+  .ds-col-head { position: static; }
+  .ds-row {
+    grid-template-columns:
+      12px 16px minmax(0, 1fr) 11px 28px 20px repeat(var(--cells, 4), 24px) 12px 10px;
+  }
+  .ds-row .ds-spark, .ds-row .ds-spark-empty { display: none; }
+}
+@media (max-width: 620px) {
+  .ds-masthead { padding: 14px 14px 10px; }
+  .ds-tabs, .ds-configbar, .ds-toolbar, .ds-board, .ds-sources { padding-left: 14px; padding-right: 14px; }
+  /* Phone: the platform cells are the first thing to go — a drafter on a phone
+     is reading the board, not arbitraging four platforms. */
+  .ds-row,
+  .ds-colkey {
+    grid-template-columns: 12px 16px minmax(0, 1fr) 11px 28px 20px 12px 10px;
+  }
+  .ds-row .ds-cell,
+  .ds-colkey-plat { display: none; }
+  .ds-row .ds-track { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-page *, .ds-page *::before, .ds-page *::after {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── offseason by team ────────────────────────────────────────────────────── */
+
+.ds-teams { max-width: var(--max-w); margin: 0 auto; padding: 14px 20px 60px; }
+.ds-teams-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ds-teams-bar .ds-pill[aria-pressed="true"] {
+  background: var(--rule); border-color: var(--rule); color: #fff;
+}
+.ds-teams-bar select {
+  font: inherit; font-size: 11px; padding: 3px 5px;
+  border: 1px solid var(--rule-soft); background: var(--paper); border-radius: 2px;
+}
+.ds-teams-note {
+  margin: 12px 0 16px;
+  font-size: 12px; line-height: 1.55; color: var(--ink-quiet); max-width: 82ch;
+}
+.ds-teams-note strong { color: var(--ink-soft); }
+
+.ds-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--rule-soft);
+  border: 1px solid var(--rule-soft);
+}
+.ds-team-card { background: var(--card); padding: 10px 12px 12px; }
+.ds-team-card header { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.ds-team-card h3 {
+  margin: 0; font-size: 13px; font-weight: 800; font-stretch: 84%;
+  letter-spacing: 0.01em;
+}
+.ds-team-div {
+  margin-left: auto; font-size: 9px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.09em;
+}
+
+.ds-team-arrows {
+  display: flex; gap: 10px; align-items: center; margin: 9px 0 7px;
+  padding: 6px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline);
+}
+.ds-vibe-wrap { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; }
+.ds-vibe-label {
+  font-size: 8.5px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.09em;
+}
+.ds-vibe {
+  padding: 2px 6px;
+  border-radius: 999px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: help;
+}
+.ds-vibe--buzzing { background: #1f7a52; color: #fff; }
+.ds-vibe--optimistic { background: #cfe6da; color: #14543a; }
+.ds-vibe--steady { background: var(--paper-sunk); color: var(--ink-soft); }
+.ds-vibe--uncertain { background: #f7e6c6; color: #7a5310; }
+.ds-vibe--skeptical { background: #f4d9d8; color: #7d1a1a; }
+.ds-vibe--bleak { background: #a52121; color: #fff; }
+
+.ds-narrative {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink);
+}
+.ds-team-arrow { display: inline-flex; align-items: center; gap: 4px; }
+.ds-team-arrow-pos {
+  font-size: 9px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+.ds-team-coach { margin: 0 0 8px; font-size: 11px; }
+.ds-team-coach div { display: flex; gap: 6px; align-items: baseline; }
+.ds-team-coach dt {
+  font-size: 9px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.08em; min-width: 18px;
+}
+.ds-team-coach dd { margin: 0; color: var(--ink-soft); }
+.ds-team-was { color: var(--ink-meta); }
+
+.ds-team-moves { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.ds-move-col h4 {
+  margin: 0 0 3px; font-size: 9px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.ds-move-col ul { margin: 0; padding: 0; list-style: none; }
+.ds-move-col li {
+  display: grid; grid-template-columns: 20px minmax(0, 1fr) auto;
+  gap: 4px; align-items: baseline; font-size: 11px; line-height: 1.55;
+}
+.ds-move-pos { font-size: 8.5px; font-weight: 700; color: var(--ink-meta); }
+.ds-move-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ds-move-dir { font-size: 8.5px; color: var(--ink-meta); font-family: var(--num); }
+.ds-move-none { margin: 0; color: var(--ink-meta); font-size: 11px; }
+
+@media (max-width: 620px) {
+  .ds-teams { padding-left: 14px; padding-right: 14px; }
+  .ds-team-grid { grid-template-columns: 1fr; }
+}
+
+/* ── grades, starters, and a much smaller coaching footprint ─────────────── */
+
+.ds-grades {
+  display: flex;
+  gap: 14px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--hairline);
+  margin-bottom: 8px;
+}
+.ds-grade { display: inline-flex; align-items: center; gap: 5px; }
+.ds-grade-label {
+  font-size: 9px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.09em;
+}
+.ds-grade-mark {
+  min-width: 24px; text-align: center;
+  font-family: var(--num); font-size: 11.5px; font-weight: 700;
+  padding: 1px 4px; border-radius: 2px;
+}
+/* Four steps only. A letter grade implies more precision than the inputs have,
+   so the color deliberately does not resolve finer than the letter does. */
+.ds-grade-mark.is-a { background: #cfe6da; color: #14543a; }
+.ds-grade-mark.is-b { background: #e4ecdf; color: #3d5a3f; }
+.ds-grade-mark.is-c { background: var(--paper-sunk); color: var(--ink-soft); }
+.ds-grade-mark.is-d { background: #f4d9d8; color: #7d1a1a; }
+
+.ds-starters { margin-bottom: 9px; }
+.ds-starters h4,
+.ds-move-col h4 {
+  margin: 0 0 3px;
+  font-size: 9px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.ds-starters ul { margin: 0; padding: 0; list-style: none; }
+.ds-starters li {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) 30px;
+  gap: 6px;
+  align-items: baseline;
+  font-size: 11.5px;
+  line-height: 1.6;
+}
+.ds-starter-pos {
+  font-size: 8.5px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.ds-starter-name {
+  font-weight: 600; color: var(--ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ds-starter-ecr { text-align: right; font-size: 10px; color: var(--ink-quiet); }
+
+.ds-staff {
+  margin: 0 0 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 12px;
+  font-size: 11px;
+  color: var(--ink-quiet);
+}
+.ds-staff em {
+  font-style: normal;
+  font-size: 8.5px;
+  font-weight: 700;
+  color: var(--ink-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-right: 3px;
+}
+.ds-staff .is-new { color: var(--accent); font-weight: 600; }
+.ds-staff-calls {
+  margin-left: 4px; padding: 0 3px;
+  font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--ink-soft); background: var(--paper-sunk); border-radius: 2px;
+}
+
+.ds-coach-major {
+  margin-bottom: 9px;
+  padding: 7px 8px;
+  background: var(--paper-shade);
+  border-left: 2px solid var(--accent);
+}
+.ds-coach-head {
+  margin: 0 0 3px;
+  display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap;
+}
+.ds-coach-flag {
+  font-size: 8.5px; font-weight: 700; color: var(--accent);
+  text-transform: uppercase; letter-spacing: 0.1em;
+}
+.ds-coach-who { font-size: 11.5px; font-weight: 700; color: var(--ink); }
+.ds-coach-role-tag {
+  margin-left: 5px;
+  font-size: 8.5px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.07em;
+}
+.ds-coach-note { margin: 0; font-size: 11px; line-height: 1.5; color: var(--ink-quiet); }
+
+/* ── league import ────────────────────────────────────────────────────────── */
+
+.ds-import { flex: 1 1 100%; border-bottom: 1px solid var(--hairline); padding-bottom: 12px; }
+.ds-import-form label {
+  display: block; margin-bottom: 4px;
+  font-size: 9.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.09em; color: var(--ink-meta);
+}
+.ds-import-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.ds-import-row input {
+  font: inherit; font-size: 12.5px; padding: 5px 8px; min-width: 240px; flex: 0 1 300px;
+  border: 1px solid var(--rule-soft); background: var(--paper); border-radius: 2px;
+}
+.ds-import-hint {
+  margin: 6px 0 0; font-size: 11px; line-height: 1.5; color: var(--ink-quiet); max-width: 74ch;
+}
+.ds-import-hint strong { color: var(--ink-soft); }
+.ds-import-choose { margin-top: 8px; }
+.ds-import-choose p { margin: 0 0 5px; font-size: 11px; color: var(--ink-quiet); }
+.ds-import-choose ul { margin: 0; padding: 0; list-style: none; display: flex; gap: 5px; flex-wrap: wrap; }
+.ds-import-choose span { color: var(--ink-meta); }
+.ds-import-ok { margin: 8px 0 0; font-size: 11.5px; color: var(--positive); }
+.ds-import-error { margin: 8px 0 0; font-size: 11.5px; color: var(--negative); max-width: 74ch; }
+.ds-coach-calls.is-new {
+  background: var(--accent); color: #fff;
+}
+
+
+/* ── the key ──────────────────────────────────────────────────────────────── */
+
+.ds-legend-bar {
+  max-width: var(--max-w);
+  margin: 10px auto 0;
+  padding: 0 20px;
+}
+.ds-legend-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-bottom: 8px;
+}
+.ds-legend-title-text {
+  font-family: var(--sans);
+  font-stretch: 78%;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink-meta);
+}
+.ds-legend-min {
+  margin-left: auto;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--rule-soft);
+  border-radius: 3px;
+  background: var(--card);
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+.ds-legend-min:hover { border-color: var(--ink-quiet); color: var(--ink); }
+.ds-platform-picks { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ds-platform-label {
+  font-size: 9.5px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.09em;
+}
+.ds-platform-check {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; color: var(--ink-soft); cursor: pointer;
+}
+
+.ds-legend-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+  padding: 12px 14px;
+  background: var(--card);
+  border: 1px solid var(--rule-soft);
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--ink-quiet);
+}
+.ds-legend-title {
+  margin: 0 0 6px;
+  font-size: 9.5px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.09em;
+}
+.ds-legend-items { margin: 0; display: grid; gap: 5px; }
+.ds-legend-items > div { display: grid; grid-template-columns: 46px 1fr; gap: 8px; align-items: baseline; }
+.ds-legend-items dt { font-weight: 700; color: var(--ink); font-size: 10.5px; }
+.ds-legend-items dd { margin: 0; }
+.ds-legend-swatches {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.ds-legend-swatches .ds-cell { width: 24px; }
+.ds-legend-foot { margin: 8px 0 0; font-size: 10.5px; color: var(--ink-meta); }
+.ds-legend-tiers p:not(.ds-legend-title) { margin: 0; }
+.ds-legend-body strong { color: var(--ink-soft); }
+
+/* ── top 200 ──────────────────────────────────────────────────────────────── */
+
+.ds-top200 { max-width: 1180px; margin: 0 auto; padding: 14px 20px 60px; }
+.ds-top-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.ds-top-bar .ds-pill[aria-pressed="true"] {
+  background: var(--rule); border-color: var(--rule); color: #fff;
+}
+.ds-top-search {
+  font: inherit; font-size: 12.5px; padding: 5px 8px; min-width: 200px;
+  border: 1px solid var(--rule-soft); background: var(--paper); border-radius: 2px;
+}
+.ds-top-note {
+  margin: 12px 0 16px;
+  font-size: 12px; line-height: 1.55; color: var(--ink-quiet); max-width: 88ch;
+}
+.ds-top-note strong { color: var(--ink-soft); }
+
+.ds-top-list { list-style: none; margin: 0; padding: 0; }
+.ds-top-row {
+  display: grid;
+  grid-template-columns: 34px 44px minmax(150px, 210px) 96px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--hairline);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 92px;
+}
+.ds-top-row:hover { background: var(--paper-shade); }
+
+.ds-top-rank {
+  font-size: 15px; font-weight: 700; color: var(--ink-meta); text-align: right;
+  padding-top: 2px;
+}
+.ds-face {
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+.ds-face--fallback {
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%; color: #fff; font-weight: 800; font-stretch: 70%;
+}
+
+.ds-top-name {
+  margin: 0; display: flex; align-items: center; gap: 5px;
+  font-size: 15px; font-weight: 700; line-height: 1.2;
+}
+.ds-top-meta {
+  margin: 4px 0 0; display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  font-size: 10.5px; color: var(--ink-meta);
+}
+.ds-top-pos { font-weight: 700; color: var(--pos, var(--accent)); }
+
+.ds-top-proj { display: flex; flex-direction: column; gap: 1px; }
+.ds-top-proj-label {
+  font-size: 8.5px; font-weight: 700; color: var(--ink-meta);
+  text-transform: uppercase; letter-spacing: 0.09em;
+}
+.ds-top-proj-val {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 16px; font-weight: 700; color: var(--ink);
+}
+.ds-top-dir { display: inline-flex; cursor: help; }
+.ds-top-last {
+  margin-top: 3px; font-size: 9.5px; line-height: 1.35; color: var(--ink-meta);
+}
+.ds-top-proj-adp {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 10.5px; color: var(--ink-quiet);
+}
+
+.ds-top-news {
+  display: inline-block;
+  margin: 0 0 7px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+}
+.ds-top-news:hover { text-decoration: underline; }
+.ds-top-row.is-flash { background: var(--accent-soft); }
+
+.ds-name {
+  background: none;
+  border: 0;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  cursor: pointer;
+}
+.ds-name:hover { color: var(--accent); text-decoration: underline; }
+
+.ds-top-blurb { margin: 0 0 6px; font-size: 13px; line-height: 1.5; color: var(--ink-soft); }
+.ds-top-case { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 4px 14px; }
+.ds-case {
+  margin: 0; font-size: 11px; line-height: 1.45; color: var(--ink-quiet);
+  padding-left: 8px; border-left: 2px solid var(--rule-soft);
+}
+.ds-case span {
+  display: block;
+  font-size: 8.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em;
+}
+.ds-case--up { border-left-color: var(--positive); }
+.ds-case--up span { color: var(--positive); }
+.ds-case--down { border-left-color: var(--negative); }
+.ds-case--down span { color: var(--negative); }
+
+.ds-top-foot { margin-top: 20px; font-size: 11.5px; }
+.ds-top-foot a { color: var(--accent); text-decoration: none; }
+
+@media (max-width: 760px) {
+  .ds-top-row {
+    grid-template-columns: 26px 36px minmax(0, 1fr);
+    gap: 10px;
+    row-gap: 8px;
+  }
+  /* Projection and notes drop below the identity block rather than crushing it. */
+  .ds-top-proj { grid-column: 2 / -1; flex-direction: row; align-items: baseline; gap: 8px; }
+  .ds-top-say { grid-column: 2 / -1; }
+}
+
+/* Portal tooltip — lives on document.body, outside every containment boundary
+   the board sets up. */
+.ds-tip {
+  position: fixed;
+  z-index: 200;
+  width: 260px;
+  padding: 7px 9px;
+  background: var(--rule, #16181d);
+  color: #fff;
+  border-radius: 3px;
+  font-family: var(--sans, system-ui);
+  font-size: 11.5px;
+  line-height: 1.45;
+  box-shadow: 0 2px 10px rgba(20, 22, 26, 0.25);
+  pointer-events: none;
+}

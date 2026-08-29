@@ -45,6 +45,15 @@ const HOME: SignupCopy = {
  * readers.
  */
 const BY_PROJECT: Record<string, SignupCopy> = {
+  "draft-sheet": {
+    id: "draft-sheet",
+    label: "Draft Sheet",
+    headline: "More football, when I make it",
+    blurb:
+      "I build football things fairly often \u2014 models, tools, and the odd argument with the consensus. Leave an address and I will send a note when the next one lands. \u2014 Greg",
+    notePrompt: "What would you want me to build next?",
+    cta: "Add me to the list",
+  },
   playbook: {
     id: "playbook",
     label: "Playbook",

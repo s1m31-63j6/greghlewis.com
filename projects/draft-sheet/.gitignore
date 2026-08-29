@@ -1,0 +1,4 @@
+# Raw upstream responses. Reproducible by re-running the fetchers, and large
+# enough (the ESPN pull alone is 18 MB) that they have no business in git.
+data/
+.venv/

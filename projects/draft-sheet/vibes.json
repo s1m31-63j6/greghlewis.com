@@ -1,0 +1,11 @@
+{
+  "_note": "Authored overrides for preseason mood, used only where the derived blend is demonstrably wrong. Every entry must name a known vibe and give a reason; team_news.py fails the build otherwise. Vibes: Buzzing, Optimistic, Steady, Uncertain, Skeptical, Bleak.",
+  "SF": {
+    "vibe": "Skeptical",
+    "why": "The receiving corps is banged up going into the season and the depth behind it is unproven."
+  },
+  "WSH": {
+    "vibe": "Bleak",
+    "why": "A first-time play-caller, a scheme change that cuts into Jayden Daniels' rushing, and an offense widely written off this preseason."
+  }
+}
