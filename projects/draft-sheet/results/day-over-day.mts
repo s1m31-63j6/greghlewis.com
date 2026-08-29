@@ -52,8 +52,13 @@ const REQUIRE_BASELINE = process.argv.includes("--require-baseline");
 let failures = 0;
 let warnings = 0;
 let assertions = 0;
-/** Below this, the gate did not actually run and must not report success. */
-const MIN_ASSERTIONS_WITH_BASELINE = 14;
+/**
+ * Below this, the gate did not actually run and must not report success.
+ * A full run with a baseline makes 13 assertions; a run whose baseline lookup
+ * silently failed makes 7. Twelve separates them with room for a check to be
+ * added or removed without a false alarm.
+ */
+const MIN_ASSERTIONS_WITH_BASELINE = 12;
 
 /**
  * `detail` prints in both states; `whenFailed` only when the check fails, for
@@ -151,6 +156,7 @@ const playersNow = current<{ players: PlayerRow[] }>("players.json").players;
 
 const adpWas = previous<{ adp: AdpRow[] }>("adp.json")?.adp ?? null;
 const playersWas = previous<{ players: PlayerRow[] }>("players.json")?.players ?? null;
+const metaWas = previous<Meta>("meta.json");
 const firstRun = adpWas === null || playersWas === null;
 
 // FantasyPros is a US site stamping Eastern dates, and the runner is on UTC. A
@@ -304,7 +310,34 @@ if (firstRun) {
   // NOTE: compare the DATA files, never meta.json — `built` is today's date, so
   // meta.json differs every single day and a whole-directory byte comparison
   // would make this check dead code that looks like it works.
-  check("adp.json is not byte-identical to the last run", !identicalToHead("adp.json"));
+  //
+  // AND identical output is only wrong if the INPUTS moved. Running twice in a
+  // day legitimately produces the same board: these feeds publish about once a
+  // day. Failing on that would mean a red run every time somebody reruns the
+  // pipeline, and a gate that cries wolf daily gets ignored within a week —
+  // which quietly disarms every other check in this file.
+  const frozen = identicalToHead("adp.json");
+  const sourcesMoved =
+    metaWas != null &&
+    (meta.freshness?.rankings !== metaWas.freshness?.rankings ||
+      meta.freshness?.adpWindowEnd !== metaWas.freshness?.adpWindowEnd);
+
+  if (frozen && sourcesMoved) {
+    check(
+      "adp.json moved, because the sources did",
+      false,
+      "",
+      "the feeds published new data and our board is byte-identical — it is not reaching the output",
+    );
+  } else if (frozen) {
+    console.log(
+      `  --    adp.json unchanged, and so are the sources ` +
+        `(rankings ${meta.freshness?.rankings}, pool ends ${meta.freshness?.adpWindowEnd}) — ` +
+        "a genuine no-op, nothing to publish",
+    );
+  } else {
+    check("adp.json changed since the last run", true);
+  }
 
   warn("players.json changed", !identicalToHead("players.json"),
     "rankings can genuinely sit still for a day");
