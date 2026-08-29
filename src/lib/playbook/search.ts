@@ -16,7 +16,7 @@
  */
 
 import { formationById } from "./formations.ts";
-import { normalize, recognise } from "./vocabulary.ts";
+import { normalize, recognize } from "./vocabulary.ts";
 import type {
   Assignment,
   Filters,
@@ -45,7 +45,7 @@ const SLOT_TO_TARGET: Partial<Record<SlotId, TargetRole>> = {
   Z: "ZWR",
   H: "SLOT",
   V: "SLOT",
-  // In flag the centre is a fully eligible receiver the instant he snaps it,
+  // In flag the center is a fully eligible receiver the instant he snaps it,
   // and at least one play in the library is built entirely around that.
   C: "CTR",
 };
@@ -58,7 +58,7 @@ export const TARGET_LABELS: Record<TargetRole, string> = {
   XWR: "Split end (X)",
   ZWR: "Flanker (Z)",
   SLOT: "Slot (H)",
-  CTR: "Centre (flag)",
+  CTR: "Center (flag)",
 };
 
 function routeWords(a: Assignment): string {
@@ -240,7 +240,7 @@ export function parseQuery(raw: string): ParsedQuery {
     }
 
     if (kept.length === 0) continue;
-    const { found, rest } = recognise(normalize(kept.join(" ")));
+    const { found, rest } = recognize(normalize(kept.join(" ")));
     if (found.length === 0 && rest.length === 0) continue;
 
     terms.push({
@@ -267,7 +267,7 @@ export function matchPlay(e: PlayIndexEntry, rail: Filters, parsed: ParsedQuery)
     for (const c of term.constraints) {
       if (!c.any.some((f) => satisfies(e, f))) return false;
     }
-    // Anything the table did not recognise still has to appear somewhere —
+    // Anything the table did not recognize still has to appear somewhere —
     // this is what keeps "mesh" and a coach's own notes searchable.
     for (const w of term.words) {
       if (!e.h.includes(w)) return false;
@@ -279,7 +279,7 @@ export function matchPlay(e: PlayIndexEntry, rail: Filters, parsed: ParsedQuery)
 
 /**
  * Remove one understood concept from the raw query, so its chip can be
- * dismissed. Matching on the normalised words rather than the literal text is
+ * dismissed. Matching on the normalized words rather than the literal text is
  * what lets "first down" be removed when the chip says "1st down".
  */
 export function withoutConstraint(raw: string, matched: string): string {

@@ -841,7 +841,7 @@ export const WEST_COAST: PlaySpec[] = [
     },
     tags: ["motion", "quick", "perimeter", "leverage"],
     situations: ["1st-down", "2nd-short", "opening-script", "vs-zone"],
-    coaching: { keys: "Motion changes the count on the perimeter after the defence has already declared." },
+    coaching: { keys: "Motion changes the count on the perimeter after the defense has already declared." },
   }),
 
   play({

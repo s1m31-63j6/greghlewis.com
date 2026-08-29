@@ -3,7 +3,7 @@
  *
  * Not a shrunken version of the eleven-man game. There is no blocking at all,
  * so there is no protection to draw and every non-quarterback is running a
- * route. The centre is a fully eligible receiver the moment he snaps it. The
+ * route. The center is a fully eligible receiver the moment he snaps it. The
  * quarterback may not run, so a run play needs a genuine exchange. The rusher
  * starts seven yards back, which is why the pocket holds long enough for a
  * fifteen-yard route to exist at all — and the seven-second clock is why it
@@ -274,7 +274,7 @@ export const FLAG_PLAYS: PlaySpec[] = [
     tags: ["screen", "center", "eligible-snapper", "surprise"],
     situations: ["3rd-short", "blitz-beater", "goal-line"],
     coaching: {
-      keys: "The centre is eligible the instant he snaps it. Nobody covers him until you have run this once.",
+      keys: "The center is eligible the instant he snaps it. Nobody covers him until you have run this once.",
       commentary: "Free yards in most youth leagues, and it stays free longer than it should.",
     },
   }),
@@ -769,7 +769,7 @@ export const FLAG_PLAYS: PlaySpec[] = [
     },
     tags: ["run", "counter", "motion", "misdirection", "exchange"],
     situations: ["1st-down", "2nd-short", "opening-script"],
-    coaching: { keys: "Motion sets the defence running one way and the handoff goes the other." },
+    coaching: { keys: "Motion sets the defense running one way and the handoff goes the other." },
   }),
 
   play({
@@ -1329,7 +1329,7 @@ export const FLAG_PLAYS: PlaySpec[] = [
     },
     tags: ["flood", "orbit", "motion", "three-level"],
     situations: ["3rd-medium", "2nd-long", "vs-zone", "sideline"],
-    coaching: { keys: "Motion the flat route across so the defence has to re-fit while the ball is coming out." },
+    coaching: { keys: "Motion the flat route across so the defense has to re-fit while the ball is coming out." },
   }),
 
   play({

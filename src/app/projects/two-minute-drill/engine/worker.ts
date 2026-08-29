@@ -62,7 +62,7 @@ self.onmessage = async (e: MessageEvent<Request>) => {
     const s = req.state;
     let state: GameState;
     let outcome: Outcome | null = null;
-    // What the opposing offence chose, when the play was theirs.
+    // What the opposing offense chose, when the play was theirs.
     let offenseAction: Action | null = null;
     if (req.side === "defense") {
       [state, outcome, offenseAction] = resolveDefense(s, req.action as DefenseAction, m, rng);

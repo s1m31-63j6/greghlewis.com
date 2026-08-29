@@ -3,8 +3,8 @@
  *
  * The drive log used to build its text as `action — outcome`, which reads
  * tolerably for your own plays ("pass sideline — first down") and not at all
- * for the other team's ("defend — no play"). Standing on defence you are
- * watching someone else's offence, and the interface has to say what they did.
+ * for the other team's ("defend — no play"). Standing on defense you are
+ * watching someone else's offense, and the interface has to say what they did.
  *
  * Yardage is recovered from the yardline delta rather than carried around,
  * because the engine already encodes it there and a second copy would be a

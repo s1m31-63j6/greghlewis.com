@@ -183,8 +183,8 @@ export function useDrill(scenario: Scenario | null, userTeam: string | null, sea
       const seed = seedRef.current++;
 
       // Still on the rails, and this is the call that was actually made. On
-      // defence that means matching whether the real defence spent a timeout,
-      // not matching the opposing offence's play.
+      // defense that means matching whether the real defense spent a timeout,
+      // not matching the opposing offense's play.
       const onRails =
         currentReal !== null && realChoiceFor(side, currentReal, userTeam) === action;
       if (onRails && currentReal && sequence && histIndex !== null) {

@@ -133,10 +133,10 @@ export default function Methodology() {
               <strong>Clock runoff is measured from the data.</strong> Rather than encoding the
               stoppage rules, the engine measures the actual elapsed time between consecutive
               snaps and samples it, split by outcome, by whether a timeout intervened, by whether
-              the offence is chasing or protecting a lead, and by how much clock is left. Those
-              splits matter: after a completed pass that stays inbounds, a trailing offence takes
+              the offense is chasing or protecting a lead, and by how much clock is left. Those
+              splits matter: after a completed pass that stays inbounds, a trailing offense takes
               a median of 14 seconds to snap again inside the final minute, 21 seconds inside two
-              minutes, and 27 seconds with three to five minutes left. A leading offence takes 43.
+              minutes, and 27 seconds with three to five minutes left. A leading offense takes 43.
             </li>
           </ul>
         </div>
@@ -256,7 +256,7 @@ export default function Methodology() {
           </div>
           <p className="mt-3">
             One caveat on reading the slider. Only the kicking moves with it. The passing, the
-            clock behaviour and what coaches choose to do all stay fit on 2016 to 2025, so setting
+            clock behavior and what coaches choose to do all stay fit on 2016 to 2025, so setting
             it to 2003 asks what this decision would look like with a 2003 kicker and nothing else
             changed. That is the counterfactual worth being able to see, and it is not a
             simulation of the 2003 NFL.
@@ -434,7 +434,7 @@ export default function Methodology() {
           <h2 className="mb-2 font-serif text-xl text-slate-900">10. Limitations</h2>
           <ul className="mt-2 list-disc space-y-1.5 pl-5 text-[14px]">
             <li>
-              <strong>No teams.</strong> Every offence and defence is league average. Playing the
+              <strong>No teams.</strong> Every offense and defense is league average. Playing the
               2021 Chiefs and playing a replacement quarterback produce identical models.
             </li>
             <li>

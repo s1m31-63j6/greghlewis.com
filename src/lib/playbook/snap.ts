@@ -12,7 +12,7 @@
  * The inverse mapping is derived from the forward one rather than restated:
  * `backPoint` is imported and evaluated for each candidate alignment, and the
  * nearest wins. That means a change to how a wing is placed cannot silently
- * disagree with how a wing is recognised.
+ * disagree with how a wing is recognized.
  *
  * What snapping deliberately loses is precision the model has no way to store,
  * and the builder says so rather than hiding it — the inspector reports the
@@ -188,7 +188,7 @@ export function snapQb(point: Vec, variantId: FieldVariantId): { align: QBAlign;
  *
  * Not cosmetic: coverage rules are written by number from the sideline in
  * ("carry #2 vertical"), so a formation whose numbering does not match its
- * shape would describe a defence that nobody plays. Recomputed on every drop
+ * shape would describe a defense that nobody plays. Recomputed on every drop
  * rather than tracked, because the shape is the only source of truth for it.
  */
 export function renumber(receivers: ReceiverSpot[], variantId: FieldVariantId): ReceiverSpot[] {

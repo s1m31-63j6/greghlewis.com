@@ -639,7 +639,7 @@ export const FLEXBONE: PlaySpec[] = [
     },
     tags: ["option", "weak-side", "misdirection", "two-way"],
     situations: ["1st-down", "2nd-short", "vs-cover-3"],
-    coaching: { keys: "Dive fake to the strength, then option the other way against a defence that has already flowed." },
+    coaching: { keys: "Dive fake to the strength, then option the other way against a defense that has already flowed." },
   }),
 
   play({
@@ -846,7 +846,7 @@ export const FLEXBONE: PlaySpec[] = [
     },
     tags: ["option", "motion", "twirl", "disguise"],
     situations: ["1st-down", "2nd-short", "opening-script"],
-    coaching: { keys: "Motion out and back so the defence has to re-declare its edge twice before the snap." },
+    coaching: { keys: "Motion out and back so the defense has to re-declare its edge twice before the snap." },
   }),
 
   play({
@@ -1301,7 +1301,7 @@ export const WING_T: PlaySpec[] = [
     },
     tags: ["pitch", "sweep", "perimeter", "speed"],
     situations: ["1st-down", "plus-territory", "sideline"],
-    coaching: { install: "No pulls and no fakes. This one beats the defence to the edge with pure width." },
+    coaching: { install: "No pulls and no fakes. This one beats the defense to the edge with pure width." },
   }),
 
   play({
@@ -1456,7 +1456,7 @@ export const WING_T: PlaySpec[] = [
     },
     tags: ["sweep", "double-wing", "pullers", "series"],
     situations: ["1st-down", "short-yardage", "four-minute"],
-    coaching: { keys: "Two pullers and two wings mean four blockers arrive at the edge before the defence can widen." },
+    coaching: { keys: "Two pullers and two wings mean four blockers arrive at the edge before the defense can widen." },
   }),
 
   play({
@@ -1631,7 +1631,7 @@ export const WING_T: PlaySpec[] = [
     },
     tags: ["sweep", "unbalanced", "pullers", "formation-stress"],
     situations: ["1st-down", "short-yardage", "plus-territory"],
-    coaching: { keys: "An extra lineman on the sweep side means one more blocker than the defence has aligned to handle." },
+    coaching: { keys: "An extra lineman on the sweep side means one more blocker than the defense has aligned to handle." },
   }),
 
   play({

@@ -2,7 +2,7 @@
  * Shapes shared by the engine, the worker and the UI.
  *
  * `GameState` is expressed in the frame of whoever has the ball: `diff` is the
- * offence's score minus the defence's, and a change of possession flips the
+ * offense's score minus the defense's, and a change of possession flips the
  * sign along with everything else. That keeps the step function free of
  * "which team am I" branching, and it is why `userDiff` exists as the one
  * place the player's own perspective is recovered.
@@ -17,7 +17,7 @@ export interface GameState {
   seconds: number;
   phase: Phase;
   diff: number;
-  yardline: number; // yards from the offence to the opponent's goal, 1-99
+  yardline: number; // yards from the offense to the opponent's goal, 1-99
   down: number;
   ydstogo: number;
   offTo: number;

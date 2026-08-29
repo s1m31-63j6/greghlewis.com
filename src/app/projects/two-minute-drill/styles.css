@@ -1,7 +1,7 @@
 /*
  * Two-Minute Drill.
  *
- * The reference is a broadcast scoreboard rather than a newspaper: club colour,
+ * The reference is a broadcast scoreboard rather than a newspaper: team color,
  * team marks, condensed type, and a field that moves. Everything is one type
  * family — Archivo, a variable font with a width axis — so the condensed
  * scoreboard face and the body text are the same hand at different widths
@@ -224,7 +224,7 @@
 .tmd-sb-team.right {
   flex-direction: row-reverse;
 }
-/* Club colour as a bar down the outer edge. */
+/* Team color as a bar down the outer edge. */
 .tmd-sb-team::before {
   content: "";
   position: absolute;
@@ -354,7 +354,7 @@
   border-radius: 4px;
   overflow: hidden;
   box-shadow: var(--shadow-md);
-  /* Fixed ratio so the club marks in the end zones are never distorted. */
+  /* Fixed ratio so the team marks in the end zones are never distorted. */
   aspect-ratio: 1000 / 300;
   background: var(--turf);
 }
@@ -707,7 +707,7 @@
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
-/* Club colours as a strip across the top of the card. */
+/* Team colors as a strip across the top of the card. */
 .tmd-card-strip {
   height: 4px;
   display: flex;

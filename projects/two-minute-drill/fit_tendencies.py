@@ -39,7 +39,7 @@ from pbp import DEFAULT_SEASONS, load_seasons
 MIN_N = 25
 
 # Tendencies are fit on the fourth quarter from five minutes out. Earlier-game
-# fourth-down behaviour is a different decision problem (field position and
+# fourth-down behavior is a different decision problem (field position and
 # expected points rather than the clock), so pooling it in would blur exactly
 # the situations this project is about.
 WINDOW = "qtr == 4 and quarter_seconds_remaining <= 300"
@@ -74,7 +74,7 @@ def _table(df: pd.DataFrame, col: str, options: list[str], levels: list[list[str
     return out
 
 
-# Fourth-down behaviour is fit on a tighter window than everything else.
+# Fourth-down behavior is fit on a tighter window than everything else.
 # Inside two and a half minutes a trailing team has essentially no chance of
 # getting the ball back, and the real punt rate for one collapses to near zero
 # (0.3% in a matched sample). Fitting on the full five-minute window pools in
@@ -185,8 +185,8 @@ def _timeout_table(w: pd.DataFrame, side: str) -> dict:
     Measured as: of all snaps in this bucket where that side had a timeout
     left, on what share was one charged before the next snap.
 
-    Both sides matter. Fitting only the defence — as an earlier version did —
-    leaves a trailing offence in the rollout unable to stop the clock, which
+    Both sides matter. Fitting only the defense — as an earlier version did —
+    leaves a trailing offense in the rollout unable to stop the clock, which
     makes every comeback drive slower than the real thing and drags trailing
     win probabilities well below what actually happens.
     """
@@ -199,7 +199,7 @@ def _timeout_table(w: pd.DataFrame, side: str) -> dict:
     # A charged timeout is its own row with `play_type == "no_play"` (2,375 of
     # 2,399 in a spot check), so it cannot be found by shifting a frame that
     # has already dropped non-snaps — do that and every timeout rate comes back
-    # as a flat zero, and the rollout's offence never stops the clock.
+    # as a flat zero, and the rollout's offense never stops the clock.
     #
     # `snap_group` counts snaps strictly before each row, which lines a timeout
     # up with the snap it immediately precedes. That is the orientation the

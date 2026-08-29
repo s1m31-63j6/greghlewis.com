@@ -394,7 +394,7 @@ def policy_action(s: State, m: Models, rng: np.random.Generator) -> str:
         return {"go": "pass", "fg": "field_goal", "punt": "punt", "kneel": "kneel"}[choice]
     choice = _pick(m.tendency("play_call", s), rng.random())
     if choice == "fg":
-        # Only honour an early-down kick if it is actually kickable from here;
+        # Only honor an early-down kick if it is actually kickable from here;
         # the tendency bucket is coarser than the yard line.
         return "field_goal" if s.yardline + FG_SNAP_OVERHEAD <= 68 else "pass"
     return choice if choice in OFF_ACTIONS else "pass"
@@ -418,7 +418,7 @@ def rollout(s: State, m: Models, rng: np.random.Generator, *, max_plays: int = 6
             continue
 
         # Either side may stop the clock before the snap. Both are modelled:
-        # a trailing offence that never spends a timeout takes far too long to
+        # a trailing offense that never spends a timeout takes far too long to
         # move the ball, which shows up directly as trailing win probabilities
         # that are too low.
         used_timeout = False
@@ -514,7 +514,7 @@ def evaluate(s: State, m: Models, actions: list[str] | None = None,
 def legal_defense_actions(s: State) -> list[str]:
     """What the team without the ball gets to decide before the snap."""
     # During a conversion or a kickoff the decision belongs to the other team —
-    # they pick two-or-kick, they pick onside-or-deep. The defence just watches.
+    # they pick two-or-kick, they pick onside-or-deep. The defense just watches.
     if s.phase != PLAY:
         return ["defend"]
     acts = ["defend"]
@@ -529,11 +529,11 @@ def legal_defense_actions(s: State) -> list[str]:
 
 def resolve_defense(s: State, action: str, m: Models,
                     rng: np.random.Generator) -> tuple[State, str, str]:
-    """Apply the defence's pre-snap choice, then let the offence run its play.
+    """Apply the defense's pre-snap choice, then let the offense run its play.
 
     Returns the resulting state, what the play produced, and *which* play the
-    offence chose. That third value is the whole point: standing on defence you
-    are watching someone else's offence, and an interface that can only say
+    offense chose. That third value is the whole point: standing on defense you
+    are watching someone else's offense, and an interface that can only say
     "you played it out" is not telling you what happened.
     """
     if s.phase == PAT:

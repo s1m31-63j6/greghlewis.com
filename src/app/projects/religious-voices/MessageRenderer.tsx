@@ -137,7 +137,7 @@ export function MessageRenderer({ content, sources = [], streaming = false }: Pr
           );
         }
         if (seg.type === "extrapolation") {
-          // Rendered as a lighter-grey span (NOT italic). The disclaimer
+          // Rendered as a lighter-gray span (NOT italic). The disclaimer
           // panel describes this color, so don't reintroduce italic without
           // updating the disclaimer copy in page.tsx to match.
           return (

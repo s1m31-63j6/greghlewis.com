@@ -233,7 +233,7 @@ export function policyAction(s: GameState, m: Models, rng: Rng): Action {
   }
   const choice = pick(m.tendency("play_call", s), rng());
   if (choice === "fg") {
-    // Only honour an early-down kick if it is kickable from here; the tendency
+    // Only honor an early-down kick if it is kickable from here; the tendency
     // bucket is coarser than the yard line.
     return fgDistance(s) <= MAX_FG_DISTANCE ? "field_goal" : "pass";
   }
@@ -311,7 +311,7 @@ function defaultRng(seed: number): Rng {
 /** What the team without the ball gets to decide before the snap. */
 export function legalDefenseActions(s: GameState): DefenseAction[] {
   // During a conversion or a kickoff the decision belongs to the other team —
-  // they pick two-or-kick, they pick onside-or-deep. The defence just watches.
+  // they pick two-or-kick, they pick onside-or-deep. The defense just watches.
   if (s.phase !== PLAY) return ["defend"];
   const acts: DefenseAction[] = ["defend"];
   if (s.defTo > 0 && s.clockRunning) acts.push("timeout");
@@ -322,11 +322,11 @@ export function legalDefenseActions(s: GameState): DefenseAction[] {
 }
 
 /**
- * Apply the defence's pre-snap choice, then let the offence run its play.
+ * Apply the defense's pre-snap choice, then let the offense run its play.
  *
  * Returns the resulting state, what the play produced, and *which* play the
- * offence chose. That third value is the whole point: standing on defence you
- * are watching someone else's offence, and an interface that can only say "you
+ * offense chose. That third value is the whole point: standing on defense you
+ * are watching someone else's offense, and an interface that can only say "you
  * played it out" is not telling you what happened.
  */
 export function resolveDefense(

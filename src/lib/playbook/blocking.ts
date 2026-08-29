@@ -214,7 +214,7 @@ export const SCHEMES: BlockingScheme[] = [
       BST: { block: "hinge" },
     },
     combos: [["C", "BSG"]],
-    notes: "The guard goes around the centre's down block into the linebacker.",
+    notes: "The guard goes around the center's down block into the linebacker.",
   },
   {
     id: "screen-release",

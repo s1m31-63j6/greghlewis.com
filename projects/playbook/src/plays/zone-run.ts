@@ -453,7 +453,7 @@ export const ZONE_RUN: PlaySpec[] = [
     },
     tags: ["zone", "inside-zone", "under-center", "lead", "pro-set"],
     situations: ["1st-down", "short-yardage", "four-minute"],
-    coaching: { keys: "Under centre the back is already downhill; the fullback takes the first linebacker to show." },
+    coaching: { keys: "Under center the back is already downhill; the fullback takes the first linebacker to show." },
   }),
 
   play({
@@ -902,7 +902,7 @@ export const ZONE_RUN: PlaySpec[] = [
     },
     tags: ["inside-zone", "unbalanced", "heavy", "formation-stress"],
     situations: ["short-yardage", "3rd-short", "four-minute", "goal-line"],
-    coaching: { commentary: "Most defences check their alignment to an unbalanced set. Snap it before they finish." },
+    coaching: { commentary: "Most defenses check their alignment to an unbalanced set. Snap it before they finish." },
   }),
 
   play({

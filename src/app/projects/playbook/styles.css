@@ -61,7 +61,7 @@
   --def: #ff4757;        /*  5.8:1 */
   --ball: #f5a524;       /*  9.5:1 */
   /* Pre-snap motion. Green reads as unmistakably "before the snap" against
-     white routes and a red defence, and the turf is near-black rather than
+     white routes and a red defense, and the turf is near-black rather than
      actually green, so it holds at 11.4:1. */
   --motion: #4ade80;     /* 11.4:1 */
   --block: #c2cbd6;      /* deliberately dimmer than a route */

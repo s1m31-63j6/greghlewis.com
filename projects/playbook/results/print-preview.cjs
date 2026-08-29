@@ -49,8 +49,8 @@ const PlayDiagram = load(path.join(APP, "PlayDiagram.tsx")).default;
 const { formationById } = load(path.join(LIB, "formations.ts"));
 const PLAYS = JSON.parse(readFileSync(path.join(ROOT, "public/playbook/plays.json"), "utf8"));
 
-// The print palette: the page flips to paper, and defence prints BLACK because
-// a mid-red photocopies to the same grey as the offence.
+// The print palette: the page flips to paper, and defense prints BLACK because
+// a mid-red photocopies to the same gray as the offense.
 const PRINT = {
   "--turf": "#fff", "--turf-band": "#fff", "--turf-hash": "#e2e6ea",
   "--turf-line-5": "#d5dae0", "--turf-line-10": "#b9c0c8", "--turf-edge": "#8b949e",

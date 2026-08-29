@@ -13,8 +13,8 @@
  * a real one — and which option the engine prefers, tagged as optimal. That
  * second tag reveals nothing the panel was keeping back: `evaluate` returns its
  * options already ranked, so the best call has always been sitting at the top
- * of the list. The tag only says out loud what the ordering was implying. On offence that is simply the recorded play. On defence the recorded
- * play belongs to the other team, so the flag keys off whether the real defence
+ * of the list. The tag only says out loud what the ordering was implying. On offense that is simply the recorded play. On defense the recorded
+ * play belongs to the other team, so the flag keys off whether the real defense
  * spent a timeout before that snap — which on that side of the ball is the
  * decision.
  */

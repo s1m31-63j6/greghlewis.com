@@ -6,7 +6,7 @@
  * **The field does not turn round.** Your team always attacks to the right, for
  * the whole game, exactly as a broadcast keeps one camera side. An earlier
  * version drew whoever had the ball as attacking rightward, which meant every
- * change of possession mirrored the world — both end zones swapped colour and
+ * change of possession mirrored the world — both end zones swapped color and
  * badge, and the ball jumped to its own reflection. Each play animated
  * correctly and the sequence was still impossible to follow.
  *
@@ -178,7 +178,7 @@ export default function Field({
           </text>
         ))}
 
-        {/* club marks, fixed to their own end */}
+        {/* team marks, fixed to their own end */}
         {user.logo && (
           <image
             href={user.logo}

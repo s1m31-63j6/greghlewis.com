@@ -256,7 +256,7 @@ export const DEFENSE: PlaySpec[] = [
     tags: ["six-man", "interior", "man-free", "pressure", "disguise"],
     situations: ["3rd-medium", "3rd-long", "red-zone"],
     coaching: {
-      keys: "Both linebackers walk up into the A gaps. Whether they come is decided after the centre declares.",
+      keys: "Both linebackers walk up into the A gaps. Whether they come is decided after the center declares.",
       commentary: "Half the value is that the offense has to slide protection before it knows anything.",
     },
   }),
@@ -489,7 +489,7 @@ export const DEFENSE: PlaySpec[] = [
     tags: ["man", "bear-front", "run-stopper", "short-yardage"],
     situations: ["3rd-short", "4th-short", "goal-line", "short-yardage"],
     coaching: {
-      install: "Three interior linemen covering both guards and the centre. Nobody inside gets a free release to the second level.",
+      install: "Three interior linemen covering both guards and the center. Nobody inside gets a free release to the second level.",
       commentary: "Built for a team that wants to run inside zone at you all afternoon.",
     },
   }),
@@ -657,7 +657,7 @@ export const DEFENSE: PlaySpec[] = [
     tags: ["six-man", "interior", "man-free", "crossing-rushers"],
     situations: ["3rd-medium", "3rd-long", "blitz-beater"],
     coaching: {
-      install: "Both linebackers mug the A gaps and cross on the snap, so the centre has to pick one and guess.",
+      install: "Both linebackers mug the A gaps and cross on the snap, so the center has to pick one and guess.",
       keys: "The second rusher through is the one who gets home.",
     },
   }),

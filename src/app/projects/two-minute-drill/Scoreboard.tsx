@@ -3,8 +3,8 @@
 /**
  * The scoreboard bug.
  *
- * Club mark, abbreviation, nickname and score on each side, with the team's own
- * colour as a bar down the outer edge; clock in the middle, turning amber when
+ * Team mark, abbreviation, nickname and score on each side, with the team's own
+ * color as a bar down the outer edge; clock in the middle, turning amber when
  * it is stopped. Everything numeric is tabular so nothing reflows as it counts.
  */
 

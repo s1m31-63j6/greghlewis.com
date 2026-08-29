@@ -68,7 +68,7 @@ export default async function Page() {
         <p className="mt-2 text-xs text-stone-600">
           <span className="text-stone-900 font-medium">Black text</span>
           {" is drawn from the leader's actual writings — the small superscript number on each sourced sentence links to the specific passage. "}
-          <span className="text-stone-500">Lighter grey text</span>
+          <span className="text-stone-500">Lighter gray text</span>
           {" is the model extrapolating in their style — not the leader's own words."}
         </p>
       </div>

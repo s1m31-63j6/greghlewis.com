@@ -62,7 +62,7 @@ export const VOCABULARY: VocabEntry[] = [
   f("vs Cover 4", ["cover 4", "cover four", "quarters"], { situation: "vs-cover-4" }),
   f("vs Cover 6", ["cover 6", "cover six"], { situation: "vs-cover-6" }),
   f("vs man", ["man coverage", "man to man", "man"], { situation: "vs-man" }),
-  f("vs zone", ["zone coverage", "zone defence", "zone defense"], { situation: "vs-zone" }),
+  f("vs zone", ["zone coverage", "zone defense", "zone defense"], { situation: "vs-zone" }),
   f("blitz beater", ["blitz beater", "blitz", "pressure", "hot"], { situation: "blitz-beater" }),
 
   // ── play type ─────────────────────────────────────────────────────────────
@@ -91,11 +91,11 @@ export const VOCABULARY: VocabEntry[] = [
   f("split end (X)", ["split end", "x receiver"], { target: "XWR" }),
   f("flanker (Z)", ["flanker", "z receiver"], { target: "ZWR" }),
   f("slot (H)", ["slot receiver", "slot", "h receiver"], { target: "SLOT" }),
-  f("centre", ["center", "centre", "snapper"], { target: "CTR" }),
+  f("center", ["center", "center", "snapper"], { target: "CTR" }),
 
   // ── side and team size ────────────────────────────────────────────────────
-  f("offense", ["offense", "offence"], { side: "offense" }),
-  f("defense", ["defense", "defence"], { side: "defense" }),
+  f("offense", ["offense", "offense"], { side: "offense" }),
+  f("defense", ["defense", "defense"], { side: "defense" }),
   f("7-on-7", ["7v7", "7 on 7", "seven on seven"], { variant: "7man" }),
   f("11-man", ["11 man", "eleven man", "11man"], { variant: "11man" }),
   // Both a philosophy and a team size. A coach typing it means either.
@@ -136,7 +136,7 @@ const COMPILED: CompiledPhrase[] = VOCABULARY.flatMap((entry) =>
   .filter((c) => c.tokens.length > 0)
   .sort((a, b) => b.tokens.length - a.tokens.length);
 
-export interface Recognised {
+export interface Recognized {
   entry: VocabEntry;
   /** The words it consumed, for the chip and for removing it from the query. */
   matched: string[];
@@ -147,8 +147,8 @@ export interface Recognised {
  * hand back whatever is left over. "first down run" comes back as the 1st-down
  * situation, the run type, and no leftovers.
  */
-export function recognise(tokens: string[]): { found: Recognised[]; rest: string[] } {
-  const found: Recognised[] = [];
+export function recognize(tokens: string[]): { found: Recognized[]; rest: string[] } {
+  const found: Recognized[] = [];
   const rest: string[] = [];
   let i = 0;
 

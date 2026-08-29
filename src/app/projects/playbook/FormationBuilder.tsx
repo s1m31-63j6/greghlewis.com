@@ -447,7 +447,7 @@ export default function FormationBuilder({
                       setDraft((f) => ({ ...f, qb: { align: e.target.value as Formation["qb"]["align"] } }))
                     }
                   >
-                    <option value="under">Under centre</option>
+                    <option value="under">Under center</option>
                     <option value="pistol">Pistol</option>
                     <option value="gun">Shotgun</option>
                   </select>

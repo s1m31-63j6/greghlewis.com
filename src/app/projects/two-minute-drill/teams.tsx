@@ -1,12 +1,12 @@
 "use client";
 
 /**
- * Team identity: names, club colours, and marks.
+ * Team identity: names, team colors, and marks.
  *
  * Logos are hotlinked from ESPN's CDN rather than mirrored into the repo — the
  * same choice NFL Prospect Comparables makes for player headshots. `TeamLogo`
  * therefore has to survive the image not arriving, and falls back to the
- * three-letter abbreviation set in the club's own colour, which is what the
+ * three-letter abbreviation set in the team's own color, which is what the
  * interface used to show everywhere anyway.
  */
 
@@ -54,7 +54,7 @@ export function teamOf(teams: TeamMap, abbr: string | null | undefined): Team {
 }
 
 /**
- * A club mark at `size` pixels square.
+ * A team mark at `size` pixels square.
  *
  * `onError` swaps to the abbreviation rather than leaving a broken image, so a
  * bad CDN day degrades to the old appearance instead of a hole in the page.
@@ -70,7 +70,7 @@ export function TeamLogo({
   size?: number;
   className?: string;
 }) {
-  // Remembering *which* club's mark failed rather than a bare boolean means
+  // Remembering *which* team's mark failed rather than a bare boolean means
   // switching teams clears the failure on its own, with no effect to reset it.
   const [failedFor, setFailedFor] = useState<string | null>(null);
   const failed = failedFor === abbr;

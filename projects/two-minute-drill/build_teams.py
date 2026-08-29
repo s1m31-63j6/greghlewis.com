@@ -1,7 +1,7 @@
-"""build_teams.py — team names, brand colours and logo URLs.
+"""build_teams.py — team names, brand colors and logo URLs.
 
 Writes `teams.json` (about 6 KB). The app uses it for three things: logos on the
-scenario cards and the scoreboard, the club colours that fill the end zones on
+scenario cards and the scoreboard, the team colors that fill the end zones on
 the field, and the full team name so the interface can stop saying "KC" at
 people.
 
@@ -9,7 +9,7 @@ Logos are hotlinked from ESPN's CDN rather than mirrored into the repo. That
 matches what NFL Prospect Comparables already does for player headshots, keeps
 the repo free of trademarked artwork, and costs nothing in bundle size. The
 tradeoff is a runtime dependency on ESPN, which `TeamLogo` handles by falling
-back to the three-letter abbreviation set in the club's own colour.
+back to the three-letter abbreviation set in the team's own color.
 
 Every URL is checked for a 200 and an image content-type before it is written,
 following the rule already set out in `headshot-overrides.ts`.
@@ -33,7 +33,7 @@ from publish import publish
 HERE = Path(__file__).parent
 
 # nflverse carries historical franchises (OAK, SD, STL) alongside current ones.
-# The scenario corpus is already normalised to current codes, so anything not
+# The scenario corpus is already normalized to current codes, so anything not
 # referenced by a scenario is surplus — but it is a few hundred bytes and
 # keeping it means a corpus rebuild that reaches further back still resolves.
 FIELDS = [
@@ -71,7 +71,7 @@ def main() -> None:
             "nick": getattr(r, "team_nick", r.team_name),
             "conf": getattr(r, "team_conf", None),
             "div": getattr(r, "team_division", None),
-            # Club colours, used to fill the end zones and accent the scoreboard.
+            # Team colors, used to fill the end zones and accent the scoreboard.
             "color": getattr(r, "team_color", "#1b4f7a"),
             "color2": getattr(r, "team_color2", "#000000"),
             "logo": logo,

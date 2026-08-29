@@ -774,7 +774,7 @@ export const AIR_RAID: PlaySpec[] = [
     },
     tags: ["flood", "quads", "overload", "three-level"],
     situations: ["3rd-medium", "2nd-long", "vs-zone", "vs-cover-3"],
-    coaching: { commentary: "Four receivers to one side against three defenders is arithmetic the defence cannot fix after the snap." },
+    coaching: { commentary: "Four receivers to one side against three defenders is arithmetic the defense cannot fix after the snap." },
   }),
 
   play({
@@ -826,7 +826,7 @@ export const AIR_RAID: PlaySpec[] = [
     },
     tags: ["mesh", "jerk", "man-beater", "double-move"],
     situations: ["3rd-medium", "vs-man", "vs-cover-1", "red-zone"],
-    coaching: { commentary: "The same mesh the defence has practised all week, with the second crosser breaking back the other way." },
+    coaching: { commentary: "The same mesh the defense has practiced all week, with the second crosser breaking back the other way." },
   }),
 
   play({

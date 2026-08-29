@@ -10,7 +10,7 @@
  *
  * Each call is marked with its verdict. Hue, size and fill all carry that,
  * and a key names every one, because a reader should never have to infer a
- * category from colour alone. See `VERDICT_MARK` in grade.ts for the palette
+ * category from color alone. See `VERDICT_MARK` in grade.ts for the palette
  * and why it is stepped the way it is.
  */
 

@@ -672,7 +672,7 @@ export const SPREAD_RPO: PlaySpec[] = [
     },
     tags: ["rpo", "outside-zone", "bubble", "perimeter"],
     situations: ["1st-down", "plus-territory", "vs-zone"],
-    coaching: { keys: "Both answers attack the edge, so the defence has to defend the same grass twice." },
+    coaching: { keys: "Both answers attack the edge, so the defense has to defend the same grass twice." },
   }),
 
   play({
@@ -858,7 +858,7 @@ export const SPREAD_RPO: PlaySpec[] = [
     tags: ["tempo", "now", "perimeter", "quick"],
     situations: ["1st-down", "opening-script", "two-minute", "vs-zone"],
     coaching: {
-      keys: "Snap it before the defence is set. The play is easy; the speed of getting to the line is the point.",
+      keys: "Snap it before the defense is set. The play is easy; the speed of getting to the line is the point.",
     },
   }),
 
@@ -885,7 +885,7 @@ export const SPREAD_RPO: PlaySpec[] = [
     },
     tags: ["four-verts", "tempo", "empty", "shot"],
     situations: ["2nd-long", "must-score", "two-minute", "vs-cover-3"],
-    coaching: { keys: "Four vertical routes against a defence that has not had time to substitute." },
+    coaching: { keys: "Four vertical routes against a defense that has not had time to substitute." },
   }),
 
   play({
@@ -940,7 +940,7 @@ export const SPREAD_RPO: PlaySpec[] = [
     },
     tags: ["option", "triple", "diamond", "three-back"],
     situations: ["1st-down", "short-yardage", "four-minute", "goal-line"],
-    coaching: { commentary: "Triple option out of a pistol set, which puts the same read on the defence from a modern look." },
+    coaching: { commentary: "Triple option out of a pistol set, which puts the same read on the defense from a modern look." },
   }),
 
   play({

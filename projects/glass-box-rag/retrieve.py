@@ -86,7 +86,7 @@ class Index:
         # (df=486) and "use" (df=628) to the SAME weight, 1.2635. This formula keeps
         # them ordered and distinct (0.4461 vs 0.1900), correctly treating "use" as
         # the less informative term. The divergence is a known idf-variant
-        # difference, not a bug, and this side of it is the better behaviour.
+        # difference, not a bug, and this side of it is the better behavior.
         self.idf = {t: math.log(1 + (n - c + 0.5) / (c + 0.5)) for t, c in df.items()}
         self.postings: dict[str, list[int]] = defaultdict(list)
         for i, tfs in enumerate(self.tf):
@@ -228,7 +228,7 @@ class Config:
     # an earlier diversification pass — so the order is a measurable choice, not a
     # detail.
     diversify_after_rerank: bool = False
-    # Honour a temporal constraint extracted from the question ("as of 2015...").
+    # Honor a temporal constraint extracted from the question ("as of 2015...").
     use_as_of: bool = False
     # Prepend a HyDE passage / query variants to the retrieval probe. Measured, not
     # assumed — see the ablation table.

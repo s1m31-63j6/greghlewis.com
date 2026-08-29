@@ -2,15 +2,15 @@
  * Print sheets.
  *
  * THE PALETTE FLIPS. Nobody prints a black field, so every token is redefined
- * on paper. Defence prints BLACK rather than red by default: most coaches print
- * monochrome, and a mid-red photocopies to a mid-grey that destroys the
- * offence/defence distinction entirely. The glyph shape carries it instead —
+ * on paper. Defense prints BLACK rather than red by default: most coaches print
+ * monochrome, and a mid-red photocopies to a mid-gray that destroys the
+ * offense/defense distinction entirely. The glyph shape carries it instead —
  * which is a second argument for the filled diamond over an X, since an X at
  * under a point collapses into a smudge while a filled shape holds its
- * silhouette. `.pb-print-color` opts back into colour for a colour laser.
+ * silhouette. `.pb-print-color` opts back into color for a color laser.
  *
  * Zebra striping is 4%, not 10%. Four per cent survives a photocopier; ten
- * becomes a grey smear that eats the text.
+ * becomes a gray smear that eats the text.
  *
  * Every sheet is designed to be readable if the printer drops backgrounds
  * entirely, which is why the reversed-out wristband number also has a border.
@@ -279,7 +279,7 @@
 
 /* ── the preview toolbar ─────────────────────────────────────────────────────
    Screen only. The page no longer fires window.print() on arrival, so this is
-   how a coach looks at a sheet, switches between the three, flips to colour,
+   how a coach looks at a sheet, switches between the three, flips to color,
    and then commits paper to it. */
 
 .pb-print-bar {

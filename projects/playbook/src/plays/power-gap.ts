@@ -432,7 +432,7 @@ export const POWER_GAP: PlaySpec[] = [
     },
     tags: ["gap", "fold", "weak", "downhill"],
     situations: ["short-yardage", "1st-down", "four-minute"],
-    coaching: { install: "The guard folds around the centre's down block. A different angle on the same gap." },
+    coaching: { install: "The guard folds around the center's down block. A different angle on the same gap." },
   }),
 
   play({
@@ -510,7 +510,7 @@ export const POWER_GAP: PlaySpec[] = [
     situations: ["2nd-long", "3rd-long", "backed-up"],
     coaching: {
       keys: "Show them a drop, then run at the rush lanes they just vacated.",
-      commentary: "Best called on a down where the defence has already decided you are throwing.",
+      commentary: "Best called on a down where the defense has already decided you are throwing.",
     },
   }),
 
@@ -562,7 +562,7 @@ export const POWER_GAP: PlaySpec[] = [
     tags: ["gap", "counter", "jet", "motion", "misdirection"],
     situations: ["1st-down", "2nd-short", "plus-territory"],
     coaching: {
-      keys: "Full-speed jet motion one way, counter the other. The front cannot honour both.",
+      keys: "Full-speed jet motion one way, counter the other. The front cannot honor both.",
     },
   }),
 
@@ -663,7 +663,7 @@ export const POWER_GAP: PlaySpec[] = [
     tags: ["power", "unbalanced", "heavy", "formation-stress"],
     situations: ["3rd-short", "4th-short", "goal-line", "short-yardage"],
     coaching: {
-      keys: "The extra lineman to the strong side gives you one more gap than the defence has aligned to cover.",
+      keys: "The extra lineman to the strong side gives you one more gap than the defense has aligned to cover.",
       commentary: "Make them check their alignment while the play clock runs.",
     },
   }),
@@ -689,7 +689,7 @@ export const POWER_GAP: PlaySpec[] = [
     },
     tags: ["power", "nub", "gun", "spread-to-run"],
     situations: ["1st-down", "2nd-short", "plus-territory"],
-    coaching: { keys: "Three receivers away pull the defence out of the box and the run goes to the tight end side." },
+    coaching: { keys: "Three receivers away pull the defense out of the box and the run goes to the tight end side." },
   }),
 
   play({

@@ -141,14 +141,14 @@ export function startState(s: Scenario, userTeam: string): GameState {
  * The call the real coach made at this snap, in the vocabulary of the side you
  * are playing.
  *
- * On offence that is simply the recorded play. On defence the recorded play
+ * On offense that is simply the recorded play. On defense the recorded play
  * belongs to the *other* team, so there is nothing to compare a defensive
- * choice against directly — what the real defence decided was whether to spend
+ * choice against directly — what the real defense decided was whether to spend
  * a timeout, and that is what the transcript's `to` field records.
  *
  * Both the "as played" flag and the on-rails check run through here. They used
  * to disagree: the rails check compared a defensive choice against the
- * opposing offence's play, which can never match, so taking the defensive side
+ * opposing offense's play, which can never match, so taking the defensive side
  * left history on the very first snap and the whole replay-until-you-diverge
  * idea quietly stopped working on that side of the ball.
  */

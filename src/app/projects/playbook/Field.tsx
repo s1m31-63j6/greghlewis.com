@@ -127,7 +127,7 @@ export default function Field({
       <defs>
         {/* The only gradient on the field. Sits above the turf, below the line
             work, and never intercepts a pointer. Absent on paper, where it
-            would print as a grey wash across the bottom of every cell — and
+            would print as a gray wash across the bottom of every cell — and
             where a shared id across twelve inline diagrams would collide,
             since ids are document-scoped once the SVGs are in one page. */}
         {!small && (

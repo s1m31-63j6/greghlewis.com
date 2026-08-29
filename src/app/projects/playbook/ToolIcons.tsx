@@ -6,7 +6,7 @@
  * Hand-drawn rather than pulled from a library, for the same reason everything
  * else here is: this repo has no icon package and does not need one for six
  * glyphs. Each is a 16-unit square at 1.6 stroke, drawn in `currentColor` so
- * the active state colours the icon and its caption together.
+ * the active state colors the icon and its caption together.
  *
  * Each one says what the tool DRAWS: the route icon breaks and arrows, the
  * block icon ends in a flat bar, the motion icon zigzags. A coach who knows the

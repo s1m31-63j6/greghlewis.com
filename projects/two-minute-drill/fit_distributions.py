@@ -11,7 +11,7 @@ out of bounds stops it inside such-and-such a window, the play clock is 40
 seconds. That approach is only as good as the rulebook you remember, and it
 still has to guess at huddle speed. Instead we measure the actual elapsed time
 between consecutive snaps in the fourth quarter and fit an empirical
-distribution per outcome class. Real hurry-up behaviour, the two-minute warning,
+distribution per outcome class. Real hurry-up behavior, the two-minute warning,
 spike timing and referee ready-for-play all come along for free.
 
 **Play outcomes are fit on a hurry-up window, not the whole game.** A first-down
@@ -136,7 +136,7 @@ def fit_pass(w: pd.DataFrame) -> dict:
     # rate it needs is conditional on the ball actually being thrown and not
     # picked — not the marginal rate over every dropback. The two differ by
     # about six points (0.571 marginal against 0.628 conditional), and feeding
-    # it the marginal rate quietly makes every offence worse than the league.
+    # it the marginal rate quietly makes every offense worse than the league.
     live = p[(p.sack != 1) & (p.interception != 1)]
     return {
         "complete": {b: rate(g.complete_pass) for b, g in live.groupby("band")},
@@ -168,8 +168,8 @@ def fit_pass(w: pd.DataFrame) -> dict:
 # thing being estimated is a slow trend and 2016 is already the modern game.
 FG_SEASONS = range(1999, 2026)
 
-# Distances are centred and scaled so the quadratic term is well conditioned;
-# seasons are centred on 2012, roughly the middle of the window.
+# Distances are centerd and scaled so the quadratic term is well conditioned;
+# seasons are centerd on 2012, roughly the middle of the window.
 FG_DIST_CENTRE = 45.0
 FG_DIST_SCALE = 10.0
 FG_SEASON_CENTRE = 2012.0
@@ -412,15 +412,15 @@ def fit_runoff(df: pd.DataFrame) -> dict:
     snaps["klass"] = snaps.apply(_runoff_class, axis=1)
     snaps = snaps[snaps.klass.notna()]
 
-    # Split by what the offence is trying to do with the clock, and by how much
+    # Split by what the offense is trying to do with the clock, and by how much
     # clock is left to do it in. Both matter, and pooling either one is a large
     # distortion.
     #
-    # Urgency: the same completed pass takes a trailing offence in no-huddle
-    # about half as long to follow up as a leading offence milking the play
+    # Urgency: the same completed pass takes a trailing offense in no-huddle
+    # about half as long to follow up as a leading offense milking the play
     # clock.
     #
-    # Time: a trailing offence is not equally hurried throughout. Measured
+    # Time: a trailing offense is not equally hurried throughout. Measured
     # medians after a completed pass that stays inbounds — 27s with three to
     # five minutes left, 21s inside two minutes, 14s inside one. A single
     # "hurrying" distribution fit across the whole window runs at the two-minute

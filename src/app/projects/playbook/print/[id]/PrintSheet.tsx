@@ -4,10 +4,10 @@
  * The three printed artifacts.
  *
  * The palette FLIPS for print — nobody prints a black field, and the token
- * block in styles.css redefines every colour under `@media print`. Defence
+ * block in styles.css redefines every color under `@media print`. Defense
  * prints black rather than red by default, because most coaches print
- * monochrome and a mid-red photocopies to a mid-grey that destroys the
- * offence/defence distinction. The glyph SHAPE carries it instead, which is a
+ * monochrome and a mid-red photocopies to a mid-gray that destroys the
+ * offense/defense distinction. The glyph SHAPE carries it instead, which is a
  * second reason the defender is a filled diamond rather than an X.
  *
  * The call sheet and the wristband both derive their numbers from `callNumber`
@@ -130,7 +130,7 @@ export default function PrintSheet({ book, layout, color: initialColor }: Props)
           onChange={(e) => setColor(e.target.checked)}
           style={{ marginRight: 5 }}
         />
-        Colour
+        Color
       </label>
       <button className="pb-btn pb-btn--primary" onClick={() => window.print()}>
         Print

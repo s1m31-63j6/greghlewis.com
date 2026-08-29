@@ -694,7 +694,7 @@ export const FORMATIONS: Formation[] = [
     variantScope: ["11man", "9man", "8man"],
   }),
 
-  // ── under centre ─────────────────────────────────────────────────────────
+  // ── under center ─────────────────────────────────────────────────────────
   F({
     id: "split-backs-pro",
     name: "Split Backs Pro",
@@ -789,7 +789,7 @@ export const FORMATIONS: Formation[] = [
 
   // ── more flag looks ──────────────────────────────────────────────────────
   // With three eligibles the variety lives in splits and stacking rather than
-  // in personnel, so these are the shapes that actually change a 5v5 defence.
+  // in personnel, so these are the shapes that actually change a 5v5 defense.
   F({
     id: "flag-wide",
     name: "Wide",
@@ -1007,7 +1007,7 @@ export const FORMATIONS: Formation[] = [
 const BY_ID = new Map(FORMATIONS.map((f) => [f.id, f]));
 
 export function formationById(id: string): Formation | undefined {
-  // A coach's own formation wins on an id collision, which is the behaviour a
+  // A coach's own formation wins on an id collision, which is the behavior a
   // duplicate-and-rename flow needs: the copy shadows nothing, but a formation
   // saved under a shipped id would otherwise be invisible.
   return CUSTOM.get(id) ?? BY_ID.get(id);
