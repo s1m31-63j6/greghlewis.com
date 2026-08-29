@@ -1,0 +1,203 @@
+# Daily refresh of the draft sheet, for the ten days around the 2026 season opener.
+#
+# WHY THIS EXISTS. The board is built from five external feeds, four of them
+# undocumented. ADP moves every day through draft season, so a sheet that is a
+# week old is quietly wrong at exactly the moment somebody is drafting from it.
+#
+# WHY IT STOPS. The expiry below is enforced in the job, not in somebody's
+# calendar. A cron that outlives its purpose is how a repo ends up rebuilding
+# itself every night in March.
+#
+# WHAT IT COSTS. Nothing to run — this repo is public, so Actions minutes are
+# free — plus roughly three cents per day in Amplify build minutes.
+#
+# IT NEEDS NO SECRETS. Every source in the pipeline is anonymous. The only
+# credential in play is the built-in GITHUB_TOKEN used to push.
+
+name: Draft sheet daily refresh
+
+on:
+  schedule:
+    # 03:00 UTC = 11pm Eastern. Late enough that the day's news has settled and
+    # the feeds have rolled, early enough to be live before the next evening's
+    # drafts.
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      force_history:
+        description: "Refresh the 30-day ADP history even if it is not due"
+        type: boolean
+        default: false
+
+# One at a time. Two runs committing to main would race.
+concurrency:
+  group: draft-sheet-refresh
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+env:
+  # Ten days from the day this was set up. Past this the job is a no-op.
+  EXPIRES_AFTER: "2026-09-08"
+  # How stale the committed history may get before it is refreshed. The 30-day
+  # window barely moves in a day, and the endpoint behind it is undocumented and
+  # takes 270 sequential calls, so it is not worth hitting daily.
+  HISTORY_MAX_AGE_DAYS: "7"
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Stop if the ten days are up
+        id: window
+        run: |
+          today=$(date -u +%F)
+          if [[ "$today" > "$EXPIRES_AFTER" ]]; then
+            echo "::notice::Scheduled window ended $EXPIRES_AFTER. Delete this workflow."
+            echo "expired=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "expired=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Full history: the drift gate reads the previous artifacts out of git, and
+      # a shallow clone would leave it with nothing to compare against.
+      - uses: actions/checkout@v4
+        if: steps.window.outputs.expired == 'false'
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        if: steps.window.outputs.expired == 'false'
+        with:
+          node-version: "22"
+          cache: npm
+
+      - uses: astral-sh/setup-uv@v5
+        if: steps.window.outputs.expired == 'false'
+        with:
+          enable-cache: true
+          cache-dependency-glob: projects/draft-sheet/uv.lock
+
+      - name: Install
+        if: steps.window.outputs.expired == 'false'
+        run: npm ci
+
+      # NOTE: projects/draft-sheet/data/ is deliberately NOT cached. It holds the
+      # raw upstream responses, and the fetchers reuse a cached file rather than
+      # refetching. Caching it would let a dead endpoint be masked by yesterday's
+      # bytes. A cold runner every night is the guard.
+      - name: Fetch and merge the sources
+        if: steps.window.outputs.expired == 'false'
+        run: npm run draft-sheet:fetch
+
+      - name: Decide whether the ADP history is due
+        if: steps.window.outputs.expired == 'false'
+        id: history
+        run: |
+          last=$(git log -1 --format=%ct -- public/draft-sheet/adp-history.json || echo 0)
+          if [[ "${{ inputs.force_history }}" == "true" || "$last" == "0" ]]; then
+            echo "due=true" >> "$GITHUB_OUTPUT"
+          else
+            age=$(( ( $(date +%s) - last ) / 86400 ))
+            echo "History last refreshed $age day(s) ago."
+            [[ "$age" -ge "$HISTORY_MAX_AGE_DAYS" ]] \
+              && echo "due=true" >> "$GITHUB_OUTPUT" \
+              || echo "due=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Must run BEFORE publish: publish.py reads adp-history.json to compute
+      # every trend arrow.
+      - name: Refresh the 30-day ADP history
+        if: steps.window.outputs.expired == 'false' && steps.history.outputs.due == 'true'
+        run: npm run draft-sheet:history
+
+      - name: Publish the artifacts
+        if: steps.window.outputs.expired == 'false'
+        run: npm run draft-sheet:publish
+
+      - name: Gates
+        if: steps.window.outputs.expired == 'false'
+        run: npm run draft-sheet:check
+
+      - name: Compare against the last good run
+        if: steps.window.outputs.expired == 'false'
+        run: |
+          node --experimental-strip-types \
+            projects/draft-sheet/results/day-over-day.mts --require-baseline
+
+      - name: Landing thumbnail
+        if: steps.window.outputs.expired == 'false'
+        run: node projects/draft-sheet/results/thumbnail.cjs
+
+      - name: Commit and push
+        if: steps.window.outputs.expired == 'false'
+        id: commit
+        run: |
+          set -euo pipefail
+          # PATH-SCOPED, deliberately. This branch can carry unrelated work in
+          # progress, and an unattended `commit -a` would ship it to a live site.
+          paths=(public/draft-sheet public/landing/draft-sheet.png)
+
+          if [[ -z "$(git status --porcelain -- "${paths[@]}")" ]]; then
+            echo "::notice::No change to publish. Sources have not moved since the last run."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "${paths[@]}"
+          git commit -m "Draft sheet: refresh for $(date -u +%F)" \
+                     -m "Automated daily rebuild. Gates and day-over-day comparison passed."
+          # Another commit may have landed while this ran.
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Report a failure
+        if: failure() && steps.window.outputs.expired == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}` +
+                        `/actions/runs/${context.runId}`;
+            const today = new Date().toISOString().slice(0, 10);
+            const title = `Draft sheet refresh failed — ${today}`;
+
+            // One issue per failure day, reopened rather than duplicated if the
+            // same day fails twice.
+            const existing = await github.rest.issues.listForRepo({
+              ...context.repo, state: "all", labels: "draft-sheet",
+            });
+            const match = existing.data.find((i) => i.title === title);
+            const body = [
+              `The scheduled refresh failed. **Nothing was published** — the site is still`,
+              `serving the last board that passed every gate, which is the intended behaviour.`,
+              ``,
+              `[Run log](${url})`,
+              ``,
+              `Most likely causes, in order: one of the four undocumented endpoints changed or`,
+              `died; a feed returned stale or truncated data and the day-over-day gate caught`,
+              `it; or FantasyPros changed the page shape the rankings are parsed out of.`,
+              ``,
+              `To debug locally: \`npm run draft-sheet:daily\``,
+            ].join("\n");
+
+            if (match) {
+              await github.rest.issues.createComment({
+                ...context.repo, issue_number: match.number, body,
+              });
+              if (match.state === "closed") {
+                await github.rest.issues.update({
+                  ...context.repo, issue_number: match.number, state: "open",
+                });
+              }
+            } else {
+              await github.rest.issues.create({
+                ...context.repo, title, body, labels: ["draft-sheet"],
+              });
+            }
