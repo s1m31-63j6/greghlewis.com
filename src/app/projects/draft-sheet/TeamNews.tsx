@@ -11,6 +11,7 @@
  */
 
 import { useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 
 import { TrendArrow, type Trend } from "./TrendArrow";
 import { TeamLogo, teamOf, type TeamMap } from "./teams";
@@ -133,46 +134,49 @@ export function TeamNews({ teams }: { teams: TeamMap }) {
   return (
     <div className="ds-teams">
       <div className="ds-teams-bar">
-        <div className="ds-presets" role="group" aria-label="Division">
-          <button type="button" className="ds-pill" aria-pressed={div === "all"}
-                  onClick={() => setDiv("all")}>All</button>
-          {DIVISIONS.map((d) => (
-            <button key={d} type="button" className="ds-pill" aria-pressed={div === d}
-                    onClick={() => setDiv(d)}>{d}</button>
-          ))}
-        </div>
-        <span className="ds-toolbar-spacer" />
         <label className="ds-check">
-          <input
-            type="checkbox"
-            checked={onlyCoaching}
-            onChange={(e) => setOnlyCoaching(e.target.checked)}
-          />
-          Major coaching change{changed ? ` (${changed})` : ""}
+          Division
+          <select value={div} onChange={(e) => setDiv(e.target.value)}>
+            <option value="all">All teams</option>
+            {DIVISIONS.map((d) => (
+              <option key={d} value={d}>{d}</option>
+            ))}
+          </select>
         </label>
+
         <label className="ds-check">
           Sort
           <select
             value={sort}
-            onChange={(e) => setSort(e.target.value as "change" | "name" | "coaching")}
+            onChange={(e) => setSort(e.target.value as "name" | "change" | "coaching")}
           >
             <option value="name">Team name</option>
             <option value="coaching">Major coaching first</option>
             <option value="change">Biggest change</option>
           </select>
         </label>
+
+        <label className="ds-check">
+          <input
+            type="checkbox"
+            checked={onlyCoaching}
+            onChange={(e) => setOnlyCoaching(e.target.checked)}
+          />
+          New coach only{changed ? ` (${changed})` : ""}
+        </label>
+
+        <span className="ds-toolbar-spacer" />
+        <span className="ds-asof">{rows.length} shown</span>
       </div>
 
+      {/* One line. The long version lives on the methodology page — on a phone
+          it filled the whole first screen before a single team appeared. */}
       <p className="ds-teams-note">
-        <strong>Grades are relative to the other 31 teams</strong>, so a C means mid-league rather
-        than bad. <strong>OFF</strong> is the consensus value of the projected starters below it;
-        <strong> DEF</strong> is where the market ranks that team defense; <strong>SOS</strong> is the
-        strength of the defenses this offense has to face, where an A is the easiest schedule. The
-        arrows blend the roster change with a coaching judgement — hover one to see the split.
-        Every team lists its head coach and coordinator; the highlighted write-up is reserved
-        for the ten where a coaching change plausibly moves production. The headline under
-        each team is the single item that most changed its offense, and <strong>vibe</strong> is
-        derived from how much the roster moved and how good it is, not from a poll.
+        Grades are relative to the other 31 teams. Arrows blend the roster change with a
+        coaching judgement — hover one for the split.{" "}
+        <Link href="/projects/draft-sheet/methodology" className="ds-teams-more">
+          How these are built
+        </Link>
       </p>
 
       <div className="ds-team-grid">

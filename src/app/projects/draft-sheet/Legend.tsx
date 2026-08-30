@@ -24,7 +24,9 @@ export function Legend({
   visible: PlatformKey[];
   onToggle: (key: PlatformKey) => void;
 }) {
-  const [open, setOpen] = useState(true);
+  // Closed by default. It is worth reading once and is in the way afterwards —
+  // and on a phone an open key pushed the entire board below the fold.
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="ds-legend-bar">

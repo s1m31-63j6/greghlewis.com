@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
 import { BOARD_KEYS, PLATFORMS } from "@/lib/draft-sheet/types";
@@ -43,6 +43,32 @@ export function DraftSheet() {
   // to that player rather than making them scroll two hundred rows.
   const [focusPlayer, setFocusPlayer] = useState<string | null>(null);
 
+  /**
+   * Scroll position per tab.
+   *
+   * The three tabs are different lengths, so carrying one scroll position
+   * across all of them lands you in the middle of nowhere — a tap on "Top 200"
+   * from halfway down the board opened somewhere around player 90. Each tab now
+   * remembers where it was, and a tab you have not opened yet starts at the top.
+   */
+  const scrollByTab = useRef<Partial<Record<Tab, number>>>({});
+
+  /**
+   * Tabs are mounted on first visit and KEPT mounted afterwards, hidden rather
+   * than unmounted.
+   *
+   * Unmounting meant every switch refetched and re-rendered from scratch, so at
+   * the moment the scroll was restored the document was still 970px tall: the
+   * restore clamped to the bottom of nothing, and then scroll anchoring threw
+   * the page 28,000px down as the rows painted in. Keeping a visited panel
+   * alive makes its height correct the instant it is shown, and switching tabs
+   * costs nothing.
+   *
+   * Still lazy on first visit, so nobody downloads the Top 200 or the offseason
+   * data unless they ask for it.
+   */
+  const [mounted, setMounted] = useState<Set<Tab>>(() => new Set<Tab>(["board"]));
+
   const { config, prefs } = useSheetState();
   const { players, adp, meta, loading, error } = useBoardData();
   const teams = useTeams();
@@ -60,14 +86,41 @@ export function DraftSheet() {
 
   const onStar = useCallback((id: string) => toggle("starred", id), []);
   const onRemove = useCallback((id: string) => toggle("removed", id), []);
-  const onOpen = useCallback((id: string) => {
-    setFocusPlayer(id);
-    setTab("top200");
-  }, []);
+  const selectTab = useCallback(
+    (next: Tab) => {
+      if (next === tab) return;
+      scrollByTab.current[tab] = window.scrollY;
+      setMounted((seen) => (seen.has(next) ? seen : new Set(seen).add(next)));
+      setTab(next);
+    },
+    [tab],
+  );
+
+  const onOpen = useCallback(
+    (id: string) => {
+      scrollByTab.current[tab] = window.scrollY;
+      // Opening a specific player overrides the remembered position — Top200
+      // scrolls to him itself, and restoring first would fight it.
+      scrollByTab.current.top200 = 0;
+      setMounted((seen) => (seen.has("top200") ? seen : new Set(seen).add("top200")));
+      setFocusPlayer(id);
+      setTab("top200");
+    },
+    [tab],
+  );
   // Must be stable. As an inline arrow this changed identity every render, so
   // the effect that scrolls to the player kept tearing down its own timer
   // before it could fire and the row never highlighted.
   const clearFocus = useCallback(() => setFocusPlayer(null), []);
+
+  // Restore after the new tab has painted, or the page is still the old height
+  // and the browser clamps the scroll.
+  useEffect(() => {
+    const id = window.setTimeout(() => {
+      window.scrollTo({ top: scrollByTab.current[tab] ?? 0, behavior: "auto" });
+    }, 0);
+    return () => window.clearTimeout(id);
+  }, [tab]);
 
   const share = useCallback(() => {
     const url = `${window.location.origin}${window.location.pathname}?cfg=${encodeConfig(config)}`;
@@ -110,7 +163,7 @@ export function DraftSheet() {
             role="tab"
             aria-selected={tab === id}
             className={`ds-tab${tab === id ? " active" : ""}`}
-            onClick={() => setTab(id as Tab)}
+            onClick={() => selectTab(id as Tab)}
             data-tel="ds-tab"
           >
             {label}
@@ -118,8 +171,7 @@ export function DraftSheet() {
         ))}
       </nav>
 
-      {tab === "board" && (
-        <>
+      <div hidden={tab !== "board"}>
           <ConfigBar
             config={config}
             setConfig={storeSetConfig}
@@ -177,14 +229,19 @@ export function DraftSheet() {
               showRemoved={showRemoved}
             />
           )}
-        </>
+      </div>
+
+      {mounted.has("top200") && (
+        <div hidden={tab !== "top200"}>
+          <Top200 focus={focusPlayer} onFocusHandled={clearFocus} />
+        </div>
       )}
 
-      {tab === "top200" && (
-        <Top200 focus={focusPlayer} onFocusHandled={clearFocus} />
+      {mounted.has("teams") && (
+        <div hidden={tab !== "teams"}>
+          <TeamNews teams={teams} />
+        </div>
       )}
-
-      {tab === "teams" && <TeamNews teams={teams} />}
 
       {meta && (
         <footer className="ds-sources">
