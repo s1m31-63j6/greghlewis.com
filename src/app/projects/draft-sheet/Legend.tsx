@@ -5,11 +5,12 @@
  *
  * A dense board is only an advantage if the density is legible. Every column
  * here is a number without units, and the colors encode a comparison the
- * reader has no way to guess — so the key is on the page by default rather
- * than hidden behind a tooltip somebody discovers on pick nine.
+ * reader has no way to guess — so the key sits in the header rather than
+ * behind a tooltip somebody discovers on pick nine.
  *
- * It collapses, and the choice is remembered for the session, because it stops
- * being useful about ninety seconds in.
+ * It starts collapsed. Opened it is 717px tall, which on a 390px phone is the
+ * entire screen ahead of the board, and it stops being useful about ninety
+ * seconds in either way.
  */
 
 import { useState } from "react";
