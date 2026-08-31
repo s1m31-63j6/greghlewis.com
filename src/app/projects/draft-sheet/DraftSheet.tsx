@@ -6,9 +6,11 @@ import Link from "next/link";
 import { BOARD_KEYS, PLATFORMS } from "@/lib/draft-sheet/types";
 import type { BoardKey, PlatformKey } from "@/lib/draft-sheet/types";
 import WantMore from "@/app/_subscribe/WantMore";
+import Tour from "@/app/_tour/Tour";
+import type { TourStep } from "@/lib/tour/types";
 import { Board } from "./Board";
 import { ConfigBar } from "./ConfigBar";
-import { Legend } from "./Legend";
+import { BoardStrip } from "./BoardStrip";
 import { TeamNews } from "./TeamNews";
 import { Top200 } from "./Top200";
 import {
@@ -29,6 +31,125 @@ const BOARD_LABEL: Record<BoardKey, string> = {
   superflex: "superflex",
   "half-superflex": "half-PPR superflex",
 };
+
+/**
+ * The tour.
+ *
+ * Eight steps, walking a reader through an actual draft prep: set scoring,
+ * pull your league in, read tiers, find the value, mark your targets, print it.
+ * It ends on the print button but does not navigate there — "Get started"
+ * leaves them on the board, which is where the work happens.
+ *
+ * Module-level rather than built in the component: none of it depends on state,
+ * and a stable array is one less thing for <Tour> to defend against.
+ *
+ * Targets are `data-tour` attributes or structural classes, never `data-tel`.
+ * Telemetry labels are their own vocabulary and renaming one should not
+ * silently break the tour.
+ */
+const SETTINGS_BTN = '[data-tour="settings"]';
+
+/**
+ * Targets resolve with `document.querySelector`, so a plain descendant selector
+ * already means "the first one in document order" — the first tier of the first
+ * column, and the first row inside it.
+ *
+ * Deliberately not the `:first-of-type` pseudo-class, which counts element type
+ * and not class: inside `.ds-col` the first `div` is the column key, so a tier
+ * selector written that way matched nothing and the step pointed at empty space.
+ */
+const FIRST_TIER = ".ds-board .ds-tier";
+const FIRST_ROW = ".ds-board .ds-row";
+
+function setSettings(open: boolean) {
+  const btn = document.querySelector<HTMLButtonElement>(SETTINGS_BTN);
+  if (btn && (btn.getAttribute("aria-expanded") === "true") !== open) btn.click();
+}
+
+const TOUR_STEPS: TourStep[] = [
+  {
+    target: '[data-tour="scoring"]',
+    title: "Start with your scoring",
+    body:
+      "Set this before anything else. Full PPR, half or standard moves the draft order a long way — receivers most of all — and everything you do after this builds on it.",
+    side: "bottom",
+    align: "start",
+  },
+  {
+    target: ".ds-import",
+    title: "On Sleeper? Import your league",
+    body:
+      "Type your Sleeper username, or paste your league ID — the long number in your league's URL — and your scoring and roster slots come across in one go. ESPN and Yahoo have to be set by hand below. In a keeper league, mark each keeper with the × on their row: the board then recomputes where every position runs dry.",
+    side: "bottom",
+    align: "start",
+    before: () => setSettings(true),
+    waitFor: 1200,
+  },
+  {
+    target: ".ds-strip-chip",
+    title: "These are not my opinions",
+    body:
+      "The order comes from the published expert consensus for the format you just picked — dozens of analysts, averaged. Your league settings shift positions against each other, but never reorder players within a position.",
+    side: "bottom",
+    align: "start",
+    before: () => setSettings(false),
+  },
+  {
+    target: FIRST_TIER,
+    title: "Draft by tier, not by rank",
+    body:
+      "Players inside one bracket carry similar upside and similar risk — the experts expect them to land in roughly the same place by the end of the season. So take the cheapest name in a tier, and when a bracket is nearly empty, that is your cue to take one now.",
+    side: "right",
+    align: "start",
+  },
+  {
+    target: `${FIRST_ROW} .ds-name`,
+    title: "Click a name to research him",
+    body:
+      "Every name opens his write-up: the injury situation, what changed for him this offseason, and how far apart the experts are on him.",
+    side: "bottom",
+    align: "start",
+  },
+  {
+    target: FIRST_ROW,
+    // The platform columns are sibling grid cells with no wrapper, so the
+    // spotlight is drawn from the union of their boxes rather than the row's.
+    rect: () => {
+      const row = document.querySelector(FIRST_ROW);
+      const cells = row ? [...row.querySelectorAll(".ds-cell")] : [];
+      if (!cells.length) return null;
+      const r = cells.map((c) => c.getBoundingClientRect());
+      const left = Math.min(...r.map((x) => x.left));
+      const top = Math.min(...r.map((x) => x.top));
+      return new DOMRect(
+        left,
+        top,
+        Math.max(...r.map((x) => x.right)) - left,
+        Math.max(...r.map((x) => x.bottom)) - top,
+      );
+    },
+    title: "This is where you find value",
+    body:
+      "Sites disagree about players, and that disagreement is your edge. These columns show where Yahoo, ESPN, Sleeper and mock drafters are actually taking him. Green means he lasts longer on that site, so you can wait a round. Red means he is gone earlier than you would expect.",
+    side: "bottom",
+    align: "start",
+  },
+  {
+    target: `${FIRST_ROW} .ds-star`,
+    title: "Star the players you want",
+    body:
+      "Stars stay in this browser and carry straight onto the printed sheet, so the players you are targeting are already marked when you sit down at the table.",
+    side: "right",
+  },
+  {
+    target: '[data-tour="print"]',
+    title: "Then print it and draft",
+    body:
+      "Two pages, one position per column, with your stars and your keepers already applied. Paper needs no signal at the draft table.",
+    side: "left",
+    doneLabel: "Get started",
+  },
+];
 
 type Tab = "board" | "teams" | "top200";
 
@@ -138,6 +259,8 @@ export function DraftSheet() {
 
   return (
     <div className="ds-page">
+      <Tour project="draft-sheet" steps={TOUR_STEPS} />
+
       <header className="ds-masthead">
         <div className="ds-masthead-main">
           <p className="ds-kicker">2026 · Tiers, ADP and the offseason you missed</p>
@@ -177,8 +300,6 @@ export function DraftSheet() {
             setConfig={storeSetConfig}
             setRoster={patchRoster}
             setScoring={patchScoring}
-            departure={built.maxDeparture}
-            boardLabel={BOARD_LABEL[built.board]}
           />
 
           <div className="ds-toolbar">
@@ -195,24 +316,17 @@ export function DraftSheet() {
             <button type="button" className="ds-btn ds-btn-ghost" onClick={share} data-tel="ds-share">
               {copied ? "Link copied" : "Share settings"}
             </button>
-            <Link href="/projects/draft-sheet/print" className="ds-btn ds-btn-primary" data-tel="ds-print">
+            <Link href="/projects/draft-sheet/print" className="ds-btn ds-btn-primary" data-tel="ds-print" data-tour="print">
               Print sheet
             </Link>
           </div>
 
-          {/*
-            No accounts, so the sheet lives in this browser. Said where the work
-            happens rather than buried in a footer, because somebody who spends
-            twenty minutes marking keepers deserves to know that clearing site
-            data or switching to their phone starts over.
-          */}
-          <p className="ds-storage-note">
-            Your settings, stars and removed players are saved in <strong>this browser only</strong> —
-            there are no accounts. Clearing site data, or opening this on another device, starts fresh.
-            Use <em>Share settings</em> to carry your league setup to another device.
-          </p>
-
-          <Legend visible={platforms} onToggle={togglePlatform} />
+          <BoardStrip
+            boardLabel={BOARD_LABEL[built.board]}
+            departure={built.maxDeparture}
+            visible={platforms}
+            onToggle={togglePlatform}
+          />
 
           {loading && <p className="ds-status">Loading the board…</p>}
           {error && <p className="ds-status ds-status--error">{error}</p>}

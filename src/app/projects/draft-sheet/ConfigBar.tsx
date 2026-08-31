@@ -36,21 +36,19 @@ function summarise(c: LeagueConfig): string {
 }
 
 export function ConfigBar({
-  config, setConfig, setRoster, setScoring, departure, boardLabel,
+  config, setConfig, setRoster, setScoring,
 }: {
   config: LeagueConfig;
   setConfig: (c: LeagueConfig) => void;
   setRoster: (p: Partial<LeagueConfig["roster"]>) => void;
   setScoring: (p: Partial<LeagueConfig["scoring"]>) => void;
-  departure: number;
-  boardLabel: string;
 }) {
   const [open, setOpen] = useState(false);
 
   return (
     <div className="ds-configbar">
       <div className="ds-configbar-main">
-        <div className="ds-control-group" role="group" aria-label="Scoring">
+        <div className="ds-control-group" role="group" aria-label="Scoring" data-tour="scoring">
           <span className="ds-control-label">Scoring</span>
           <div className="ds-seg">
             {SCORING_PRESETS.map((p) => (
@@ -98,23 +96,11 @@ export function ConfigBar({
           aria-expanded={open}
           onClick={() => setOpen((o) => !o)}
           data-tel="ds-settings"
+          data-tour="settings"
         >
           {open ? "Hide settings" : "Settings"}
         </button>
       </div>
-
-      {/*
-        Say plainly which published board this snapped to and how far the league
-        pulled away from it. Somebody in an exotic league deserves to know they
-        are further from consensus than somebody in a standard one — that is the
-        most interesting thing this panel can tell them.
-      */}
-      <p className="ds-provenance">
-        Built on the <strong>{boardLabel}</strong> expert consensus board.{" "}
-        {departure === 0
-          ? "Your settings match what that board assumes, so this is consensus, unedited."
-          : `Your roster shifts positions against each other by up to ${Math.round(departure)} places. Order within each position is untouched.`}
-      </p>
 
       {open && (
         <div className="ds-panel">

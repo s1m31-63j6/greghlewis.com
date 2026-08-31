@@ -1,0 +1,180 @@
+/**
+ * Editorial styling for the tour popover.
+ *
+ * The popover is appended to `document.body`, deliberately outside every
+ * project's wrapper class — which means it cannot inherit `.ds-page`'s tokens
+ * or any other project's. It carries its own small token block instead, in the
+ * same spirit as the per-medium blocks the projects already use.
+ *
+ * Restrained on purpose: a rule, a serif title, and a lot of white. The default
+ * driver.js look is a rounded blue SaaS balloon, which would be the loudest
+ * thing on any page it appeared on.
+ */
+
+.driver-popover.tour-pop {
+  --tour-paper: #ffffff;
+  --tour-ink: #16181d;
+  --tour-ink-soft: #3b3f47;
+  --tour-ink-meta: #8b9098;
+  --tour-rule: #dcdcd7;
+  --tour-accent: #1b4f7a;
+  /* Hover deepens the navy. It must never resolve to ink: the forward button
+     is white-on-accent, and an ink fill under white text reads as a dead
+     button rather than a pressed one. */
+  --tour-accent-deep: #143c5d;
+
+  max-width: 330px;
+  padding: 16px 18px 12px;
+  background: var(--tour-paper);
+  border: 1px solid var(--tour-rule);
+  border-top: 2px solid var(--tour-ink);
+  border-radius: 2px;
+  box-shadow: 0 12px 34px rgb(20 24 33 / 22%);
+  color: var(--tour-ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+.driver-popover.tour-pop .driver-popover-title {
+  margin: 0 0 6px;
+  font-family: var(--font-source-serif), Georgia, serif;
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--tour-ink);
+}
+
+.driver-popover.tour-pop .driver-popover-description {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--tour-ink-soft);
+}
+
+.driver-popover.tour-pop .driver-popover-arrow {
+  display: none;
+}
+
+/* Footer: progress on the left, navigation on the right, separated by a rule
+   rather than a filled bar. */
+.driver-popover.tour-pop .driver-popover-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--tour-rule);
+}
+
+.driver-popover.tour-pop .driver-popover-progress-text {
+  flex: 1;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tour-ink-meta);
+}
+
+.driver-popover.tour-pop .driver-popover-navigation-btns {
+  display: flex;
+  gap: 6px;
+}
+
+.driver-popover.tour-pop .driver-popover-footer button {
+  all: unset;
+  padding: 5px 12px;
+  border: 1px solid var(--tour-rule);
+  border-radius: 2px;
+  background: var(--tour-paper);
+  color: var(--tour-ink-soft);
+  font-size: 12px;
+  font-weight: 500;
+  text-shadow: none;
+  cursor: pointer;
+  transition: border-color 120ms ease, background-color 120ms ease, color 120ms ease;
+}
+
+/* Scoped OFF the forward button on purpose. Unscoped, this selector is
+   (0,4,1) and the forward button's own hover is (0,4,0), so this one won the
+   `color` and painted near-black text onto a near-black fill. Same specificity
+   trap as the print bar. */
+.driver-popover.tour-pop
+  .driver-popover-footer
+  button:not(.driver-popover-next-btn):hover {
+  border-color: var(--tour-ink);
+  color: var(--tour-ink);
+}
+
+/* The forward button is the one to press, on every step. Selectors below carry
+   the footer class too, so they outrank the generic button rules above rather
+   than tying with them. */
+.driver-popover.tour-pop .driver-popover-footer .driver-popover-next-btn {
+  border-color: var(--tour-accent);
+  background: var(--tour-accent);
+  color: #ffffff;
+}
+
+.driver-popover.tour-pop .driver-popover-footer .driver-popover-next-btn:hover {
+  border-color: var(--tour-accent-deep);
+  background: var(--tour-accent-deep);
+  color: #ffffff;
+}
+
+.driver-popover.tour-pop .driver-popover-close-btn {
+  top: 8px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  color: var(--tour-ink-meta);
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.driver-popover.tour-pop .driver-popover-close-btn:hover {
+  color: var(--tour-ink);
+}
+
+/* Stand-in box for a step that spotlights a group of elements rather than one.
+   It must never take a click: driver grants the active element pointer-events,
+   and this one sits directly on top of real controls. */
+.tour-rect-proxy {
+  position: fixed;
+  pointer-events: none !important;
+  background: transparent;
+}
+
+/* Default launcher styling, used only when no `className` is passed. */
+.tour-launch {
+  padding: 4px 10px;
+  border: 1px solid #dcdcd7;
+  border-radius: 2px;
+  background: transparent;
+  color: #3b3f47;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.tour-launch:hover {
+  border-color: #16181d;
+  color: #16181d;
+}
+
+/* A phone has no room for a 330px card pinned beside a target. Let it span the
+   width it is given and stay put. */
+@media (max-width: 620px) {
+  .driver-popover.tour-pop {
+    max-width: calc(100vw - 24px);
+    padding: 14px 15px 10px;
+  }
+
+  .driver-popover.tour-pop .driver-popover-title {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .driver-popover.tour-pop .driver-popover-footer button {
+    transition: none;
+  }
+}

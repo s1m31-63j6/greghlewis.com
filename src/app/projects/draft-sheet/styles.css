@@ -257,15 +257,6 @@
   color: var(--ink-soft);
   font-weight: 600;
 }
-.ds-provenance {
-  margin: 8px 0 0;
-  font-size: 12px;
-  color: var(--ink-quiet);
-  line-height: 1.45;
-  max-width: 78ch;
-}
-.ds-provenance strong { color: var(--ink); font-weight: 700; }
-
 .ds-panel {
   margin-top: 10px;
   padding: 12px;
@@ -316,16 +307,6 @@
   display: inline-flex; align-items: center; gap: 5px;
   font-size: 11px; color: var(--ink-quiet);
 }
-.ds-storage-note {
-  max-width: var(--max-w);
-  margin: 10px auto 0;
-  padding: 8px 20px;
-  font-size: 11.5px;
-  line-height: 1.5;
-  color: var(--ink-quiet);
-}
-.ds-storage-note strong { color: var(--ink-soft); }
-
 .ds-status { max-width: var(--max-w); margin: 24px auto; padding: 0 20px; color: var(--ink-quiet); }
 .ds-status--error { color: var(--negative); }
 
@@ -598,7 +579,7 @@
 }
 @media (max-width: 620px) {
   .ds-masthead { padding: 14px 14px 10px; }
-  .ds-tabs, .ds-configbar, .ds-toolbar, .ds-board, .ds-sources { padding-left: 14px; padding-right: 14px; }
+  .ds-tabs, .ds-configbar, .ds-toolbar, .ds-strip-wrap, .ds-board, .ds-sources { padding-left: 14px; padding-right: 14px; }
   /* The platform cells STAY on a phone. An earlier version hid them on the
      theory that nobody arbitrages four platforms on a phone — but the numbers
      are the whole point of the board, and there was never a space problem: at
@@ -613,6 +594,15 @@
   }
   .ds-cell { font-size: 9px; }
   .ds-colkey { font-size: 7px; }
+
+  /* The strip wraps rather than scrolls. "Saved in this browser" is the one
+     item that goes: it is a reassurance, not a control, the tour says it on
+     the first visit, and the same sentence is still on the chip. What stays
+     is everything a returning reader might actually press. */
+  .ds-strip { gap: 6px 10px; font-size: 10.5px; }
+  .ds-strip-saved { display: none; }
+  .ds-strip-spacer { display: none; }
+  .ds-strip-key .ds-cell { width: 19px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -853,43 +843,85 @@
 
 /* ── the key ──────────────────────────────────────────────────────────────── */
 
-.ds-legend-bar {
+/*
+   The strip: one line carrying what a returning reader looks up, in place of
+   the provenance paragraph, the storage paragraph and the key's header. It is
+   a single row that wraps, not a grid — the items are different widths on
+   every board and a grid would have to guess at them.
+*/
+.ds-strip-wrap {
   max-width: var(--max-w);
   margin: 10px auto 0;
   padding: 0 20px;
 }
-.ds-legend-head {
+.ds-strip {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px 14px;
   flex-wrap: wrap;
-  padding-bottom: 8px;
+  padding: 7px 0 8px;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+  font-size: 11px;
+  color: var(--ink-quiet);
 }
-.ds-legend-title-text {
-  font-family: var(--sans);
-  font-stretch: 78%;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: var(--ink-meta);
-}
-.ds-legend-min {
-  margin-left: auto;
-  width: 20px;
-  height: 20px;
+.ds-strip-chip {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  gap: 5px;
+  padding: 2px 8px;
   border: 1px solid var(--rule-soft);
-  border-radius: 3px;
+  border-radius: 2px;
   background: var(--card);
   color: var(--ink-soft);
-  font-size: 14px;
-  line-height: 1;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: help;
+}
+.ds-strip-chip::after {
+  content: "?";
+  font-size: 8.5px;
+  font-weight: 700;
+  color: var(--ink-meta);
+}
+/* The colors are the only thing on a row with no units and no label, so the
+   key to them is the part that stays on screen. */
+.ds-strip-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.ds-strip-key .ds-cell {
+  width: 22px;
+  font-size: 9px;
+}
+.ds-strip-key-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: var(--ink-meta);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.ds-strip-key-label:first-child { margin-right: 2px; }
+.ds-strip-key-label:last-child { margin-left: 2px; }
+.ds-strip-spacer { flex: 1 1 auto; }
+.ds-strip-saved {
+  color: var(--ink-meta);
+  cursor: help;
+  text-decoration: underline dotted var(--rule-soft);
+  text-underline-offset: 2px;
+}
+.ds-strip-btn {
+  padding: 2px 9px;
+  border: 1px solid var(--rule-soft);
+  border-radius: 2px;
+  background: var(--card);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 11px;
   cursor: pointer;
 }
-.ds-legend-min:hover { border-color: var(--ink-quiet); color: var(--ink); }
+.ds-strip-btn:hover { border-color: var(--ink-quiet); color: var(--ink); }
 .ds-platform-picks { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .ds-platform-label {
   font-size: 9.5px; font-weight: 700; color: var(--ink-meta);
@@ -901,6 +933,7 @@
 }
 
 .ds-legend-body {
+  margin-top: 10px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 18px;
