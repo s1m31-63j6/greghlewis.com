@@ -154,7 +154,8 @@ jobs:
             public/draft-sheet/adp-history.json \
             public/draft-sheet/top200.json \
             public/draft-sheet/team-news.json \
-            public/draft-sheet/teams.json)
+            public/draft-sheet/teams.json \
+            public/draft-sheet/news.json)
 
           if [[ -z "$data_changed" ]]; then
             echo "::notice::No data change. Sources have not moved since the last run."

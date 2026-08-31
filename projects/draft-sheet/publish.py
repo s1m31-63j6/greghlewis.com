@@ -53,6 +53,9 @@ ATTRIBUTION = {
     "fantasypros": "Expert consensus rankings and tiers from FantasyPros.",
     "dynastyprocess": "Cross-platform player id crosswalk from DynastyProcess.",
     "nflverse": "Rosters, draft picks and team marks from nflverse.",
+    "news": "Player headlines from the public RSS feeds of ProFootballTalk, "
+            "CBS Sports and Yahoo Sports. Headlines and links only — every "
+            "item links out to the publisher that reported it.",
 }
 
 

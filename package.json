@@ -12,10 +12,10 @@
     "playbook:preview": "node projects/playbook/results/render.cjs && node projects/playbook/results/print-preview.cjs",
     "draft-sheet:build": "npm run draft-sheet:fetch && npm run draft-sheet:publish",
     "draft-sheet:history": "cd projects/draft-sheet && uv run python adp_history.py --force",
-    "draft-sheet:check": "node --experimental-strip-types projects/draft-sheet/results/tie-out.mts && node --experimental-strip-types projects/draft-sheet/results/import.mts && node --experimental-strip-types projects/draft-sheet/results/coaching.mts && node --experimental-strip-types projects/draft-sheet/results/top200.mts && node projects/draft-sheet/results/render-board.cjs",
+    "draft-sheet:check": "node --experimental-strip-types projects/draft-sheet/results/tie-out.mts && node --experimental-strip-types projects/draft-sheet/results/import.mts && node --experimental-strip-types projects/draft-sheet/results/coaching.mts && node --experimental-strip-types projects/draft-sheet/results/top200.mts && node --experimental-strip-types projects/draft-sheet/results/news.mts && node projects/draft-sheet/results/render-board.cjs",
     "draft-sheet:daily": "npm run draft-sheet:fetch && npm run draft-sheet:history && npm run draft-sheet:publish && npm run draft-sheet:check && npm run draft-sheet:drift && node projects/draft-sheet/results/thumbnail.cjs",
     "draft-sheet:fetch": "cd projects/draft-sheet && uv run python crosswalk.py --force && uv run python rankings_fpros.py --force && uv run python adp_espn.py --force && uv run python adp_yahoo.py --force && uv run python adp_ffc.py --force && uv run python adp_sleeper.py --force && uv run python merge.py",
-    "draft-sheet:publish": "cd projects/draft-sheet && uv run python publish.py && uv run python teams.py --no-verify && uv run python team_news.py && uv run python top200.py",
+    "draft-sheet:publish": "cd projects/draft-sheet && uv run python publish.py && uv run python teams.py --no-verify && uv run python team_news.py && uv run python top200.py && uv run python news.py --force",
     "draft-sheet:drift": "node --experimental-strip-types projects/draft-sheet/results/day-over-day.mts"
   },
   "dependencies": {

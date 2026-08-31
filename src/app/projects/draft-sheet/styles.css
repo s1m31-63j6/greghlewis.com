@@ -1073,6 +1073,33 @@
   text-decoration: none;
 }
 .ds-top-news:hover { text-decoration: underline; }
+
+/* The wire. Set as a list of links rather than prose, because every line here
+   was written by somebody else and the publisher's name belongs next to it. */
+.ds-top-wire {
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+  border-left: 2px solid var(--rule-soft);
+}
+.ds-top-wire li {
+  padding: 0 0 3px 9px;
+  font-size: 11.5px;
+  line-height: 1.35;
+}
+.ds-top-wire li:last-child { padding-bottom: 0; }
+.ds-top-wire a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.ds-top-wire a:hover { text-decoration: underline; }
+.ds-top-wire-meta {
+  display: block;
+  font-size: 9.5px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-meta);
+}
 .ds-top-row.is-flash { background: var(--accent-soft); }
 
 .ds-name {

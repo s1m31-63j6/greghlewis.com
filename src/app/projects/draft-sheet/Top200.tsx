@@ -48,6 +48,29 @@ interface Row {
   last: string | null;
 }
 
+/**
+ * A headline somebody else reported, with their name on it.
+ *
+ * Every other number on this page is the market's opinion; this is the only
+ * thing that says what actually happened. Headline and link only — the article
+ * belongs to the publisher, and the point of this block is to send the reader
+ * to them.
+ */
+interface NewsItem {
+  headline: string;
+  url: string;
+  source: string;
+  ts: string;
+}
+
+/** "2h ago" / "3d ago". Precision beyond the day is not the point. */
+function ago(ts: string): string {
+  const mins = Math.max(0, (Date.now() - Date.parse(ts)) / 60000);
+  if (mins < 60) return `${Math.round(mins)}m ago`;
+  if (mins < 60 * 24) return `${Math.round(mins / 60)}h ago`;
+  return `${Math.round(mins / (60 * 24))}d ago`;
+}
+
 export function Top200({
   focus,
   onFocusHandled,
@@ -57,6 +80,7 @@ export function Top200({
   onFocusHandled?: () => void;
 }) {
   const [rows, setRows] = useState<Row[] | null>(null);
+  const [news, setNews] = useState<Record<string, NewsItem[]>>({});
   const [flash, setFlash] = useState<string | null>(null);
   const [pos, setPos] = useState<Position | "ALL">("ALL");
   const [q, setQ] = useState("");
@@ -68,6 +92,14 @@ export function Top200({
       .then((r) => r.json())
       .then((d) => { if (live) setRows(d.players as Row[]); })
       .catch(() => { if (live) setRows([]); });
+
+    // Separately, and allowed to fail: a page with no headlines is the page we
+    // shipped for months. A page that will not render because a wire is down
+    // is a regression.
+    fetch("/draft-sheet/news.json")
+      .then((r) => r.json())
+      .then((d) => { if (live) setNews(d.news ?? {}); })
+      .catch(() => undefined);
     return () => { live = false; };
   }, []);
 
@@ -199,6 +231,25 @@ export function Top200({
 
             <div className="ds-top-say">
               <p className="ds-top-blurb">{r.blurb}</p>
+              {news[r.id]?.length > 0 && (
+                <ul className="ds-top-wire">
+                  {news[r.id].map((n) => (
+                    <li key={n.url}>
+                      <a
+                        href={n.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-tel="ds-player-headline"
+                      >
+                        {n.headline}
+                      </a>
+                      <span className="ds-top-wire-meta">
+                        {n.source} · {ago(n.ts)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              )}
               {r.newsUrl && (
                 <a
                   className="ds-top-news"
