@@ -263,8 +263,11 @@ export function DraftSheet() {
 
       <header className="ds-masthead">
         <div className="ds-masthead-main">
-          <p className="ds-kicker">2026 · Tiers, ADP and the offseason you missed</p>
-          <h1>A Draft Sheet for More Casual Fans</h1>
+          <p className="ds-kicker">2026 season</p>
+          <h1>A Draft Board for the Casual Fan</h1>
+          <p className="ds-dek">
+            Spent your summer doing something more rewarding than refreshing X and watching NFL Network? Don’t worry — we’ve got you covered.
+          </p>
         </div>
         <div className="ds-masthead-actions">
           <Link href="/projects/draft-sheet/methodology" className="ds-btn ds-btn-ghost">

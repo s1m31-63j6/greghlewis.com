@@ -108,6 +108,18 @@
   font-weight: 600;
   color: var(--accent);
 }
+/* The tagline is a dek, not a kicker: it is a full conversational sentence, and
+   the kicker's small uppercase accent treatment would fight it. Measure is
+   capped so it breaks in two lines on a wide screen rather than running the
+   full width of the masthead. */
+.ds-dek {
+  margin: 8px 0 0;
+  max-width: 58ch;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
 .ds-masthead h1 {
   margin: 0;
   font-size: clamp(26px, 3.4vw, 40px);
@@ -579,6 +591,7 @@
 }
 @media (max-width: 620px) {
   .ds-masthead { padding: 14px 14px 10px; }
+  .ds-dek { font-size: 13px; }
   .ds-tabs, .ds-configbar, .ds-toolbar, .ds-strip-wrap, .ds-board, .ds-sources { padding-left: 14px; padding-right: 14px; }
   /* The platform cells STAY on a phone. An earlier version hid them on the
      theory that nobody arbitrages four platforms on a phone — but the numbers

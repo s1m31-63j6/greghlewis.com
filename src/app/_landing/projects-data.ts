@@ -15,7 +15,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     id: "draft-sheet",
-    title: "A Draft Sheet for More Casual Fans - Fantasy Football",
+    title: "A Draft Board for the Casual Fan - Fantasy Football",
     date: "2026-08-29",
     oneLiner:
       "Expert consensus tiers rebuilt for your exact league settings, with Yahoo, ESPN, Sleeper and mock-draft ADP side by side so you can see who your platform is giving away \u2014 and a one-page sheet to print for draft night.",
