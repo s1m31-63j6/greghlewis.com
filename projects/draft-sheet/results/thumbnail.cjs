@@ -3,6 +3,13 @@
  * real ADP spread — composed as SVG and rasterised, rather than mocked up.
  *
  *   node projects/draft-sheet/results/thumbnail.cjs
+ *
+ * Run this by hand after a change that alters what the card should say — a
+ * rename, or a board shift big enough to be worth showing. It is deliberately
+ * NOT in the nightly workflow: it shells out to `rsvg-convert`, and it draws in
+ * Archivo and JetBrains Mono. A runner has neither the binary nor the fonts, so
+ * in CI it would either fail or, worse, quietly rasterise the card in fallback
+ * faces and publish that. Keep the renderer where the fonts are.
  */
 const { execSync } = require("node:child_process");
 const { readFileSync, writeFileSync, mkdirSync } = require("node:fs");
@@ -103,8 +110,8 @@ COLS.forEach((pos, ci) => {
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
 <rect width="${W}" height="${H}" fill="#f7f7f5"/>
-<text x="${PAD}" y="66" font-family="Archivo,Helvetica,Arial" font-size="19" font-weight="700" letter-spacing="2.4" fill="#1b4f7a">2026 · TIERS, ADP AND THE OFFSEASON YOU MISSED</text>
-<text x="${PAD}" y="122" font-family="Archivo,Helvetica,Arial" font-size="54" font-weight="800" fill="#16181d">Draft Sheet for Casuals</text>
+<text x="${PAD}" y="66" font-family="Archivo,Helvetica,Arial" font-size="19" font-weight="700" letter-spacing="2.4" fill="#1b4f7a">2026 SEASON</text>
+<text x="${PAD}" y="122" font-family="Archivo,Helvetica,Arial" font-size="54" font-weight="800" fill="#16181d">A Draft Board for the Casual Fan</text>
 <text x="${W - PAD}" y="122" text-anchor="end" font-family="Archivo,Helvetica,Arial" font-size="15" font-weight="700" letter-spacing="1.6" fill="#6b7079">YAHOO · ESPN · SLEEPER · MOCKS</text>
 ${body}
 </svg>`;
