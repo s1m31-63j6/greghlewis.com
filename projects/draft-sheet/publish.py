@@ -111,12 +111,29 @@ INJURY = {
 }
 
 
+# Statuses where Sleeper's `injury_body_part` is genuinely describing the
+# current designation.
+#
+# Everything else is an AVAILABILITY ruling rather than an injury, and Sleeper
+# leaves the last-known body part on the record when the status changes
+# underneath it. A player moved to the commissioner's exempt list still carried
+# "Groin" from an earlier knock, which read as "Groin — Did not report.": a
+# holdout with a sore groin, rather than what had actually happened to him.
+#
+# An allowlist rather than a blocklist, so an unfamiliar status is treated as
+# not-an-injury. We cannot confirm a body part belongs to a designation we do
+# not recognise, and inventing a plausible one is worse than saying less.
+BODY_PART_APPLIES = {"IR", "PUP", "Out", "Doubtful", "Questionable", "COV"}
+
+
 def injury_of(status, part, note) -> dict | None:
     if not status or (isinstance(status, float) and pd.isna(status)):
         return None
     sev, meaning = INJURY.get(str(status), ("questionable", str(status)))
     txt = lambda v: None if v is None or (isinstance(v, float) and pd.isna(v)) else str(v).strip()
     part, note = txt(part), txt(note)
+    if str(status) not in BODY_PART_APPLIES:
+        part = None
 
     # Lead with the injury, not the designation. Sleeper lists a player who has
     # had ACL surgery as "Questionable", and "Questionable. Day to day." as the
