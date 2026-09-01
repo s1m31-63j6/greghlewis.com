@@ -21,7 +21,8 @@
  */
 
 import { defaultConfig } from "@/lib/draft-sheet/presets";
-import type { LeagueConfig, SheetPrefs } from "@/lib/draft-sheet/types";
+import { ADP_PLATFORMS, PLATFORMS } from "@/lib/draft-sheet/types";
+import type { LeagueConfig, PlatformKey, SheetPrefs } from "@/lib/draft-sheet/types";
 
 const KEY = "ds:sheet:v1";
 const DEBOUNCE_MS = 300;
@@ -31,7 +32,10 @@ export interface SheetState {
   prefs: SheetPrefs;
 }
 
-const EMPTY_PREFS: SheetPrefs = { removed: [], starred: [], notes: {} };
+const EMPTY_PREFS: SheetPrefs = {
+  removed: [], starred: [], notes: {},
+  platforms: ADP_PLATFORMS.map((p) => p.key),
+};
 
 /** Stable identity for SSR and for a browser with storage switched off. */
 const SERVER_STATE: SheetState = {
@@ -94,6 +98,14 @@ function ids(v: unknown): string[] {
   return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : [];
 }
 
+/** Unknown keys are dropped and canonical order is imposed, so a hand-edited
+ *  or outdated payload cannot reorder the columns or invent a lane. */
+function lanes(v: unknown): PlatformKey[] {
+  const want = new Set(Array.isArray(v) ? v : []);
+  const kept = PLATFORMS.map((p) => p.key).filter((k) => want.has(k));
+  return kept.length ? kept : ADP_PLATFORMS.map((p) => p.key);
+}
+
 function hydrate(): SheetState {
   // A private window is a perfectly reasonable place to look at a draft board.
   try {
@@ -106,6 +118,7 @@ function hydrate(): SheetState {
         removed: ids(p?.removed),
         starred: ids(p?.starred),
         notes: p?.notes && typeof p.notes === "object" ? p.notes : {},
+        platforms: lanes(p?.platforms),
       },
     };
   } catch {
@@ -182,6 +195,19 @@ export function patchRoster(patch: Partial<LeagueConfig["roster"]>): void {
 
 export function patchScoring(patch: Partial<LeagueConfig["scoring"]>): void {
   update((s) => ({ ...s, config: { ...s.config, scoring: { ...s.config.scoring, ...patch } } }));
+}
+
+export function togglePlatform(key: PlatformKey): void {
+  update((s) => {
+    const on = new Set(s.prefs.platforms);
+    if (on.has(key)) on.delete(key);
+    else on.add(key);
+    // Canonical order always, so the columns never reshuffle under the reader.
+    return {
+      ...s,
+      prefs: { ...s.prefs, platforms: PLATFORMS.map((p) => p.key).filter((k) => on.has(k)) },
+    };
+  });
 }
 
 export function toggle(field: "removed" | "starred", id: string): void {

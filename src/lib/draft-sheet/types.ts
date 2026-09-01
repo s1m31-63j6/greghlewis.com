@@ -163,6 +163,15 @@ export interface SheetPrefs {
   removed: string[];
   starred: string[];
   notes: Record<string, string>;
+  /**
+   * Which ADP lanes to show, in canonical order.
+   *
+   * Persisted rather than local to the board, because the printed sheet is a
+   * different route reading the same store — as component state it could not
+   * reach print at all, so ticking a box on the board changed the screen and
+   * silently did nothing to the paper.
+   */
+  platforms: PlatformKey[];
 }
 
 export interface TierGroup {

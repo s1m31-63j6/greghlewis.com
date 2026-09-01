@@ -3,8 +3,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
-import { ADP_PLATFORMS, BOARD_KEYS, PLATFORMS } from "@/lib/draft-sheet/types";
-import type { BoardKey, PlatformKey } from "@/lib/draft-sheet/types";
+import { BOARD_KEYS } from "@/lib/draft-sheet/types";
+import type { BoardKey } from "@/lib/draft-sheet/types";
 import WantMore from "@/app/_subscribe/WantMore";
 import Tour from "@/app/_tour/Tour";
 import type { TourStep } from "@/lib/tour/types";
@@ -19,6 +19,7 @@ import {
   patchScoring,
   setConfig as storeSetConfig,
   toggle,
+  togglePlatform,
 } from "./sheetStore";
 import { useSheetState } from "./useSheetState";
 import { withRemoved } from "@/lib/draft-sheet/board";
@@ -158,11 +159,7 @@ export function DraftSheet() {
   const [tab, setTab] = useState<Tab>("board");
   const [showRemoved, setShowRemoved] = useState(false);
   const [copied, setCopied] = useState(false);
-  // Auction is deliberately not in the default set: most leagues are snake
-  // drafts, and a column of dollars is dead weight to everyone in one.
-  const [platforms, setPlatforms] = useState<PlatformKey[]>(
-    () => ADP_PLATFORMS.map((p) => p.key),
-  );
+
   // Set when a name is clicked on the board: switch tabs and take the reader
   // to that player rather than making them scroll two hundred rows.
   const [focusPlayer, setFocusPlayer] = useState<string | null>(null);
@@ -194,6 +191,9 @@ export function DraftSheet() {
   const [mounted, setMounted] = useState<Set<Tab>>(() => new Set<Tab>(["board"]));
 
   const { config, prefs } = useSheetState();
+  // Lives in the store, not here: the printed sheet is a different route
+  // reading the same state, and as component state this could never reach it.
+  const platforms = prefs.platforms;
   const { players, adp, meta, loading, error } = useBoardData();
   const teams = useTeams();
   const base = useBuiltBoard(players, config, prefs);
@@ -202,16 +202,6 @@ export function DraftSheet() {
     () => (showRemoved ? withRemoved(base) : base),
     [base, showRemoved],
   );
-
-  // Keep the canonical lane order however they are toggled, so the columns
-  // never reshuffle under the reader.
-  const togglePlatform = useCallback((key: PlatformKey) => {
-    setPlatforms((cur) =>
-      cur.includes(key)
-        ? cur.filter((k) => k !== key)
-        : PLATFORMS.map((p) => p.key).filter((k) => cur.includes(k) || k === key),
-    );
-  }, []);
 
   const onStar = useCallback((id: string) => toggle("starred", id), []);
   const onRemove = useCallback((id: string) => toggle("removed", id), []);

@@ -21,7 +21,19 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { buildBoard } from "@/lib/draft-sheet/board";
-import { ADP_PLATFORMS as PLATFORMS } from "@/lib/draft-sheet/types";
+import { PLATFORMS as ALL_PLATFORMS } from "@/lib/draft-sheet/types";
+
+/**
+ * How many numeric lanes a printed column can hold.
+ *
+ * Measured, not chosen. A 2.5in column minus its padding leaves 2.44in; the
+ * star, positional rank, team·bye, ECR and trend glyph claim 0.75in of that,
+ * and each lane costs 0.17in plus a 0.022in gap. Four lanes leave the name
+ * 0.812in against the 0.781in the longest name on the board needs — about a
+ * thirtieth of an inch of slack. A fifth takes the name to 0.620in, and no
+ * amount of shuffling the other columns buys that back.
+ */
+const MAX_PRINT_LANES = 4;
 import type { Adp, Player } from "@/lib/draft-sheet/types";
 import { useSheetState } from "../useSheetState";
 
@@ -123,6 +135,12 @@ export function PrintBoard({
   }, [columns, colsPerPage]);
 
   const starred = new Set(state.prefs.starred);
+
+  // The sheet prints what the reader ticked on the board — that selection is
+  // in the store precisely so it can reach this route. Capped at what fits.
+  const chosen = ALL_PLATFORMS.filter((p) => state.prefs.platforms.includes(p.key));
+  const PLATFORMS = chosen.slice(0, MAX_PRINT_LANES);
+  const dropped = chosen.slice(MAX_PRINT_LANES);
   const cfg = state.config;
   const label = `${cfg.teams} team · ${
     cfg.scoring.rec === 1 ? "full PPR" : cfg.scoring.rec === 0 ? "standard" : "half PPR"
@@ -143,6 +161,19 @@ export function PrintBoard({
         <span className="ds-print-note">
           Built from the settings saved in this browser. {pages.length} page
           {pages.length > 1 ? "s" : ""}.
+          {/* Said out loud. Silently printing fewer columns than the reader
+              ticked is how somebody ends up checking a box and wondering why
+              the paper never changes. */}
+          {dropped.length > 0 && (
+            <>
+              {" "}
+              <strong>
+                {dropped.map((d) => d.label).join(" and ")} left off
+              </strong>{" "}
+              — a printed column fits {MAX_PRINT_LANES} of these. Untick one on
+              the board to make room.
+            </>
+          )}
         </span>
         <span className="ds-print-spacer" />
         <button type="button" className="ds-print-go" onClick={() => window.print()}
@@ -155,7 +186,11 @@ export function PrintBoard({
 
       {ready &&
         pages.map((page, pi) => (
-          <div key={pi} className={`ds-sheet ds-sheet--${layout}`}>
+          <div
+            key={pi}
+            className={`ds-sheet ds-sheet--${layout}`}
+            style={{ ["--pcells" as string]: PLATFORMS.length }}
+          >
             <header className="ds-sheet-head">
               <span>Draft Sheet · 2026</span>
               <span className="ds-sheet-cfg">{label}</span>
@@ -208,17 +243,24 @@ export function PrintBoard({
                           {PLATFORMS.map((plat) => {
                             const raw = a?.raw[plat.key] ?? null;
                             const pr = a?.posRank[plat.key] ?? null;
-                            const shown = plat.kind === "adp" ? raw : pr;
+                            const shown = plat.kind === "rank" ? pr : raw;
                             // Bold marks a real bargain on that platform.
-                            // Weight photocopies; a tint does not.
+                            // Weight photocopies; a tint does not. A price has
+                            // no consensus rank to be a bargain against, so the
+                            // auction lane is never marked.
                             const value =
+                              plat.kind !== "cost" &&
                               pr != null && posEcr != null && pr - posEcr >= 4;
                             return (
                               <span
                                 key={plat.key}
                                 className={`ds-pcell${value ? " is-value" : ""}`}
                               >
-                                {shown != null ? Math.round(shown) : "·"}
+                                {shown == null
+                                  ? "·"
+                                  : plat.kind === "cost"
+                                    ? `$${Math.round(shown)}`
+                                    : Math.round(shown)}
                               </span>
                             );
                           })}

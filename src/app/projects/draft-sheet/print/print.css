@@ -168,7 +168,7 @@
 .ds-prow {
   display: grid;
   grid-template-columns:
-    0.06in 0.16in minmax(0, 1fr) 0.26in 0.18in repeat(4, 0.17in) 0.09in;
+    0.06in 0.16in minmax(0, 1fr) 0.26in 0.18in repeat(var(--pcells, 4), 0.17in) 0.09in;
   gap: 0.022in;
   align-items: center;
   height: 0.13in;
@@ -221,7 +221,7 @@
 .ds-pkey {
   display: grid;
   grid-template-columns:
-    0.06in 0.16in minmax(0, 1fr) 0.26in 0.18in repeat(4, 0.17in) 0.09in;
+    0.06in 0.16in minmax(0, 1fr) 0.26in 0.18in repeat(var(--pcells, 4), 0.17in) 0.09in;
   gap: 0.022in;
   height: 0.13in;
   align-items: center;
