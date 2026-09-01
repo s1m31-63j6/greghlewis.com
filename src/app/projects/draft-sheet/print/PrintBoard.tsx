@@ -26,14 +26,17 @@ import { PLATFORMS as ALL_PLATFORMS } from "@/lib/draft-sheet/types";
 /**
  * How many numeric lanes a printed column can hold.
  *
- * Measured, not chosen. A 2.5in column minus its padding leaves 2.44in; the
- * star, positional rank, team·bye, ECR and trend glyph claim 0.75in of that,
- * and each lane costs 0.17in plus a 0.022in gap. Four lanes leave the name
- * 0.812in against the 0.781in the longest name on the board needs — about a
- * thirtieth of an inch of slack. A fifth takes the name to 0.620in, and no
- * amount of shuffling the other columns buys that back.
+ * Five is past what the geometry wants. A 2.5in column less its padding leaves
+ * 2.44in; the star, positional rank, team·bye, ECR and trend glyph claim
+ * 0.75in, and each lane costs 0.17in plus a 0.022in gap. Four lanes leave the
+ * name 0.812in against the 0.781in the longest name needs. The fifth is paid
+ * for out of the name column, which is a deliberate trade: an auction drafter
+ * would rather read a truncated surname than not see the price at all.
+ *
+ * The name is `minmax(0, 1fr)`, so it yields the space automatically and
+ * ellipsises rather than pushing the row wide.
  */
-const MAX_PRINT_LANES = 4;
+const MAX_PRINT_LANES = 5;
 import type { Adp, Player } from "@/lib/draft-sheet/types";
 import { useSheetState } from "../useSheetState";
 
