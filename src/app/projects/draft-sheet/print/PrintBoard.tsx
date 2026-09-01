@@ -21,7 +21,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 
 import { buildBoard } from "@/lib/draft-sheet/board";
-import { PLATFORMS } from "@/lib/draft-sheet/types";
+import { ADP_PLATFORMS as PLATFORMS } from "@/lib/draft-sheet/types";
 import type { Adp, Player } from "@/lib/draft-sheet/types";
 import { useSheetState } from "../useSheetState";
 

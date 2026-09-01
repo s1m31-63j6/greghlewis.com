@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
-import { BOARD_KEYS, PLATFORMS } from "@/lib/draft-sheet/types";
+import { ADP_PLATFORMS, BOARD_KEYS, PLATFORMS } from "@/lib/draft-sheet/types";
 import type { BoardKey, PlatformKey } from "@/lib/draft-sheet/types";
 import WantMore from "@/app/_subscribe/WantMore";
 import Tour from "@/app/_tour/Tour";
@@ -21,6 +21,7 @@ import {
   toggle,
 } from "./sheetStore";
 import { useSheetState } from "./useSheetState";
+import { withRemoved } from "@/lib/draft-sheet/board";
 import { useBoardData, useBuiltBoard } from "./useBoard";
 import { useTeams } from "./teams";
 
@@ -157,8 +158,10 @@ export function DraftSheet() {
   const [tab, setTab] = useState<Tab>("board");
   const [showRemoved, setShowRemoved] = useState(false);
   const [copied, setCopied] = useState(false);
+  // Auction is deliberately not in the default set: most leagues are snake
+  // drafts, and a column of dollars is dead weight to everyone in one.
   const [platforms, setPlatforms] = useState<PlatformKey[]>(
-    () => PLATFORMS.map((p) => p.key),
+    () => ADP_PLATFORMS.map((p) => p.key),
   );
   // Set when a name is clicked on the board: switch tabs and take the reader
   // to that player rather than making them scroll two hundred rows.
@@ -193,7 +196,12 @@ export function DraftSheet() {
   const { config, prefs } = useSheetState();
   const { players, adp, meta, loading, error } = useBoardData();
   const teams = useTeams();
-  const built = useBuiltBoard(players, config, prefs);
+  const base = useBuiltBoard(players, config, prefs);
+  // Only while the box is ticked. The default board is untouched.
+  const built = useMemo(
+    () => (showRemoved ? withRemoved(base) : base),
+    [base, showRemoved],
+  );
 
   // Keep the canonical lane order however they are toggled, so the columns
   // never reshuffle under the reader.
@@ -315,6 +323,9 @@ export function DraftSheet() {
                 onChange={(e) => setShowRemoved(e.target.checked)}
               />
               Show removed
+              {base.removed.length > 0 && (
+                <span className="ds-removed-count">{base.removed.length}</span>
+              )}
             </label>
             <button type="button" className="ds-btn ds-btn-ghost" onClick={share} data-tel="ds-share">
               {copied ? "Link copied" : "Share settings"}

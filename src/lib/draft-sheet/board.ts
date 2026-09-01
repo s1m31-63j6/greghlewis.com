@@ -296,5 +296,62 @@ export function buildBoard({
     };
   }).filter((c) => c.tiers.length > 0);
 
-  return { board: key, columns, overall, maxDeparture };
+  const removedPlayers = players
+    .filter((p) => removed.has(p.id) && p.ecr[boardFor(key, p)] != null)
+    .sort((a, b) => a.ecr[boardFor(key, a)]! - b.ecr[boardFor(key, b)]!);
+
+  return { board: key, columns, overall, maxDeparture, removed: removedPlayers };
+}
+
+/**
+ * Put the removed players back into the columns, for display only.
+ *
+ * They are spliced into the tier their consensus rank falls in, so a keeper
+ * shows up where he would have been rather than in a list somewhere else. It
+ * changes nothing about the board underneath: ranks on a row come from the
+ * player's own `posRank`, not from his index, so nobody is renumbered, and
+ * `overall` — which the printed sheet budgets from — is not touched at all.
+ */
+export function withRemoved(
+  built: BuiltBoard,
+  { depth = 60 }: { depth?: number } = {},
+): BuiltBoard {
+  if (!built.removed.length) return built;
+
+  const ecrOf = (p: Player) => p.ecr[boardFor(built.board, p)] ?? Infinity;
+  const byPos = new Map<Position, Player[]>();
+  for (const p of built.removed) {
+    byPos.set(p.pos, [...(byPos.get(p.pos) ?? []), p]);
+  }
+
+  const columns = built.columns.map((col) => {
+    const mine = byPos.get(col.pos);
+    if (!mine?.length) return col;
+
+    const tiers = col.tiers.map((t) => ({ ...t, players: [...t.players] }));
+    for (const p of mine) {
+      // The first tier this player would not be behind. Falls to the last tier
+      // when he ranks below everyone still on the board.
+      const target =
+        tiers.find((t) => ecrOf(p) <= Math.max(...t.players.map(ecrOf))) ??
+        tiers[tiers.length - 1];
+      const at = target.players.findIndex((q) => ecrOf(q) > ecrOf(p));
+      target.players.splice(at === -1 ? target.players.length : at, 0, p);
+    }
+    // Honour the same depth cut the column was built with, so restoring a
+    // keeper cannot make one position run longer than the rest.
+    let budget = depth;
+    return {
+      ...col,
+      tiers: tiers
+        .map((t) => {
+          const take = t.players.slice(0, Math.max(0, budget));
+          budget -= take.length;
+          return { ...t, players: take };
+        })
+        .filter((t) => t.players.length > 0),
+    };
+  });
+
+  return { ...built, columns };
 }

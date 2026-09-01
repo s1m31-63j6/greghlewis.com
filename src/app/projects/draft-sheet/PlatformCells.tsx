@@ -84,7 +84,8 @@ export function PlatformCells({
         const tone = cellTone(delta, posEcr);
         // Sleeper publishes no ADP, so its cell shows where Sleeper ranks him
         // among his position rather than a pick number he does not have.
-        const shown = spec.kind === "adp" ? raw : posRank;
+        // Auction shows money, which is neither.
+        const shown = spec.kind === "rank" ? posRank : raw;
 
         if (shown == null) {
           return (
@@ -93,6 +94,22 @@ export function PlatformCells({
             </span>
           );
         }
+        // A price has no consensus rank to be measured against, so the cell
+        // carries no colour: there is no "goes later here" to report. Showing
+        // it uncoloured is the honest version — the number is the whole signal.
+        if (spec.kind === "cost") {
+          return (
+            <span
+              key={key}
+              className="ds-cell ds-cell--cost"
+              title={`${spec.label}: average winning bid of $${shown.toFixed(2)} in Yahoo's default 12-team, $200 auction. Scale it to your own budget.`}
+              aria-label={`${spec.label}, average winning bid ${Math.round(shown)} dollars`}
+            >
+              {`$${Math.round(shown)}`}
+            </span>
+          );
+        }
+
         const unit =
           spec.kind === "adp"
             ? `drafted around ${Math.round(shown)}`

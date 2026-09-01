@@ -127,7 +127,7 @@ def main() -> None:
     yname = yh[yh["yahoo_adp"].notna()].copy()
     yname["key"] = yname["name"].fillna("").map(norm_name)
     ycols = ["yahoo_adp", "yahoo_round", "yahoo_pct_drafted",
-             "yahoo_adp_preseason", "yahoo_headshot"]
+             "yahoo_adp_preseason", "yahoo_headshot", "yahoo_cost"]
     yname = yname.drop_duplicates(["key", "pos"])[["key", "pos"] + ycols]
     df = df.merge(yname, on=["key", "pos"], how="left", suffixes=("", "_n"))
     for c in ycols:

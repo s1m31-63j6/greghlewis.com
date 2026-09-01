@@ -29,7 +29,7 @@ export const BOARD_KEYS: BoardKey[] = [
 ];
 
 /** A lane on the ADP track. `kind` is honest about what the number is. */
-export type PlatformKey = "yahoo" | "espn" | "sleeper" | "ffc";
+export type PlatformKey = "yahoo" | "espn" | "sleeper" | "ffc" | "auction";
 
 export interface PlatformSpec {
   key: PlatformKey;
@@ -39,9 +39,10 @@ export interface PlatformSpec {
   /**
    * "adp" is a real average draft position. "rank" is a platform's own
    * ordering — Sleeper publishes no ADP, and saying so is better than
-   * quietly averaging a rank into a mean of picks.
+   * quietly averaging a rank into a mean of picks. "cost" is money: the
+   * average winning bid in an auction, which shares no units with either.
    */
-  kind: "adp" | "rank";
+  kind: "adp" | "rank" | "cost";
 }
 
 export const PLATFORMS: PlatformSpec[] = [
@@ -49,7 +50,19 @@ export const PLATFORMS: PlatformSpec[] = [
   { key: "espn", label: "ESPN", short: "ESP", kind: "adp" },
   { key: "sleeper", label: "Sleeper", short: "SLP", kind: "rank" },
   { key: "ffc", label: "Mocks", short: "MCK", kind: "adp" },
+  // Off by default. Most leagues are snake drafts, and a column of dollars is
+  // noise to everyone in one — but it costs an auction drafter nothing to find.
+  { key: "auction", label: "Yahoo Auction", short: "AUC", kind: "cost" },
 ];
+
+/**
+ * The lanes that are a draft POSITION.
+ *
+ * The printed sheet budgets its columns to a measured fraction of an inch and
+ * has no room for a fifth, and the spread arithmetic is in ranks — so anywhere
+ * that means "the ADP track", this is the list, not `PLATFORMS`.
+ */
+export const ADP_PLATFORMS: PlatformSpec[] = PLATFORMS.filter((p) => p.kind !== "cost");
 
 export interface Player {
   id: string;
@@ -174,4 +187,13 @@ export interface BuiltBoard {
   overall: Player[];
   /** Largest |adjusted - consensus| rank move applied. 0 means pure consensus. */
   maxDeparture: number;
+  /**
+   * Players the reader removed, in board order.
+   *
+   * Deliberately absent from `columns` and `overall` — a keeper must not
+   * occupy a slot, stretch a tier, or take a place on the printed sheet. They
+   * are carried here so "Show removed" can put them back on screen, which is
+   * the only way to undo a mis-click without clearing browser storage.
+   */
+  removed: Player[];
 }

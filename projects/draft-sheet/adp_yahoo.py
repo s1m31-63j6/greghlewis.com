@@ -81,6 +81,10 @@ def main() -> None:
                 "yahoo_round": num(da.get("average_round")),
                 "yahoo_pct_drafted": num(da.get("percent_drafted")),
                 "yahoo_adp_preseason": num(da.get("preseason_average_pick")),
+                # Yahoo's own auction leagues: the average winning bid, in the
+                # dollars of their default 12-team $200 room. It is a real
+                # observed price, not a valuation model.
+                "yahoo_cost": num(da.get("average_cost")),
                 "yahoo_headshot": (p.get("headshot") or {}).get("url"),
             })
 

@@ -237,11 +237,19 @@ def main() -> None:
         })
         adp.append({
             "id": pid,
-            "raw": {k: num(g(col)) for k, col, _ in PLATFORMS},
-            "rank": {k: num(g(f"rank_{k}")) for k, _, _ in PLATFORMS},
+            # Auction sits in `raw` and NOWHERE else. A price is not a pick,
+            # so it must not reach mean_rank, the spread, or the source count:
+            # averaging dollars into a mean of draft positions would be
+            # meaningless, and counting it as a fifth opinion would overstate
+            # how many markets actually agree.
+            "raw": {**{k: num(g(col)) for k, col, _ in PLATFORMS},
+                    "auction": num(g("yahoo_cost"))},
+            "rank": {**{k: num(g(f"rank_{k}")) for k, _, _ in PLATFORMS},
+                     "auction": None},
             # Rank within the player's own position, per platform, plus the
             # consensus equivalent. The cell color is the gap between them.
-            "posRank": {k: num(g(f"posrankp_{k}")) for k, _, _ in PLATFORMS},
+            "posRank": {**{k: num(g(f"posrankp_{k}")) for k, _, _ in PLATFORMS},
+                        "auction": None},
             "posRankEcr": num(g("posrank_ecr")),
             "mean": num(g("mean_rank")),
             "spread": num(g("spread")),
@@ -289,7 +297,8 @@ def main() -> None:
         "boards": {b: {"lastUpdated": boards[b]["last_updated"],
                        "experts": boards[b]["total_experts"],
                        "players": len(boards[b]["players"])} for b in BOARDS},
-        "platforms": [{"key": k, "kind": kind} for k, _, kind in PLATFORMS],
+        "platforms": ([{"key": k, "kind": kind} for k, _, kind in PLATFORMS]
+                      + [{"key": "auction", "kind": "cost"}]),
         "trendDays": TREND_DAYS,
         "movementCoverage": sum(1 for a in adp if a["move"] is not None),
         "attribution": ATTRIBUTION,

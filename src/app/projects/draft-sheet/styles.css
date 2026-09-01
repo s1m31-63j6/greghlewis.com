@@ -319,6 +319,24 @@
   display: inline-flex; align-items: center; gap: 5px;
   font-size: 11px; color: var(--ink-quiet);
 }
+/* A removal is silent otherwise: the row simply vanishes, and somebody who hit
+   the wrong × has no way to know the board is still holding it. */
+.ds-removed-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 15px;
+  height: 15px;
+  margin-left: 4px;
+  padding: 0 4px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
 .ds-status { max-width: var(--max-w); margin: 24px auto; padding: 0 20px; color: var(--ink-quiet); }
 .ds-status--error { color: var(--negative); }
 
@@ -943,6 +961,15 @@
 .ds-platform-check {
   display: inline-flex; align-items: center; gap: 4px;
   font-size: 11px; color: var(--ink-soft); cursor: pointer;
+}
+
+/* Dollars, not a pick. No tint, because there is no consensus price to be
+   above or below — the tinted cells all mean "against expert rank", and
+   borrowing that vocabulary here would imply a comparison nobody made. */
+.ds-cell--cost {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  color: var(--ink-soft);
 }
 
 .ds-legend-body {
