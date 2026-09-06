@@ -13,6 +13,7 @@ const FUNDING_COLS: { key: keyof FundingRow; label: string }[] = [
   { key: "liquidity", label: "Liquidity" },
   { key: "jobRisk", label: "Job risk" },
   { key: "goodOutcome", label: "Good outcome" },
+  { key: "experience", label: "What it feels like as an employee" },
 ];
 
 const STAGE_COLS: { key: keyof StageRow; label: string }[] = [

@@ -51,7 +51,7 @@
   },
   {
    "check": "Corporate (technical, no switching): median year-20 / year-1 pay",
-   "value": 1.9864695047830923,
+   "value": 2.085552967808667,
    "low": 1.6,
    "high": 2.4,
    "ok": true,
@@ -67,7 +67,7 @@
   },
   {
    "check": "Startup: mean / median of 30-year average pay",
-   "value": 1.0926144660970338,
+   "value": 1.0915215558631766,
    "low": 1.05,
    "high": 2.0,
    "ok": true,
@@ -83,7 +83,7 @@
   },
   {
    "check": "Consulting p10 exceeds startup p10",
-   "value": 1.1341919615734497,
+   "value": 1.136505094954719,
    "low": 1.0,
    "high": 3.0,
    "ok": true,
@@ -96,11 +96,27 @@
    "high": 0.25,
    "ok": true,
    "source": "Correlation Ventures: 65% of investments return under 1x; roughly 10% of founders reach a real exit"
+  },
+  {
+   "check": "Corporate (non-technical): median invested wealth at year 30",
+   "value": 1227688.3903220622,
+   "low": 400000,
+   "high": 1400000,
+   "ok": true,
+   "source": "SCF 2022, 2026 dollars: median net worth $529K for college-degree households, $850K at the 80-90th income percentile; pre-tax simulation sits above"
+  },
+  {
+   "check": "Corporate: employer retirement money as a share of 30-year pay",
+   "value": 0.04082676216160499,
+   "low": 0.03,
+   "high": 0.06,
+   "ok": true,
+   "source": "Vanguard promised match 4.6%; BLS ECEC 5.4% of wages for management and professional occupations, net of vesting"
   }
  ],
  "spread": {
-  "startup": 2.306911739076245,
-  "corporate": 2.346456383074897,
-  "consulting": 2.466282333973498
+  "startup": 2.3141826406751753,
+  "corporate": 2.348605625258218,
+  "consulting": 2.4696821995292773
  }
 }

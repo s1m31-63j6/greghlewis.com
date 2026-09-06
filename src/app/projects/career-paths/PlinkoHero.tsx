@@ -98,14 +98,14 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
         <div className="cp-control">
           <span className="cp-kicker">Switching</span>
           <label className="cp-toggle">
-            <input type="checkbox" checked={p.stay} onChange={(e) => p.onStay(e.target.checked)} data-tel="cp-stay" data-tel-project="career-paths" />
-            Stay the course for 30 years
+            <input type="checkbox" role="switch" aria-checked={p.stay} checked={p.stay} onChange={(e) => p.onStay(e.target.checked)} data-tel="cp-stay" data-tel-project="career-paths" />
+            {p.stay ? "Stay the course for 30 years" : "Let careers switch tracks"}
           </label>
         </div>
         <div className="cp-control" style={{ marginLeft: "auto" }}>
           <span className="cp-kicker">Drop</span>
           <div className="cp-seg">
-            <button type="button" className="cp-btn" onClick={() => { setSkip(false); setReplayKey((k) => k + 1); p.onReplay(); }} data-tel="cp-replay" data-tel-project="career-paths">
+            <button type="button" className="cp-btn" onClick={() => { setSkip(false); setReplayKey((k) => k + 1); p.onReplay(); document.querySelector(".cp-plinko-board")?.scrollIntoView({ behavior: "smooth", block: "nearest" }); }} data-tel="cp-replay" data-tel-project="career-paths">
               Replay
             </button>
             <button type="button" className="cp-btn" onClick={() => { setSkip(true); setReplayKey((k) => k + 1); }} data-tel="cp-skip" data-tel-project="career-paths">
@@ -121,7 +121,8 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
           <p className="cp-chart-sub">
             Each ball is one simulated career. It falls one row per year, sitting at that year&apos;s realized pay
             (salary plus any equity actually turned into cash, in 2026 dollars, log scale), then settles on its
-            thirty-year average.
+            thirty-year average. Realized pay counts the employer&apos;s retirement contribution once it has
+            vested; invested wealth below compounds savings, windfalls and those contributions at a real return.
           </p>
         </>
       )}
@@ -154,6 +155,10 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
                   <dt>Median 30-yr average</dt><dd>{fmtDollars(s.median)}</dd>
                   <dt>10th to 90th percentile</dt><dd>{fmtDollars(s.p10)} to {fmtDollars(s.p90)}</dd>
                   <dt>Averaged under $100K</dt><dd>{s.under100K} of 1,000</dd>
+                  <dt>Lost a job involuntarily</dt><dd>{s.jobLoss} of 1,000</dd>
+                  <dt>Employer shut down</dt><dd>{s.shutdowns} of 1,000</dd>
+                  <dt>Employer retirement money, 30 yrs</dt><dd>{fmtDollars(s.retire30)}</dd>
+                  <dt>Median invested wealth at 30</dt><dd>{fmtDollars(s.wealth30)}</dd>
                   <dt>Any single year over $1M</dt><dd>{s.leap1M} of 1,000</dd>
                   <dt>Averaged over $1M</dt><dd>{s.over1M} of 1,000</dd>
                 </dl>
@@ -161,10 +166,13 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
             ))}
           </div>
           <p className="cp-plinko-foot">
-            The three cohorts share one model: the same pay curves, layoff odds, promotion clocks and, at each
-            milestone, the same chances of switching tracks, going to business school or founding something.
-            Only the first job differs. Stage changes re-drop the startup balls alone. Sources for every number
-            are on the <a href="/projects/career-paths/methodology">methodology page</a>.
+            One engine, three very different first jobs. Startups pay less cash by stage, shut down at 5 to 16
+            percent a year, and lay people off more often; consulting pays the most but counsels out 10 to 20
+            percent of each rung every year; corporate jobs carry a 4 to 5 percent layoff hazard and the
+            steadiest retirement contributions. After the first job every ball faces the same chances of
+            switching tracks, going to business school or founding something, so what differs is where each
+            start leaves you. Stage changes re-drop the startup balls alone. Sources for every number are on
+            the <a href="/projects/career-paths/methodology">methodology page</a>.
           </p>
         </>
       )}

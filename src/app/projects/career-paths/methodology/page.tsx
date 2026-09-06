@@ -23,6 +23,7 @@ type Cohort = {
   avg30: { mean: number; median: number; p10: number; p90: number; over1M: number };
   ltv: { median: number; p10: number; p90: number };
   equity: { median: number; p90: number; anyPayday: number };
+  wealth: { median: number; p10: number; p90: number; retireMedian: number };
 };
 type Check = { check: string; value: number; low: number; high: number; ok: boolean; source: string };
 
@@ -32,6 +33,7 @@ const ROWS: SourcedRow[] = flatten(params);
 
 const GROUPS: [string, string, (p: string) => boolean][] = [
   ["pay", "Starting pay and pay curves", (p) => p.startsWith("start") || p.startsWith("levelMult") || p.startsWith("ability") || p === "discountRate"],
+  ["benefits", "Retirement contributions, savings and returns", (p) => p.startsWith("benefits")],
   ["ladders", "Promotion clocks, counseling out, layoffs", (p) => p.startsWith("promotion") || p.startsWith("layoff")],
   ["startup", "Startup stages and equity", (p) => p.startsWith("startup") || p.startsWith("vest") || p.startsWith("cliff") || p.startsWith("secondaryFrac") || p.startsWith("stageMix") || p.startsWith("rejoin")],
   ["moves", "Business school, founding, and switching", (p) => p.startsWith("gradschool") || p.startsWith("founder") || p.startsWith("choice")],
@@ -58,7 +60,7 @@ function CohortRow({ label, c }: { label: string; c: Cohort }) {
       <td className="num">{fmtDollars(c.avg30.p10)}</td>
       <td className="num">{fmtDollars(c.avg30.median)}</td>
       <td className="num">{fmtDollars(c.avg30.p90)}</td>
-      <td className="num">{fmtDollars(c.ltv.median)}</td>
+      <td className="num">{fmtDollars(c.wealth.median)}</td>
       <td className="num">{c.equity.anyPayday}</td>
       <td className="num">{c.avg30.over1M}</td>
     </tr>
@@ -156,11 +158,46 @@ payout  = diluted x vested x common x (1 - strike / preferred price)`}</pre>
             </ul>
           </section>
 
+          <section id="tracks">
+            <h2>3b. How the three first jobs differ</h2>
+            <p>
+              One engine does not mean one set of odds. The tracks differ on every axis the sources support:
+            </p>
+            <ul>
+              <li><b>Losing the job.</b> A startup employee faces the company&apos;s shutdown hazard (16 percent a year at seed, 10 at Series A-B, 5 at growth) on top of a layoff hazard of 5 to 8 percent. A consultant who misses a promotion faces a 10 to 20 percent counseling-out roll each year, rising by rung. A corporate professional carries a 4.5 percent layoff hazard. The plinko&apos;s stat block counts how many of each thousand lost a job involuntarily.</li>
+              <li><b>Cash.</b> Consulting starts highest and its ladder is steepest; startups pay 25 percent below the corporate blend at seed and reach parity at growth stage; corporate sits between.</li>
+              <li><b>Equity.</b> Only startup and founder balls hold tickets; the corporate technical blend already counts big-tech stock as pay because it is liquid.</li>
+              <li><b>Retirement money.</b> Employer 401(k) contributions differ by track and vest with tenure, so short startup stints leave matches on the table. They count as realized pay and feed invested wealth (section 4).</li>
+              <li><b>Life and cash strain</b> scores are set per track and rung from weekly-hours data.</li>
+            </ul>
+          </section>
+
+          <section id="wealth">
+            <h2>4. Wealth: retirement contributions and compounding</h2>
+            <p>
+              Pay is not wealth. Each year the ball&apos;s invested wealth grows at a real return, then adds a
+              share of cash pay that rises with income (the Survey of Consumer Finances puts the fourth
+              income quintile at 14 percent and the top at 27), about half of any windfall, and the whole of
+              the employer&apos;s retirement contribution. Business school tuition is drawn down. The employer contribution is a
+              percent of base pay set per track (and per stage for startups), and it vests with tenure, so a
+              ball that leaves inside the vesting window keeps only part of it. Every one of those numbers is
+              in the parameter table with its source.
+            </p>
+            <pre className="cp-method-code">{`retire  = base x employerRetirement[track] x min(1, tenure / matchVestYears)
+pay     = base + equity cash + retire
+wealth  = wealth x (1 + realReturn) + base x savingsRate(base) + equity cash x windfallSavingsRate + retire
+          savingsRate steps 10% -> 14% -> 18% -> 22% at $80K, $150K and $250K of pay`}</pre>
+            <p>
+              Invested wealth at year 30 appears in the plinko&apos;s stat block and in the adventure pane, and
+              the year-30 medians are benchmarked against the Survey of Consumer Finances in section 6.
+            </p>
+          </section>
+
           <section id="results">
-            <h2>4. Reference results</h2>
+            <h2>5. Reference results</h2>
             <p>
               One thousand careers per cohort under a fixed seed, first thirty years. These are the
-              numbers the browser must reproduce (section 7).
+              numbers the browser must reproduce (section 8).
             </p>
             {PERSONAS.map(([pid, plabel]) => (
               <div key={pid} className="cp-table-wrap">
@@ -171,7 +208,7 @@ payout  = diluted x vested x common x (1 - strike / preferred price)`}</pre>
                       <th className="num">p10</th>
                       <th className="num">Median</th>
                       <th className="num">p90</th>
-                      <th className="num">Lifetime median</th>
+                      <th className="num">Wealth at 30</th>
                       <th className="num">$100K+ payday</th>
                       <th className="num">Avg over $1M</th>
                     </tr>
@@ -192,13 +229,13 @@ payout  = diluted x vested x common x (1 - strike / preferred price)`}</pre>
             ))}
             <p className="cp-method-small">
               p10, median and p90 are of the thirty-year average of realized annual pay in 2026
-              dollars. Lifetime is the undiscounted thirty-five-year sum. A payday is $100K or more of
-              equity cash in any year.
+              dollars. Wealth is invested savings at year 30. A payday is $100K or more of equity cash
+              in any year.
             </p>
           </section>
 
           <section id="benchmarks">
-            <h2>5. Benchmarks the model is held to</h2>
+            <h2>6. Benchmarks the model is held to</h2>
             <p>
               <code>verify.py</code> runs 4,000 careers per check and exits nonzero if any lands
               outside the range the sources support. All {CHECKS.length} pass in the shipped build.
@@ -223,7 +260,7 @@ payout  = diluted x vested x common x (1 - strike / preferred price)`}</pre>
           </section>
 
           <section id="parameters">
-            <h2>6. Every parameter and where it came from</h2>
+            <h2>7. Every parameter and where it came from</h2>
             <p>
               {ROWS.length} values. <b>{measured}</b> are read directly off a source, <b>{estimated}</b>{" "}
               are estimates with the reasoning stated, and the rest are derived from other rows. The
@@ -264,7 +301,7 @@ payout  = diluted x vested x common x (1 - strike / preferred price)`}</pre>
           </section>
 
           <section id="two">
-            <h2>7. Two implementations, one model</h2>
+            <h2>8. Two implementations, one model</h2>
             <p>
               The engine is written in Python and ported line for line to TypeScript so the browser can
               re-simulate when the reader changes the persona or the stage. Two implementations are two
@@ -277,11 +314,12 @@ payout  = diluted x vested x common x (1 - strike / preferred price)`}</pre>
           </section>
 
           <section id="limits">
-            <h2>8. Limitations</h2>
+            <h2>9. Limitations</h2>
             <ul>
               <li><b>Balls are assigned, people self-select.</b> Somebody who takes a seed-stage job at 22 is not a random graduate. The ability draw widens every cohort but is uncorrelated with the first job; the real world may not be.</li>
               <li><b>&ldquo;Corporate&rdquo; is a blend.</b> For the technical persona it mixes big-tech pay with the far larger population of engineers elsewhere; for the non-technical persona it is a Fortune 500 analyst track. A reader with a specific offer in hand should compare against that offer, not the blend.</li>
-              <li><b>Pre-tax, real dollars, no geography.</b> Nothing here is after tax, and a $200K year in San Francisco is not a $200K year in Columbus.</li>
+              <li><b>Pre-tax, real dollars, no geography.</b> Nothing here is after tax, so invested wealth is overstated by roughly the tax bill on savings; a $200K year in San Francisco is not a $200K year in Columbus.</li>
+              <li><b>Savings depend on pay alone.</b> The savings rate steps up with income but does not fall in a layoff year or rise for a two-earner household; both would move the wealth figures.</li>
               <li><b>Survivor bias in the sources.</b> Most private-market data comes from Carta, which sees companies that are alive, organized and venture-backed. The failure mass is spliced in from cohort data and that splice is an estimate.</li>
               <li><b>Consulting&apos;s exit premium is folklore.</b> No study measures what a counseled-out consultant earns against a peer who never consulted; the one-rung bump is a judgment call.</li>
               <li><b>Milestone choices are the least sourced part.</b> The propensity to switch, go to school or found is estimated from turnover and enrollment rates, and the &ldquo;stay the course&rdquo; toggle exists so a reader can remove that layer entirely.</li>
@@ -289,7 +327,7 @@ payout  = diluted x vested x common x (1 - strike / preferred price)`}</pre>
           </section>
 
           <section id="sources">
-            <h2>9. Sources</h2>
+            <h2>10. Sources</h2>
             <ul className="cp-method-sources">
               {sources.map(([url, name]) => (
                 <li key={url}><a href={url} target="_blank" rel="noreferrer">{name}</a></li>

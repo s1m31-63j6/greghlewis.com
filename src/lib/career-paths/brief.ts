@@ -18,6 +18,7 @@ export interface FundingRow {
   liquidity: string;
   jobRisk: string;
   goodOutcome: string;
+  experience: string;
 }
 
 export interface StageRow {
@@ -130,6 +131,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "Only if the owner sells the company",
     jobRisk: "Tied to revenue; no runway cliff",
     goodOutcome: "Durable profitable business, steady raises, maybe profit share",
+    experience: "Slow, frugal, personal. The owner is in the room and every dollar is theirs.",
   },
   {
     model: "Friends and family",
@@ -141,6 +143,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "None until a later round or sale",
     jobRisk: "High; cash is thin",
     goodOutcome: "Company reaches seed funding or profitability",
+    experience: "A few people wearing every hat; the founder's relatives are your investors, which shapes every decision.",
   },
   {
     model: "Angel",
@@ -152,6 +155,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "None until a priced round or exit",
     jobRisk: "High",
     goodOutcome: "Company raises a seed or Series A",
+    experience: "Tiny team, weekly pivots, no process. You will build things and also fix the printer.",
   },
   {
     model: "Venture capital",
@@ -163,6 +167,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "IPO, acquisition, or an occasional tender",
     jobRisk: "Falls with stage; layoffs common",
     goodOutcome: "IPO or acquisition well above the preference stack",
+    experience: "Fast, high pressure, growth over everything; frequent reorganizations, big swings in morale around each round.",
   },
   {
     model: "Corporate venture (CVC)",
@@ -174,6 +179,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "Often the parent buys the company",
     jobRisk: "Venture risk plus parent strategy changes",
     goodOutcome: "Acquisition by the parent or another buyer",
+    experience: "Startup pace with a big-company shadow; roadmap bends toward the parent's needs.",
   },
   {
     model: "Venture debt (as an overlay)",
@@ -185,6 +191,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "Unchanged",
     jobRisk: "Rises; covenants can force cuts before the next round",
     goodOutcome: "Runway stretched to the next equity round",
+    experience: "Invisible day to day, until the covenants bite: sudden hiring freezes or cuts near a deadline.",
   },
   {
     model: "Revenue-based financing",
@@ -196,6 +203,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "Unchanged",
     jobRisk: "Moderate; revenue dips squeeze cash",
     goodOutcome: "Financing repaid, ownership intact",
+    experience: "Disciplined and revenue-obsessed; less hype, steadier hours, modest upside.",
   },
   {
     model: "Crowdfunding",
@@ -207,6 +215,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "None; secondary markets are thin",
     jobRisk: "High; usually a single product",
     goodOutcome: "Product ships and follow-on money arrives",
+    experience: "Public and scrappy; customers are also shareholders and everyone reads the comments.",
   },
   {
     model: "Private equity buyout",
@@ -218,6 +227,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "At the sale, for plan participants",
     jobRisk: "Higher early, especially in public-to-private deals",
     goodOutcome: "Sale to another PE firm or a strategic buyer",
+    experience: "Metrics, cost targets and reporting; job cuts early, then stability if the numbers hold.",
   },
   {
     model: "Search fund",
@@ -229,6 +239,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "At the sale",
     jobRisk: "Moderate; a new owner changes things",
     goodOutcome: "Sale at a higher multiple",
+    experience: "A small, old-fashioned business run by an ambitious new owner learning on the job.",
   },
   {
     model: "ESOP / employee-owned",
@@ -240,6 +251,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "Shares repurchased at departure or retirement",
     jobRisk: "Low relative to peers",
     goodOutcome: "Steady growth and a funded retirement account",
+    experience: "Stable, long tenures, a real ownership culture; patient about growth.",
   },
   {
     model: "Public company (anchor)",
@@ -251,6 +263,7 @@ export const FUNDING_TABLE: FundingRow[] = [
     liquidity: "Sell any trading day after vesting",
     jobRisk: "Layoffs happen, usually with severance",
     goodOutcome: "Stock rises; pay is predictable",
+    experience: "Process, levels, reviews and predictable pay; slower, safer, easier to plan a life around.",
   },
 ];
 

@@ -49,6 +49,9 @@ export interface AdventureView {
   avg: number;
   lifetime: number;
   crowdLifetime: number | null;
+  /** Invested wealth (savings, windfalls and employer retirement money, compounded). */
+  wealth: number;
+  crowdWealth: number | null;
   demand: [number, number];
 }
 
@@ -123,7 +126,7 @@ export function useAdventure(model: Model, persona: Persona, seed: number): [Adv
   const view = useMemo<AdventureView>(() => {
     const empty: AdventureView = {
       status: "start", step: -1, year: 0, career: null, pathIds: [], pathForced: [], nodeKey: null, track: null, level: 0,
-      forced: null, options: firstOptions(), pay: 0, avg: 0, lifetime: 0, crowdLifetime: null, demand: [0, 0],
+      forced: null, options: firstOptions(), pay: 0, avg: 0, lifetime: 0, crowdLifetime: null, wealth: 0, crowdWealth: null, demand: [0, 0],
     };
     if (!career || !first) return empty;
 
@@ -154,6 +157,8 @@ export function useAdventure(model: Model, persona: Persona, seed: number): [Adv
       avg: avgFirst(career, year),
       lifetime: career.realized.slice(0, year).reduce((t, x) => t + x, 0),
       crowdLifetime: flows.nodes[`${year}:${nodeKey}`]?.medLtv ?? null,
+      wealth: career.wealthByYear[year - 1],
+      crowdWealth: flows.nodes[`${year}:${nodeKey}`]?.medWealth ?? null,
       demand: demand(track, Math.min(level, 4), P),
     };
   }, [career, first, choices, acked, milestones, P, flows]);

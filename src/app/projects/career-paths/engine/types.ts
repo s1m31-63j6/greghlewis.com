@@ -41,6 +41,13 @@ export interface Career {
   events: CareerEvent[];
   milestoneTrack: Track[];
   milestoneLevel: number[];
+  /** Years at the current employer before this year. */
+  tenure: number;
+  /** Invested savings, real dollars. */
+  wealth: number;
+  wealthByYear: number[];
+  /** Employer retirement contributions received each year. */
+  retireByYear: number[];
 }
 
 /** A `Sourced` leaf in params.json. */
@@ -81,6 +88,17 @@ export interface Params {
   founder: { salary: number; pctFD: number; postExitLevelBump: number; failMult: number };
   choice: Record<Track3 | "founder", Record<string, number>> & { decayPerMilestone: number };
   demand: Record<Track, { life: number[]; cash: number[] }>;
+  benefits: {
+    employerRetirement: {
+      corporate: Record<Persona, number>;
+      consulting: Record<Persona, number>;
+      startup: Record<Stage, number>;
+    };
+    matchVestYears: number;
+    savingsBands: { upTo: number; rate: number }[];
+    windfallSavingsRate: number;
+    realReturn: number;
+  };
 }
 
 export interface SimOptions {

@@ -59,17 +59,14 @@ function modelArn(): string {
 
 // ── System prompt ────────────────────────────────────────────────────
 
-const RULES = `You answer reader questions about a short explainer titled "Stages and funding, explained", part of a page called "Should You Join a Startup?". The full text of the explainer (the brief) follows these rules.
+const RULES = `You are answering reader questions on a page called "Should You Join a Startup?", next to a short explainer titled "Stages and funding, explained". The explainer's full text follows as context: prefer it when it covers the question, and name the section in parentheses when you lean on it, for example "(see: How money reaches you)". You are not limited to it. Use everything you know about startup funding, venture and private equity, equity compensation, tax treatment, employment law, negotiation, and careers in general, and say plainly when the explainer's numbers and your own knowledge differ.
 
-Rules:
-- Answer only from the brief. Do not bring in outside facts.
-- When you draw on a section, name it in parentheses, for example "(see: How money reaches you)".
-- If the question is outside startup funding, stages, or equity compensation, say so in one sentence and point to the nearest section.
-- Never give personalized financial or tax advice. If asked "should I take this offer" or anything like it, restate what the brief says to check instead of answering yes or no.
-- Plain prose, no headings, at most 120 words.
+Style:
+- Plain prose, no headings, no bullet lists, at most about 200 words. Short sentences.
 - No em dashes.
-- At most three short bullet-like sentences if you need to list things; otherwise ordinary sentences.
-- Do not invent numbers that are not in the brief. If the brief lacks a number, say so.`;
+- Give the reader the general rule and the main exception, then stop.
+- Numbers are welcome when you are confident of them; label rough figures as rough. Do not attribute a number to the explainer unless it is actually in it.
+- You may explain how to think about a specific offer, and what to check, but do not tell the reader whether to take it, and do not give individualized tax advice; suggest a professional for that.`;
 
 function mdTable(headers: string[], rows: string[][]): string {
   const line = (cells: string[]) => `| ${cells.map((c) => c.replace(/\|/g, "/")).join(" | ")} |`;
@@ -82,8 +79,8 @@ function serializeBrief(): string {
     parts.push(`## ${s.heading}\n\n${s.paragraphs.join("\n\n")}`);
     if (s.id === "funding-models") {
       parts.push(mdTable(
-        ["Model", "Who owns it", "What they want", "Horizon", "Cash pay", "Equity", "Liquidity", "Job risk", "Good outcome"],
-        FUNDING_TABLE.map((r) => [r.model, r.owner, r.wants, r.horizon, r.cashPay, r.equity, r.liquidity, r.jobRisk, r.goodOutcome]),
+        ["Model", "Who owns it", "What they want", "Horizon", "Cash pay", "Equity", "Liquidity", "Job risk", "Good outcome", "What it feels like as an employee"],
+        FUNDING_TABLE.map((r) => [r.model, r.owner, r.wants, r.horizon, r.cashPay, r.equity, r.liquidity, r.jobRisk, r.goodOutcome, r.experience]),
       ));
     }
     if (s.id === "the-stage-ladder") {
@@ -157,7 +154,7 @@ export async function* askStream(question: string, history: AskTurn[] = []): Asy
     modelId: modelArn(),
     system,
     messages,
-    inferenceConfig: { maxTokens: 400, temperature: 0.3 },
+    inferenceConfig: { maxTokens: 700, temperature: 0.4 },
   });
 
   const resp = await client().send(cmd);

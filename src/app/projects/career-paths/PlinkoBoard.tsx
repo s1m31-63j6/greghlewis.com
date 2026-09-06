@@ -63,20 +63,32 @@ interface Layout {
 
 export interface TrackStats {
   track: Track3; median: number; p10: number; p90: number; over1M: number; under100K: number; leap1M: number;
+  /** Careers that lost a job involuntarily at least once in 30 years, and how many to a shutdown. */
+  jobLoss: number; shutdowns: number;
+  /** Median invested wealth at year 30 and median employer retirement contributions over the 30 years. */
+  wealth30: number; retire30: number;
 }
 
 export function trackStats(run: TrackRun): TrackStats {
   const a = run.careers.map((c) => avgFirst(c, ROWS)).sort((x, y) => x - y);
   const q = (p: number) => a[Math.min(a.length - 1, Math.floor(p * a.length))];
   let leap = 0;
+  let jobLoss = 0;
+  let shutdowns = 0;
   for (const c of run.careers) {
     for (let i = 0; i < ROWS; i++) if (c.realized[i] >= 1_000_000) { leap++; break; }
+    const ev = c.events.filter((e) => e.year <= ROWS);
+    if (ev.some((e) => e.kind === "fail" || e.kind === "layoff" || e.kind === "counseled")) jobLoss++;
+    if (ev.some((e) => e.kind === "fail")) shutdowns++;
   }
+  const w = run.careers.map((c) => c.wealthByYear[ROWS - 1]).sort((x, y) => x - y);
+  const r = run.careers.map((c) => { let s = 0; for (let i = 0; i < ROWS; i++) s += c.retireByYear[i]; return s; }).sort((x, y) => x - y);
+  const mid = Math.floor(run.careers.length / 2);
   return {
     track: run.track, median: q(0.5), p10: q(0.1), p90: q(0.9),
     over1M: a.filter((x) => x >= 1_000_000).length,
     under100K: a.filter((x) => x < 100_000).length,
-    leap1M: leap,
+    leap1M: leap, jobLoss, shutdowns, wealth30: w[mid], retire30: r[mid],
   };
 }
 
@@ -173,6 +185,9 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
   const raf = useRef<number>(0);
   const [width, setWidth] = useState(900);
   const [settled, setSettled] = useState(false);
+  // The drop waits until the board is actually on screen: it starts at the
+  // top of a long page and a drop nobody sees is a drop that never happened.
+  const [inView, setInView] = useState(false);
   const [hover, setHover] = useState<{ id: number; x: number; y: number; track: Track3 } | null>(null);
   const lastReplay = useRef(replayKey);
 
@@ -225,7 +240,7 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
         let y: number;
         const rel = L.release[k];
         const p = Number.isNaN(rel) ? Infinity : (t - rel) / FALL_MS;
-        if (p < 0) continue;
+        if (p < 0) { allDone = false; continue; } // not released yet: the drop is still running
         if (p < 1) {
           allDone = false;
           const row = Math.floor(p * ROWS);
@@ -304,12 +319,16 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
       if (w > 0) setWidth(w);
     });
     ro.observe(el);
-    return () => ro.disconnect();
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) setInView(true);
+    }, { threshold: 0.35 });
+    io.observe(el);
+    return () => { ro.disconnect(); io.disconnect(); };
   }, []);
 
   // Relayout on width or data change; decide which balls re-drop.
   useEffect(() => {
-    if (!active || width <= 0) return;
+    if (!active || !inView || width <= 0) return;
     const g = geometry(width);
     geom.current = g;
     const cv = canvas.current!;
@@ -334,7 +353,7 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
       return;
     }
     start(reduced);
-  }, [runs, width, active, replayKey, reduced, drawStatic, loop, start]);
+  }, [runs, width, active, inView, replayKey, reduced, drawStatic, loop, start]);
 
   useEffect(() => () => {
     if (raf.current) cancelAnimationFrame(raf.current);

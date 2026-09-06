@@ -106,6 +106,7 @@ function push(s: Career, year: number, kind: EventKind, amount = 0.0): void {
 
 function applyChoice(rng: Rng, s: Career, year: number, choice: string, P: Params): void {
   if (choice === "stay") return;
+  s.tenure = 0;
   if (s.track === "startup" || s.track === "founder") leaveEmployer(rng, s, year, P);
   if (choice.startsWith("switch:")) {
     const parts = choice.split(":");
@@ -188,6 +189,7 @@ function afterJobLoss(rng: Rng, s: Career, year: number, P: Params, pinned: bool
   const wasStartup = s.track === "startup";
   s.track = "corporate";
   s.stage = null;
+  s.tenure = 0;
   if (wasStartup) {
     const p = pinned ? 1.0 : P.rejoinStartup;
     if (rng() < p) joinStartup(rng, s, year, null, P); // draw: rejoin, then stage
@@ -207,7 +209,9 @@ export function simulate(persona: Persona, first: Track3, P: Params, rng: Rng, o
   const s: Career = {
     persona, track: first, level: 0, ability: 1.0, mult: 1.0, schoolLeft: 0, landing: null,
     stage: null, companies: [], realized: [], events: [], milestoneTrack: [], milestoneLevel: [],
+    tenure: 0, wealth: 0.0, wealthByYear: [], retireByYear: [],
   };
+  const B = P.benefits;
   s.ability = Math.exp(P.ability.sigma * normal(rng)); // draws: u1, u2
   if (first === "startup") joinStartup(rng, s, 1, opts.stage ?? null, P); // draw: stage (if blended)
   const cost = P.gradschool.annualCost;
@@ -217,6 +221,7 @@ export function simulate(persona: Persona, first: Track3, P: Params, rng: Rng, o
     if (s.track === "gradschool" && s.schoolLeft === 0) {
       s.track = s.landing ?? "corporate";
       s.landing = null;
+      s.tenure = 0;
       if (s.level < 4) s.level += 1;
       s.mult *= P.gradschool.postSalaryMult;
       push(s, year, "mba_done");
@@ -241,6 +246,9 @@ export function simulate(persona: Persona, first: Track3, P: Params, rng: Rng, o
     if (s.track === "gradschool") {
       s.schoolLeft -= 1;
       s.realized.push(-cost);
+      s.wealth = s.wealth * (1.0 + B.realReturn) - cost;
+      s.wealthByYear.push(s.wealth);
+      s.retireByYear.push(0.0);
       if (milestones.includes(year)) { s.milestoneTrack.push("gradschool"); s.milestoneLevel.push(s.level); }
       continue;
     }
@@ -269,6 +277,7 @@ export function simulate(persona: Persona, first: Track3, P: Params, rng: Rng, o
       if (s.track === "founder" && s.level < 4) s.level += P.founder.postExitLevelBump;
       s.track = "corporate";
       s.stage = null;
+      s.tenure = 0;
     } else {
       let hazard: number;
       if (s.track === "founder") hazard = 0.0;
@@ -291,6 +300,7 @@ export function simulate(persona: Persona, first: Track3, P: Params, rng: Rng, o
             push(s, year, "counseled");
             s.track = "corporate";
             s.level += 1;
+            s.tenure = 0;
           }
         }
       }
@@ -307,7 +317,24 @@ export function simulate(persona: Persona, first: Track3, P: Params, rng: Rng, o
       if (s.track === "startup") base *= 1.0 - P.startup[s.stage as Stage].salaryDiscount;
     }
     if (lostMonths > 0.0) base *= 1.0 - lostMonths / 12.0;
-    s.realized.push(base + cash);
+    // 6b. employer retirement contribution, vesting with tenure
+    let pct: number;
+    if (s.track === "founder") pct = 0.0;
+    else if (s.track === "startup") pct = B.employerRetirement.startup[s.stage as Stage];
+    else pct = B.employerRetirement[s.track as "corporate" | "consulting"][persona];
+    let kept = s.tenure / B.matchVestYears;
+    if (kept > 1.0) kept = 1.0;
+    const retire = base * pct * kept;
+    s.realized.push(base + cash + retire);
+    s.retireByYear.push(retire);
+    // 7. wealth: the savings rate steps up with pay
+    let rate = B.savingsBands[B.savingsBands.length - 1].rate;
+    for (const band of B.savingsBands) {
+      if (base <= band.upTo) { rate = band.rate; break; }
+    }
+    s.wealth = s.wealth * (1.0 + B.realReturn) + base * rate + cash * B.windfallSavingsRate + retire;
+    s.wealthByYear.push(s.wealth);
+    s.tenure += 1;
     if (milestones.includes(year)) { s.milestoneTrack.push(s.track); s.milestoneLevel.push(s.level); }
   }
   return s;

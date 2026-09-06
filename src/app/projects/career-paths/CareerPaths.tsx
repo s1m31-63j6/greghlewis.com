@@ -38,7 +38,7 @@ export default function CareerPaths() {
   const [tab, setTab] = useState<TabId>("plinko");
   const [persona, setPersona] = useState<Persona>("nontechnical");
   const [stage, setStage] = useState<Stage | null>(null);
-  const [stay, setStay] = useState(false);
+  const [stay, setStay] = useState(true);
   const [seed, setSeed] = useState(20260906);
 
   const model = useModel();

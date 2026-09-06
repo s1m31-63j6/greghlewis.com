@@ -13,7 +13,11 @@ One ball is one career. Each year, in this order:
   5. Consequences for the employer: shutdown -> next job; exit -> paid and
      absorbed into the acquirer (corporate); else layoff roll; else
      promotion roll (and, in consulting, the counseled-out roll).
-  6. Pay: start * level * ability * noise, plus any equity cash.
+  6. Pay: start * level * ability * noise, plus any equity cash, plus the
+     employer's retirement contribution (which vests with tenure).
+  7. Wealth: last year's wealth grows at the real return; a share of cash pay
+     that steps up with income, about half of any windfall, and the whole
+     employer contribution are added; business school tuition is drawn down.
 
 Every `rng.random()` call is annotated with a draw number so the two
 implementations can be diffed by eye. Add a draw and the other side must add
@@ -75,6 +79,10 @@ class State:
     events: list[Event] = field(default_factory=list)
     milestone_track: list[str] = field(default_factory=list)  # track at each milestone
     milestone_level: list[int] = field(default_factory=list)
+    tenure: int = 0                      # years at the current employer, before this year
+    wealth: float = 0.0                  # invested savings, real dollars
+    wealth_by_year: list[float] = field(default_factory=list)
+    retire_by_year: list[float] = field(default_factory=list)  # employer retirement contributions
 
 
 def employer(s: State) -> Company | None:
@@ -167,6 +175,7 @@ def leave_employer(rng, s: State, year: int, P) -> None:
 def apply_choice(rng, s: State, year: int, choice: str, P) -> None:
     if choice == "stay":
         return
+    s.tenure = 0
     if s.track in ("startup", "founder"):
         leave_employer(rng, s, year, P)
     if choice.startswith("switch:"):
@@ -245,6 +254,7 @@ def after_job_loss(rng, s: State, year: int, P, pinned: bool) -> None:
     was_startup = s.track == "startup"
     s.track = "corporate"
     s.stage = None
+    s.tenure = 0
     if was_startup:
         p = 1.0 if pinned else P["rejoinStartup"]
         if rng.random() < p:                                        # draw: rejoin
@@ -259,6 +269,7 @@ def simulate(persona: str, first: str, P, rng, *, stage: str | None = None,
     `stay` pins every milestone to "stay" (the plinko's stay-the-course toggle)."""
     H = horizon or P["horizon"]
     milestones = P["milestones"]
+    B = P["benefits"]
     s = State(persona=persona, track=first)
     s.ability = math.exp(P["ability"]["sigma"] * normal(rng))       # draws: u1, u2
     if first == "startup":
@@ -270,6 +281,7 @@ def simulate(persona: str, first: str, P, rng, *, stage: str | None = None,
         if s.track == "gradschool" and s.school_left == 0:
             s.track = s.landing or "corporate"
             s.landing = None
+            s.tenure = 0
             if s.level < 4:
                 s.level += 1
             s.mult *= P["gradschool"]["postSalaryMult"]
@@ -295,6 +307,9 @@ def simulate(persona: str, first: str, P, rng, *, stage: str | None = None,
         if s.track == "gradschool":
             s.school_left -= 1
             s.realized.append(-cost)
+            s.wealth = s.wealth * (1.0 + B["realReturn"]) - cost
+            s.wealth_by_year.append(s.wealth)
+            s.retire_by_year.append(0.0)
             if year in milestones:
                 s.milestone_track.append("gradschool")
                 s.milestone_level.append(s.level)
@@ -328,6 +343,7 @@ def simulate(persona: str, first: str, P, rng, *, stage: str | None = None,
                 s.level += P["founder"]["postExitLevelBump"]
             s.track = "corporate"
             s.stage = None
+            s.tenure = 0
         else:
             if s.track == "founder":
                 hazard = 0.0
@@ -354,6 +370,7 @@ def simulate(persona: str, first: str, P, rng, *, stage: str | None = None,
                         s.events.append(Event(year, "counseled"))
                         s.track = "corporate"
                         s.level += 1
+                        s.tenure = 0
 
         # 6. pay
         noise = math.exp(P["ability"]["annualNoise"] * normal(rng))  # draws: u1, u2
@@ -366,7 +383,29 @@ def simulate(persona: str, first: str, P, rng, *, stage: str | None = None,
                 base *= 1.0 - P["startup"][s.stage]["salaryDiscount"]
         if lost_months > 0.0:
             base *= 1.0 - lost_months / 12.0
-        s.realized.append(base + cash)
+        # 6b. employer retirement contribution, vesting with tenure
+        if s.track == "founder":
+            pct = 0.0
+        elif s.track == "startup":
+            pct = B["employerRetirement"]["startup"][s.stage]
+        else:
+            pct = B["employerRetirement"][s.track][persona]
+        kept = s.tenure / B["matchVestYears"]
+        if kept > 1.0:
+            kept = 1.0
+        retire = base * pct * kept
+        s.realized.append(base + cash + retire)
+        s.retire_by_year.append(retire)
+        # 7. wealth: the savings rate steps up with pay
+        rate = B["savingsBands"][-1]["rate"]
+        for band in B["savingsBands"]:
+            if base <= band["upTo"]:
+                rate = band["rate"]
+                break
+        s.wealth = (s.wealth * (1.0 + B["realReturn"]) + base * rate
+                    + cash * B["windfallSavingsRate"] + retire)
+        s.wealth_by_year.append(s.wealth)
+        s.tenure += 1
         if year in milestones:
             s.milestone_track.append(s.track)
             s.milestone_level.append(s.level)

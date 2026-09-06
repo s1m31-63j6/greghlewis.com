@@ -1192,6 +1192,162 @@
    "note": "Switching propensity falls with age: 15/10/6/4% a year by decade."
   }
  },
+ "benefits": {
+  "employerRetirement": {
+   "corporate": {
+    "technical": {
+     "value": 0.05,
+     "source": "Vanguard, How America Saves 2025",
+     "kind": "measured",
+     "url": "https://www.asppa-net.org/news/2025/8/a-robust-report-on-savings/",
+     "note": "Vanguard promised match 4.6% of pay; big-tech blend 4.5-5.5% (Google, Meta, Microsoft 50% to the IRS limit; Apple 3%; Amazon 2%); BLS management and professional employer retirement cost 5.4% of wages."
+    },
+    "nontechnical": {
+     "value": 0.05,
+     "source": "BLS Employer Costs for Employee Compensation",
+     "kind": "measured",
+     "url": "https://www.bls.gov/news.release/ecec.htm",
+     "note": "BLS ECEC: employer defined-contribution cost about 5% of wages for management, professional and related occupations at large private employers."
+    }
+   },
+   "consulting": {
+    "technical": {
+     "value": 0.05,
+     "source": "Firm 401(k) plan filings (McKinsey PSRP, Deloitte, others via MyPlanIQ) and firm salary guides",
+     "kind": "estimated",
+     "url": "https://www.myplaniq.com/invest/plancontribution-match/mckinsey-company-inc-psrp-profit-sharing-retirement-plan",
+     "note": "MBB new-grad contributions about 6.2% (McKinsey PSRP 7.5%, BCG 5% plus 1.5%, Bain 4.5%) against Big 4 about 3.4% (Deloitte and EY 1.5%, PwC 4.5%, KPMG 6-8% automatic); 30/70 blend."
+    },
+    "nontechnical": {
+     "value": 0.05,
+     "source": "Firm 401(k) plan filings (McKinsey PSRP, Deloitte, others via MyPlanIQ) and firm salary guides",
+     "kind": "estimated",
+     "url": "https://www.myplaniq.com/invest/plancontribution-match/mckinsey-company-inc-psrp-profit-sharing-retirement-plan",
+     "note": "Same blend."
+    }
+   },
+   "startup": {
+    "seed": {
+     "value": 0.005,
+     "source": "BLS Employee Benefits Survey 2025 (retirement access by establishment size)",
+     "kind": "derived",
+     "url": "https://www.bls.gov/news.release/archives/ebs2_09252025.htm",
+     "note": "About 55% of seed companies run a plan, 30% of those match, at a 3-4% safe-harbor rate: 0.6% expected. Safe-harbor matches vest immediately."
+    },
+    "seriesAB": {
+     "value": 0.015,
+     "source": "BLS Employee Benefits Survey 2025 (retirement access by establishment size)",
+     "kind": "derived",
+     "url": "https://www.bls.gov/news.release/archives/ebs2_09252025.htm",
+     "note": "Access by establishment size (BLS) times the share that match times a 3-4% rate."
+    },
+    "growth": {
+     "value": 0.025,
+     "source": "BLS Employee Benefits Survey 2025 (retirement access by establishment size)",
+     "kind": "derived",
+     "url": "https://www.bls.gov/news.release/archives/ebs2_09252025.htm",
+     "note": "Growth-stage companies mostly offer a plan; matches remain below the corporate norm."
+    },
+    "bootstrapped": {
+     "value": 0.02,
+     "source": "BLS Employee Benefits Survey 2025 (retirement access by establishment size)",
+     "kind": "derived",
+     "url": "https://www.bls.gov/news.release/archives/ebs2_09252025.htm",
+     "note": "Under-50-employee firms: 45% have no plan; those with one use a 3% nonelective or 4% match."
+    },
+    "pe": {
+     "value": 0.035,
+     "source": "BLS Employer Costs for Employee Compensation",
+     "kind": "estimated",
+     "url": "https://www.bls.gov/news.release/ecec.htm",
+     "note": "Market-rate plan, often trimmed after the buyout."
+    }
+   }
+  },
+  "matchVestYears": {
+   "value": 2,
+   "source": "Vanguard, How America Saves 2025",
+   "kind": "estimated",
+   "url": "https://www.asppa-net.org/news/2025/8/a-robust-report-on-savings/",
+   "note": "Vanguard: 43% of plans vest employer money immediately, the rest on 2-6 year cliff or graded schedules; forfeitures occur in about 30% of separations. Modeled as two-year graded vesting on the employer contribution."
+  },
+  "savingsBands": [
+   {
+    "upTo": {
+     "value": 80000,
+     "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+     "kind": "measured",
+     "url": "https://www.nber.org/papers/w7906",
+     "note": "SCF median saving rate by income: second and third quintiles about 9%; rounded up for a professional with employer plan access."
+    },
+    "rate": {
+     "value": 0.1,
+     "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+     "kind": "measured",
+     "url": "https://www.nber.org/papers/w7906"
+    }
+   },
+   {
+    "upTo": {
+     "value": 150000,
+     "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+     "kind": "measured",
+     "url": "https://www.nber.org/papers/w7906",
+     "note": "Fourth quintile 14.4%."
+    },
+    "rate": {
+     "value": 0.14,
+     "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+     "kind": "measured",
+     "url": "https://www.nber.org/papers/w7906"
+    }
+   },
+   {
+    "upTo": {
+     "value": 250000,
+     "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+     "kind": "measured",
+     "url": "https://www.nber.org/papers/w7906",
+     "note": "Between the fourth and fifth quintiles."
+    },
+    "rate": {
+     "value": 0.18,
+     "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+     "kind": "measured",
+     "url": "https://www.nber.org/papers/w7906"
+    }
+   },
+   {
+    "upTo": {
+     "value": 1000000000000,
+     "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+     "kind": "measured",
+     "url": "https://www.nber.org/papers/w7906",
+     "note": "Top quintile 26.5%, top 5% 36.8%; 22% is a conservative reading."
+    },
+    "rate": {
+     "value": 0.22,
+     "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+     "kind": "measured",
+     "url": "https://www.nber.org/papers/w7906"
+    }
+   }
+  ],
+  "windfallSavingsRate": {
+   "value": 0.45,
+   "source": "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)",
+   "kind": "estimated",
+   "url": "https://www.nber.org/papers/w7906",
+   "note": "High earners save about 70% of an after-tax windfall; on the model's pre-tax dollars that is roughly 45% of the gross amount."
+  },
+  "realReturn": {
+   "value": 0.045,
+   "source": "Damodaran, historical returns on stocks, bonds and bills 1928-2025",
+   "kind": "measured",
+   "url": "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html",
+   "note": "S&P 500 with dividends 6.8% real, 1928-2025; a 60/40 portfolio about 5.2%; forward-looking estimates for the next decade run 2.5-3.5%. 4.5% is a diversified, slightly conservative long-run figure."
+  }
+ },
  "demand": {
   "corporate": {
    "life": [

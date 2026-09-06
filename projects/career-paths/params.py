@@ -92,6 +92,20 @@ PE_HOLD_URL = "https://www.spglobal.com/market-intelligence/en/news-insights/art
 HOURS = "Consulting and tech weekly-hours compilations"
 HOURS_URL = "https://www.hackingthecaseinterview.com/pages/consulting-hours-per-week"
 EST = "Estimate, see research notes"
+VANG = "Vanguard, How America Saves 2025"
+VANG_URL = "https://www.asppa-net.org/news/2025/8/a-robust-report-on-savings/"
+BLS_ECEC = "BLS Employer Costs for Employee Compensation"
+BLS_ECEC_URL = "https://www.bls.gov/news.release/ecec.htm"
+BLS_EBS = "BLS Employee Benefits Survey 2025 (retirement access by establishment size)"
+BLS_EBS_URL = "https://www.bls.gov/news.release/archives/ebs2_09252025.htm"
+MYPLAN = "Firm 401(k) plan filings (McKinsey PSRP, Deloitte, others via MyPlanIQ) and firm salary guides"
+MYPLAN_URL = "https://www.myplaniq.com/invest/plancontribution-match/mckinsey-company-inc-psrp-profit-sharing-retirement-plan"
+DSZ = "Dynan, Skinner and Zeldes, Do the Rich Save More? (SCF saving rates by income)"
+DSZ_URL = "https://www.nber.org/papers/w7906"
+DAMODARAN = "Damodaran, historical returns on stocks, bonds and bills 1928-2025"
+DAMODARAN_URL = "https://pages.stern.nyu.edu/~adamodar/New_Home_Page/datafile/histretSP.html"
+SCF = "Federal Reserve Survey of Consumer Finances 2022, Bulletin Table 2"
+SCF_URL = "https://www.federalreserve.gov/publications/files/scf23.pdf"
 
 CARTA_NOTE = "Carta data is survivor-conditioned (dead companies churn off) and AI-inflated in 2025-26; shaded pessimistic."
 
@@ -279,6 +293,35 @@ PARAMS: dict[str, Any] = {
         "consulting": {"stay": S(0.45, UPOROUT, "estimated", UPOROUT_URL, "Consulting turnover 20-30% a year; average tenure 2.7 years."), "corporate": S(0.35, UPOROUT, "estimated", UPOROUT_URL), "consulting": S(0.0, EST, "derived"), "startup": S(0.08, EST, "estimated"), "mba": S(0.09, GMAC, "estimated", GMAC_URL, "Ex-consultants are 31-35% of top MBA classes; about 15% of consultants go within five years."), "found": S(0.03, EST, "estimated")},
         "founder": {"stay": S(0.85, EST, "estimated"), "corporate": S(0.10, EST, "estimated"), "consulting": S(0.0, EST, "derived"), "startup": S(0.05, EST, "estimated"), "mba": S(0.0, EST, "derived"), "found": S(0.0, EST, "derived")},
         "decayPerMilestone": S(0.75, EST, "estimated", None, "Switching propensity falls with age: 15/10/6/4% a year by decade."),
+    },
+    # Retirement contributions, savings and returns. See research/sources_benefits.md.
+    "benefits": {
+        "employerRetirement": {
+            "corporate": {
+                "technical": S(0.05, VANG, "measured", VANG_URL, "Vanguard promised match 4.6% of pay; big-tech blend 4.5-5.5% (Google, Meta, Microsoft 50% to the IRS limit; Apple 3%; Amazon 2%); BLS management and professional employer retirement cost 5.4% of wages."),
+                "nontechnical": S(0.05, BLS_ECEC, "measured", BLS_ECEC_URL, "BLS ECEC: employer defined-contribution cost about 5% of wages for management, professional and related occupations at large private employers."),
+            },
+            "consulting": {
+                "technical": S(0.05, MYPLAN, "estimated", MYPLAN_URL, "MBB new-grad contributions about 6.2% (McKinsey PSRP 7.5%, BCG 5% plus 1.5%, Bain 4.5%) against Big 4 about 3.4% (Deloitte and EY 1.5%, PwC 4.5%, KPMG 6-8% automatic); 30/70 blend."),
+                "nontechnical": S(0.05, MYPLAN, "estimated", MYPLAN_URL, "Same blend."),
+            },
+            "startup": {
+                "seed": S(0.005, BLS_EBS, "derived", BLS_EBS_URL, "About 55% of seed companies run a plan, 30% of those match, at a 3-4% safe-harbor rate: 0.6% expected. Safe-harbor matches vest immediately."),
+                "seriesAB": S(0.015, BLS_EBS, "derived", BLS_EBS_URL, "Access by establishment size (BLS) times the share that match times a 3-4% rate."),
+                "growth": S(0.025, BLS_EBS, "derived", BLS_EBS_URL, "Growth-stage companies mostly offer a plan; matches remain below the corporate norm."),
+                "bootstrapped": S(0.02, BLS_EBS, "derived", BLS_EBS_URL, "Under-50-employee firms: 45% have no plan; those with one use a 3% nonelective or 4% match."),
+                "pe": S(0.035, BLS_ECEC, "estimated", BLS_ECEC_URL, "Market-rate plan, often trimmed after the buyout."),
+            },
+        },
+        "matchVestYears": S(2, VANG, "estimated", VANG_URL, "Vanguard: 43% of plans vest employer money immediately, the rest on 2-6 year cliff or graded schedules; forfeitures occur in about 30% of separations. Modeled as two-year graded vesting on the employer contribution."),
+        "savingsBands": [
+            {"upTo": S(80_000, DSZ, "measured", DSZ_URL, "SCF median saving rate by income: second and third quintiles about 9%; rounded up for a professional with employer plan access."), "rate": S(0.10, DSZ, "measured", DSZ_URL)},
+            {"upTo": S(150_000, DSZ, "measured", DSZ_URL, "Fourth quintile 14.4%."), "rate": S(0.14, DSZ, "measured", DSZ_URL)},
+            {"upTo": S(250_000, DSZ, "measured", DSZ_URL, "Between the fourth and fifth quintiles."), "rate": S(0.18, DSZ, "measured", DSZ_URL)},
+            {"upTo": S(1_000_000_000_000, DSZ, "measured", DSZ_URL, "Top quintile 26.5%, top 5% 36.8%; 22% is a conservative reading."), "rate": S(0.22, DSZ, "measured", DSZ_URL)},
+        ],
+        "windfallSavingsRate": S(0.45, DSZ, "estimated", DSZ_URL, "High earners save about 70% of an after-tax windfall; on the model's pre-tax dollars that is roughly 45% of the gross amount."),
+        "realReturn": S(0.045, DAMODARAN, "measured", DAMODARAN_URL, "S&P 500 with dividends 6.8% real, 1928-2025; a 60/40 portfolio about 5.2%; forward-looking estimates for the next decade run 2.5-3.5%. 4.5% is a diversified, slightly conservative long-run figure."),
     },
     # 0 = no demand, 1 = all-consuming. Life demand from weekly hours; cash
     # demand from how far pay sits from a comfortable professional budget.

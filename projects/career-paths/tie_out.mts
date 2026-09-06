@@ -44,6 +44,7 @@ for (const [key, py] of Object.entries(ref.cohorts)) {
   for (const [k, v] of Object.entries(py.avg30)) cmp(key, `avg30.${k}`, ts.avg30[k as keyof typeof ts.avg30], v);
   for (const [k, v] of Object.entries(py.ltv)) cmp(key, `ltv.${k}`, ts.ltv[k as keyof typeof ts.ltv], v);
   for (const [k, v] of Object.entries(py.equity)) cmp(key, `equity.${k}`, ts.equity[k as keyof typeof ts.equity], v);
+  for (const [k, v] of Object.entries(py.wealth)) cmp(key, `wealth.${k}`, ts.wealth[k as keyof typeof ts.wealth], v);
 }
 
 console.log(`${Object.keys(ref.cohorts).length} cohorts, ${checks} statistics, ${misses} outside ${TOL * 100}%`);

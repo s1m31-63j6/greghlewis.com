@@ -1,6 +1,6 @@
 /* ─────────────────────────────────────────────────────────────────────
    Choose your own — the vertical sankey and its scorecard.
-   Same Swiss chrome as styles.css: white, 1px black rules, no radius.
+   Same chrome as styles.css: white ground, Material shapes.
    ───────────────────────────────────────────────────────────────────── */
 
 .cp-page .cp-adv-head {
@@ -132,10 +132,12 @@
   padding: 8px 8px 9px;
   background: var(--paper);
   color: var(--ink);
-  border: 1px solid var(--ink);
+  border: 1px solid var(--outline);
   border-top: 4px solid var(--opt, var(--ink));
+  border-radius: var(--r-md);
   font-family: var(--body);
   font-size: 12.5px;
+  transition: background 120ms ease, box-shadow 120ms ease;
   font-weight: 500;
   line-height: 1.25;
   text-align: left;
@@ -146,8 +148,8 @@
 
 .cp-page .cp-adv-option:hover,
 .cp-page .cp-adv-option:focus-visible {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--primary-tint);
+  box-shadow: var(--shadow-1);
   outline: none;
 }
 
@@ -162,7 +164,9 @@
   display: inline-flex;
   align-items: center;
   gap: 16px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--outline-soft);
+  border-radius: var(--r-sm);
+  overflow: hidden;
   background: var(--paper);
   padding: 0 12px 0 0;
   max-width: 100%;
@@ -178,7 +182,7 @@
     var(--paper) 0 3px,
     var(--forced) 3px 5px
   );
-  border-right: 1px solid var(--ink);
+  border-right: 1px solid var(--outline-soft);
 }
 
 .cp-page .cp-adv-forced-label {
@@ -294,7 +298,9 @@
 
 .cp-page .cp-adv-demand-track {
   display: inline-flex;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--outline);
+  border-radius: var(--r-full);
+  overflow: hidden;
 }
 
 .cp-page .cp-adv-demand-cell {
@@ -305,7 +311,7 @@
 }
 
 .cp-page .cp-adv-demand-cell + .cp-adv-demand-cell {
-  border-left: 1px solid var(--ink);
+  border-left: 1px solid var(--paper);
 }
 
 .cp-page .cp-adv-demand-num {

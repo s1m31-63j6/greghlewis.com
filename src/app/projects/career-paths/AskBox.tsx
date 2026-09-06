@@ -96,7 +96,7 @@ export default function AskBox({ starters }: { starters: string[] }) {
       )}
 
       <p className="cp-ask-disclaimer">
-        General explanation, not tax or financial advice. Answers come from the brief above.
+        General explanation, not tax or financial advice. Answers draw on the brief above and on the model&apos;s general knowledge; check anything you would act on.
       </p>
     </section>
   );

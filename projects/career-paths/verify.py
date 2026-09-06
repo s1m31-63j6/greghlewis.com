@@ -83,6 +83,13 @@ def main() -> int:
     fx = sum(1 for b in founders if any(e.kind == "exit" and e.amount >= PAYDAY for e in b.events)) / max(1, len(founders))
     rows.append(check("Founders: share with a $100K+ exit", fx, 0.05, 0.25, "Correlation Ventures: 65% of investments return under 1x; roughly 10% of founders reach a real exit"))
 
+    corp_free = cohort(P, "nontechnical", "corporate")
+    w30 = [b.wealth_by_year[29] for b in corp_free]
+    rows.append(check("Corporate (non-technical): median invested wealth at year 30", pct(w30, 0.5), 400_000, 1_400_000,
+                      "SCF 2022, 2026 dollars: median net worth $529K for college-degree households, $850K at the 80-90th income percentile; pre-tax simulation sits above"))
+    ret = st.mean([sum(b.retire_by_year[:30]) / max(1.0, sum(x for x in b.realized[:30] if x > 0)) for b in corp_free])
+    rows.append(check("Corporate: employer retirement money as a share of 30-year pay", ret, 0.03, 0.06,
+                      "Vanguard promised match 4.6%; BLS ECEC 5.4% of wages for management and professional occupations, net of vesting"))
     out = {"n": N, "checks": rows, "spread": spread}
     blob = json.dumps(out, indent=1)
     (HERE / "validation.json").write_text(blob)

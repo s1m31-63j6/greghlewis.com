@@ -48,7 +48,10 @@ def summarize(balls, years: int) -> dict:
     a = [avg_first(b, years) for b in balls]
     l = [ltv(b) for b in balls]
     eq = [sum(e.amount for e in b.events if e.kind in ("exit", "tender")) for b in balls]
+    w = [b.wealth_by_year[years - 1] for b in balls]
+    r = [sum(b.retire_by_year[:years]) for b in balls]
     return {
+        "wealth": {"median": pct(w, 0.5), "p10": pct(w, 0.1), "p90": pct(w, 0.9), "retireMedian": pct(r, 0.5)},
         "n": len(balls),
         "avg30": {"mean": st.mean(a), "median": pct(a, 0.5), "p10": pct(a, 0.1), "p90": pct(a, 0.9),
                   "over1M": sum(1 for x in a if x >= 1_000_000)},
@@ -82,6 +85,7 @@ def flows(P) -> dict:
         node_ltv: dict[str, list] = defaultdict(list)
         node_life: dict[str, list] = defaultdict(list)
         node_cash: dict[str, list] = defaultdict(list)
+        node_wealth: dict[str, list] = defaultdict(list)
         for first in TRACKS3:
             rng = Mulberry32(cohort_seed(persona, first, None, False) ^ 0x5F10)
             root = f"0:{first}"
@@ -101,6 +105,7 @@ def flows(P) -> dict:
                     node_pay[nid].append(b.realized[y - 1])
                     node_avg[nid].append(avg_first(b, y))
                     node_ltv[nid].append(sum(b.realized[:y]))
+                    node_wealth[nid].append(b.wealth_by_year[y - 1])
                     d = P["demand"].get(b.milestone_track[i]) or P["demand"]["corporate"]
                     node_life[nid].append(d["life"][b.milestone_level[i]])
                     node_cash[nid].append(d["cash"][b.milestone_level[i]])
@@ -110,7 +115,8 @@ def flows(P) -> dict:
             row = {"count": n}
             if nid in node_pay:
                 row.update({"medPay": pct(node_pay[nid], 0.5), "medAvg": pct(node_avg[nid], 0.5),
-                            "medLtv": pct(node_ltv[nid], 0.5), "life": st.mean(node_life[nid]),
+                            "medLtv": pct(node_ltv[nid], 0.5), "medWealth": pct(node_wealth[nid], 0.5),
+                            "life": st.mean(node_life[nid]),
                             "cash": st.mean(node_cash[nid])})
             nodes[nid] = row
         links = {k: {"count": v, "forced": dict(link_forced[k])} for k, v in link_n.items()}

@@ -6,7 +6,7 @@ import { loadParams } from "./engine/params.ts";
 import type { Params } from "./engine/types.ts";
 
 export interface FlowNode {
-  count: number; medPay?: number; medAvg?: number; medLtv?: number; life?: number; cash?: number;
+  count: number; medPay?: number; medAvg?: number; medLtv?: number; medWealth?: number; life?: number; cash?: number;
 }
 export interface FlowLink { count: number; forced: Record<string, number> }
 export interface Flows {

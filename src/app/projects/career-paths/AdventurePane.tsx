@@ -24,7 +24,7 @@ const NODE_SENTENCE: Record<string, string> = {
  */
 export default function AdventurePane({ view }: { view: AdventureView }) {
   const [expanded, setExpanded] = useState(false);
-  const { status, year, nodeKey, pay, avg, lifetime, crowdLifetime, demand } = view;
+  const { status, year, nodeKey, pay, avg, lifetime, crowdLifetime, wealth, crowdWealth, demand } = view;
 
   if (status === "start" || !nodeKey) {
     return (
@@ -90,9 +90,18 @@ export default function AdventurePane({ view }: { view: AdventureView }) {
               )}
             </dd>
           </div>
+          <div>
+            <dt className="cp-kicker">Invested wealth</dt>
+            <dd className="cp-mono">{fmtDollars(wealth)}</dd>
+          </div>
+          <div>
+            <dt className="cp-kicker">Crowd&apos;s wealth</dt>
+            <dd className="cp-mono">{crowdWealth === null ? "—" : fmtDollars(crowdWealth)}</dd>
+          </div>
         </dl>
         <p className="cp-adv-pane-foot">
-          The crowd is the median of every simulated career standing at this same node in year {year}.
+          The crowd is the median of every simulated career standing at this same node in year {year}. Wealth
+          compounds savings, windfalls and employer retirement money at a real return.
         </p>
 
         <DemandBar label="Life demand" value={demand[0]} />
