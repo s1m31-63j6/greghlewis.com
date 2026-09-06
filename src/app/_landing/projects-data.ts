@@ -14,6 +14,33 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "career-paths",
+    title: "Should You Join a Startup?",
+    date: "2026-09-06",
+    oneLiner:
+      "Three thousand simulated careers dropped through thirty years of pay, layoffs, shutdowns and the occasional exit: what a first job at a startup, a corporation or a consulting firm tends to be worth, and what funding stage does to the odds. Plus a plain-English brief on seed, Series A and everything after.",
+    techStack: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Canvas",
+      "Python",
+      "Monte Carlo",
+      "Bedrock",
+      "Claude Sonnet 4.6",
+    ],
+    searchTags: [
+      "startup", "equity", "stock options", "vesting", "dilution", "liquidation preference",
+      "venture capital", "private equity", "seed", "series a", "series b", "consulting",
+      "corporate", "career", "salary", "compensation", "plinko", "sankey", "simulation",
+      "monte carlo", "mba", "founder", "new grad", "carta",
+    ],
+    liveUrl: "/projects/career-paths",
+    liveUrlIsExternal: false,
+    githubUrl: null,
+    thumbnail: "/landing/career-paths.png",
+  },
+  {
     id: "draft-sheet",
     title: "A Draft Board for the Casual Fan - Fantasy Football",
     date: "2026-08-29",

@@ -1,0 +1,17 @@
+[project]
+name = "career-paths"
+version = "0.1.0"
+description = "Should You Join a Startup? — a sourced Monte Carlo of a new grad's first job (startup, corporate, consulting) over 35 years, plus the reference engine the browser port is checked against."
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=1.26",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.4",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

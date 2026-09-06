@@ -45,6 +45,15 @@ const HOME: SignupCopy = {
  * readers.
  */
 const BY_PROJECT: Record<string, SignupCopy> = {
+  "career-paths": {
+    id: "career-paths",
+    label: "Career Paths",
+    headline: "More career math, when I make it",
+    blurb:
+      "This one started as a conversation with a young consultant weighing a startup offer. If you want the next piece like it, leave an address and I will send a note when it lands. \u2014 Greg",
+    notePrompt: "Which job are you weighing?",
+    cta: "Add me to the list",
+  },
   "draft-sheet": {
     id: "draft-sheet",
     label: "Draft Sheet",

@@ -1,39 +1,29 @@
-import { chatStream } from "@/lib/religious-voices/chat";
-import leadersJson from "@/lib/religious-voices/leaders.json";
-import { dedupeSources, retrieveForLeader } from "@/lib/religious-voices/retrieval";
-import { checkRateLimit } from "@/lib/rate-limit";
+import { askStream, type AskStreamEvent, type AskTurn } from "@/lib/career-paths/ask";
 import { clientIp } from "@/lib/client-ip";
+import { checkRateLimit } from "@/lib/rate-limit";
 import { verifyTurnstile } from "@/lib/turnstile";
-import type { ChatStreamEvent, ChatTurn, Leader } from "@/lib/religious-voices/types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const LEADERS_BY_ID = new Map<string, Leader>(
-  (leadersJson as { leaders: Leader[] }).leaders.map((l) => [l.leader_id, l]),
-);
-
-interface ChatPayload {
-  query: string;
-  leaderId: string;
-  history?: ChatTurn[];
+interface AskPayload {
+  question: string;
+  history?: AskTurn[];
   turnstileToken?: string | null;
 }
 
 export async function POST(req: Request) {
-  let body: ChatPayload;
+  let body: AskPayload;
   try {
-    body = (await req.json()) as ChatPayload;
+    body = (await req.json()) as AskPayload;
   } catch {
     return Response.json({ error: "invalid JSON body" }, { status: 400 });
   }
-  const query = body.query?.trim();
-  if (!query) return Response.json({ error: "query is required" }, { status: 400 });
-  const leader = LEADERS_BY_ID.get(body.leaderId);
-  if (!leader) return Response.json({ error: `unknown leader: ${body.leaderId}` }, { status: 404 });
+  const question = body.question?.trim();
+  if (!question) return Response.json({ error: "question is required" }, { status: 400 });
 
   const ip = clientIp(req);
-  const rl = checkRateLimit(ip);
+  const rl = checkRateLimit(ip, "career-paths");
   if (!rl.allowed) {
     return Response.json(
       { error: "Rate limit exceeded. Try again later." },
@@ -45,21 +35,18 @@ export async function POST(req: Request) {
   if (!ts.ok) return Response.json({ error: `Verification failed: ${ts.reason}` }, { status: 403 });
 
   const enc = new TextEncoder();
-  const send = (controller: ReadableStreamDefaultController<Uint8Array>, ev: ChatStreamEvent) =>
+  const send = (controller: ReadableStreamDefaultController<Uint8Array>, ev: AskStreamEvent) =>
     controller.enqueue(enc.encode(`data: ${JSON.stringify(ev)}\n\n`));
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {
       try {
-        const retrieved = await retrieveForLeader(query, leader.leader_id, 8);
-        send(controller, { type: "meta", sources: dedupeSources(retrieved) });
-
-        for await (const event of chatStream(leader, query, retrieved, body.history ?? [])) {
+        for await (const event of askStream(question, body.history ?? [])) {
           send(controller, event);
         }
       } catch (e) {
         const message = e instanceof Error ? e.message : "Unknown error";
-        console.error("[religious-voices][chat]", message);
+        console.error("[career-paths][ask]", message);
         send(controller, { type: "error", message });
       } finally {
         controller.close();

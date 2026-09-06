@@ -1,0 +1,352 @@
+/* ─────────────────────────────────────────────────────────────────────
+   Tab three: the funding brief. One reading column, a sticky contents
+   list beside it on wide screens, and the ask box at the end. Inherits
+   the page tokens from styles.css: white ground, 1px black rules, no
+   radius, Inter body, JetBrains Mono for numbers and labels.
+   ───────────────────────────────────────────────────────────────────── */
+
+.cp-page .cp-brief {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
+}
+
+.cp-page .cp-brief-column {
+  max-width: 68ch;
+  min-width: 0;
+}
+
+/* ── Contents ─────────────────────────────────────────────────────── */
+
+.cp-page .cp-brief-contents {
+  display: none;
+}
+
+.cp-page .cp-brief-contents ol {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.cp-page .cp-brief-contents li {
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.cp-page .cp-brief-contents a {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  text-decoration: none;
+  line-height: 1.35;
+}
+
+.cp-page .cp-brief-contents a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.cp-page .cp-brief-contents .cp-num {
+  color: var(--ink-4);
+  flex: 0 0 auto;
+}
+
+@media (min-width: 1080px) {
+  .cp-page .cp-brief {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 56px;
+  }
+  .cp-page .cp-brief-contents {
+    display: block;
+    position: sticky;
+    top: 24px;
+    align-self: start;
+  }
+}
+
+/* ── Sections ─────────────────────────────────────────────────────── */
+
+.cp-page .cp-brief-section {
+  padding: 8px 0 28px;
+  scroll-margin-top: 24px;
+}
+
+.cp-page .cp-brief-section + .cp-brief-section {
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
+}
+
+.cp-page .cp-brief-section p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-2);
+}
+
+/* ── Tables ───────────────────────────────────────────────────────── */
+
+/* The wide tables break out of the reading measure so nine columns get
+   room; the wrapper scrolls sideways before the page ever does. */
+.cp-page .cp-brief-table-wrap {
+  margin: 8px 0 22px;
+  width: min(100%, var(--max-w));
+}
+
+.cp-page .cp-brief-table {
+  min-width: 960px;
+  font-size: 12.5px;
+}
+
+.cp-page .cp-brief-table caption {
+  text-align: left;
+  caption-side: top;
+  padding: 0 0 10px;
+}
+
+.cp-page .cp-brief-table tbody th {
+  font-family: var(--body);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+  border-bottom: 1px solid var(--rule-soft);
+  min-width: 140px;
+}
+
+.cp-page .cp-brief-table td {
+  min-width: 120px;
+  color: var(--ink-2);
+}
+
+.cp-page .cp-brief-params p {
+  margin: 0 0 10px;
+  font-size: 13px;
+}
+
+.cp-page .cp-brief-params-table {
+  font-size: 12px;
+}
+
+.cp-page .cp-brief-params-table td:first-child {
+  font-family: var(--mono);
+  white-space: nowrap;
+}
+
+.cp-page .cp-brief-params-table td.num {
+  white-space: nowrap;
+}
+
+/* ── Questions ────────────────────────────────────────────────────── */
+
+.cp-page .cp-brief-questions {
+  margin: 0 0 18px;
+  padding-left: 0;
+  list-style: none;
+  counter-reset: cp-q;
+}
+
+.cp-page .cp-brief-questions li {
+  counter-increment: cp-q;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 8px;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule-soft);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.cp-page .cp-brief-questions li:last-child {
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.cp-page .cp-brief-questions li::before {
+  content: counter(cp-q, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  padding-top: 4px;
+}
+
+/* ── Glossary ─────────────────────────────────────────────────────── */
+
+.cp-page .cp-brief-glossary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 32px;
+  margin: 0;
+}
+
+.cp-page .cp-brief-term {
+  padding: 12px 0;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.cp-page .cp-brief-term dt {
+  font-weight: 600;
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+
+.cp-page .cp-brief-term dd {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+
+@media (max-width: 640px) {
+  .cp-page .cp-brief-glossary {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ── Ask box ──────────────────────────────────────────────────────── */
+
+.cp-page .cp-ask {
+  border-top: 1px solid var(--rule);
+  padding-top: 28px;
+  scroll-margin-top: 24px;
+}
+
+.cp-page .cp-ask-starters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0 14px;
+}
+
+.cp-page .cp-ask-chip {
+  appearance: none;
+  background: var(--paper);
+  color: var(--ink-2);
+  border: 1px solid var(--ink);
+  padding: 6px 10px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cp-page .cp-ask-chip:hover {
+  background: var(--rule-faint);
+  color: var(--ink);
+}
+
+.cp-page .cp-ask-chip:disabled {
+  color: var(--ink-4);
+  border-color: var(--ink-4);
+  cursor: default;
+  background: var(--paper);
+}
+
+.cp-page .cp-ask-form {
+  display: flex;
+  gap: 0;
+}
+
+.cp-page .cp-ask-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  appearance: none;
+  background: var(--paper);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-right: 0;
+  padding: 9px 12px;
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.3;
+  outline: none;
+}
+
+.cp-page .cp-ask-input::placeholder {
+  color: var(--ink-4);
+}
+
+.cp-page .cp-ask-input:focus {
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.cp-page .cp-ask-input:disabled {
+  color: var(--ink-3);
+}
+
+.cp-page .cp-ask-form .cp-btn {
+  flex: 0 0 auto;
+  padding: 9px 18px;
+}
+
+.cp-page .cp-ask-thread {
+  margin-top: 22px;
+  border-top: 1px solid var(--rule-soft);
+}
+
+.cp-page .cp-ask-turn {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+
+.cp-page .cp-ask-turn .cp-kicker {
+  margin-bottom: 6px;
+}
+
+.cp-page .cp-ask-turn p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.cp-page .cp-ask-turn.user p {
+  font-weight: 500;
+}
+
+.cp-page .cp-ask-working {
+  padding: 14px 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.cp-page .cp-ask-error {
+  padding: 14px 0;
+  font-size: 13px;
+  color: var(--demand-5);
+}
+
+.cp-page .cp-ask-clear {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 12px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cp-page .cp-ask-clear:hover {
+  color: var(--ink);
+}
+
+.cp-page .cp-ask-disclaimer {
+  margin: 16px 0 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-3);
+}

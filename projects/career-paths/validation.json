@@ -1,0 +1,106 @@
+{
+ "n": 4000,
+ "checks": [
+  {
+   "check": "Startup (blended, technical): median equity cash by year 10",
+   "value": 420.0,
+   "low": 0,
+   "high": 5000,
+   "ok": true,
+   "source": "Carta: 32% of vested in-the-money options exercised; 65% of VC investments return under 1x"
+  },
+  {
+   "check": "Startup: share with $10K+ of equity cash by year 10",
+   "value": 0.223,
+   "low": 0.08,
+   "high": 0.3,
+   "ok": true,
+   "source": "Correlation Ventures / PitchBook exit rates"
+  },
+  {
+   "check": "Startup: share with a $100K+ payday by year 10",
+   "value": 0.059,
+   "low": 0.02,
+   "high": 0.12,
+   "ok": true,
+   "source": "92% of VC M&A under $50M; preference stacks"
+  },
+  {
+   "check": "Seed: share whose first company is gone by year 5",
+   "value": 0.5295,
+   "low": 0.45,
+   "high": 0.65,
+   "ok": true,
+   "source": "Carta: ~50% of seed companies reach A within 4 years"
+  },
+  {
+   "check": "Consulting: share still in consulting at year 5",
+   "value": 0.2915,
+   "low": 0.2,
+   "high": 0.4,
+   "ok": true,
+   "source": "Consulting turnover 20-30% a year; average tenure 2.7 years"
+  },
+  {
+   "check": "Consulting: share who make partner by year 15",
+   "value": 0.09175,
+   "low": 0.02,
+   "high": 0.1,
+   "ok": true,
+   "source": "5-10% of an entering class make partner"
+  },
+  {
+   "check": "Corporate (technical, no switching): median year-20 / year-1 pay",
+   "value": 1.9864695047830923,
+   "low": 1.6,
+   "high": 2.4,
+   "ok": true,
+   "source": "Deming: bachelor's real pay roughly doubles by mid-career"
+  },
+  {
+   "check": "All tracks: involuntary separations per career-year",
+   "value": 0.05045952380952381,
+   "low": 0.03,
+   "high": 0.08,
+   "ok": true,
+   "source": "JOLTS layoffs and discharges, scaled to professionals"
+  },
+  {
+   "check": "Startup: mean / median of 30-year average pay",
+   "value": 1.0926144660970338,
+   "low": 1.05,
+   "high": 2.0,
+   "ok": true,
+   "source": "Lottery-shaped payoff: mean above median"
+  },
+  {
+   "check": "Seed hires who stay the course: share with $250K+ of equity over a career",
+   "value": 0.15075,
+   "low": 0.05,
+   "high": 0.25,
+   "ok": true,
+   "source": "Derived: Carta new-grad grant sizes x dilution x the VC exit distribution"
+  },
+  {
+   "check": "Consulting p10 exceeds startup p10",
+   "value": 1.1341919615734497,
+   "low": 1.0,
+   "high": 3.0,
+   "ok": true,
+   "source": "Shape check"
+  },
+  {
+   "check": "Founders: share with a $100K+ exit",
+   "value": 0.14666666666666667,
+   "low": 0.05,
+   "high": 0.25,
+   "ok": true,
+   "source": "Correlation Ventures: 65% of investments return under 1x; roughly 10% of founders reach a real exit"
+  }
+ ],
+ "spread": {
+  "startup": 2.306911739076245,
+  "corporate": 2.346456383074897,
+  "consulting": 2.466282333973498
+ }
+}

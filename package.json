@@ -16,7 +16,9 @@
     "draft-sheet:daily": "npm run draft-sheet:fetch && npm run draft-sheet:history && npm run draft-sheet:publish && npm run draft-sheet:check && npm run draft-sheet:drift && node projects/draft-sheet/results/thumbnail.cjs",
     "draft-sheet:fetch": "cd projects/draft-sheet && uv run python crosswalk.py --force && uv run python rankings_fpros.py --force && uv run python adp_espn.py --force && uv run python adp_yahoo.py --force && uv run python adp_ffc.py --force && uv run python adp_sleeper.py --force && uv run python merge.py",
     "draft-sheet:publish": "cd projects/draft-sheet && uv run python publish.py && uv run python teams.py --no-verify && uv run python team_news.py && uv run python top200.py && uv run python news.py --force",
-    "draft-sheet:drift": "node --experimental-strip-types projects/draft-sheet/results/day-over-day.mts"
+    "draft-sheet:drift": "node --experimental-strip-types projects/draft-sheet/results/day-over-day.mts",
+    "career-paths:build": "cd projects/career-paths && uv run python params.py && uv run python simulate.py && uv run python verify.py",
+    "career-paths:check": "cd projects/career-paths && uv run python parity_test.py && cd ../.. && node --experimental-strip-types projects/career-paths/tie_out.mts"
   },
   "dependencies": {
     "@aws-sdk/client-bedrock-agent-runtime": "^3.1040.0",

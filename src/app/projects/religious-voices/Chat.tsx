@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { MessageRenderer } from "./MessageRenderer";
-import { Turnstile, type TurnstileHandle } from "./Turnstile";
+import { Turnstile, type TurnstileHandle } from "@/components/Turnstile";
 import { STARTERS } from "./starters";
 import { useChatThread } from "./useChatThread";
 import type { Leader } from "@/lib/religious-voices/types";
