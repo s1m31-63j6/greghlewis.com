@@ -45,5 +45,42 @@ export const TOUR_STEPS: TourStep[] = [
     side: "bottom",
     before: showTab("plinko"),
     doneLabel: "Drop the balls",
+    onDone: () => document.querySelector<HTMLButtonElement>('[data-tel="cp-replay"]')?.click(),
+  },
+];
+
+export const ADVENTURE_STEPS: TourStep[] = [
+  {
+    target: ".cp-adv-board",
+    title: "Choose Your Own Adventure",
+    body:
+      "One career, walked through the same engine as the thousands on tab one, except you make the calls. Each band is a milestone year; the crowd's flow is drawn faintly behind your path once you set out.",
+    side: "top",
+    before: showTab("adventure"),
+    waitFor: 2500,
+  },
+  {
+    target: ".cp-adv-options",
+    title: "Your decisions",
+    body:
+      "Pick a first job, then at years 3, 5, 10, 15, 20 and 30 choose to stay, switch tracks, get an MBA or found something. Between decisions the model rolls promotions, layoffs, shutdowns and the odd exit, and tells you what happened before you choose again.",
+    side: "bottom",
+    waitFor: 2500,
+  },
+  {
+    target: ".cp-adv-pane-full",
+    title: "Your scorecard",
+    body:
+      "Pay this year, your average, what you have earned and invested so far, and the median of every simulated career standing at the same spot. The two bars are how much the job takes from your life and how tight the cash is.",
+    side: "left",
+    waitFor: 1500,
+  },
+  {
+    target: ".cp-adv-controls",
+    title: "Run it again",
+    body:
+      "Start over draws a fresh set of dice, so the same choices can end somewhere else. Switch the graduate between technical and non-technical to change the pay curves and grant sizes underneath.",
+    side: "bottom",
+    doneLabel: "Start choosing",
   },
 ];

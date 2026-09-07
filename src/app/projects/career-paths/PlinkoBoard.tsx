@@ -37,7 +37,15 @@ interface Geometry {
   rowsTop: number; rowPitch: number; bandTop: number; bandBottom: number; ball: number;
 }
 
-function geometry(w: number): Geometry {
+const TAU = Math.PI * 2;
+
+/** Ball diameter: smaller as the crowd grows so the histogram still reads. */
+function ballSize(n: number, narrow: boolean): number {
+  const base = n <= 3000 ? 3.4 : n <= 9000 ? 2.8 : 2.2;
+  return narrow ? base * 0.7 : base;
+}
+
+function geometry(w: number, n: number): Geometry {
   const narrow = w < 640;
   const rowPitch = narrow ? 8 : 11;
   const bandH = narrow ? 150 : 220;
@@ -45,7 +53,7 @@ function geometry(w: number): Geometry {
   const bandTop = rowsTop + ROWS * rowPitch + 64;
   return {
     w, h: bandTop + bandH + 6, left: 34, right: w - 8,
-    rowsTop, rowPitch, bandTop, bandBottom: bandTop + bandH, ball: narrow ? 2 : 3,
+    rowsTop, rowPitch, bandTop, bandBottom: bandTop + bandH, ball: ballSize(n, narrow),
   };
 }
 
@@ -121,7 +129,7 @@ function buildLayout(runs: TrackRun[], g: Geometry, seed: number, prev: Layout |
   });
   let maxCount = 1;
   for (const c of counts) if (c > maxCount) maxCount = c;
-  const pitch = Math.min(g.ball + 0.5, (g.bandBottom - g.bandTop - 4) / maxCount);
+  const pitch = Math.min(g.ball + 0.6, (g.bandBottom - g.bandTop - 4) / maxCount);
   for (let k = 0; k < n; k++) {
     settleX[k] = g.left + bins[k] * binW + track[k] * sub + sub / 2;
     settleY[k] = g.bandBottom - 2 - stack[k] * pitch - g.ball / 2;
@@ -179,7 +187,8 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const layout = useRef<Layout | null>(null);
-  const geom = useRef<Geometry>(geometry(900));
+  const n = runs.reduce((s, r) => s + r.careers.length, 0);
+  const geom = useRef<Geometry>(geometry(900, n));
   const seen = useRef<Record<Track3, Career[] | null>>({ startup: null, corporate: null, consulting: null });
   const t0 = useRef<number>(0);
   const raf = useRef<number>(0);
@@ -230,10 +239,14 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
 
     const t = now - t0.current;
     let allDone = true;
-    const b = g.ball;
+    const r = g.ball / 2;
+    // One fill per ball, never one path for all of them: a single path holding
+    // thousands of overlapping shapes (the settled stacks) makes the
+    // rasterizer's winding work explode. Below ~1.3px radius a square is
+    // indistinguishable from a circle, and fillRect skips paths entirely.
+    const square = r < 1.3;
     for (let ti = 0; ti < 3; ti++) {
       ctx.fillStyle = COLORS[TRACKS3[ti]];
-      ctx.beginPath();
       for (let k = 0; k < L.n; k++) {
         if (L.track[k] !== ti) continue;
         let x: number;
@@ -260,9 +273,14 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
           x = L.settleX[k];
           y = L.settleY[k];
         }
-        ctx.rect(x - b / 2, y - b / 2, b, b);
+        if (square) {
+          ctx.fillRect(x - r, y - r, r * 2, r * 2);
+        } else {
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, TAU);
+          ctx.fill();
+        }
       }
-      ctx.fill();
     }
 
     if (hoverId >= 0) {
@@ -279,7 +297,9 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
         ctx.lineTo(L.settleX[hoverId], L.settleY[hoverId]);
         ctx.stroke();
         ctx.fillStyle = "#000";
-        ctx.fillRect(L.settleX[hoverId] - 3, L.settleY[hoverId] - 3, 6, 6);
+        ctx.beginPath();
+        ctx.arc(L.settleX[hoverId], L.settleY[hoverId], r + 1.5, 0, TAU);
+        ctx.fill();
       }
     }
     return allDone;
@@ -329,7 +349,7 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
   // Relayout on width or data change; decide which balls re-drop.
   useEffect(() => {
     if (!active || !inView || width <= 0) return;
-    const g = geometry(width);
+    const g = geometry(width, n);
     geom.current = g;
     const cv = canvas.current!;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -353,7 +373,7 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
       return;
     }
     start(reduced);
-  }, [runs, width, active, inView, replayKey, reduced, drawStatic, loop, start]);
+  }, [runs, n, width, active, inView, replayKey, reduced, drawStatic, loop, start]);
 
   useEffect(() => () => {
     if (raf.current) cancelAnimationFrame(raf.current);
@@ -380,7 +400,7 @@ export default function PlinkoBoard({ runs, stats, active, replayKey, reduced, o
     }
   };
 
-  const g = geometry(width);
+  const g = geometry(width, n);
   const span = g.right - g.left;
   const px = (v: number) => g.left + unit(v) * span;
 

@@ -11,15 +11,36 @@
   gap: 40px;
 }
 
+/* The reading column takes its whole grid cell; prose keeps a 68ch
+   measure while anything marked .cp-brief-wide (the tables, the equity
+   flow) gets the full width. */
 .cp-page .cp-brief-column {
-  max-width: 68ch;
   min-width: 0;
+}
+
+.cp-page .cp-brief-section > :not(.cp-brief-wide, .cp-eqflow),
+.cp-page .cp-brief-column > .cp-ask {
+  max-width: 68ch;
 }
 
 /* ── Contents ─────────────────────────────────────────────────────── */
 
 .cp-page .cp-brief-contents {
   display: none;
+}
+
+.cp-page .cp-brief-contents-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 28px;
+}
+
+.cp-page .cp-brief-contents-toggle {
+  height: 28px;
+  padding: 0 12px;
+  font-size: 12px;
 }
 
 .cp-page .cp-brief-contents ol {
@@ -59,14 +80,33 @@
 
 @media (min-width: 1080px) {
   .cp-page .cp-brief {
-    grid-template-columns: 220px minmax(0, 1fr);
-    gap: 56px;
+    --cp-contents-w: 220px;
+    --cp-contents-gap: 56px;
+    grid-template-columns: var(--cp-contents-w) minmax(0, 1fr);
+    gap: var(--cp-contents-gap);
   }
   .cp-page .cp-brief-contents {
     display: block;
     position: sticky;
     top: 24px;
     align-self: start;
+  }
+  /* Rail hidden: one column, the toggle sits as a short row above the text. */
+  .cp-page .cp-brief[data-contents="hidden"] {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  .cp-page .cp-brief[data-contents="hidden"] .cp-brief-contents {
+    position: static;
+  }
+  /* Rail shown: the wide pieces break out leftward across the rail and
+     its gap. They paint over the sticky rail while they pass it. */
+  .cp-page .cp-brief[data-contents="shown"] .cp-brief-wide {
+    position: relative;
+    z-index: 1;
+    margin-left: calc(-1 * (var(--cp-contents-w) + var(--cp-contents-gap)));
+    width: calc(100% + var(--cp-contents-w) + var(--cp-contents-gap));
+    background: var(--paper);
   }
 }
 
@@ -90,15 +130,51 @@
 
 /* ── Tables ───────────────────────────────────────────────────────── */
 
-/* The wide tables break out of the reading measure so nine columns get
-   room; the wrapper scrolls sideways before the page ever does. */
+.cp-page .cp-table-shell {
+  position: relative;
+}
+
+/* Right-edge fade while there is more table to the right. */
+.cp-page .cp-table-shell::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 64px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), var(--paper) 80%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.cp-page .cp-table-shell[data-overflow="true"][data-at-end="false"]::after {
+  opacity: 1;
+}
+
+.cp-page .cp-table-hint {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  height: 14px;
+  line-height: 14px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+
+.cp-page .cp-table-shell[data-at-end="true"] .cp-table-hint {
+  visibility: hidden;
+}
+
 .cp-page .cp-brief-table-wrap {
   margin: 8px 0 22px;
-  width: min(100%, var(--max-w));
 }
 
 .cp-page .cp-brief-table {
-  min-width: 960px;
   font-size: 12.5px;
 }
 
@@ -106,6 +182,12 @@
   text-align: left;
   caption-side: top;
   padding: 0 0 10px;
+}
+
+.cp-page .cp-brief-table th,
+.cp-page .cp-brief-table td {
+  vertical-align: top;
+  padding-right: 14px;
 }
 
 .cp-page .cp-brief-table tbody th {
@@ -116,11 +198,9 @@
   text-transform: none;
   color: var(--ink);
   border-bottom: 1px solid var(--rule-soft);
-  min-width: 140px;
 }
 
 .cp-page .cp-brief-table td {
-  min-width: 120px;
   color: var(--ink-2);
 }
 
@@ -140,6 +220,99 @@
 
 .cp-page .cp-brief-params-table td.num {
   white-space: nowrap;
+}
+
+/* ── Equity flow ──────────────────────────────────────────────────── */
+
+.cp-page .cp-eqflow {
+  margin: 4px 0 10px;
+}
+
+.cp-page .cp-eqflow-card {
+  margin-top: 14px;
+  padding: 16px 18px 14px;
+  border: 1px solid var(--outline-soft);
+  border-radius: var(--r-md);
+  background: var(--paper);
+  box-shadow: var(--shadow-1);
+}
+
+.cp-page .cp-eqflow-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-bottom: 14px;
+}
+
+.cp-page .cp-eqflow-controls .cp-seg .cp-btn {
+  height: 30px;
+  padding: 0 11px;
+  font-size: 12px;
+}
+
+.cp-page .cp-eqflow-scroll {
+  overflow-x: auto;
+}
+
+.cp-page .cp-eqflow-svg {
+  display: block;
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+}
+
+.cp-page .cp-eqflow-svg .ribbon { stroke-opacity: 0.35; }
+.cp-page .cp-eqflow-svg .ribbon.flow { stroke: var(--corporate); }
+.cp-page .cp-eqflow-svg .ribbon.take { stroke: var(--forced); }
+.cp-page .cp-eqflow-svg .ribbon.other { stroke: var(--forced); stroke-opacity: 0.14; }
+.cp-page .cp-eqflow-svg .ribbon.cash { stroke: var(--startup); stroke-opacity: 0.6; }
+
+.cp-page .cp-eqflow-svg .node.flow { fill: var(--corporate); }
+.cp-page .cp-eqflow-svg .node.take { fill: var(--forced); }
+.cp-page .cp-eqflow-svg .node.other { fill: var(--outline-soft); }
+.cp-page .cp-eqflow-svg .node.cash { fill: var(--startup); }
+
+/* Labels sit over the ribbons; a white halo keeps them legible. */
+.cp-page .cp-eqflow-svg text {
+  paint-order: stroke;
+  stroke: var(--paper);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.cp-page .cp-eqflow-svg .name {
+  font-family: var(--body);
+  font-size: 11.5px;
+  font-weight: 600;
+  fill: var(--ink);
+}
+
+.cp-page .cp-eqflow-svg .sub {
+  font-family: var(--body);
+  font-size: 10.5px;
+  fill: var(--ink-3);
+}
+
+.cp-page .cp-eqflow-svg .value {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  fill: var(--ink-2);
+}
+
+.cp-page .cp-eqflow-caption {
+  margin: 12px 0 6px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.cp-page .cp-eqflow-fine {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--ink-3);
 }
 
 /* ── Questions ────────────────────────────────────────────────────── */

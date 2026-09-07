@@ -191,7 +191,7 @@
   font-size: 13px;
   color: var(--ink-3);
   margin-top: 14px;
-  max-width: 78ch;
+  max-width: none;
 }
 
 @media (max-width: 760px) {

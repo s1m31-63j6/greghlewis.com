@@ -7,12 +7,13 @@
  * ask box at the end. All copy lives in src/lib/career-paths/brief.ts.
  */
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 
 import { BRIEF, FUNDING_TABLE, GLOSSARY, QUESTIONS_TO_ASK, STAGE_LADDER, STARTERS } from "@/lib/career-paths/brief";
 
 import AskBox from "./AskBox";
-import { FundingTable, StageTable } from "./ComparisonTable";
+import { FundingTable, ScrollTable, StageTable } from "./ComparisonTable";
+import EquityFlow from "./EquityFlow";
 import Glossary from "./Glossary";
 import { STAGES, type Stage } from "./engine/types.ts";
 import { fmtDollars, fmtPct } from "./format";
@@ -61,9 +62,9 @@ function StageParams({ model }: { model: Model }) {
     };
   });
   return (
-    <div className="cp-note cp-brief-params">
+    <div className="cp-note cp-brief-params cp-brief-wide">
       <p>The simulation on tab one uses these stage parameters:</p>
-      <div className="cp-table-wrap">
+      <ScrollTable>
         <table className="cp-table cp-brief-params-table">
           <thead>
             <tr>
@@ -90,26 +91,62 @@ function StageParams({ model }: { model: Model }) {
             ))}
           </tbody>
         </table>
-      </div>
+      </ScrollTable>
     </div>
   );
 }
 
+// The contents rail's shown/hidden choice, kept in localStorage and read
+// through useSyncExternalStore so the server render and the first client
+// render agree (the server always says shown).
+const CONTENTS_KEY = "cp-brief-contents";
+const contentsListeners = new Set<() => void>();
+let contentsPref: boolean | null = null;
+
+function readContents(): boolean {
+  if (contentsPref === null) {
+    try { contentsPref = localStorage.getItem(CONTENTS_KEY) !== "hidden"; } catch { contentsPref = true; }
+  }
+  return contentsPref;
+}
+function writeContents(shown: boolean) {
+  contentsPref = shown;
+  try { localStorage.setItem(CONTENTS_KEY, shown ? "shown" : "hidden"); } catch {}
+  contentsListeners.forEach((fn) => fn());
+}
+function subscribeContents(fn: () => void) {
+  contentsListeners.add(fn);
+  return () => { contentsListeners.delete(fn); };
+}
+
 export default function Brief({ model }: { model: Model | null }) {
+  const contents = useSyncExternalStore(subscribeContents, readContents, () => true);
+  const toggleContents = () => writeContents(!contents);
+
   return (
-    <div className="cp-brief">
+    <div className="cp-brief" data-contents={contents ? "shown" : "hidden"}>
       <nav className="cp-brief-contents" aria-label="Contents">
-        <div className="cp-kicker">Contents</div>
-        <ol>
-          {CONTENTS.map((c, i) => (
-            <li key={c.id}>
-              <a href={`#${c.id}`}>
-                <span className="cp-num">{String(i + 1).padStart(2, "0")}</span>
-                {c.heading}
-              </a>
-            </li>
-          ))}
-        </ol>
+        <div className="cp-brief-contents-head">
+          {contents && <div className="cp-kicker">Contents</div>}
+          <button
+            type="button" className="cp-btn cp-brief-contents-toggle" onClick={toggleContents}
+            aria-expanded={contents} data-tel="cp-brief-contents" data-tel-project="career-paths"
+          >
+            {contents ? "Hide contents" : "Show contents"}
+          </button>
+        </div>
+        {contents && (
+          <ol>
+            {CONTENTS.map((c, i) => (
+              <li key={c.id}>
+                <a href={`#${c.id}`}>
+                  <span className="cp-num">{String(i + 1).padStart(2, "0")}</span>
+                  {c.heading}
+                </a>
+              </li>
+            ))}
+          </ol>
+        )}
       </nav>
 
       <article className="cp-brief-column">
@@ -119,6 +156,8 @@ export default function Brief({ model }: { model: Model | null }) {
             {s.paragraphs.map((p, i) => <p key={i}>{p}</p>)}
 
             {s.id === "funding-models" && <FundingTable rows={FUNDING_TABLE} />}
+
+            {s.id === "equity-mechanics" && <EquityFlow model={model} />}
 
             {s.id === "the-stage-ladder" && (
               <>

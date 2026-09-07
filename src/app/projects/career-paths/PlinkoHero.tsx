@@ -11,7 +11,7 @@ import type { Persona, Stage, Track3 } from "./engine/types.ts";
 import { fmtDollars } from "./format";
 import PlinkoBoard, { trackStats, type TrackStats } from "./PlinkoBoard";
 import type { Model } from "./useModel";
-import type { TrackRun } from "./useSimulation";
+import { VOLUMES, type TrackRun, type Volume } from "./useSimulation";
 
 export interface PlinkoHeroProps {
   model: Model | null;
@@ -24,6 +24,9 @@ export interface PlinkoHeroProps {
   onStay: (b: boolean) => void;
   onReplay: () => void;
   active: boolean;
+  n: Volume;
+  onVolume: (n: Volume) => void;
+  busy: boolean;
 }
 
 const STAGES: { id: Stage | null; label: string }[] = [
@@ -38,7 +41,7 @@ const STAGES: { id: Stage | null; label: string }[] = [
 const LABELS: Record<Track3, string> = { startup: "Startup", corporate: "Corporate", consulting: "Consulting" };
 const COLORS: Record<Track3, string> = { startup: "var(--startup)", corporate: "var(--corporate)", consulting: "var(--consulting)" };
 
-function title(stats: TrackStats[], stay: boolean): string {
+function title(stats: TrackStats[], stay: boolean, n: number): string {
   const by = Object.fromEntries(stats.map((s) => [s.track, s])) as Record<Track3, TrackStats>;
   const su = by.startup;
   const gap = by.corporate.median - su.median;
@@ -46,14 +49,13 @@ function title(stats: TrackStats[], stay: boolean): string {
     ? `${fmtDollars(gap)} a year below a corporate start`
     : gap < -5000 ? `${fmtDollars(-gap)} a year above a corporate start` : "within a rounding error of a corporate start";
   const tail = su.leap1M > 0
-    ? `${su.leap1M} of the 1,000 startup careers had a single year over $1M, and ${su.over1M === 0 ? "none" : su.over1M} averaged that much over thirty.`
+    ? `${su.leap1M} of the ${n.toLocaleString()} startup careers had a single year over $1M, and ${su.over1M === 0 ? "none" : su.over1M} averaged that much over thirty.`
     : "No startup career had a single year over $1M.";
   return `A startup first job landed at a median of ${fmtDollars(su.median)} a year over thirty years, ${cmp}${stay ? ", with nobody switching tracks" : ""}. ${tail}`;
 }
 
 export default function PlinkoHero(p: PlinkoHeroProps) {
   const [replayKey, setReplayKey] = useState(0);
-  const [skip, setSkip] = useState(false);
   const [reduced, setReduced] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -96,28 +98,43 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
           </div>
         </div>
         <div className="cp-control">
-          <span className="cp-kicker">Switching</span>
+          <span className="cp-kicker">Can switch tracks?</span>
           <label className="cp-toggle">
-            <input type="checkbox" role="switch" aria-checked={p.stay} checked={p.stay} onChange={(e) => p.onStay(e.target.checked)} data-tel="cp-stay" data-tel-project="career-paths" />
-            {p.stay ? "Stay the course for 30 years" : "Let careers switch tracks"}
+            <input type="checkbox" role="switch" aria-checked={!p.stay} checked={!p.stay} onChange={(e) => p.onStay(!e.target.checked)} data-tel="cp-stay" data-tel-project="career-paths" />
+            {p.stay ? "No, stay the course for 30 years" : "Yes, at each milestone"}
           </label>
         </div>
-        <div className="cp-control" style={{ marginLeft: "auto" }}>
-          <span className="cp-kicker">Drop</span>
+        <div className="cp-control">
+          <span className="cp-kicker">Careers per first job</span>
           <div className="cp-seg">
-            <button type="button" className="cp-btn" onClick={() => { setSkip(false); setReplayKey((k) => k + 1); p.onReplay(); document.querySelector(".cp-plinko-board")?.scrollIntoView({ behavior: "smooth", block: "nearest" }); }} data-tel="cp-replay" data-tel-project="career-paths">
-              Replay
-            </button>
-            <button type="button" className="cp-btn" onClick={() => { setSkip(true); setReplayKey((k) => k + 1); }} data-tel="cp-skip" data-tel-project="career-paths">
-              Skip to the end
-            </button>
+            {VOLUMES.map((v) => (
+              <button
+                key={v} type="button" className={`cp-btn ${p.n === v ? "active" : ""}`}
+                onClick={() => p.onVolume(v)} data-tel="cp-volume" data-tel-project="career-paths"
+              >
+                {v.toLocaleString()}
+              </button>
+            ))}
           </div>
         </div>
       </div>
 
+      <div className="cp-drop-row">
+        <button
+          type="button"
+          className="cp-btn primary cp-drop-btn"
+          onClick={() => { setReplayKey((k) => k + 1); p.onReplay(); document.querySelector(".cp-plinko-board")?.scrollIntoView({ behavior: "smooth", block: "nearest" }); }}
+          data-tel="cp-replay"
+          data-tel-project="career-paths"
+          disabled={p.busy}
+        >
+          {p.busy ? "Simulating…" : "Drop the balls"}
+        </button>
+      </div>
+
       {stats && (
         <>
-          <p className="cp-chart-title">{title(stats, p.stay)}</p>
+          <p className="cp-chart-title">{title(stats, p.stay, p.n)}</p>
           <p className="cp-chart-sub">
             Each ball is one simulated career. It falls one row per year, sitting at that year&apos;s realized pay
             (salary plus any equity actually turned into cash, in 2026 dollars, log scale), then settles on its
@@ -128,7 +145,7 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
       )}
 
       {p.runs && stats ? (
-        <PlinkoBoard runs={p.runs} stats={stats} active={p.active} replayKey={replayKey} reduced={reduced || skip} />
+        <PlinkoBoard runs={p.runs} stats={stats} active={p.active} replayKey={replayKey} reduced={reduced} />
       ) : (
         <div className="cp-loading">Simulating three thousand careers…</div>
       )}
@@ -139,7 +156,7 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
             {stats.map((s) => (
               <span key={s.track}>
                 <span className="cp-swatch" style={{ background: COLORS[s.track] }} />
-                {LABELS[s.track]} <span className="cp-num">1,000 careers</span>
+                {LABELS[s.track]} <span className="cp-num">{p.n.toLocaleString()} careers</span>
               </span>
             ))}
             <span className="cp-num">Hover a settled ball for its story</span>
@@ -154,13 +171,13 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
                 <dl>
                   <dt>Median 30-yr average</dt><dd>{fmtDollars(s.median)}</dd>
                   <dt>10th to 90th percentile</dt><dd>{fmtDollars(s.p10)} to {fmtDollars(s.p90)}</dd>
-                  <dt>Averaged under $100K</dt><dd>{s.under100K} of 1,000</dd>
-                  <dt>Lost a job involuntarily</dt><dd>{s.jobLoss} of 1,000</dd>
-                  <dt>Employer shut down</dt><dd>{s.shutdowns} of 1,000</dd>
+                  <dt>Averaged under $100K</dt><dd>{s.under100K.toLocaleString()} of {p.n.toLocaleString()}</dd>
+                  <dt>Lost a job involuntarily</dt><dd>{s.jobLoss.toLocaleString()} of {p.n.toLocaleString()}</dd>
+                  <dt>Employer shut down</dt><dd>{s.shutdowns.toLocaleString()} of {p.n.toLocaleString()}</dd>
                   <dt>Employer retirement money, 30 yrs</dt><dd>{fmtDollars(s.retire30)}</dd>
                   <dt>Median invested wealth at 30</dt><dd>{fmtDollars(s.wealth30)}</dd>
-                  <dt>Any single year over $1M</dt><dd>{s.leap1M} of 1,000</dd>
-                  <dt>Averaged over $1M</dt><dd>{s.over1M} of 1,000</dd>
+                  <dt>Any single year over $1M</dt><dd>{s.leap1M.toLocaleString()} of {p.n.toLocaleString()}</dd>
+                  <dt>Averaged over $1M</dt><dd>{s.over1M.toLocaleString()} of {p.n.toLocaleString()}</dd>
                 </dl>
               </div>
             ))}

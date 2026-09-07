@@ -20,14 +20,14 @@ import Adventure from "./Adventure";
 import Brief from "./Brief";
 import PlinkoHero from "./PlinkoHero";
 import type { Persona, Stage } from "./engine/types.ts";
-import { TOUR_STEPS } from "./tour";
+import { ADVENTURE_STEPS, TOUR_STEPS } from "./tour";
 import { useModel } from "./useModel";
-import { useSimulation } from "./useSimulation";
+import { useSimulation, type Volume } from "./useSimulation";
 
 type TabId = "plinko" | "adventure" | "brief";
 
 const TABS: { id: TabId; label: string; n: string }[] = [
-  { id: "plinko", label: "Three thousand careers", n: "01" },
+  { id: "plinko", label: "Thousands of careers", n: "01" },
   { id: "adventure", label: "Choose your own", n: "02" },
   { id: "brief", label: "Stages and funding, explained", n: "03" },
 ];
@@ -40,9 +40,10 @@ export default function CareerPaths() {
   const [stage, setStage] = useState<Stage | null>(null);
   const [stay, setStay] = useState(true);
   const [seed, setSeed] = useState(20260906);
+  const [n, setN] = useState<Volume>(3000);
 
   const model = useModel();
-  const runs = useSimulation(model?.params ?? null, { persona, stage, stay, seed });
+  const { runs, busy } = useSimulation(model?.raw ?? null, { persona, stage, stay, seed, n });
 
   return (
     <div className="cp-page" data-tel-project={PROJECT}>
@@ -50,7 +51,7 @@ export default function CareerPaths() {
         <nav className="cp-topnav">
           <Link href="/">← back to projects</Link>
           <div className="cp-topnav-right">
-            <TourButton className="cp-tour-launch" />
+            <TourButton className="cp-tour-launch" label={tab === "adventure" ? "Tour: Choose Your Own Adventure" : "Take the tour"} />
             <Link href="/projects/career-paths/methodology">Methodology</Link>
             <WantMore project={PROJECT} className="cp-want" />
           </div>
@@ -62,10 +63,9 @@ export default function CareerPaths() {
             <h1 className="cp-display">Should You Join a Startup?</h1>
           </div>
           <p className="cp-lede">
-            Students hear the upside of a startup job and rarely the downside. Here are three
-            thousand simulated careers, one first job each, dropped through thirty years of pay,
-            layoffs, promotions, shutdowns and the occasional exit. Every number behind them
-            has a citation.
+            Students hear the upside of a startup job and rarely the downside. Here are thousands
+            of simulated careers, one first job each, dropped through thirty years of pay, layoffs,
+            promotions, shutdowns and the occasional exit. Every number behind them has a citation.
           </p>
         </header>
 
@@ -88,7 +88,13 @@ export default function CareerPaths() {
           ))}
         </nav>
 
-        <Tour project={PROJECT} steps={TOUR_STEPS} startDelayMs={2500} />
+        {/* One registry slot, so the tour follows the tab: the adventure gets its
+            own first-visit key and offers itself the first time someone lands there. */}
+        {tab === "adventure" ? (
+          <Tour key="adventure" project={`${PROJECT}-adventure`} steps={ADVENTURE_STEPS} startDelayMs={1800} />
+        ) : (
+          <Tour key="plinko" project={PROJECT} steps={TOUR_STEPS} startDelayMs={2500} />
+        )}
 
         <main>
           <section className="cp-panel" hidden={tab !== "plinko"} aria-hidden={tab !== "plinko"}>
@@ -103,6 +109,9 @@ export default function CareerPaths() {
               onStay={setStay}
               onReplay={() => setSeed((s) => s + 1)}
               active={tab === "plinko"}
+              n={n}
+              onVolume={setN}
+              busy={busy}
             />
           </section>
           <section className="cp-panel" hidden={tab !== "adventure"} aria-hidden={tab !== "adventure"}>

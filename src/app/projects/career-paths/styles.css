@@ -21,6 +21,8 @@
   --surface-1: #f7f7f9;
   --surface-2: #eeeef1;
   --primary: #1c1b1f;          /* Material on-surface as a monochrome primary */
+  --accent: #1a73e8;           /* Material blue for the one featured action */
+  --accent-hover: #1765cc;
   --primary-tint: rgba(28, 27, 31, 0.08);
   --primary-tint-2: rgba(28, 27, 31, 0.14);
   --r-sm: 8px;
@@ -350,6 +352,28 @@
   cursor: default;
   background: var(--paper);
   box-shadow: none;
+}
+
+.cp-drop-row {
+  display: flex;
+  justify-content: center;
+  padding: 2px 0 22px;
+}
+
+.cp-btn.cp-drop-btn {
+  height: 48px;
+  padding: 0 34px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-1);
+}
+
+.cp-btn.cp-drop-btn:hover {
+  background: var(--accent-hover);
+  box-shadow: var(--shadow-2);
 }
 
 /* Material segmented button group. */
