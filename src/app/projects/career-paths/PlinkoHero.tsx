@@ -11,7 +11,7 @@ import type { Persona, Stage, Track3 } from "./engine/types.ts";
 import { fmtDollars } from "./format";
 import PlinkoBoard, { trackStats, type TrackStats } from "./PlinkoBoard";
 import type { Model } from "./useModel";
-import { VOLUMES, type TrackRun, type Volume } from "./useSimulation";
+import { N_BALLS, type TrackRun } from "./useSimulation";
 
 export interface PlinkoHeroProps {
   model: Model | null;
@@ -24,8 +24,6 @@ export interface PlinkoHeroProps {
   onStay: (b: boolean) => void;
   onReplay: () => void;
   active: boolean;
-  n: Volume;
-  onVolume: (n: Volume) => void;
   busy: boolean;
 }
 
@@ -104,19 +102,6 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
             {p.stay ? "No, stay the course for 30 years" : "Yes, at each milestone"}
           </label>
         </div>
-        <div className="cp-control">
-          <span className="cp-kicker">Careers per first job</span>
-          <div className="cp-seg">
-            {VOLUMES.map((v) => (
-              <button
-                key={v} type="button" className={`cp-btn ${p.n === v ? "active" : ""}`}
-                onClick={() => p.onVolume(v)} data-tel="cp-volume" data-tel-project="career-paths"
-              >
-                {v.toLocaleString()}
-              </button>
-            ))}
-          </div>
-        </div>
       </div>
 
       <div className="cp-drop-row">
@@ -128,13 +113,13 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
           data-tel-project="career-paths"
           disabled={p.busy}
         >
-          {p.busy ? "Simulating…" : "Drop the balls"}
+          {p.busy ? "Simulating…" : "Roll"}
         </button>
       </div>
 
       {stats && (
         <>
-          <p className="cp-chart-title">{title(stats, p.stay, p.n)}</p>
+          <p className="cp-chart-title">{title(stats, p.stay, N_BALLS)}</p>
           <p className="cp-chart-sub">
             Each ball is one simulated career. It falls one row per year, sitting at that year&apos;s realized pay
             (salary plus any equity actually turned into cash, in 2026 dollars, log scale), then settles on its
@@ -147,7 +132,7 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
       {p.runs && stats ? (
         <PlinkoBoard runs={p.runs} stats={stats} active={p.active} replayKey={replayKey} reduced={reduced} />
       ) : (
-        <div className="cp-loading">Simulating three thousand careers…</div>
+        <div className="cp-loading">Simulating nine thousand careers…</div>
       )}
 
       {stats && (
@@ -156,7 +141,7 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
             {stats.map((s) => (
               <span key={s.track}>
                 <span className="cp-swatch" style={{ background: COLORS[s.track] }} />
-                {LABELS[s.track]} <span className="cp-num">{p.n.toLocaleString()} careers</span>
+                {LABELS[s.track]} <span className="cp-num">{N_BALLS.toLocaleString()} careers</span>
               </span>
             ))}
             <span className="cp-num">Hover a settled ball for its story</span>
@@ -171,13 +156,13 @@ export default function PlinkoHero(p: PlinkoHeroProps) {
                 <dl>
                   <dt>Median 30-yr average</dt><dd>{fmtDollars(s.median)}</dd>
                   <dt>10th to 90th percentile</dt><dd>{fmtDollars(s.p10)} to {fmtDollars(s.p90)}</dd>
-                  <dt>Averaged under $100K</dt><dd>{s.under100K.toLocaleString()} of {p.n.toLocaleString()}</dd>
-                  <dt>Lost a job involuntarily</dt><dd>{s.jobLoss.toLocaleString()} of {p.n.toLocaleString()}</dd>
-                  <dt>Employer shut down</dt><dd>{s.shutdowns.toLocaleString()} of {p.n.toLocaleString()}</dd>
+                  <dt>Averaged under $100K</dt><dd>{s.under100K.toLocaleString()} of {N_BALLS.toLocaleString()}</dd>
+                  <dt>Lost a job involuntarily</dt><dd>{s.jobLoss.toLocaleString()} of {N_BALLS.toLocaleString()}</dd>
+                  <dt>Employer shut down</dt><dd>{s.shutdowns.toLocaleString()} of {N_BALLS.toLocaleString()}</dd>
                   <dt>Employer retirement money, 30 yrs</dt><dd>{fmtDollars(s.retire30)}</dd>
                   <dt>Median invested wealth at 30</dt><dd>{fmtDollars(s.wealth30)}</dd>
-                  <dt>Any single year over $1M</dt><dd>{s.leap1M.toLocaleString()} of {p.n.toLocaleString()}</dd>
-                  <dt>Averaged over $1M</dt><dd>{s.over1M.toLocaleString()} of {p.n.toLocaleString()}</dd>
+                  <dt>Any single year over $1M</dt><dd>{s.leap1M.toLocaleString()} of {N_BALLS.toLocaleString()}</dd>
+                  <dt>Averaged over $1M</dt><dd>{s.over1M.toLocaleString()} of {N_BALLS.toLocaleString()}</dd>
                 </dl>
               </div>
             ))}

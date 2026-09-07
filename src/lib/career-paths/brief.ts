@@ -4,8 +4,16 @@
 
 export interface BriefSection {
   id: string;
+  /** The h2. A claim or a verb, not a label. */
   heading: string;
+  /** The heading in a few words, for the floating contents control. */
+  short: string;
+  /** One bold sentence under the heading; the section in one line. */
+  takeaway?: string;
+  /** For the two table sections the first paragraph leads into the table and the rest follow it. */
   paragraphs: string[];
+  /** A boxed worked case, rendered after the paragraphs. */
+  callout?: { title: string; body: string };
 }
 
 export interface FundingRow {
@@ -38,84 +46,95 @@ export interface GlossaryEntry {
 
 export const BRIEF: BriefSection[] = [
   {
-    id: "what-the-letters-mean",
-    heading: "What the letters mean",
+    id: "who-funded-it",
+    heading: "Who funded the company decides what your job is like",
+    short: "Who funded it",
     paragraphs: [
-      "A new grad sits across from a recruiter who says, \"We just closed our B.\" The grad nods. The recruiter moves on to the free lunch. Nobody explains what a B is, what it cost the company, or what it means for the offer on the table. This page fills that gap. The letters are shorthand for how far a company has climbed a funding ladder that runs from a founder's savings through seed, Series A, B, C, and onward to a public listing. Each rung is a new group of investors buying a slice of the company at a new price.",
-      "Two questions decide most of what an employee will experience: who owns the company, and what stage it is at. Ownership tells you what the people in charge want and how fast they want it. Stage tells you how likely the company is to survive, how much of it a new hire can expect to be given, and how much cash the company can afford to pay. A seed startup and a Series C startup both call themselves startups. They are different jobs with different odds, and the offer letter rarely says which one you are looking at.",
-      "Each round has a rough size and a rough valuation attached. Carta's 2025 data puts the median seed round at $4M with a $20M post-money valuation; by Q1 2026 those figures were $4.1M and $24.3M. A Series A in Carta's Q1 2026 data is a median $19.6M raise at a $78.7M post-money. A Series B is roughly $40M at a valuation of $120M to $160M or more. The letters are therefore a proxy for size, age, and how much money the company has already promised to pay back to investors before employees see anything from a sale.",
-    ],
-  },
-  {
-    id: "who-owns-it",
-    heading: "Who owns it decides what they want from you",
-    paragraphs: [
-      "The owner of a company decides what winning looks like, and every employee's pay follows from that definition. A founder who has never taken outside money wins by keeping the business profitable for decades. A venture fund wins by returning many times its money inside a ten-year fund life, which means it needs the company to grow fast or fail fast. A private equity firm wins by buying at one price, tightening operations, and selling at a higher price roughly six years later. None of these is wrong. They are different clocks, and you will be working on one of them.",
-      "Those clocks show up in the offer letter. A venture-backed company pays below-market cash and fills the gap with options, because the investors want cash spent on growth rather than salaries. A bootstrapped company pays what it can afford from revenue and rarely shares equity at all. A private equity owner pays market cash, may add a bonus, and keeps equity for a small group of senior executives. The same title at the same size of company can come with three different pay structures, depending only on who sits at the top of the cap table.",
-      "Job security follows the same logic. Venture investors accept that most of their bets fail, so the company you join is one of those bets. A family owner has no portfolio; the business is the retirement plan, and layoffs are personal. A private equity firm bought the company with borrowed money and needs the cash flow to service that debt, so headcount is a lever it will pull when the numbers slip. Before reading the salary line, find out who owns the company and what they need from it. Everything else in this explainer follows from that answer.",
+      "A recruiter says, \"We just closed our B,\" and the new grad nods. The recruiter moves on to the free lunch. Nobody says what the B cost the company, who now sits on its board, or what that means for the offer on the table. The letter is not trivia. It says how much money the company has already promised to return to investors before an employee sees anything from a sale.",
+      "Two questions decide most of what an employee will experience: who owns the company, and what stage it is at. Ownership tells you what the people in charge want and how fast they want it. Stage tells you how likely the company is to survive, how much of it a new hire can expect, and how much cash it can afford to pay. A seed startup and a Series C startup are different jobs with different odds.",
     ],
   },
   {
     id: "funding-models",
     heading: "Twelve ways a company gets funded",
+    short: "Twelve funding models",
     paragraphs: [
-      "The table below lines up twelve ways a company can be funded, from a founder's own savings to a public stock listing. For each, it names who owns the company, what that owner is trying to get out of it, how long they plan to hold, and what the arrangement usually means for an employee's cash, equity, chance of selling that equity, and risk of losing the job. The last row, a public company, is there as the reference point most readers already understand, so the other rows can be read as departures from it.",
-      "Several of these models stack. A venture-backed company often adds venture debt on top of its equity rounds. A bootstrapped company might take a revenue-based loan to fund inventory. A private equity buyout may keep a founder on as a minority holder. The point of the table is not to sort every company into a single box but to show what each source of money asks of the company, because whatever the money asks of the company, the company will eventually ask of its employees. Read the owner column first and the cash column second.",
+      "Read the owner column first and the cash column second; the last row, a public company, is the reference point the other eleven depart from.",
     ],
   },
   {
     id: "the-stage-ladder",
     heading: "The stage ladder",
+    short: "The stage ladder",
     paragraphs: [
-      "The ladder below runs from pre-seed to public. Round size, valuation, and headcount come from Carta's reports. The new-grad grant and cash discount are rough ranges built from Carta's grant data and practitioner benchmarks, and the odds of reaching the next stage combine Carta's graduation rates with secondary estimates. Every Carta figure is drawn from companies that use Carta and were still alive when measured, and 2025 medians are pulled up by AI companies, so treat them as an optimistic anchor rather than the average for any startup you might actually join.",
-      "Three things move in opposite directions as you climb. Failure odds fall: Carta reports that only about half of seed companies raise a Series A within four years, while roughly 60% of Series A companies reach a B and a similar share of B companies reach a C. Grant size falls faster. Hire number one at a seed company gets a median 1.5% of the company in Carta's data. A new grad at seed might get roughly 0.1% to 0.3%, and a new grad at Series C typically gets RSUs worth roughly $30K to $80K over four years, a few thousandths of a percent.",
-      "Cash pay rises. Startup new-grad base salaries run roughly $100K to $180K by Simplify's 2026 data, against big-tech new-grad packages of roughly $180K to $285K, and the gap narrows as the company matures. This is the trade the ladder offers. Early, you take a large slice of something that will probably be worth nothing. Late, you take a tiny slice of something that will probably survive, paid mostly in cash. Neither is a bad deal. They are different deals, and the letter after the word Series tells you which one you are being offered.",
+      "Round size, valuation and headcount are Carta medians, drawn from companies on Carta that were still alive when measured and pulled up in 2025 by AI companies, so read them as an optimistic anchor rather than the average for a company you might join.",
+      "Failure odds fall as you climb. Grant size falls faster: hire number one at a seed company gets a median 1.5% in Carta's data, and a new grad at seed roughly 0.1% to 0.3%. Cash rises: startup new-grad base salaries run roughly $100K to $180K by Simplify's 2026 data, against big-tech packages of roughly $180K to $285K. Early, you take a large slice of something likely worthless. Late, a tiny slice of something likely to survive, paid mostly in cash.",
+    ],
+  },
+  {
+    id: "who-owns-it",
+    heading: "Three clocks, and you work on one of them",
+    short: "The owner's clock",
+    paragraphs: [
+      "A founder who never took outside money wins by staying profitable for decades. A venture fund wins by returning many times its money inside a ten-year fund life, so it needs the company to grow fast or fail fast. A private equity firm wins by buying at one price, tightening operations, and selling higher roughly six years later. None of these is wrong. They are different clocks, and the cash and equity columns above follow from them.",
+      "Venture investors expect most of their bets to fail, and the company you join is one of them, so cash is thin and options fill the gap. A family owner has no portfolio; the business is the retirement plan, and layoffs are personal. A private equity firm bought with borrowed money and needs the cash flow to service the debt, so headcount is a lever. Whatever the money asks of the company, the company will ask of you.",
     ],
   },
   {
     id: "equity-mechanics",
-    heading: "How the equity actually works",
+    heading: "Why your options may be worth nothing",
+    short: "Why options may be worth nothing",
+    takeaway: "Most people never exercise: options vest slowly, cost cash to exercise, and expire 90 days after you leave.",
     paragraphs: [
-      "Startup equity comes in two forms. A stock option is the right to buy a share at a fixed price, called the strike price, at some point in the future. It is worth something only if the share is later worth more than the strike. A restricted stock unit (RSU) is a promise to hand you a share outright once conditions are met, so it has value as long as the share does. Carta's compensation reports show options dominating through Series B, with RSUs becoming common from Series C or D and standard at companies preparing for an IPO.",
-      "Options come in two tax flavors. Incentive stock options (ISOs) can be taxed at long-term capital gains rates if you hold the shares long enough, but the gap between strike and fair value at exercise can trigger the alternative minimum tax. Non-qualified stock options (NSOs) are taxed as ordinary income on that gap at exercise, with no AMT surprise. The strike is set by a 409A valuation, an appraisal of the common stock the company commissions. Practitioner rules of thumb put the 409A at roughly 20% of the preferred price at Series A and roughly 30% at Series B, rising toward the preferred price before an IPO.",
-      "Grants vest over time. The standard schedule at every venture stage is four years with a one-year cliff, then monthly. Nothing vests until your first anniversary, when a quarter vests at once; the rest arrives in 36 monthly slices. Leave in month eleven and you get nothing. Vesting only gives you the right to buy. Exercising means paying the strike price for every share, in real cash, plus any tax due on the spread. At a growth-stage company where the strike is a large fraction of the preferred price, that bill can run to tens of thousands of dollars.",
-      "When you leave, a clock starts. Carta found that 91% of terminated grants carry a post-termination exercise window of 90 days or less. Inside that window you either pay to exercise or forfeit the options. Most people forfeit: Carta's Q4 2024 data shows only 32.2% of vested, in-the-money grants were exercised, down from 54.2% three years earlier. If the company is acquired, acceleration decides whether unvested shares vest early. Single-trigger acceleration vests on the sale alone. Double-trigger, the more common form, requires both the sale and your termination without cause afterward.",
+      "A stock option is the right to buy a share at a fixed strike price. It pays only if the share is later worth more. A restricted stock unit (RSU) is a promise to hand you a share once it vests. Carta's reports show options dominating through Series B and RSUs common from Series C or D. The strike is set by a 409A valuation, roughly 20% of the preferred price at Series A and roughly 30% at Series B.",
+      "Grants vest over four years with a one-year cliff, then monthly. Nothing vests until your first anniversary, when a quarter arrives at once; the rest comes in 36 monthly slices. Leave in month eleven and you get nothing. Vesting only gives you the right to buy. Exercising means paying the strike for every share, in cash, plus any tax due on the spread. At a growth-stage company that bill can run to tens of thousands of dollars.",
+      "When you leave, a clock starts. Carta found that 91% of terminated grants carry a post-termination exercise window of 90 days or less. Inside that window you pay to exercise or forfeit. Most people forfeit: Carta's Q4 2024 data shows only 32.2% of vested, in-the-money grants were exercised, down from 54.2% three years earlier. If the company is acquired, acceleration decides whether unvested shares vest early; double-trigger, the more common form, requires both the sale and your termination without cause.",
     ],
   },
   {
     id: "how-money-reaches-you",
-    heading: "How money reaches you",
+    heading: "How money actually reaches you",
+    short: "How money reaches you",
+    takeaway: "Private shares turn into cash only at an IPO, an acquisition, or a rare tender, and investors are paid first.",
     paragraphs: [
-      "Private shares cannot be sold on a whim, so money reaches employees through a few narrow doors. An IPO turns private shares into public ones, but employees are usually barred from selling for a lockup period measured in months, during which the price can move a great deal. An acquisition converts shares into cash or acquirer stock at a price set by the deal. Between those two events, a company may run a tender offer, in which the company or an outside buyer purchases shares from employees at a set price, or permit a secondary sale to a private buyer it approves.",
-      "Tenders are rarer than the headlines suggest. Carta ran 396 tender offers in 2025, up 62% from the year before and paying roughly 16,000 employees, but that is about 1% of the companies on its platform, and about a fifth of those tenders were at Series E or later. Even when a tender happens, the cap on what any holder may sell is typically 10% to 25% of their holdings; Carta reports only 23% of tenders let sellers part with more than half. Median participation in H1 2025 was 56%, lower at seed through B (46.4%) than at Series C and later (65.6%).",
-      "The headline valuation is not your valuation. Investors buy preferred stock, which carries a liquidation preference: the right to get their money back before common holders, meaning founders and employees, receive anything. Carta's deal-terms data shows about 96% to 97% of rounds use a 1x non-participating preference, meaning investors take either their money back or their pro-rata share of the proceeds, whichever is larger, but not both. The sum of those preferences across all rounds is the preference stack, and it sits between the sale price and your shares.",
-      "A worked example. A company has raised $60M across several rounds, all at 1x non-participating, and the investors together hold 60% of the fully diluted shares. It sells for $50M. The stack is $60M, more than the price, so the investors split the $50M and common gets zero, whatever the last valuation said. Now suppose it sells for $150M. Investors compare their preference ($60M) to their converted share (60% of $150M, or $90M) and convert, because $90M is more. Every share is then paid alike. A holder of 0.1% receives $150,000, before taxes and before any exercise cost.",
+      "Private shares cannot be sold on a whim. An IPO turns them into public shares, but employees are usually barred from selling for a lockup measured in months. An acquisition converts shares into cash or acquirer stock at the deal price. Between those events, a company may run a tender offer, buying shares from employees at a set price, or approve a secondary sale to a private buyer.",
+      "Tenders are rarer than the headlines suggest. Carta ran 396 tender offers in 2025, up 62% from the year before and paying roughly 16,000 employees, but that is about 1% of the companies on its platform, and about a fifth were at Series E or later. The cap on what any holder may sell is typically 10% to 25% of their holdings; only 23% of tenders let sellers part with more than half. Median participation in H1 2025 was 56%.",
+      "The headline valuation is not your valuation. Investors buy preferred stock, which carries a liquidation preference: the right to get their money back before common holders, meaning founders and employees, receive anything. Carta's deal-terms data shows about 96% to 97% of rounds use a 1x non-participating preference, so investors take either their money back or their pro-rata share, whichever is larger. The sum of those preferences is the preference stack, and it sits between the sale price and your shares.",
     ],
   },
   {
     id: "what-goes-wrong",
-    heading: "What goes wrong",
+    heading: "What goes wrong, and to whom",
+    short: "What goes wrong",
+    takeaway: "Down rounds, dilution and shutdowns all hit common stock first, and a new grad holds only common.",
     paragraphs: [
-      "A down round is a financing at a lower price per share than the previous one. Two things happen to employees. First, earlier investors usually hold anti-dilution protection, which hands them extra shares to make up for the price drop, and those shares come out of everyone else's ownership. Second, options granted at the old 409A price may now carry a strike above the current share value, which is called being underwater. Underwater options are worth nothing until the price recovers. Some companies reprice them or issue fresh grants; many do not, and the old grant simply sits there.",
-      "Even in good rounds, ownership shrinks. Carta's data on 2,005 US software startups puts median dilution per round at 19.5% at seed, 18% at Series A, 14% at Series B, and 10% at Series C, and each round usually adds a few points of option-pool top-up on top of that. An employee who held 0.2% after a seed round and watched the company raise an A, a B, and a C would hold roughly 0.12% by the end, without ever selling a share. The company is bigger, so the smaller slice may be worth more, but it is not the number in the offer letter.",
-      "Most often, the company simply dies. Carta's cohort data shows 30.6% of the seed companies from early 2018 raised a Series A within two years; for the 2022 cohort the figure was 15.4%. By year four about half of seed companies have raised an A, and the remainder mostly shut down, sell for very little, or limp along. Correlation Ventures found that about 65% of venture investments return less than the capital invested. When a company closes, options are worthless, and there is no severance for equity. The salary you gave up to get the grant is gone with it.",
-      "Private equity ownership changes the job even when the company survives. Davis, Haltiwanger, and co-authors studied 3,200 buyouts and found net employment down about 1% two years after a deal, with wide variation: down 13% in public-to-private deals and up 13% in private-to-private ones. Earnings per worker fell about 1.7%. Equity at PE-backed companies sits in a management incentive plan for a small group of senior executives; a new grad gets none. Growth-stage venture companies have their own version. Carta reports average Series D headcount fell 29% from its 2023 peak, and layoffs there arrive in cohorts, often right after a hiring class.",
+      "A down round is a financing at a lower price per share than the last one. Earlier investors usually hold anti-dilution protection, which hands them extra shares to make up for the drop, and those shares come out of everyone else's ownership. Options granted at the old 409A price may now carry a strike above the share value, which is called being underwater. Some companies reprice them or issue fresh grants; many do not.",
+      "Even in good rounds, ownership shrinks. Carta's data on 2,005 US software startups puts median dilution per round at 19.5% at seed, 18% at Series A, 14% at Series B, and 10% at Series C. An employee who held 0.2% after seed holds roughly 0.12% after an A, B and C. Most often, though, the company simply dies: Correlation Ventures found about 65% of venture investments return less than the capital invested, and a dead company's options are worth nothing.",
+      "Private equity changes the job even when the company survives. Davis, Haltiwanger and co-authors studied 3,200 buyouts and found net employment down about 1% two years after a deal: down 13% in public-to-private deals, up 13% in private-to-private ones. Earnings per worker fell about 1.7%. Equity sits in a management incentive plan for a few senior executives; a new grad gets none. Carta reports average Series D headcount fell 29% from its 2023 peak, and layoffs there arrive in cohorts.",
     ],
+    callout: {
+      title: "A $60M stack, a $50M sale, and common gets zero",
+      body: "A company has raised $60M across several rounds, all at 1x non-participating, and the investors together hold 60% of the fully diluted shares. It sells for $50M. The stack is $60M, more than the price, so the investors split the $50M and common gets zero, whatever the last valuation said. Sell instead for $150M and investors compare their preference ($60M) to their converted share (60% of $150M, or $90M) and convert, because $90M is more. Every share is then paid alike, and a holder of 0.1% receives $150,000, before taxes and exercise cost.",
+    },
   },
   {
     id: "lifestyle-vs-venture",
     heading: "Lifestyle business or venture scale",
+    short: "Lifestyle or venture scale",
+    takeaway: "A lifestyle business pays in cash and stability rather than equity, and it is more likely to exist in ten years.",
     paragraphs: [
-      "Not every company is trying to become enormous. A lifestyle business is built to generate a good living for its owner, indefinitely, without outside investors and without an exit. A venture-scale business is built to grow to a size that returns a fund, which means it must aim for hundreds of millions in value or fail trying. The word startup gets applied to both, and the confusion is expensive, because the two owners want nearly opposite things from the same employee. One wants you to stay for a decade. The other wants the company to be worth ten times more in five years.",
-      "A bootstrapped or family owner wants stability, competence, and low turnover. Profit shared in cash is more common than equity. The family-firm literature notes that owners \"wish to maintain substantial equity ownership,\" and a rough estimate is that only 5% to 10% of non-family employees at such firms receive any equity or phantom equity, while 20% to 30% get cash profit share. Pay tends to sit roughly 10% to 25% below large-company cash for the same title. In exchange, the business is not on a fund's clock, does not need to be sold, and does not need to grow to justify your seat.",
-      "Survival is the quiet advantage. The Bureau of Labor Statistics tracks every employer business in the country and finds 77.9% still open after one year, 51.4% after five, and 34.7% after ten. Those closures include sales and retirements, so they overstate failure, and they still compare well with a seed-stage venture company. A lifestyle business is not a bad place for an employee. It is a place where the upside is a steady paycheck, a share of profits, and a boss who plans to be there next year, and where nobody should expect to get rich from equity.",
+      "Not every company is trying to become enormous. A lifestyle business is built to generate a good living for its owner, without outside investors and without an exit. A venture-scale business must aim for hundreds of millions in value or fail trying. The word startup gets applied to both, and the two owners want opposite things from the same employee. One wants you to stay for a decade. The other wants the company worth ten times more in five years.",
+      "A bootstrapped or family owner wants stability, competence, and low turnover, and shares profit in cash more often than equity. The family-firm literature notes that owners \"wish to maintain substantial equity ownership\"; a rough estimate is that only 5% to 10% of non-family employees at such firms receive any equity or phantom equity, while 20% to 30% get cash profit share. Pay tends to sit roughly 10% to 25% below large-company cash for the same title.",
+      "Survival is the quiet advantage. The Bureau of Labor Statistics tracks every employer business in the country and finds 77.9% still open after one year, 51.4% after five, and 34.7% after ten. Those closures include sales and retirements, so they overstate failure, and they still compare well with a seed-stage venture company. The upside is a steady paycheck, a share of profits, and a boss who plans to be there next year. Nobody should expect to get rich from equity.",
     ],
   },
   {
     id: "questions-to-ask",
-    heading: "Questions to ask before you sign",
+    heading: "Ten questions to ask before you sign",
+    short: "Ten questions to ask",
+    takeaway: "Every one of these can be pasted into an email, and a refusal to answer is itself an answer.",
     paragraphs: [
-      "The questions below are the ones an offer letter will not answer on its own. Every one of them can be pasted into an email to a recruiter or hiring manager, and a company that has its house in order will answer most of them within a day. Refusal to answer is itself an answer. The point is not to negotiate harder. It is to convert a grant expressed as a share count into a grant expressed in ownership, price, and the odds of ever being paid, so that the equity line can be compared with the salary you would give up to get it.",
+      "A company that has its house in order will answer most of them within a day. The point is not to negotiate harder. It is to convert a grant expressed as a share count into ownership, price, and the odds of ever being paid, so the equity line can be compared with the salary you give up to get it.",
     ],
   },
 ];

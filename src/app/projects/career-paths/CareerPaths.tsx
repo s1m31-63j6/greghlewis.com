@@ -22,12 +22,12 @@ import PlinkoHero from "./PlinkoHero";
 import type { Persona, Stage } from "./engine/types.ts";
 import { ADVENTURE_STEPS, TOUR_STEPS } from "./tour";
 import { useModel } from "./useModel";
-import { useSimulation, type Volume } from "./useSimulation";
+import { useSimulation } from "./useSimulation";
 
 type TabId = "plinko" | "adventure" | "brief";
 
 const TABS: { id: TabId; label: string; n: string }[] = [
-  { id: "plinko", label: "Thousands of careers", n: "01" },
+  { id: "plinko", label: "Nine thousand careers", n: "01" },
   { id: "adventure", label: "Choose your own", n: "02" },
   { id: "brief", label: "Stages and funding, explained", n: "03" },
 ];
@@ -40,10 +40,9 @@ export default function CareerPaths() {
   const [stage, setStage] = useState<Stage | null>(null);
   const [stay, setStay] = useState(true);
   const [seed, setSeed] = useState(20260906);
-  const [n, setN] = useState<Volume>(3000);
 
   const model = useModel();
-  const { runs, busy } = useSimulation(model?.raw ?? null, { persona, stage, stay, seed, n });
+  const { runs, busy } = useSimulation(model?.raw ?? null, { persona, stage, stay, seed });
 
   return (
     <div className="cp-page" data-tel-project={PROJECT}>
@@ -63,8 +62,8 @@ export default function CareerPaths() {
             <h1 className="cp-display">Should You Join a Startup?</h1>
           </div>
           <p className="cp-lede">
-            Students hear the upside of a startup job and rarely the downside. Here are thousands
-            of simulated careers, one first job each, dropped through thirty years of pay, layoffs,
+            Students hear the upside of a startup job and rarely the downside. Here are nine
+            thousand simulated careers, one first job each, dropped through thirty years of pay, layoffs,
             promotions, shutdowns and the occasional exit. Every number behind them has a citation.
           </p>
         </header>
@@ -109,8 +108,6 @@ export default function CareerPaths() {
               onStay={setStay}
               onReplay={() => setSeed((s) => s + 1)}
               active={tab === "plinko"}
-              n={n}
-              onVolume={setN}
               busy={busy}
             />
           </section>

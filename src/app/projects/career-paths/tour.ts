@@ -16,7 +16,7 @@ function showTab(id: string) {
 export const TOUR_STEPS: TourStep[] = [
   {
     target: '[data-tour="plinko"] .cp-plinko-board',
-    title: "Three thousand careers",
+    title: "Nine thousand careers",
     body:
       "Each ball is one simulated career. It falls one row per year, sitting at that year's realized pay on a log axis, and settles on its thirty-year average. Orange started at a startup, blue in a corporate job, green in consulting.",
     side: "top",
@@ -44,7 +44,7 @@ export const TOUR_STEPS: TourStep[] = [
       "Tab two walks one career through the same engine with you making the calls at each milestone, and shows where the crowd went. Tab three explains seed, Series A, preference stacks and the rest for people who have never heard the words.",
     side: "bottom",
     before: showTab("plinko"),
-    doneLabel: "Drop the balls",
+    doneLabel: "Roll",
     onDone: () => document.querySelector<HTMLButtonElement>('[data-tel="cp-replay"]')?.click(),
   },
 ];

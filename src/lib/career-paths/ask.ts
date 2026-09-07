@@ -76,7 +76,8 @@ function mdTable(headers: string[], rows: string[][]): string {
 function serializeBrief(): string {
   const parts: string[] = [];
   for (const s of BRIEF) {
-    parts.push(`## ${s.heading}\n\n${s.paragraphs.join("\n\n")}`);
+    const body = [s.takeaway, ...s.paragraphs, s.callout ? `${s.callout.title}: ${s.callout.body}` : null].filter(Boolean);
+    parts.push(`## ${s.heading}\n\n${body.join("\n\n")}`);
     if (s.id === "funding-models") {
       parts.push(mdTable(
         ["Model", "Who owns it", "What they want", "Horizon", "Cash pay", "Equity", "Liquidity", "Job risk", "Good outcome", "What it feels like as an employee"],

@@ -225,15 +225,19 @@ function Flow({ id, model }: { id: string; model: Model | null }) {
 export default function EquityFlow({ model }: { model: Model | null }) {
   const [open, setOpen] = useState(false);
   const panelId = useId();
+  // The button sits in the reading column; the card is a sibling marked
+  // .cp-brief-wide so it can grow to the container width.
   return (
-    <div className="cp-eqflow">
-      <button
-        type="button" className="cp-btn" aria-expanded={open} aria-controls={panelId}
-        onClick={() => setOpen((o) => !o)} data-tel="cp-equity-flow" data-tel-project="career-paths"
-      >
-        {open ? "Hide the exit walk-through" : "Show how a $100M exit reaches a 0.2% holder"}
-      </button>
+    <>
+      <div className="cp-eqflow">
+        <button
+          type="button" className="cp-btn" aria-expanded={open} aria-controls={panelId}
+          onClick={() => setOpen((o) => !o)} data-tel="cp-equity-flow" data-tel-project="career-paths"
+        >
+          {open ? "Hide the exit walk-through" : "Show how a $100M exit reaches a 0.2% holder"}
+        </button>
+      </div>
       {open && <Flow id={panelId} model={model} />}
-    </div>
+    </>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * The plinko board: three thousand careers falling through thirty rows.
+ * The plinko board: nine thousand careers falling through thirty rows.
  *
  * Canvas for the balls, DOM for every piece of text. Each ball's x in row t
  * is its realized pay in year t on the log axis, so a liquidity event reads
@@ -41,7 +41,7 @@ const TAU = Math.PI * 2;
 
 /** Ball diameter: smaller as the crowd grows so the histogram still reads. */
 function ballSize(n: number, narrow: boolean): number {
-  const base = n <= 3000 ? 3.4 : n <= 9000 ? 2.8 : 2.2;
+  const base = n <= 3000 ? 3.6 : n <= 9000 ? 2.8 : 2.2;
   return narrow ? base * 0.7 : base;
 }
 

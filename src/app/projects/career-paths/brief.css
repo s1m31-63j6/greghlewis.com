@@ -1,131 +1,206 @@
 /* ─────────────────────────────────────────────────────────────────────
-   Tab three: the funding brief. One reading column, a sticky contents
-   list beside it on wide screens, and the ask box at the end. Inherits
-   the page tokens from styles.css: white ground, 1px black rules, no
-   radius, Inter body, JetBrains Mono for numbers and labels.
+   Tab three: the funding brief. One centered reading column at a 72ch
+   measure; the wide tables and the equity-flow card grow to the full
+   container width, so they extend past the prose symmetrically. A
+   floating contents pill sits in the left gutter on wide screens and
+   above the column on narrow ones. Inherits the page tokens from
+   styles.css: white ground, Material outlines and shadows, Inter body,
+   JetBrains Mono for numbers and labels.
    ───────────────────────────────────────────────────────────────────── */
 
 .cp-page .cp-brief {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 40px;
+  --cp-measure: 640px; /* 72ch of 16px Inter; fixed so the h2 and the rule share it */
+  --cp-pill-w: 220px;
+  position: relative;
+  container-type: inline-size;
 }
 
-/* The reading column takes its whole grid cell; prose keeps a 68ch
-   measure while anything marked .cp-brief-wide (the tables, the equity
-   flow) gets the full width. */
 .cp-page .cp-brief-column {
   min-width: 0;
 }
 
-.cp-page .cp-brief-section > :not(.cp-brief-wide, .cp-eqflow),
+/* Everything sits at the measure, centered, except pieces marked
+   .cp-brief-wide, which keep the container width. */
+.cp-page .cp-brief-section > :not(.cp-brief-wide),
 .cp-page .cp-brief-column > .cp-ask {
-  max-width: 68ch;
+  max-width: var(--cp-measure);
+  margin-inline: auto;
 }
 
-/* ── Contents ─────────────────────────────────────────────────────── */
+/* ── Contents pill ────────────────────────────────────────────────── */
 
+/* Narrow screens: a sticky row above the column holding the pill. */
 .cp-page .cp-brief-contents {
-  display: none;
+  position: sticky;
+  top: 16px;
+  z-index: 5;
+  padding-bottom: 14px;
 }
 
-.cp-page .cp-brief-contents-head {
-  display: flex;
-  align-items: center;
+.cp-page .cp-brief-contents-pill {
+  position: relative;
+  width: var(--cp-pill-w);
+  max-width: 100%;
+}
+
+/* Once the brief is wide enough for a gutter on each side (1000px, which
+   is the 1080px viewport), the row becomes a full-height strip in the
+   left gutter and the pill sticks inside it. The strip ignores the
+   pointer so the wide tables passing beneath stay scrollable. */
+@container (min-width: 1000px) {
+  .cp-page .cp-brief-contents {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: min(var(--cp-pill-w), calc(50% - var(--cp-measure) / 2 - 20px));
+    padding: 0;
+    pointer-events: none;
+  }
+  .cp-page .cp-brief-contents-pill {
+    position: sticky;
+    top: 16px;
+    width: 100%;
+    pointer-events: auto;
+  }
+}
+
+.cp-page .cp-brief-contents-btn {
+  width: 100%;
   justify-content: space-between;
   gap: 10px;
-  min-height: 28px;
+  padding: 0 12px 0 16px;
+  box-shadow: var(--shadow-1);
 }
 
-.cp-page .cp-brief-contents-toggle {
-  height: 28px;
-  padding: 0 12px;
-  font-size: 12px;
+.cp-page .cp-brief-contents-btn:hover {
+  box-shadow: var(--shadow-2);
 }
 
-.cp-page .cp-brief-contents ol {
-  list-style: none;
-  margin: 12px 0 0;
-  padding: 0;
-  border-top: 1px solid var(--rule);
+.cp-page .cp-brief-contents-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
 }
 
-.cp-page .cp-brief-contents li {
-  border-bottom: 1px solid var(--rule-soft);
-}
-
-.cp-page .cp-brief-contents a {
-  display: flex;
-  gap: 10px;
-  align-items: baseline;
-  padding: 8px 0;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-2);
-  text-decoration: none;
-  line-height: 1.35;
-}
-
-.cp-page .cp-brief-contents a:hover {
-  color: var(--ink);
-  text-decoration: underline;
-}
-
-.cp-page .cp-brief-contents .cp-num {
-  color: var(--ink-4);
+.cp-page .cp-brief-contents-chev {
   flex: 0 0 auto;
+  color: var(--ink-3);
+  transition: transform 160ms var(--ease-out);
 }
 
-@media (min-width: 1080px) {
-  .cp-page .cp-brief {
-    --cp-contents-w: 220px;
-    --cp-contents-gap: 56px;
-    grid-template-columns: var(--cp-contents-w) minmax(0, 1fr);
-    gap: var(--cp-contents-gap);
-  }
-  .cp-page .cp-brief-contents {
-    display: block;
-    position: sticky;
-    top: 24px;
-    align-self: start;
-  }
-  /* Rail hidden: one column, the toggle sits as a short row above the text. */
-  .cp-page .cp-brief[data-contents="hidden"] {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
-  }
-  .cp-page .cp-brief[data-contents="hidden"] .cp-brief-contents {
-    position: static;
-  }
-  /* Rail shown: the wide pieces break out leftward across the rail and
-     its gap. They paint over the sticky rail while they pass it. */
-  .cp-page .cp-brief[data-contents="shown"] .cp-brief-wide {
-    position: relative;
-    z-index: 1;
-    margin-left: calc(-1 * (var(--cp-contents-w) + var(--cp-contents-gap)));
-    width: calc(100% + var(--cp-contents-w) + var(--cp-contents-gap));
-    background: var(--paper);
-  }
+.cp-page .cp-brief-contents-btn[aria-expanded="true"] .cp-brief-contents-chev {
+  transform: rotate(180deg);
+}
+
+/* Material menu: white card, 8px radius, second-level shadow. */
+.cp-page .cp-brief-contents-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 320px;
+  max-width: min(360px, calc(100vw - 36px));
+  margin: 0;
+  padding: 6px 0;
+  list-style: none;
+  background: var(--paper);
+  border: 1px solid var(--outline-soft);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-2);
+}
+
+.cp-page .cp-brief-contents-menu button {
+  appearance: none;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  width: 100%;
+  padding: 9px 16px;
+  background: none;
+  border: 0;
+  font-family: var(--body);
+  font-size: 13.5px;
+  line-height: 1.35;
+  text-align: left;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.cp-page .cp-brief-contents-menu button:hover,
+.cp-page .cp-brief-contents-menu button:focus-visible {
+  background: var(--primary-tint);
+  color: var(--ink);
+  outline: none;
+}
+
+.cp-page .cp-brief-contents-menu button[aria-current="true"] {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cp-page .cp-brief-contents-menu .cp-num {
+  flex: 0 0 auto;
+  color: var(--ink-4);
 }
 
 /* ── Sections ─────────────────────────────────────────────────────── */
 
 .cp-page .cp-brief-section {
   padding: 8px 0 28px;
-  scroll-margin-top: 24px;
+  scroll-margin-top: 72px;
 }
 
+/* The rule between sections stays at the measure, not the table width. */
 .cp-page .cp-brief-section + .cp-brief-section {
+  padding-top: 0;
+}
+
+.cp-page .cp-brief-section + .cp-brief-section::before {
+  content: "";
+  display: block;
+  max-width: var(--cp-measure);
+  margin: 0 auto 28px;
   border-top: 1px solid var(--rule);
-  padding-top: 28px;
+}
+
+@container (min-width: 1000px) {
+  .cp-page .cp-brief-section {
+    scroll-margin-top: 24px;
+  }
 }
 
 .cp-page .cp-brief-section p {
   font-size: 16px;
   line-height: 1.6;
   color: var(--ink-2);
+}
+
+/* One bold line under the heading: the section's argument. */
+.cp-page .cp-brief-section .cp-brief-takeaway {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+
+.cp-page .cp-brief-callout {
+  margin: 4px auto 22px;
+}
+
+.cp-page .cp-brief-callout .cp-kicker {
+  margin-bottom: 6px;
+}
+
+.cp-page .cp-brief-callout p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+
+.cp-page .cp-brief-copy {
+  margin-bottom: 8px;
 }
 
 /* ── Tables ───────────────────────────────────────────────────────── */
@@ -202,6 +277,10 @@
 
 .cp-page .cp-brief-table td {
   color: var(--ink-2);
+}
+
+.cp-page .cp-brief-params .cp-kicker {
+  margin-bottom: 6px;
 }
 
 .cp-page .cp-brief-params p {
@@ -385,7 +464,13 @@
 .cp-page .cp-ask {
   border-top: 1px solid var(--rule);
   padding-top: 28px;
-  scroll-margin-top: 24px;
+  scroll-margin-top: 72px;
+}
+
+@container (min-width: 1000px) {
+  .cp-page .cp-ask {
+    scroll-margin-top: 24px;
+  }
 }
 
 .cp-page .cp-ask-starters {
