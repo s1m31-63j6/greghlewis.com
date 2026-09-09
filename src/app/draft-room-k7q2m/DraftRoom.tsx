@@ -7,6 +7,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
+  EXTRAS,
   KEEPERS,
   KEPT_IDS,
   pickOwner,
@@ -52,6 +53,7 @@ export function DraftRoom() {
       for (const x of p.players as Omit<Player, "yahoo">[]) {
         map.set(x.id, { ...x, yahoo: yahoo.get(x.id) ?? null });
       }
+      for (const x of EXTRAS) map.set(x.id, x);
       setPlayers(map);
     });
   }, []);

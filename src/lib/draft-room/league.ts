@@ -23,6 +23,15 @@ export const KEEPERS: Record<Team, string[]> = {
 
 export const KEPT_IDS = new Set(Object.values(KEEPERS).flat());
 
+/**
+ * Players the league's ranking doc lists that the draft-sheet data lacks.
+ * Synthetic ids sit above the real id range. `yahoo` is a placeholder taken
+ * from the doc's own rank so they sort near where the league expects them.
+ */
+export const EXTRAS = [
+  { id: "900001", name: "Jayden Higgins", pos: "WR", team: "HOU", bye: 8, ecrStd: 121, yahoo: 121 },
+];
+
 export const isTeam = (s: unknown): s is Team => TEAMS.includes(s as Team);
 
 /** Snake: even rounds run left to right, odd rounds run back. */
