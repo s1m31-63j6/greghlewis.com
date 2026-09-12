@@ -30,15 +30,21 @@ const PRICED_FLOOR = 0.8;
 const TOP50_MIN_OVERLAP = 40;
 /** Sportsbooks must not quietly drop out once they are live. */
 const BOOKS_FLOOR = 4;
-/** A full run with a baseline makes 10 assertions; a disarmed one makes 4. */
-const MIN_ASSERTIONS_WITH_BASELINE = 9;
+/**
+ * A same-week run with a baseline makes 8 assertions and a new-week run 7; a
+ * run whose baseline lookup silently failed makes 3. Seven separates them
+ * with no room for a check to go missing unnoticed.
+ */
+const MIN_ASSERTIONS_WITH_BASELINE = 7;
 
 let failures = 0;
 let assertions = 0;
-function check(label: string, ok: boolean, detail = ""): void {
+/** `detail` prints in both states; `whenFailed` only when the check fails. */
+function check(label: string, ok: boolean, detail = "", whenFailed = ""): void {
   assertions++;
   if (!ok) failures++;
-  console.log(`  ${ok ? "ok  " : "FAIL"}  ${label}${detail ? `  — ${detail}` : ""}`);
+  const tail = ok ? detail : [detail, whenFailed].filter(Boolean).join("; ");
+  console.log(`  ${ok ? "ok  " : "FAIL"}  ${label}${tail ? `  — ${tail}` : ""}`);
 }
 
 const current = <T,>(f: string): T => JSON.parse(readFileSync(join(ROOT, DIR, f), "utf8")) as T;
@@ -86,7 +92,7 @@ check(`${priced(now).length} priced players`, priced(now).length >= 120);
 console.log("\n2. Against the last good run");
 if (firstRun) {
   check("a baseline exists to compare against", !REQUIRE_BASELINE,
-    REQUIRE_BASELINE ? "no previous commit for public/start-sit — the scheduled run requires one" : "first run, comparisons skipped");
+    "first run, comparisons skipped", "no previous commit for public/start-sit — the scheduled run requires one");
 } else {
   check(`week ${meta.week} follows week ${metaWas.week}`,
     meta.week === metaWas.week || meta.week === metaWas.week + 1);
@@ -125,7 +131,7 @@ if (firstRun) {
   const booksWas = metaWas.counts.books ?? 0;
   check(`sportsbook books ${meta.counts.books} (was ${booksWas})`,
     booksWas === 0 || (meta.counts.books ?? 0) >= Math.min(BOOKS_FLOOR, booksWas),
-    "the sportsbook tier thinned out or disappeared");
+    "", "the sportsbook tier thinned out or disappeared");
 }
 
 if (!firstRun && assertions < MIN_ASSERTIONS_WITH_BASELINE) {
