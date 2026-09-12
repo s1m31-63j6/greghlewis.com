@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * The slots. Two by default, up to five. Each slot is a search box until a
+ * The slots. Two by default, up to six. Each slot is a search box until a
  * player is chosen, then a chip with his face and a remove button.
  *
  * The search results show the coverage tag before the player is picked, so
