@@ -54,6 +54,15 @@ const BY_PROJECT: Record<string, SignupCopy> = {
     notePrompt: "Which job are you weighing?",
     cta: "Add me to the list",
   },
+  "start-sit": {
+    id: "start-sit",
+    label: "Start/Sit",
+    headline: "More football, when I make it",
+    blurb:
+      "I build football things fairly often \u2014 models, tools, and the odd argument with the consensus. Leave an address and I will send a note when the next one lands. \u2014 Greg",
+    notePrompt: "What would make this more useful on a Sunday morning?",
+    cta: "Add me to the list",
+  },
   "draft-sheet": {
     id: "draft-sheet",
     label: "Draft Sheet",

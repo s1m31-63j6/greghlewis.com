@@ -14,6 +14,35 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "start-sit",
+    title: "Start/Sit by the Betting Market",
+    date: "2026-09-13",
+    oneLiner:
+      "Pick up to five players and let this week's prop lines settle it. Sportsbook and pick'em lines for receptions, yards and touchdowns become market-implied fantasy points with a floor and a ceiling, a head-to-head probability, and a plain verdict that says \u201ctoo close to call\u201d when it is.",
+    techStack: [
+      "TypeScript",
+      "Next.js 16",
+      "React 19",
+      "Inline SVG",
+      "Monte Carlo",
+      "Python",
+      "uv",
+      "pandas",
+      "nflreadpy",
+      "GitHub Actions",
+    ],
+    searchTags: [
+      "fantasy football", "start sit", "start/sit", "player props", "betting lines", "vegas",
+      "sportsbook", "DraftKings", "FanDuel", "pick'em", "PrizePicks", "Sleeper", "implied points",
+      "projections", "PPR", "half PPR", "receptions", "receiving yards", "rushing yards",
+      "anytime touchdown", "floor", "ceiling", "NFL", "weekly", "lineup",
+    ],
+    liveUrl: "/projects/start-sit",
+    liveUrlIsExternal: false,
+    githubUrl: null,
+    thumbnail: "/landing/start-sit.png",
+  },
+  {
     id: "career-paths",
     title: "Should You Join a Startup?",
     date: "2026-09-06",
