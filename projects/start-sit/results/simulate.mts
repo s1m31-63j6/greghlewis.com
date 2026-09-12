@@ -16,6 +16,7 @@ import { simulate } from "../../../src/lib/start-sit/simulate.ts";
 import type { Player, Scoring } from "../../../src/lib/start-sit/types.ts";
 import { decodeState, encodeState } from "../../../src/lib/start-sit/url.ts";
 import { explain, verdict } from "../../../src/lib/start-sit/verdict.ts";
+import { waiverBoard } from "../../../src/lib/start-sit/waivers.ts";
 
 const ROOT = join(import.meta.dirname, "..", "..", "..");
 const players: Player[] = JSON.parse(
@@ -75,11 +76,25 @@ const wr = rankBoard(players, PPR, "WR", 500);
 check(`WR board has ${wr.length} rows, sorted by mean`, wr.length >= 40 && wr.every((r, i) => i === 0 || r.mean <= wr[i - 1].mean));
 check("board bands are ordered", wr.every((r) => r.p20 <= r.p80));
 
+console.log("\nWaivers");
+{
+  // Pretend a league holds the top 20 receivers: none may appear, the rest must be ranked.
+  const held = new Set(wr.slice(0, 20).map((r) => r.player.id));
+  const board = waiverBoard(players, held, PPR);
+  check("no rostered player is listed", board.WR.every((r) => !held.has(r.player.id)));
+  check(`WR waivers start at the 21st receiver (${board.WR[0]?.player.name})`, board.WR[0]?.player.id === wr[20].player.id);
+  check("eight per position, sorted", (["QB", "RB", "WR", "TE"] as const).every((pos) =>
+    board[pos].length === 8 && board[pos].every((r, i) => i === 0 || r.mean <= board[pos][i - 1].mean)));
+  check("bands are ordered", board.RB.every((r) => r.p20 <= r.p80));
+  check("played and unpriced players are excluded", Object.values(board).flat().every((r) => r.player.coverage !== "played" && Object.keys(r.player.stats).length > 0));
+}
+
 console.log("\nShare link");
 const enc = encodeState([a.id, null, b.id], { rec: 0.5, passTd: 6 });
 const dec = decodeState(`?${enc}`);
 check("round-trips picks and scoring", dec.ids.join() === [a.id, b.id].join() && dec.scoring.rec === 0.5 && dec.scoring.passTd === 6);
 check("garbage falls back to defaults", decodeState("?p=x,y&s=9-9").scoring.rec === 0.5 && decodeState("?p=x").ids.length === 0);
+check("a seventh pick is dropped", decodeState("?p=1,2,3,4,5,6,7").ids.length === 6);
 
 console.log(failures === 0 ? "\nsimulate: all checks passed\n" : `\nsimulate: ${failures} FAILURES\n`);
 process.exit(failures === 0 ? 0 : 1);

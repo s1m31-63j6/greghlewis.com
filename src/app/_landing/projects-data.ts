@@ -18,7 +18,7 @@ export const projects: Project[] = [
     title: "Start/Sit by the Betting Market",
     date: "2026-09-13",
     oneLiner:
-      "Pick up to five players and let this week's prop lines settle it. Sportsbook and pick'em lines for receptions, yards and touchdowns become market-implied fantasy points with a floor and a ceiling, a head-to-head probability, and a plain verdict that says \u201ctoo close to call\u201d when it is.",
+      "Pick up to six players and let this week's prop lines settle it. Sportsbook and pick'em lines for receptions, yards and touchdowns become market-implied fantasy points with a floor and a ceiling, a head-to-head probability, and a plain verdict that says \u201ctoo close to call\u201d when it is.",
     techStack: [
       "TypeScript",
       "Next.js 16",

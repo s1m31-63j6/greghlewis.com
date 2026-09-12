@@ -14,7 +14,7 @@ import { Headshot } from "./Headshot";
 import { InjuryTag } from "./InjuryTag";
 import { COVERAGE_LABEL, kickoffLabel, matchup, pts, teamTotal } from "./format";
 import type { TeamMap } from "./teams";
-import { TeamLogo } from "./teams";
+import { TeamLogo, teamOf } from "./teams";
 
 const POSITIONS: Position[] = ["QB", "RB", "WR", "TE"];
 
@@ -37,7 +37,7 @@ export function Board({
       <div className="ss-board-bar">
         <div className="ss-seg" role="group" aria-label="Position">
           {POSITIONS.map((p) => (
-            <button key={p} type="button" className="ss-seg-btn" aria-pressed={pos === p}
+            <button key={p} type="button" className="ss-seg-btn" aria-pressed={pos === p} data-pos={p}
               onClick={() => setPos(p)} data-tel="ss-board-pos">
               {p}
             </button>
@@ -68,8 +68,8 @@ export function Board({
             const books = Math.max(0, ...Object.values(p.stats).map((s) => (s.tier === "book" ? s.books : 0)));
             const tag = COVERAGE_LABEL[p.coverage];
             return (
-              <tr key={p.id} className={`ss-row ss-pos-${p.pos}`}>
-                <td className="ss-num ss-rank">{i + 1}</td>
+              <tr key={p.id} className={`ss-row ss-pos-${p.pos}`} style={{ ["--team-color" as string]: teamOf(teams, p.team).color }}>
+                <td className={`ss-num ss-rank${i < 3 ? " is-top" : ""}`}>{i + 1}</td>
                 <td className="ss-cell-player">
                   <Headshot name={p.name} espnId={p.espnId} fallbackUrl={null} team={p.team} teams={teams} size={26} />
                   <span className="ss-cell-name">

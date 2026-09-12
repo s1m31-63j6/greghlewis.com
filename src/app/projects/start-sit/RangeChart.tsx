@@ -1,8 +1,9 @@
 /**
  * Every selected player on one points axis: a band from the 20th to the 80th
  * percentile of the simulated game, a tick at the median, a filled mark at the
- * expected value. The recommended starter is drawn in the accent; the rest
- * in gray. Direct labels only: the name on the left, the band's ends beside it.
+ * expected value. Each row is drawn in the player's team color; the recommended
+ * starter gets a full-strength band and an ink outline on his mark. Direct
+ * labels only: the name on the left, the band's ends beside it.
  */
 
 import type { SimResult } from "@/lib/start-sit/simulate";
@@ -14,7 +15,7 @@ const ROW = 30;
 export function RangeChart({
   rows, best, tied, compact = false,
 }: {
-  rows: { player: Player; mean: number; sim: SimResult }[];
+  rows: { player: Player; mean: number; sim: SimResult; color: string }[];
   best: string | null;
   tied: string[];
   /** Phone geometry: a narrower drawing so the type stays legible when scaled. */
@@ -45,7 +46,7 @@ export function RangeChart({
           const y = i * ROW + 16;
           const state = r.player.id === best ? "best" : tied.includes(r.player.id) ? "tied" : "rest";
           return (
-            <g key={r.player.id} className={`ss-range-row is-${state}`}>
+            <g key={r.player.id} className={`ss-range-row is-${state}`} style={{ ["--team-color" as string]: r.color }}>
               <text x={PAD_L - 10} y={y + 4} className="ss-range-name">{r.player.short}</text>
               <rect x={x(r.sim.p20)} y={y - 6} width={Math.max(2, x(r.sim.p80) - x(r.sim.p20))} height={12} rx={2} className="ss-range-band" />
               <line x1={x(r.sim.p50)} x2={x(r.sim.p50)} y1={y - 8} y2={y + 8} className="ss-range-median" />

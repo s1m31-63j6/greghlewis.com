@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 
 import WantMore from "@/app/_subscribe/WantMore";
@@ -10,7 +10,8 @@ import { Advisor } from "./Advisor";
 import { Board } from "./Board";
 import { PlayerPicker } from "./PlayerPicker";
 import { ScoringControl } from "./ScoringControl";
-import { setPicks, setScoring, useSitState } from "./store";
+import { setLeagueId, setPicks, setScoring, useSitState } from "./store";
+import { WaiverReport } from "./WaiverReport";
 import { useMarket } from "./useMarket";
 import { useTeams } from "./teams";
 
@@ -19,7 +20,10 @@ type Tab = "advisor" | "board";
 export function StartSit() {
   const [tab, setTab] = useState<Tab>("advisor");
   const [copied, setCopied] = useState(false);
-  const { picks, scoring } = useSitState();
+  const [waivers, setWaivers] = useState(false);
+  const waiversBtn = useRef<HTMLButtonElement>(null);
+  const closeWaivers = useCallback(() => setWaivers(false), []);
+  const { picks, scoring, leagueId } = useSitState();
 
   const { players, byId, games, meta, loading, error } = useMarket();
   const teams = useTeams();
@@ -66,7 +70,7 @@ export function StartSit() {
           <p className="ss-kicker">{meta ? `2026 season · week ${meta.week}` : "2026 season"}</p>
           <h1>Start/Sit by the Betting Market</h1>
           <p className="ss-dek">
-            Pick two to five players and let this week&rsquo;s prop lines settle it. Receptions,
+            Pick two to six players and let this week&rsquo;s prop lines settle it. Receptions,
             yards and touchdown prices become expected fantasy points with a floor and a ceiling,
             and the page says so when the market cannot separate them.
           </p>
@@ -90,10 +94,29 @@ export function StartSit() {
         <ScoringControl scoring={scoring} onChange={setScoring} />
         <span className="ss-toolbar-spacer" />
         {asOf && <span className="ss-asof">{asOf}</span>}
-        <button type="button" className="ss-btn" onClick={share} data-tel="ss-share">
+        <button ref={waiversBtn} type="button" className="ss-btn ss-btn-primary" onClick={() => setWaivers(true)} data-tel="ss-waivers">
+          Waivers
+        </button>
+        <button type="button" className="ss-btn ss-btn-primary" onClick={share} data-tel="ss-share">
           {copied ? "Link copied" : "Share this comparison"}
         </button>
       </div>
+
+      {!loading && !error && (
+        <WaiverReport
+          open={waivers}
+          onClose={closeWaivers}
+          returnFocusTo={waiversBtn}
+          players={players}
+          games={games}
+          teams={teams}
+          scoring={scoring}
+          picked={picked}
+          leagueId={leagueId}
+          onLeagueId={setLeagueId}
+          onCompare={(id) => { addFromBoard(id); setWaivers(false); }}
+        />
+      )}
 
       {loading && <p className="ss-status">Loading this week&rsquo;s lines…</p>}
       {error && <p className="ss-status ss-status--error">{error}</p>}

@@ -18,12 +18,15 @@ import { decodeState } from "@/lib/start-sit/url";
 export interface SitState {
   picks: (string | null)[];
   scoring: Scoring;
+  /** The Sleeper league id last used for the waiver report. */
+  leagueId: string;
 }
 
 const STORAGE = "start-sit:v1";
 const DEFAULT: SitState = {
   picks: Array.from({ length: DEFAULT_SLOTS }, () => null),
   scoring: DEFAULT_SCORING,
+  leagueId: "",
 };
 
 let state: SitState = DEFAULT;
@@ -36,18 +39,20 @@ function slots(ids: string[]): (string | null)[] {
 }
 
 function load(): SitState {
+  let saved: { ids?: unknown; scoring?: { rec: number; passTd: number }; leagueId?: unknown } | null = null;
+  try {
+    saved = JSON.parse(window.localStorage.getItem(STORAGE) ?? "null");
+  } catch { /* a fresh browser */ }
+  const leagueId = typeof saved?.leagueId === "string" && /^\d{6,}$/.test(saved.leagueId) ? saved.leagueId : "";
   const fromUrl = decodeState(window.location.search);
   if (fromUrl.ids.length || window.location.search.includes("s=")) {
-    return { picks: slots(fromUrl.ids), scoring: fromUrl.scoring };
+    return { picks: slots(fromUrl.ids), scoring: fromUrl.scoring, leagueId };
   }
-  try {
-    const saved = JSON.parse(window.localStorage.getItem(STORAGE) ?? "null");
-    if (Array.isArray(saved?.ids) && saved?.scoring) {
-      const s = decodeState(`?p=${saved.ids.join(",")}&s=${saved.scoring.rec}-${saved.scoring.passTd}`);
-      return { picks: slots(s.ids), scoring: s.scoring };
-    }
-  } catch { /* a fresh browser */ }
-  return DEFAULT;
+  if (Array.isArray(saved?.ids) && saved?.scoring) {
+    const s = decodeState(`?p=${saved.ids.join(",")}&s=${saved.scoring.rec}-${saved.scoring.passTd}`);
+    return { picks: slots(s.ids), scoring: s.scoring, leagueId };
+  }
+  return { ...DEFAULT, leagueId };
 }
 
 function get(): SitState {
@@ -62,7 +67,7 @@ function set(next: SitState): void {
   state = next;
   try {
     window.localStorage.setItem(STORAGE, JSON.stringify({
-      ids: next.picks.filter(Boolean), scoring: next.scoring,
+      ids: next.picks.filter(Boolean), scoring: next.scoring, leagueId: next.leagueId,
     }));
   } catch { /* storage unavailable */ }
   for (const fn of listeners) fn();
@@ -79,6 +84,10 @@ export function setPicks(next: (string | null)[] | ((ps: (string | null)[]) => (
 
 export function setScoring(scoring: Scoring): void {
   set({ ...get(), scoring });
+}
+
+export function setLeagueId(leagueId: string): void {
+  set({ ...get(), leagueId });
 }
 
 export function useSitState(): SitState {

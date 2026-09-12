@@ -15,9 +15,9 @@ import { MAX_PICKS } from "@/lib/start-sit/types";
 import { Headshot } from "./Headshot";
 import { COVERAGE_LABEL } from "./format";
 import type { TeamMap } from "./teams";
-import { TeamLogo } from "./teams";
+import { TeamLogo, teamOf } from "./teams";
 
-const RESULTS = 8;
+const RESULTS = 10;
 
 function Slot({
   index, player, players, teams, taken, onPick, onClear,
@@ -35,12 +35,14 @@ function Slot({
   const [cursor, setCursor] = useState(0);
   const box = useRef<HTMLDivElement>(null);
 
+  // An empty box lists the week's top players so the first click shows names;
+  // typing narrows the same list.
+  const browsing = q.trim() === "";
   const matches = useMemo(() => {
-    const s = q.trim().toLowerCase();
-    if (!s) return [];
-    const words = s.split(/\s+/);
+    const words = q.trim().toLowerCase().split(/\s+/).filter(Boolean);
     return players
       .filter((p) => !taken.has(p.id))
+      .filter((p) => words.length > 0 || (p.game && p.coverage !== "played" && p.coverage !== "none"))
       .filter((p) => {
         const hay = `${p.name} ${p.team} ${p.pos}`.toLowerCase();
         return words.every((w) => hay.includes(w));
@@ -61,7 +63,7 @@ function Slot({
   if (player) {
     const tag = COVERAGE_LABEL[player.coverage];
     return (
-      <div className="ss-slot ss-slot--filled">
+      <div className="ss-slot ss-slot--filled" style={{ ["--team-color" as string]: teamOf(teams, player.team).color }}>
         <Headshot name={player.name} espnId={player.espnId} fallbackUrl={null} team={player.team} teams={teams} size={30} />
         <div className="ss-slot-id">
           <span className="ss-slot-name">{player.name}</span>
@@ -104,6 +106,7 @@ function Slot({
       />
       {open && matches.length > 0 && (
         <ul className="ss-results" id={`ss-list-${index}`} role="listbox">
+          {browsing && <li className="ss-results-head" role="presentation">Top players this week</li>}
           {matches.map((p, i) => {
             const tag = COVERAGE_LABEL[p.coverage];
             return (

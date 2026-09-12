@@ -181,7 +181,20 @@ sigma   = a + b × line, floored                                 the stat's game
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-slate-900">8. Sources and cadence</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">8. The waiver report</h2>
+          <p>
+            A Sleeper league id names every roster in the league, and every roster names its
+            players in the same id space this page uses. &ldquo;Best available&rdquo; is every
+            priced player on none of them, ranked by expected points for the scoring set on
+            the page, eight per position. The league is read from Sleeper&rsquo;s public API in
+            your browser and stored nowhere else. The report knows nothing about waiver order,
+            claim priority or who on your roster is droppable; it answers one question, which
+            of the unowned players the market expects to score this week.
+          </p>
+        </div>
+
+        <div>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">9. Sources and cadence</h2>
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>Sportsbook player props and game lines — SportsGameOdds, as posted by the books on the plan.</li>
             <li>Pick&rsquo;em lines, player metadata and injury designations — Sleeper.</li>

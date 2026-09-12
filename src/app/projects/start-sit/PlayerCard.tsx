@@ -9,7 +9,7 @@ import { PointsBar } from "./PointsBar";
 import { StatTable } from "./StatTable";
 import { COVERAGE_LABEL, kickoffLabel, matchup, pts, teamTotal } from "./format";
 import type { TeamMap } from "./teams";
-import { TeamLogo } from "./teams";
+import { TeamLogo, teamOf } from "./teams";
 
 export function PlayerCard({
   player, breakdown, sim, games, teams, scale, state,
@@ -25,7 +25,7 @@ export function PlayerCard({
   const total = teamTotal(player, games);
   const tag = COVERAGE_LABEL[player.coverage];
   return (
-    <article className={`ss-card is-${state} ss-pos-${player.pos}`}>
+    <article className={`ss-card is-${state} ss-pos-${player.pos}`} style={{ ["--team-color" as string]: teamOf(teams, player.team).color }}>
       <header className="ss-card-head">
         <Headshot name={player.name} espnId={player.espnId} fallbackUrl={null} team={player.team} teams={teams} size={48} />
         <div className="ss-card-id">

@@ -142,5 +142,5 @@ export const STAT_ORDER: Record<Position, (StatKey | "td")[]> = {
   TE: ["rec", "rec_yds", "td"],
 };
 
-export const MAX_PICKS = 5;
+export const MAX_PICKS = 6;
 export const DEFAULT_SLOTS = 2;

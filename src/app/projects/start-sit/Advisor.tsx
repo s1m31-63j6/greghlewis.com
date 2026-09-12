@@ -11,6 +11,7 @@ import { PointsKey } from "./PointsBar";
 import { RangeChart } from "./RangeChart";
 import { VerdictBanner } from "./VerdictBanner";
 import type { TeamMap } from "./teams";
+import { teamOf } from "./teams";
 import { useMediaQuery } from "./useMediaQuery";
 
 export function Advisor({
@@ -31,7 +32,7 @@ export function Advisor({
   );
   const scale = Math.max(12, ...priced.map((p) => breakdowns.get(p.id)!.mean + 2));
 
-  const rows = priced.map((p, i) => ({ player: p, mean: breakdowns.get(p.id)!.mean, sim: sim!.results[i] }))
+  const rows = priced.map((p, i) => ({ player: p, mean: breakdowns.get(p.id)!.mean, sim: sim!.results[i], color: teamOf(teams, p.team).color }))
     .sort((a, b) => b.mean - a.mean);
 
   return (
