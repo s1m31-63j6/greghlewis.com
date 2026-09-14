@@ -110,11 +110,11 @@ export function TrackRecord() {
               </p>
               <div className="mt-3 grid gap-4 sm:grid-cols-2">
                 {(["hot", "cold"] as const).map((k) => (
-                  <div key={k}>
+                  <div key={k} className="min-w-0">
                     <p className="mb-1 text-xs uppercase tracking-wider text-slate-500">{k === "hot" ? "Biggest overs" : "Biggest unders"}</p>
                     <ul className="text-sm">
                       {f.story[k].slice(0, 6).map((r) => (
-                        <li key={r.name} className="flex justify-between border-b border-slate-100 py-1">
+                        <li key={r.name} className="flex flex-wrap justify-between gap-x-3 border-b border-slate-100 py-1">
                           <span>{r.name} <span className="text-slate-400">{r.pos} {r.team}</span></span>
                           <span className="font-mono text-[13px]">{num(r.projected)} → {num(r.actual)} <span className={r.diff > 0 ? "text-emerald-700" : "text-red-700"}>({signed(r.diff)})</span></span>
                         </li>
@@ -184,7 +184,7 @@ export function TrackRecord() {
             </div>
 
             <div className="grid gap-8 md:grid-cols-2">
-              <div>
+              <div className="min-w-0">
                 <h3 className="mb-2 font-serif text-xl text-slate-900">Touchdowns</h3>
                 <p className="mb-2">
                   {f.touchdowns.n} priced players; {pct(f.touchdowns.baseRate)} scored. The scaled price predicted {pct(f.touchdowns.meanP)},
@@ -195,7 +195,7 @@ export function TrackRecord() {
                     xLabel="predicted chance to score" yLabel="share who scored" />
                 )}
               </div>
-              <div>
+              <div className="min-w-0">
                 <h3 className="mb-2 font-serif text-xl text-slate-900">The verdict</h3>
                 <p className="mb-2">
                   Across {f.verdict.pairs} same-position pairs the higher projection won {pct(f.verdict.overallHit)}.
@@ -207,7 +207,7 @@ export function TrackRecord() {
                   xLabel="simulated P(A beats B)" yLabel="share where A did" />
                 <ul className="mt-2 text-sm">
                   {f.verdict.byGap.map((b) => (
-                    <li key={b.from} className="flex justify-between border-b border-slate-100 py-1 font-mono text-[13px]">
+                    <li key={b.from} className="flex flex-wrap justify-between gap-x-3 border-b border-slate-100 py-1 font-mono text-[12.5px]">
                       <span className="font-sans">gap {b.from}–{b.to ?? "∞"} pts</span>
                       <span>won {pct(b.hitRate)} · sim said {pct(b.meanPWin)} · n={b.n}</span>
                     </li>
