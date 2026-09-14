@@ -27,6 +27,12 @@ body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* The body is a flex column (layout.tsx), and a flex item's minimum width is
+   its content's. A page whose <main> holds a code block or a wide table was
+   therefore growing past the viewport on phones instead of scrolling inside
+   its own overflow container. Every direct child of the body is a page. */
+body > * { min-width: 0; }
+
 /* ChatBar suggestion carousel — each rotation re-keys the React node so
    this animation runs fresh on mount. The previous suggestion unmounts
    without an exit transition; the new one rises into place. */
