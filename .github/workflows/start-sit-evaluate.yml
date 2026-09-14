@@ -1,0 +1,98 @@
+# Tuesday scoring of last week's lines against what happened.
+#
+# Reads every committed snapshot of the week out of git and the week's stats
+# from nflverse, writes public/start-sit/eval.json, and commits it. Needs no
+# secret: nflverse and git only. Runs after Monday night's stats have landed.
+# Expires with the refresh workflow.
+
+name: Start/Sit evaluate
+
+on:
+  schedule:
+    - cron: "0 14 * * 2"
+  workflow_dispatch:
+    inputs:
+      week:
+        description: "Week to evaluate (default: the week just played)"
+        type: string
+        default: ""
+
+concurrency:
+  group: start-sit-evaluate
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+
+env:
+  EXPIRES_AFTER: "2027-01-12"
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Stop if the season is over
+        id: window
+        run: |
+          today=$(date -u +%F)
+          if [[ "$today" > "$EXPIRES_AFTER" ]]; then
+            echo "::notice::Scheduled window ended $EXPIRES_AFTER. Delete this workflow."
+            echo "expired=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "expired=false" >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/checkout@v4
+        if: steps.window.outputs.expired == 'false'
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        if: steps.window.outputs.expired == 'false'
+        with:
+          node-version: "22"
+          cache: npm
+      - uses: astral-sh/setup-uv@v5
+        if: steps.window.outputs.expired == 'false'
+        with:
+          enable-cache: true
+          cache-dependency-glob: projects/start-sit/uv.lock
+      - name: Install
+        if: steps.window.outputs.expired == 'false'
+        run: npm ci
+      - name: Evaluate
+        if: steps.window.outputs.expired == 'false'
+        run: |
+          cd projects/start-sit
+          uv run python sigma.py
+          if [[ -n "${{ inputs.week }}" ]]; then
+            uv run python evaluate.py --week "${{ inputs.week }}"
+          else
+            uv run python evaluate.py
+          fi
+      - name: Gate
+        if: steps.window.outputs.expired == 'false'
+        run: node --experimental-strip-types projects/start-sit/results/eval.mts
+      - name: Commit and push
+        if: steps.window.outputs.expired == 'false'
+        run: |
+          set -euo pipefail
+          if [[ -z "$(git status --porcelain -- public/start-sit/eval.json)" ]]; then
+            echo "::notice::Evaluation unchanged."; exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- public/start-sit/eval.json projects/start-sit/results/eval-w*.md
+          week=$(jq -r '.weeks | keys | map(tonumber) | max' public/start-sit/eval.json)
+          git commit -m "Start/Sit: week $week evaluation" -m "Automated Tuesday scoring against nflverse actuals."
+          git pull --rebase --autostash origin main
+          git push origin HEAD:main
+      - name: Report a failure
+        if: failure() && steps.window.outputs.expired == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const title = `Start/Sit evaluation failed — ${new Date().toISOString().slice(0, 10)}`;
+            await github.rest.issues.create({ ...context.repo, title, labels: ["start-sit"],
+              body: `The Tuesday evaluation failed. [Run log](${url}). Likely causes: nflverse has not published the week's stats yet, or a snapshot's shape changed.` });

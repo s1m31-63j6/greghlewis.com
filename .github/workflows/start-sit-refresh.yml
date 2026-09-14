@@ -169,6 +169,7 @@ jobs:
           data_changed=$(git status --porcelain -- \
             public/start-sit/players.json \
             public/start-sit/games.json \
+            public/start-sit/lines.json \
             public/start-sit/teams.json)
           if [[ -z "$data_changed" ]]; then
             echo "::notice::No data change. The lines have not moved since the last run."

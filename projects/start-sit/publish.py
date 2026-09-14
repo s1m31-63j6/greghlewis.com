@@ -161,8 +161,11 @@ def sleeper_rows(games: list[dict]) -> tuple[dict, dict]:
         line = float(o["over"]["outcome_value"])
         if stat == "td" and line != 0.5:
             continue
+        picks = (x.get("pick_stats") or {}).get("counts") or {}
         rows[(x["subject_id"], stat)] = {"line": line, "p_over": p_over, "game": game["id"],
-                                         "team": norm_team(o["over"]["subject_team"])}
+                                         "team": norm_team(o["over"]["subject_team"]),
+                                         "picks": {"over": picks.get("over"), "under": picks.get("under")}
+                                         if picks else None}
     return rows, game_of
 
 
@@ -253,6 +256,9 @@ def main() -> None:
 
     # ── per player ──
     players = []
+    # Per-book rows, archived every run so an evaluation can ask which book was
+    # closest and how far each line moved. Keyed by player id.
+    archive: dict[str, dict] = {}
     lam_by_team: dict[str, dict[str, float]] = collections.defaultdict(dict)
     unpaired: set[str] = set()
     for r in pool.itertuples():
@@ -273,21 +279,34 @@ def main() -> None:
                 if len(evs) >= 3:
                     q = statistics.quantiles(evs, n=4)
                     se = (q[2] - q[0]) / 1.349
+                opens = [row["open"] for row in src if row.get("open") is not None]
+                open_line = statistics.median(opens) if opens else None
                 stats[stat] = {"line": line, "ev": r2(ev), "sd": r2(sigma_at(sig["stats"], stat, line)),
-                               "se": r2(se), "books": len(evs), "tier": "book"}
+                               "se": r2(se), "books": len(evs), "tier": "book",
+                               "open": open_line,
+                               "move": None if open_line is None else r2(line - open_line),
+                               "agree": r2(max(lines) - min(lines))}
+                archive.setdefault(r.sleeper_id, {})[stat] = [
+                    {"book": row["book"], "line": row["line"], "pOver": round(row["p_over"], 3)} for row in src]
                 continue
             d = dfs.get((r.sleeper_id, stat))
             if d and not (stat in YARD_STATS and d["line"] < MIN_YARD_LINE):
                 sd = sigma_at(sig["stats"], stat, d["line"])
                 stats[stat] = {"line": d["line"], "ev": r2(max(0.0, ev_from_line(d["line"], d["p_over"], sd))),
-                               "sd": r2(sd), "se": None, "books": 1, "tier": "dfs"}
+                               "sd": r2(sd), "se": None, "books": 1, "tier": "dfs",
+                               "open": None, "move": None, "agree": None}
+                archive.setdefault(r.sleeper_id, {})[stat] = [
+                    {"book": "sleeper", "line": d["line"], "pOver": round(d["p_over"], 3), "picks": d.get("picks")}]
         td_src = book.get((r.sleeper_id, "td"))
         if td_src:
+            archive.setdefault(r.sleeper_id, {})["td"] = [
+                {"book": row["book"], "p": round(row["p"], 3), "paired": row["paired"]} for row in td_src]
             ps = [row["p"] for row in td_src]
             paired = all(row["paired"] for row in td_src)
             p = statistics.median(ps)
             stats["td"] = {"p": r2(p), "lambda": round(lam_from_p(p), 3), "books": len(ps),
-                           "tier": "book", "paired": paired, "scaled": 1.0}
+                           "tier": "book", "paired": paired, "scaled": 1.0,
+                           "agree": r2(max(ps) - min(ps))}
         elif (r.sleeper_id, "td") in dfs:
             d = dfs[(r.sleeper_id, "td")]
             stats["td"] = {"p": r2(d["p_over"]), "lambda": round(lam_from_p(d["p_over"]), 3),
@@ -425,6 +444,8 @@ def main() -> None:
     for name, payload in (
         ("players.json", {"_note": meta["_note"], "week": week, "players": players}),
         ("games.json", {"_note": meta["_note"], "week": week, "games": games}),
+        ("lines.json", {"_note": meta["_note"], "week": week, "builtAt": meta["builtAt"],
+                        "snapshot": args.snapshot, "lines": archive}),
         ("meta.json", meta),
     ):
         kb = dump(PUBLIC / name, payload) / 1024

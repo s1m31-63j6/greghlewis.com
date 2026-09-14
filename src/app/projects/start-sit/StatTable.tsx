@@ -4,10 +4,27 @@
  * which tier it came from. A pick'em row says so.
  */
 
+import { firmness, tdFirmness } from "@/lib/start-sit/conviction";
+import type { Firmness } from "@/lib/start-sit/conviction";
 import type { Breakdown } from "@/lib/start-sit/scoring";
-import type { Player } from "@/lib/start-sit/types";
+import type { Player, StatKey } from "@/lib/start-sit/types";
 import { STAT_LABEL } from "@/lib/start-sit/types";
 import { pct } from "./format";
+
+function Market({ f }: { f: Firmness }) {
+  if (f.kind === "pickem") return <span className="ss-mkt ss-mkt--pickem">pick&rsquo;em</span>;
+  const books = `${f.books} book${f.books === 1 ? "" : "s"}`;
+  if (f.kind === "moving" && f.move != null) {
+    const up = f.move > 0;
+    return (
+      <span className={`ss-mkt ss-mkt--moving ${up ? "is-up" : "is-down"}`} title={`Moved ${up ? "up" : "down"} ${Math.abs(f.move).toFixed(1)} since the line opened`}>
+        {books} <span className="ss-mkt-arrow" aria-hidden="true">{up ? "▲" : "▼"}</span>
+        <span className="ss-sr">moved {up ? "up" : "down"}</span>{Math.abs(f.move).toFixed(1)}
+      </span>
+    );
+  }
+  return <span className={`ss-mkt ss-mkt--${f.kind}`}>{books} · {f.kind}</span>;
+}
 
 export function StatTable({ player, breakdown }: { player: Player; breakdown: Breakdown }) {
   return (
@@ -18,7 +35,7 @@ export function StatTable({ player, breakdown }: { player: Player; breakdown: Br
           <th scope="col" className="ss-num">Line</th>
           <th scope="col" className="ss-num">Implied</th>
           <th scope="col" className="ss-num">Pts</th>
-          <th scope="col">Source</th>
+          <th scope="col">Market</th>
         </tr>
       </thead>
       <tbody>
@@ -32,7 +49,7 @@ export function StatTable({ player, breakdown }: { player: Player; breakdown: Br
               <td className="ss-num">{td ? `${td.lambda.toFixed(2)} TD` : c.value.toFixed(1)}</td>
               <td className="ss-num">{c.points === 0 ? "—" : c.points.toFixed(1)}</td>
               <td className="ss-src">
-                {c.tier === "book" ? `${c.books} book${c.books === 1 ? "" : "s"}` : "pick'em"}
+                <Market f={td ? tdFirmness(td) : firmness(c.key as StatKey, line!)} />
               </td>
             </tr>
           );

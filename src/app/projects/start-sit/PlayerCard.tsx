@@ -1,5 +1,6 @@
 "use client";
 
+import { summarize } from "@/lib/start-sit/conviction";
 import type { Breakdown } from "@/lib/start-sit/scoring";
 import type { SimResult } from "@/lib/start-sit/simulate";
 import type { Game, Player } from "@/lib/start-sit/types";
@@ -24,6 +25,13 @@ export function PlayerCard({
 }) {
   const total = teamTotal(player, games);
   const tag = COVERAGE_LABEL[player.coverage];
+  const firm = summarize(player.stats);
+  const firmLine = [
+    firm.firm ? `${firm.firm} firm` : null,
+    firm.moving ? `${firm.moving} moving` : null,
+    firm.thin ? `${firm.thin} thin` : null,
+    firm.pickem ? `${firm.pickem} pick'em` : null,
+  ].filter(Boolean).join(" · ");
   return (
     <article className={`ss-card is-${state} ss-pos-${player.pos}`} style={{ ["--team-color" as string]: teamOf(teams, player.team).color }}>
       <header className="ss-card-head">
@@ -55,6 +63,7 @@ export function PlayerCard({
             <span className="ss-card-band ss-num">{pts(sim.p20)} – {pts(sim.p80)}</span>
             <span className="ss-card-band-label">floor to ceiling</span>
           </div>
+          <p className="ss-card-firm">Lines: {firmLine}</p>
           <PointsBar breakdown={breakdown} scale={scale} />
           {tag && <p className="ss-card-partial">{tag[0].toUpperCase() + tag.slice(1)}: the market has not posted every line it usually does for a {player.pos}, so this total leans on what is up.</p>}
           <StatTable player={player} breakdown={breakdown} />

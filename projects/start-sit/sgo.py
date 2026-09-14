@@ -133,6 +133,13 @@ def load(path: Path, team_names: dict[str, str]) -> tuple[list[dict], list[dict]
         for (entity, key, bet), sides in pairs.items():
             name = _player_name(entity, players)
             pteam = _team_from_id((players.get(entity) or {}).get("teamID"), team_names)
+            # The feed's opening consensus line, for movement since open.
+            over_side = sides.get("over") or {}
+            open_line = over_side.get("openBookOverUnder") or over_side.get("openFairOverUnder")
+            try:
+                open_line = float(open_line) if open_line not in (None, "") else None
+            except ValueError:
+                open_line = None
             by_book: dict[str, dict] = collections.defaultdict(dict)
             for side, o in sides.items():
                 for book, b in (o.get("byBookmaker") or {}).items():
@@ -167,7 +174,8 @@ def load(path: Path, team_names: dict[str, str]) -> tuple[list[dict], list[dict]
                         continue
                     rows.append({"name": name, "key": norm_name(name), "team": pteam,
                                  "home": home, "away": away, "stat": key, "book": book,
-                                 "line": line, "p_over": devig_pair(implied(po), implied(pu))[0]})
+                                 "line": line, "p_over": devig_pair(implied(po), implied(pu))[0],
+                                 "open": open_line})
         if home and away:
             games.append(game)
 

@@ -163,7 +163,28 @@ sigma   = a + b × line, floored                                 the stat's game
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-slate-900">7. What the page refuses to do</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">7. How firm a line is</h2>
+          <p>
+            Each row on a card says what the market&rsquo;s conviction looks like. <strong>Firm</strong>
+            means five or more books post the line and agree within a unit (three yards, half a
+            reception) and it has not moved since it opened. <strong>Moving</strong> means the
+            consensus has moved at least a unit since the books opened it, with the direction and
+            the size shown; a line that has moved toward a side is the market changing its mind
+            with money behind it. <strong>Thin</strong> is one or two books. <strong>Pick&rsquo;em</strong>
+            is the Sleeper tier. None of this changes the arithmetic; it tells you which numbers to
+            trust more.
+          </p>
+          <p className="mt-3">
+            The verdict&rsquo;s &ldquo;too close to call&rdquo; rule is being calibrated rather than
+            guessed. Every week the lines are scored against what happened, including how often the
+            higher projection actually won at each size of gap. Once two weeks exist, the rule will
+            call a winner only at gaps where the favorite has historically won at least 60% of the
+            time, and the banner will say what that gap is and on how many pairs it rests.
+          </p>
+        </div>
+
+        <div>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">8. What the page refuses to do</h2>
           <p>
             A player with no line is shown with that fact, excluded from the verdict, and not
             ranked last as if zero were a projection. A player with only a touchdown price
@@ -181,7 +202,7 @@ sigma   = a + b × line, floored                                 the stat's game
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-slate-900">8. The waiver report</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">9. The waiver report</h2>
           <p>
             A Sleeper league id names every roster in the league, and every roster names its
             players in the same id space this page uses. &ldquo;Best available&rdquo; is every
@@ -194,7 +215,7 @@ sigma   = a + b × line, floored                                 the stat's game
         </div>
 
         <div>
-          <h2 className="mb-2 font-serif text-xl text-slate-900">9. Sources and cadence</h2>
+          <h2 className="mb-2 font-serif text-xl text-slate-900">10. Sources and cadence</h2>
           <ul className="mt-2 list-disc space-y-1 pl-5">
             <li>Sportsbook player props and game lines — SportsGameOdds, as posted by the books on the plan.</li>
             <li>Pick&rsquo;em lines, player metadata and injury designations — Sleeper.</li>

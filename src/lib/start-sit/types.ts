@@ -24,6 +24,12 @@ export interface StatLine {
   se: number | null;
   books: number;
   tier: Tier;
+  /** The consensus line when the market opened; sportsbook tier only. */
+  open?: number | null;
+  /** line − open, in stat units. */
+  move?: number | null;
+  /** Spread of the books' lines, max − min. */
+  agree?: number | null;
 }
 
 export interface TdLine {
@@ -37,6 +43,8 @@ export interface TdLine {
   tier: Tier;
   paired: boolean;
   scaled: number;
+  /** Spread of the books' probabilities, max − min. */
+  agree?: number | null;
 }
 
 export type Position = "QB" | "RB" | "WR" | "TE";

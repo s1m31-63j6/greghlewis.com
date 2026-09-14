@@ -93,6 +93,28 @@ Because the feed reports no usage, `publish.py` keeps a ledger in
 treats 78 as "skipped, not failed". Transient feed errors retry three times
 (`common.get_with_retry`); a 4xx other than 429 fails at once.
 
+## Evaluation (Tuesdays, `evaluate.py`)
+
+Every committed snapshot of the week is scored against nflverse actuals and
+written to `public/start-sit/eval.json` (rendered at the unlinked
+`/projects/start-sit/track-record`). `lines.json`, archived every run, carries
+the per-book lines so the evaluation can say which book was closest.
+
+| metric | what it answers | target |
+|---|---|---|
+| per-stat MAE / bias / share over the line | is each market centered | over-rate ≈ 50% |
+| band coverage | does p20–p80 hold | 60% inside |
+| touchdown Brier + reliability, scaled vs raw | is the field scaling right | calibrated buckets |
+| points MAE by position vs books' fantasy line, 2025 average | who predicted best | beat the baselines |
+| verdict hit rate by projected gap, P(A>B) reliability | when is a call earned | first bucket ≥ 60% → `suggested.minGap` |
+| snapshot timing | is the Sunday final worth it | — |
+
+Week 1 (2026-09-14): scoring ran +2.0 points per player hot; the band held only
+46% (too NARROW, not too wide); the raw touchdown price calibrated better than
+the field-scaled one; the favorite won 50% at gaps under a point, 54% at 1–2,
+64% at 2–3, 70% at 3–5, 78% over 5 → suggested minimum gap 2; DraftKings had
+the lowest line error, FanDuel and BetMGM the highest. One week.
+
 ## The arithmetic
 
 - De-vig a pair by scaling to sum to one.

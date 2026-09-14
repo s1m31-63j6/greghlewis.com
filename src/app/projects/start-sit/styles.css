@@ -350,7 +350,15 @@
 .ss-stats tbody th { font-weight: 600; color: var(--ink-soft); }
 .ss-stats td.ss-num, .ss-stats th.ss-num { text-align: right; }
 .ss-stats .ss-src { font-size: 10.5px; color: var(--ink-quiet); white-space: nowrap; }
-.ss-stats tr.is-dfs .ss-src { color: var(--ink-meta); font-style: italic; }
+.ss-mkt { font-size: 10px; }
+.ss-mkt--firm { color: var(--positive); font-weight: 700; }
+.ss-mkt--thin { color: var(--ink-meta); }
+.ss-mkt--pickem { color: var(--ink-meta); font-style: italic; }
+.ss-mkt--moving { color: var(--ink); font-weight: 700; }
+.ss-mkt--moving.is-up .ss-mkt-arrow { color: var(--positive); }
+.ss-mkt--moving.is-down .ss-mkt-arrow { color: var(--negative); }
+.ss-card-firm { margin: -2px 0 6px; font-size: 10px; color: var(--ink-meta);
+  font-family: var(--sans); font-stretch: 78%; text-transform: uppercase; letter-spacing: 0.08em; }
 .ss-stats tr.is-missing td, .ss-stats tr.is-missing th { color: var(--ink-meta); font-weight: 400; font-style: italic; }
 .ss-stats tr:last-child th, .ss-stats tr:last-child td { border-bottom: 0; }
 

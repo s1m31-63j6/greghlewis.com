@@ -21,6 +21,7 @@
     "start-sit:publish": "cd projects/start-sit && uv run python ev.py --selftest && uv run python teams.py --no-verify && uv run python publish.py",
     "start-sit:build": "npm run start-sit:fetch && npm run start-sit:publish",
     "start-sit:check": "node --experimental-strip-types projects/start-sit/results/odds-shape.mts && node --experimental-strip-types projects/start-sit/results/names.mts && node --experimental-strip-types projects/start-sit/results/simulate.mts && node projects/start-sit/results/render.cjs",
+    "start-sit:evaluate": "cd projects/start-sit && uv run python evaluate.py && cd ../.. && node --experimental-strip-types projects/start-sit/results/eval.mts",
     "start-sit:drift": "node --experimental-strip-types projects/start-sit/results/day-over-day.mts",
     "start-sit:daily": "npm run start-sit:fetch && npm run start-sit:publish && npm run start-sit:check && npm run start-sit:drift",
     "career-paths:build": "cd projects/career-paths && uv run python params.py && uv run python simulate.py && uv run python verify.py",

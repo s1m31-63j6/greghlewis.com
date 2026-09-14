@@ -38,6 +38,19 @@ check(`books' fantasy-score line agrees: n=${fs?.n} r=${fs?.r} gap=${fs?.meanGap
 check(`week ${meta.week} is a regular-season week`, meta.week >= 1 && meta.week <= 18);
 check(`${games.length} games`, games.length >= 13 && games.length <= 16);
 
+console.log("\nPer-book archive");
+{
+  // Present from the first run after 2026-09-14; older commits lack it.
+  let lines: any = null;
+  try { lines = read("lines.json").lines; } catch { /* not yet published */ }
+  if (!lines) console.log("  --    lines.json not in this build");
+  else {
+    const rows = Object.values<any>(lines).flatMap((s) => Object.values<any>(s)).flat();
+    check(`${Object.keys(lines).length} players archived with ${rows.length} book rows`, Object.keys(lines).length >= 100 && rows.length >= 500);
+    check("every archived row names a book and a number", rows.every((r: any) => r.book && (Number.isFinite(r.line) || Number.isFinite(r.p))));
+  }
+}
+
 console.log("\nGames");
 const gameIds = new Set(games.map((g) => g.id));
 let totalsOk = 0;
