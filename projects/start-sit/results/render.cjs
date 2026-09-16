@@ -71,9 +71,12 @@ const none = players.find((p) => p.coverage === "none");
 const tdOnly = players.find((p) => p.coverage === "td-only") ?? players.find((p) => p.coverage === "partial");
 
 console.log("\nRendering the advisor");
+// A Wednesday prices far fewer receivers fully than a Saturday, so the six
+// are spread over the list, not fixed ranks.
+const at = (f) => wrs[Math.round(f * (wrs.length - 1))];
 const CASES = [
   ["pair", [wrs[0], wrs[1]]],
-  ["six", [wrs[0], wrs[3], wrs[8], wrs[15], wrs[30], wrs[40]]],
+  ["six", [at(0), at(0.1), at(0.25), at(0.45), at(0.7), at(1)]],
   ["with-no-line", [wrs[0], wrs[1], none]],
   ["partial", [wrs[5], tdOnly]],
   ["one", [wrs[0]]],
