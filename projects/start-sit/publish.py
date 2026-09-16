@@ -65,7 +65,13 @@ SLEEPER_STATS = {
 
 # Sanity thresholds. Fail the build rather than publish a number that has
 # stopped resembling football.
-MIN_SPEARMAN = 0.6
+# The rank floor is per stat. Passing yards cannot earn 0.6: every starter's
+# line sits in a 190-270 band and moves with the matchup, so its rank against
+# last season is weak by nature. In 2025 the actual weekly yards of the top 25
+# quarterbacks ranked against their season average at a median 0.31 and never
+# above 0.66; the market's forecast ran 0.46-0.68 across weeks 1-2. A broken
+# inversion lands near zero or negative, which 0.3 still catches.
+MIN_SPEARMAN = {"rec_yds": 0.6, "rush_yds": 0.6, "rec": 0.6, "pass_yds": 0.3}
 MAX_LEAN_SD = 1.5
 MIN_PRICED = 120
 # The books post their own fantasy-score line (DraftKings scoring: full PPR,
@@ -373,14 +379,14 @@ def main() -> None:
     if len(priced) < MIN_PRICED:
         raise SystemExit(f"only {len(priced)} priced players — a feed is missing or the week is wrong")
     spearman = {}
-    for stat in ("rec_yds", "rush_yds", "pass_yds", "rec"):
+    for stat in MIN_SPEARMAN:
         pairs = [(p["stats"][stat]["ev"], season_avg[p["gsisId"]][stat])
                  for p in priced if stat in p["stats"] and p["gsisId"] in season_avg]
         if len(pairs) >= 15:
             df = pd.DataFrame(pairs, columns=["ev", "avg"])
             # Rank correlation by hand: pandas defers Spearman to scipy.
             spearman[stat] = round(float(df["ev"].rank().corr(df["avg"].rank())), 3)
-    bad = [s for s, v in spearman.items() if v < MIN_SPEARMAN]
+    bad = [s for s, v in spearman.items() if v < MIN_SPEARMAN[s]]
     if bad:
         raise SystemExit(f"market EV no longer tracks last season for {bad}: {spearman}")
     lean = max((abs(s["ev"] - s["line"]) / s["sd"] for p in priced for k, s in p["stats"].items()

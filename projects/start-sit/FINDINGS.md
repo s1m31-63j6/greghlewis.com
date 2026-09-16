@@ -71,3 +71,18 @@ track-record page (unlinked) renders it all.
 4. Do "moving" lines (moved a unit since open) predict better than "firm" ones?
    (Needs the archive; not measurable for week 1.)
 5. Does DraftKings stay the sharpest book on rushing yards?
+
+## Week 2, Wednesday (2026-09-16): the passing-yards gate
+
+The first week 2 refresh failed in the publisher's sanity gate: passing-yards
+EV ranked against the 2025 per-game average at 0.458, under the 0.6 floor.
+The lines were fine. Twenty-five starters priced between 189 and 270 yards,
+with the largest gaps being matchup stories (Mahomes 218.5 against a 256
+average; Dart 212.5 against a rookie's 162). Week 1 had passed at 0.684, so
+the floor was already marginal for this stat. Benchmark from 2025: the actual
+weekly passing yards of the top 25 quarterbacks ranked against their season
+average at a median 0.31 and never above 0.66, so the market's 0.46 to 0.68 is
+already better than outcomes manage. The floor is now per stat: 0.6 for
+rushing yards, receiving yards and receptions (running 0.78 to 0.92), 0.3 for
+passing yards. A broken inversion lands near zero or negative, which 0.3
+still catches. Nothing about the method changed.

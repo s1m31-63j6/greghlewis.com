@@ -191,7 +191,9 @@ sigma   = a + b × line, floored                                 the stat's game
             gets a partial total flagged as partial. Nothing is imputed from last season,
             from a depth chart, or from the other players on the page. The build checks that
             the market numbers still track last season&rsquo;s per-game averages (rank
-            correlation above 0.6 for yards and receptions), that no expectation sits more
+            correlation above 0.6 for rushing yards, receiving yards and receptions, and
+            above 0.3 for passing yards, where every starter&rsquo;s line sits in a narrow
+            band and moves with the matchup), that no expectation sits more
             than one and a half spreads from its line, and that every priced player is on a
             team in a game that week. It also checks the whole chain against an answer key
             the market supplies: the books post their own fantasy-score line for most fully
