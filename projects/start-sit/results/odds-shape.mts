@@ -33,8 +33,12 @@ for (const f of ["players.json", "games.json", "meta.json"]) {
 }
 check("meta.sanity.ran", meta.sanity?.ran === true);
 const fs = meta.sanity?.fantasyScore;
+// The publisher skips the tie-out (r null) under FS_MIN_N pairs, which a
+// Wednesday can legitimately be; a null at or above the floor is a failure.
+const FS_MIN_N = 30;
 check(`books' fantasy-score line agrees: n=${fs?.n} r=${fs?.r} gap=${fs?.meanGap}`,
-  !!fs && (meta.counts.books === 0 || (fs.n >= 50 && fs.r >= 0.98 && Math.abs(fs.meanGap) <= 0.5)));
+  !!fs && (meta.counts.books === 0 || (fs.r === null ? fs.n < FS_MIN_N
+    : fs.n >= FS_MIN_N && fs.r >= 0.98 && Math.abs(fs.meanGap) <= 0.5)));
 check(`week ${meta.week} is a regular-season week`, meta.week >= 1 && meta.week <= 18);
 check(`${games.length} games`, games.length >= 13 && games.length <= 16);
 

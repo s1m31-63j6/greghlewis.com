@@ -85,4 +85,8 @@ average at a median 0.31 and never above 0.66, so the market's 0.46 to 0.68 is
 already better than outcomes manage. The floor is now per stat: 0.6 for
 rushing yards, receiving yards and receptions (running 0.78 to 0.92), 0.3 for
 passing yards. A broken inversion lands near zero or negative, which 0.3
-still catches. Nothing about the method changed.
+still catches. The rerun then tripped a second Saturday-calibrated floor:
+the books' fantasy-score tie-out wanted 50 pairs and a Wednesday has 46
+(at which it agreed at r = 0.998, gap 0.09). That floor is 30 on both sides
+now, and the Node gate accepts the publisher's skip only below it. Nothing
+about the method changed.

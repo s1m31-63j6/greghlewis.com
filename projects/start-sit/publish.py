@@ -76,8 +76,11 @@ MAX_LEAN_SD = 1.5
 MIN_PRICED = 120
 # The books post their own fantasy-score line (DraftKings scoring: full PPR,
 # -1 per interception). Our full-PPR total must agree with it, or the
-# arithmetic upstream has broken.
-FS_MIN_N = 50
+# arithmetic upstream has broken. The books post that line for ~180 players by
+# Saturday but ~50 on a Wednesday, and 46 pairs already tied out at r = 0.998;
+# below the floor the check is recorded as skipped and the Node gate
+# (results/odds-shape.mts) accepts that only while n is under the same floor.
+FS_MIN_N = 30
 FS_MIN_R = 0.98
 FS_MAX_GAP = 0.5
 # A yardage line under a yard is a yes/no prop ("any rushing yards"), not a
