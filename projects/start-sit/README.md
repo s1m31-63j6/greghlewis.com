@@ -151,6 +151,14 @@ the lowest line error, FanDuel and BetMGM the highest. One week.
   the pool is dropped silently by design; the probe counts them.
 - **Passing yards' spread fit has a negative slope on raw data.** `MIN_R2` turns
   it into a constant. Do not "fix" the slope by hand.
+- **Every gate floor was first set from a Saturday pull, and Wednesday is a
+  different animal.** The first pull of a new week fully prices a third as many
+  players, posts a quarter as many fantasy-score lines, prices ~23 quarterbacks,
+  and bye weeks take up to six teams off the slate. Three Wednesdays in a row
+  failed on floors that every Saturday cleared (fantasy-score pairs, fully
+  priced count, an exact waiver row count). Calibrate a floor against the
+  Wednesday run logs (`gh run view <id> --log`), never against the committed
+  snapshots: those are green by construction.
 - **Never cache `data/` in CI.** A warm cache lets a dead feed serve yesterday.
 - **The key is a header, never a query parameter.** It must not reach a cache
   filename or a log line; `fetch_sgo.py` redacts it from error text.

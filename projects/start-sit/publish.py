@@ -69,9 +69,11 @@ SLEEPER_STATS = {
 # line sits in a 190-270 band and moves with the matchup, so its rank against
 # last season is weak by nature. In 2025 the actual weekly yards of the top 25
 # quarterbacks ranked against their season average at a median 0.31 and never
-# above 0.66; the market's forecast ran 0.46-0.68 across weeks 1-2. A broken
-# inversion lands near zero or negative, which 0.3 still catches.
-MIN_SPEARMAN = {"rec_yds": 0.6, "rush_yds": 0.6, "rec": 0.6, "pass_yds": 0.3}
+# above 0.66; the market's forecast ran 0.39-0.72 across weeks 1-4, lowest on
+# Wednesdays (0.52, 0.46, 0.39 in weeks 2-4) when ~20 quarterbacks are priced
+# and drifting down as last season's averages age. A broken inversion lands
+# near zero or negative, which 0.2 still catches.
+MIN_SPEARMAN = {"rec_yds": 0.6, "rush_yds": 0.6, "rec": 0.6, "pass_yds": 0.2}
 MAX_LEAN_SD = 1.5
 MIN_PRICED = 120
 # The books post their own fantasy-score line (DraftKings scoring: full PPR,

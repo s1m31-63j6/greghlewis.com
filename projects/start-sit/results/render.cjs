@@ -109,8 +109,14 @@ console.log("\nRendering the waiver report");
   writeFileSync(path.join(OUT, "waivers.html"), html);
   const rows = (html.match(/class="ss-waiver-row"/g) || []).length;
   const cols = (html.match(/class="ss-waiver-col /g) || []).length;
-  check(`waiver report renders ${cols} columns · ${rows} rows`, cols === 4 && rows === 32 && !/NaN|undefined/.test(html)
-    && /switch the control above/.test(html));
+  // The board lists up to eight per position, but on a Wednesday only ~23
+  // quarterbacks are priced and most of them sit inside the top 120 held
+  // here, so a column can legitimately run short (31 rows on 2026-09-30).
+  // Assert that the render matches the report, not a Saturday row count.
+  const perPos = Object.values(report.byPos).map((r) => r.length);
+  check(`waiver report renders ${cols} columns · ${rows} rows`, cols === 4
+    && rows === perPos.reduce((a, b) => a + b, 0) && perPos.every((n) => n >= 1 && n <= 8)
+    && !/NaN|undefined/.test(html) && /switch the control above/.test(html));
 }
 
 console.log("\nRendering the board");

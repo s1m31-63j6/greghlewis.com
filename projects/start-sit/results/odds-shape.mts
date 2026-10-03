@@ -100,8 +100,13 @@ const dupes = new Map<string, number>();
 for (const p of players) dupes.set(`${p.name}|${p.team}`, (dupes.get(`${p.name}|${p.team}`) ?? 0) + 1);
 check("no two players share a name and team", [...dupes.values()].every((n) => n === 1));
 
+// Wednesday is thin: the books post most props from Thursday on, so a new
+// week's first pull fully prices ~55-85 players against ~185 by Saturday
+// (56 on 2026-09-23, which a floor of 60 refused), and bye weeks take up to
+// six teams off the slate. A dead sportsbook tier lands near zero, which 30
+// still catches.
 const full = players.filter((p) => p.coverage === "full").length;
-check(`${full} players fully priced`, full >= 60);
+check(`${full} players fully priced`, full >= 30);
 const byPos = new Map<string, number>();
 for (const p of priced) byPos.set(p.pos, (byPos.get(p.pos) ?? 0) + 1);
 check(`priced by position ${JSON.stringify(Object.fromEntries(byPos))}`,
