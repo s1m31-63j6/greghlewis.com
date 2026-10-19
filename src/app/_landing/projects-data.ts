@@ -14,6 +14,31 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    id: "bond-yields",
+    title: "Intro to Bond Yields",
+    date: "2026-10-19",
+    oneLiner:
+      "The 10-year Treasury and the Fed's rate since 2000, with fifteen episodes explained in plain language, and the five ideas that account for every turn. Written for an econ 101 reader. Why 5% today is a different 5% from 2007.",
+    techStack: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "Inline SVG",
+      "Python",
+      "FRED",
+    ],
+    searchTags: [
+      "bonds", "bond yields", "treasury", "10-year", "fed funds", "interest rates", "macro",
+      "macroeconomics", "term premium", "real yield", "TIPS", "breakeven", "inflation",
+      "neutral rate", "r-star", "Taylor rule", "yield curve", "inversion", "QE", "taper tantrum",
+      "financial services", "fixed income", "timeline", "explainer", "data viz", "editorial",
+    ],
+    liveUrl: "/projects/bond-yields",
+    liveUrlIsExternal: false,
+    githubUrl: null,
+    thumbnail: "/landing/bond-yields.png",
+  },
+  {
     id: "career-paths",
     title: "Should You Join a Startup?",
     date: "2026-09-06",

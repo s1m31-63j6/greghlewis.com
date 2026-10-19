@@ -45,6 +45,15 @@ const HOME: SignupCopy = {
  * readers.
  */
 const BY_PROJECT: Record<string, SignupCopy> = {
+  "bond-yields": {
+    id: "bond-yields",
+    label: "Bond Yields",
+    headline: "More macro, when I make it",
+    blurb:
+      "This one explains the forces on a bond yield and then walks the ten-year from 2000 to today. If you want the next piece like it, leave an address and I will send a note when it lands. \u2014 Greg",
+    notePrompt: "What market question are you trying to answer?",
+    cta: "Add me to the list",
+  },
   "career-paths": {
     id: "career-paths",
     label: "Career Paths",

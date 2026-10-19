@@ -64,3 +64,6 @@ projects/nfl-prospect-comparables/engine/corpus/
 # adventureworks-chat: Function project ignores its own build artifacts
 # via azure-functions/adventureworks/.gitignore. Azure-infra parameter
 # files (with secrets) are ignored via azure-infra/.gitignore.
+
+# bond-yields raw FRED downloads (regenerate with fetch.py)
+projects/bond-yields/raw/
