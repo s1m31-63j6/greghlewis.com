@@ -3,12 +3,14 @@ import {
   Archivo,
   Geist,
   Geist_Mono,
+  Instrument_Sans,
   Source_Serif_4,
   Inter,
   JetBrains_Mono,
   Nunito,
 } from "next/font/google";
 import "./globals.css";
+import "../../design/working-papers/tokens.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -57,6 +59,16 @@ const nunito = Nunito({
   weight: ["400", "600", "700", "800", "900"],
 });
 
+// Working Papers — the site's visual identity (design/working-papers/README.md).
+// One variable face for everything on a paper: width axis for the masthead,
+// true italics for the personal note.
+const instrumentSans = Instrument_Sans({
+  variable: "--font-wp",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["wdth"],
+});
+
 export const metadata: Metadata = {
   title: "Greg Lewis",
   description: "Recent projects — ML systems, AWS-native AI infra, and applied analysis.",
@@ -70,7 +82,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${nunito.variable} ${archivo.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${inter.variable} ${jetbrainsMono.variable} ${nunito.variable} ${archivo.variable} ${instrumentSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}

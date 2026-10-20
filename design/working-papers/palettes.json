@@ -1,0 +1,62 @@
+{
+  "_note": "Working Papers inks. --a = ink A (title, dotted rules, primary data), --b = ink B (overprint offset, link underline), --hl = highlighter behind graphite text (ink B screened lighter when needed so graphite on it is >= 7.5:1). See README.md section 5.",
+  "constants": {
+    "paper": "#f3f2ee",
+    "ink": "#1f2023",
+    "label": "#5b5d63",
+    "quiet": "#7a7c82",
+    "footer": "#3a3c42",
+    "hair": "#cfcdc6"
+  },
+  "papers": {
+    "bond-yields":              { "no": 12, "title": "Intro to Bond Yields", "a": "#00707a", "b": "#ffb20f", "hl": "#ffb20f", "data": { "ten_year": "a (halftone)", "fed_funds": "b (flat)" } },
+    "chess-coach":              { "no": 11, "title": "Chess Coach", "a": "#24583f", "b": "#ff6f7d", "hl": "#fb9da5", "data": { "dark_square": "a (halftone)", "selected_square": "b", "band": "b multiply" } },
+    "career-paths":             { "no": 9,  "title": "Should You Join a Startup?", "a": "#343a8c", "b": "#ff6a2b", "hl": "#fb9a6f", "data": { "startup": "#ff6a2b", "corporate": "#343a8c", "consulting": "#00707a" } },
+    "draft-sheet":              { "no": 8,  "title": "A Draft Board for the Casual Fan", "a": "#24583f", "b": "#ffb20f", "hl": "#ffb20f", "data": "football_positions" },
+    "glass-box-rag":            { "no": 6,  "title": "Glass Box RAG", "a": "#343a8c", "b": "#e8590c", "hl": "#ed9e72", "data": { "precedent": "#343a8c", "ai_era": "#e8590c" } },
+    "religious-voices":         { "no": 4,  "title": "Religious Voices", "a": "#7c2335", "b": "#5fb0e5", "hl": "#75bae6", "data": { "leader": "#7c2335 multiply" } },
+    "two-minute-drill":         { "no": 3,  "title": "Two-Minute Drill", "a": "#2b2c30", "b": "#ff6a2b", "hl": "#fb9a6f", "data": "team colours for teams only" },
+    "nfl-prospect-comparables": { "no": 2,  "title": "NFL Prospect Comparables", "a": "#2b2c30", "b": "#ff6f7d", "hl": "#fb9da5", "data": "football_positions" },
+    "index":                    { "title": "Index of papers", "a": "#1f2023", "b": "#ffb20f", "hl": "#ffb20f", "data": "each row uses its paper's a/b for the title overprint and hover stroke" }
+  },
+  "unassigned_projects": ["playbook", "scale-or-sell", "emba-roi-analysis", "adventureworks-chat"],
+  "library": [
+    { "name": "Teal & Sunflower",   "a": "#00707a", "b": "#ffb20f", "hl": "#ffb20f" },
+    { "name": "Graphite & Orange",  "a": "#2b2c30", "b": "#ff6a2b", "hl": "#fb9a6f" },
+    { "name": "Forest & Coral",     "a": "#24583f", "b": "#ff6f7d", "hl": "#fb9da5" },
+    { "name": "Indigo & Peach",     "a": "#343a8c", "b": "#f59b74", "hl": "#f59b74" },
+    { "name": "Burgundy & Sky",     "a": "#7c2335", "b": "#5fb0e5", "hl": "#75bae6" },
+    { "name": "Blue & Red",         "a": "#2236c4", "b": "#f15060", "hl": "#f299a0" },
+    { "name": "Indigo & Orange",    "a": "#343a8c", "b": "#e8590c", "hl": "#ed9e72" },
+    { "name": "Forest & Sunflower", "a": "#24583f", "b": "#ffb20f", "hl": "#ffb20f" },
+    { "name": "Graphite & Coral",   "a": "#2b2c30", "b": "#ff6f7d", "hl": "#fb9da5" }
+  ],
+  "football_positions": {
+    "QB":  { "ink": "#343a8c", "text": "#f3f2ee" },
+    "TE":  { "ink": "#00707a", "text": "#f3f2ee" },
+    "WR":  { "ink": "#e8590c", "text": "#1f2023" },
+    "RB":  { "ink": "#5fb0e5", "text": "#1f2023" },
+    "K":   { "ink": "#ffb20f", "text": "#1f2023" },
+    "DST": { "ink": "#ffb20f", "text": "#1f2023" }
+  },
+  "five_strengths": {
+    "_note": "For 5 ordered categories in one ink (e.g. bust → Hall of Fame track). Dots on a 5px grid.",
+    "1_sparse_halftone": "radial-gradient(INK 0.9px, transparent 1.2px) 5px 5px + 1px inset outline",
+    "2_medium_halftone": "radial-gradient(INK 1.5px, transparent 1.8px) 5px 5px",
+    "3_dense_halftone":  "radial-gradient(INK 2.1px, transparent 2.4px) 5px 5px",
+    "4_solid":           "INK",
+    "5_solid_inset_rule":"INK with an inset 3px paper line and 1px ink line inside"
+  },
+  "selector_tilts_deg": [-1.5, 1, -0.8, 1.4, -1.2, 0.8],
+  "motion": {
+    "draw_ease": "cubic-bezier(.55,.05,.25,1)",
+    "grow_ease": "cubic-bezier(.2,.8,.2,1)",
+    "pop_ease": "cubic-bezier(.3,1.5,.5,1)",
+    "swipe_draw_ms": 520, "swipe_delay_ms": 90, "swipe_lift_ms": 200,
+    "link_highlight_ms": 320,
+    "circle_draw_ms": 640, "circle_undraw_ms": 260,
+    "tooltip_grow_ms": 300, "tooltip_print_ms": 260, "tooltip_underline_ms": 460,
+    "flood_ms": 340, "reink_ms": 460, "dim_ms": 260, "pop_ms": 360, "pop_stagger_ms": 45,
+    "index_thumb_ms": 700, "field_underline_ms": 460
+  }
+}

@@ -1,0 +1,5 @@
+/* How it was built: a short run of prose on the same sheet. */
+.bym { max-width: 720px; }
+.bym p { margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: var(--wp-footer); }
+.bym .wp-h2 { margin-top: 40px; font-size: 22px; }
+.bym .wp-h2:first-child { margin-top: 0; }

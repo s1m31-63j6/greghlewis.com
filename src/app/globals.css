@@ -34,6 +34,9 @@ body {
    their max-width and auto margins do the centering. */
 body > main { width: 100%; min-width: 0; }
 
+/* A Working Paper prints its own quiet footer, so the site footer stays off it. */
+body:has(.wp-page) > footer { display: none; }
+
 /* ChatBar suggestion carousel — each rotation re-keys the React node so
    this animation runs fresh on mount. The previous suggestion unmounts
    without an exit transition; the new one rises into place. */

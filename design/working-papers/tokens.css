@@ -1,0 +1,175 @@
+/* =====================================================================
+   Working Papers — tokens, controls and motion for greghlewis.com
+   Import once from src/app/globals.css (after @import "tailwindcss";).
+   Every paper's root element gets class "wp-page" and sets --a, --b, --hl
+   from palettes.json, e.g. style={{ "--a": "#00707a", "--b": "#ffb20f", "--hl": "#ffb20f" }}.
+   ===================================================================== */
+
+:root {
+  --wp-paper: #f3f2ee;
+  --wp-ink: #1f2023;
+  --wp-label: #5b5d63;
+  --wp-quiet: #7a7c82;
+  --wp-footer: #3a3c42;
+  --wp-hair: #cfcdc6;
+  --wp-draw: cubic-bezier(.55, .05, .25, 1);
+  --wp-grow: cubic-bezier(.2, .8, .2, 1);
+  --wp-pop: cubic-bezier(.3, 1.5, .5, 1);
+}
+
+/* ---------- page ---------- */
+.wp-page {
+  --a: #00707a; --b: #ffb20f; --hl: var(--b);
+  background: var(--wp-paper);
+  color: var(--wp-ink);
+  font-family: var(--font-wp, "Instrument Sans"), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+  color-scheme: light;
+}
+.wp-title {
+  margin: 0; font-weight: 600; font-size: clamp(44px, 9vw, 92px); line-height: .92; letter-spacing: -.045em;
+  color: var(--a); text-shadow: 4px 3px 0 var(--b);
+}
+.wp-note { margin: 24px auto 0; max-width: 780px; font-size: 16px; line-height: 1.5; font-style: italic; color: var(--wp-label); }
+.wp-h2 { margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -.025em; }
+.wp-big { font-size: 42px; font-weight: 700; letter-spacing: -.045em; line-height: 1; color: var(--a); }
+.wp-lab { font-size: 12.5px; font-weight: 500; color: var(--wp-label); }
+.wp-ax { font-size: 12px; font-weight: 500; color: var(--wp-label); }
+.wp-rosette { position: absolute; pointer-events: none; opacity: .05; }
+.wp-rosette * { fill: none; stroke: var(--a); stroke-width: .6; }
+
+/* caption under every chart */
+.wp-cap { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px; font-size: 13px; font-weight: 500; color: var(--wp-label); }
+.wp-cap b { color: var(--wp-ink); font-weight: 600; }
+.wp-sw { display: inline-flex; align-items: center; gap: 7px; }
+
+/* footer */
+.wp-foot { display: flex; gap: 26px; font-size: 13px; color: var(--wp-footer); }
+.wp-foot b { display: block; font-size: 11.5px; font-weight: 500; color: var(--wp-quiet); margin-bottom: 3px; }
+
+/* ---------- separators: halftone dotted rule ---------- */
+.wp-rule { height: 4px; background-image: radial-gradient(var(--a) 1.4px, transparent 1.7px); background-size: 6px 4px; }
+
+/* ---------- inline links: underline grows into a highlighter ---------- */
+.wp-x {
+  color: inherit; text-decoration: none; padding: 0 1px 1px;
+  background-image: linear-gradient(var(--b), var(--b)), linear-gradient(var(--hl), var(--hl));
+  background-repeat: no-repeat; background-position: 0 100%, 0 100%; background-size: 100% 2px, 100% 0;
+  transition: background-size 320ms var(--wp-draw);
+}
+.wp-x:hover, .wp-x:focus-visible { background-size: 100% 2px, 100% 100%; outline: 0; }
+
+/* ---------- arrow links: hand-drawn circle ----------
+   <a class="wp-circ">Want more? <span class="wp-arr">→</span>
+     <svg aria-hidden viewBox="0 0 200 60" preserveAspectRatio="none"><path pathLength="1" d="M34 9 C86 0 168 3 191 21 C207 35 176 55 104 57 C44 59 5 49 7 31 C9 15 44 6 76 5 C102 4 128 7 146 12"/></svg></a> */
+.wp-circ { position: relative; display: inline-block; color: inherit; text-decoration: none; }
+.wp-circ svg { position: absolute; left: -16px; top: -11px; width: calc(100% + 30px); height: calc(100% + 22px); overflow: visible; pointer-events: none; transform: rotate(-2deg); }
+.wp-circ path { fill: none; stroke: var(--a); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 260ms ease-in; }
+.wp-circ:hover path, .wp-circ:focus-visible path { stroke-dashoffset: 0; transition: stroke-dashoffset 640ms var(--wp-draw); }
+.wp-circ:focus-visible { outline: 0; }
+.wp-arr { display: inline-block; transition: transform 300ms var(--wp-pop); }
+.wp-circ:hover .wp-arr, .wp-circ:focus-visible .wp-arr { transform: translateX(3px); }
+
+/* ---------- selectors: ink swipe that draws on select ----------
+   <button class="wp-opt" role="tab" aria-selected="true|false">
+     <span class="wp-ink" aria-hidden style="transform: rotate(-1.5deg)"/>
+     <span class="wp-opt-t"><b>Label</b><span>Label</span></span>   (b shown when selected; both reserve width)
+   </button> */
+.wp-opts { display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; font-size: 14.5px; font-weight: 500; }
+.wp-opt, .wp-hov { position: relative; padding: 3px 6px; margin: 0; border: 0; background: none; font: inherit; cursor: pointer; transition: color 200ms; }
+.wp-opt { color: var(--wp-label); }
+.wp-opt:hover, .wp-opt[aria-selected="true"], .wp-opt[aria-pressed="true"] { color: var(--wp-ink); }
+.wp-opt:focus-visible, .wp-hov:focus-visible { outline: 1.5px dotted var(--wp-ink); outline-offset: 3px; }
+.wp-ink {
+  position: absolute; left: 0; right: 0; top: 3px; bottom: 0; pointer-events: none;
+  background: var(--hl); mix-blend-mode: multiply;
+  border-radius: 2px 7px 4px 3px / 5px 3px 6px 4px;
+  clip-path: inset(0 100% 0 0); opacity: 0;
+  transition: opacity 200ms ease, clip-path 0s 200ms;          /* lift */
+}
+.wp-opt[aria-selected="true"] .wp-ink, .wp-opt[aria-pressed="true"] .wp-ink {
+  clip-path: inset(0 0 0 0); opacity: 1;
+  transition: clip-path 520ms var(--wp-draw) 90ms, opacity 0s 90ms;  /* draw */
+}
+.wp-opt-t { position: relative; display: inline-grid; }
+.wp-opt-t > * { grid-area: 1 / 1; }
+.wp-opt-t b { font-weight: 600; visibility: hidden; }
+.wp-opt[aria-selected="true"] .wp-opt-t b, .wp-opt[aria-pressed="true"] .wp-opt-t b { visibility: visible; }
+.wp-opt[aria-selected="true"] .wp-opt-t span, .wp-opt[aria-pressed="true"] .wp-opt-t span { visibility: hidden; }
+
+/* ---------- actions: text buttons with a hover swipe ---------- */
+.wp-hov { color: var(--wp-ink); font-weight: 500; }
+.wp-hov::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 3px; bottom: 0; background: var(--hl); mix-blend-mode: multiply;
+  border-radius: 2px 7px 4px 3px / 5px 3px 6px 4px; transform: rotate(-1deg);
+  clip-path: inset(0 100% 0 0); transition: clip-path 420ms var(--wp-draw);
+}
+.wp-hov:hover::before, .wp-hov:focus-visible::before { clip-path: inset(0 0 0 0); }
+.wp-hov > span { position: relative; }
+.wp-ask { font-weight: 600; color: var(--a); }   /* primary action */
+
+/* ---------- inputs: dotted underline that draws solid ---------- */
+.wp-field {
+  flex: 1; min-width: 0; box-sizing: border-box; font: inherit; font-size: 15px; font-weight: 500; color: var(--wp-ink);
+  border: 0; border-radius: 0; padding: 12px 2px 11px; outline: 0; background-color: transparent;
+  background-image: linear-gradient(var(--a), var(--a)), radial-gradient(var(--a) 1.2px, transparent 1.5px);
+  background-repeat: no-repeat, repeat-x; background-position: 0 100%, 0 100%; background-size: 0% 2px, 5px 3px;
+  transition: background-size 460ms var(--wp-draw);
+}
+.wp-field:hover, .wp-field:focus { background-size: 100% 2px, 5px 3px; }
+.wp-field::placeholder { color: var(--wp-quiet); opacity: 1; }
+
+/* ---------- tooltips: grow from the anchor ----------
+   Mount conditionally so the entry animation plays. Set --ox/--oy to the anchor corner (e.g. 0% 100%). */
+.wp-tip {
+  position: absolute; z-index: 6; pointer-events: none; box-sizing: border-box; max-width: 320px;
+  background: var(--wp-paper); border: 1.5px solid var(--wp-ink); padding: 9px 12px 10px; line-height: 1.3;
+  transform-origin: var(--ox, 50%) var(--oy, 100%);
+  animation: wpGrow 300ms var(--wp-grow) both;
+}
+.wp-tip > * { animation: wpPrint 260ms 110ms both; }
+.wp-tip > *:nth-child(2) { animation-delay: 150ms; }
+.wp-tip > *:nth-child(3) { animation-delay: 190ms; }
+.wp-tip b {
+  font-size: 15px; font-weight: 600;
+  background-image: linear-gradient(var(--b), var(--b)); background-repeat: no-repeat; background-position: 0 92%; background-size: 0 4px;
+  animation: wpPrint 260ms 110ms both, wpUnder 460ms 240ms var(--wp-draw) forwards;
+}
+.wp-tip small { display: block; font-size: 12.5px; font-weight: 500; color: var(--wp-label); }
+
+/* ---------- selection: ink floods from the centre ---------- */
+.wp-mark { position: relative; overflow: hidden; background: var(--wp-paper); transition: opacity 240ms ease, color 260ms ease 60ms, transform 260ms var(--wp-pop); }
+.wp-mark:hover, .wp-mark:focus-visible { transform: scale(1.14); outline: 0; }
+.wp-flood { position: absolute; inset: 0; background: var(--a); clip-path: circle(0% at 50% 50%); transition: clip-path 340ms var(--wp-draw); }
+.wp-mark[aria-pressed="true"] .wp-flood { clip-path: circle(75% at 50% 50%); }
+.wp-dim { transition: opacity 260ms ease; }        /* lit/dim; dimmed = opacity .18–.3 */
+.wp-pop { animation: wpPop 360ms var(--wp-pop) both; } /* stagger with animation-delay: n*45ms */
+.wp-reink { animation: wpReA 460ms var(--wp-draw) both; } /* swap to wpReB on each content change to replay */
+
+/* ---------- Index rows ---------- */
+.ix-row { color: inherit; text-decoration: none; }
+.ix-frame { display: block; overflow: hidden; border: 1px solid var(--wp-hair); transition: border-color 300ms; }
+.ix-img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--wp-grow); }
+.ix-row:hover .ix-img, .ix-row:focus-visible .ix-img { transform: scale(1.04); }
+.ix-row:hover .ix-frame { border-color: var(--wp-ink); }
+.ix-s { background-image: linear-gradient(var(--rb), var(--rb)); background-repeat: no-repeat; background-position: 0 96%; background-size: 0 6px; transition: background-size 520ms var(--wp-draw); }
+.ix-row:hover .ix-s, .ix-row:focus-visible .ix-s { background-size: 100% 6px; }
+
+/* ---------- keyframes ---------- */
+@keyframes wpGrow {
+  from { opacity: 0; transform: scale(.4); clip-path: circle(0 at var(--ox, 50%) var(--oy, 100%)); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: scale(1); clip-path: circle(160% at var(--ox, 50%) var(--oy, 100%)); }
+}
+@keyframes wpPrint { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+@keyframes wpUnder { to { background-size: 100% 4px; } }
+@keyframes wpPop { 0% { transform: scale(.2); opacity: 0; } 70% { transform: scale(1.18); opacity: 1; } 100% { transform: scale(1); } }
+@keyframes wpReA { from { opacity: .2; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+@keyframes wpReB { from { opacity: .2; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .wp-page *, .wp-page *::before, .wp-page *::after {
+    transition-duration: 1ms !important; transition-delay: 0ms !important;
+    animation-duration: 1ms !important; animation-delay: 0ms !important;
+  }
+}
