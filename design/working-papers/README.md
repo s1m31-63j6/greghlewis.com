@@ -94,7 +94,7 @@ Every paper sets three CSS variables on its root: `--a` (ink A: title, dotted ru
 |---|---|---|---|---|
 | No. 12 Intro to Bond Yields (`bond-yields`) | teal `#00707a` | sunflower `#ffb20f` | `#ffb20f` | 10-year = ink-A halftone; Fed funds = ink-B flat |
 | No. 11 Chess Coach (`chess-coach`) | forest `#24583f` | coral `#ff6f7d` | `#fb9da5` | dark squares = forest halftone; selected square = coral |
-| No. 09 Should You Join a Startup? (`career-paths`) | indigo `#343a8c` | orange `#ff6a2b` | `#fb9a6f` | paths: startup orange, corporate indigo, consulting teal `#00707a` |
+| No. 09 Should New Grads Join a Startup? (`career-paths`) | indigo `#343a8c` | orange `#ff6a2b` | `#fb9a6f` | paths: startup orange, corporate indigo, consulting teal `#00707a` |
 | No. 08 A Draft Board for the Casual Fan (`draft-sheet`) | forest `#24583f` | sunflower `#ffb20f` | `#ffb20f` | football position inks (5.3) |
 | No. 06 Glass Box RAG (`glass-box-rag`) | indigo `#343a8c` | orange `#e8590c` | `#ed9e72` | precedent = indigo, AI-era = orange |
 | No. 04 Religious Voices (`religious-voices`) | burgundy `#7c2335` | sky `#5fb0e5` | `#75bae6` | dots burgundy, multiply |

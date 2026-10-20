@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Should You Join a Startup? — the page.
+ * Should New Grads Join a Startup? — the page.
  *
  * Three tabs over one model. The plinko and the adventure share the same
  * calibrated parameters and the same engine, so the distribution a reader
@@ -59,7 +59,7 @@ export default function CareerPaths() {
         <header className="cp-header">
           <div>
             <div className="cp-kicker">Project 10 · A sourced simulation</div>
-            <h1 className="cp-display">Should You Join a Startup?</h1>
+            <h1 className="cp-display">Should New Grads Join a Startup?</h1>
           </div>
           <p className="cp-lede">
             Students hear the upside of a startup job and rarely the downside. Here are nine

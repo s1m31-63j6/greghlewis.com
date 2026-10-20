@@ -2,7 +2,8 @@ export type Project = {
   id: string;
   title: string;
   date: string;
-  oneLiner: string;
+  /** One italic line under the title. */
+  note: string;
   techStack: string[];
   searchTags: string[];
   liveUrl: string;
@@ -17,8 +18,8 @@ export const projects: Project[] = [
     id: "bond-yields",
     title: "Intro to Bond Yields",
     date: "2026-10-19",
-    oneLiner:
-      "The 10-year Treasury and the Fed's rate since 2000, with fifteen episodes explained in plain language, and the five ideas that account for every turn. Written for an econ 101 reader. Why 5% today is a different 5% from 2007.",
+    note:
+      "Rates are back in the news, so I went back to what actually moves them.",
     techStack: [
       "Next.js 16",
       "React 19",
@@ -40,10 +41,10 @@ export const projects: Project[] = [
   },
   {
     id: "career-paths",
-    title: "Should You Join a Startup?",
+    title: "Should New Grads Join a Startup?",
     date: "2026-09-06",
-    oneLiner:
-      "Three thousand simulated careers dropped through thirty years of pay, layoffs, shutdowns and the occasional exit: what a first job at a startup, a corporation or a consulting firm tends to be worth, and what funding stage does to the odds. Plus a plain-English brief on seed, Series A and everything after.",
+    note:
+      "Students hear the upside of a startup job and rarely the downside.",
     techStack: [
       "Next.js 16",
       "React 19",
@@ -67,10 +68,10 @@ export const projects: Project[] = [
   },
   {
     id: "draft-sheet",
-    title: "A Draft Board for the Casual Fan - Fantasy Football",
+    title: "A Draft Board for the Casual Fan",
     date: "2026-08-29",
-    oneLiner:
-      "Expert consensus tiers rebuilt for your exact league settings, with Yahoo, ESPN, Sleeper and mock-draft ADP side by side so you can see who your platform is giving away \u2014 and a one-page sheet to print for draft night.",
+    note:
+      "Spent your summer doing something more rewarding than refreshing X? I've got you covered.",
     techStack: [
       "TypeScript",
       "Next.js 16",
@@ -119,10 +120,10 @@ export const projects: Project[] = [
   },
   {
     id: "chess-coach",
-    title: "Chess Coach — Play at Your Level",
+    title: "Chess Coach",
     date: "2026-08-10",
-    oneLiner:
-      "A chess app built to be enjoyed rather than survived \u2014 a difficulty that actually fits you, win chances that swing move by move, and a walk back through the game to the moment it turned.",
+    note:
+      "I wanted an opponent that plays at my level, not against it.",
     techStack: [
       "Stockfish WASM",
       "Web Workers",
@@ -169,10 +170,10 @@ export const projects: Project[] = [
   },
   {
     id: "glass-box-rag",
-    title: "Glass Box RAG — Fair Use AI",
+    title: "Glass Box RAG",
     date: "2026-07-20",
-    oneLiner:
-      "A legal precedent retrieval system that shows its work — ask about AI and copyright fair use, and watch the two searches race, the ranks reshuffle under fusion and again under a cross-encoder, and the agent decide whether to follow a citation.",
+    note:
+      "I wanted to watch a retrieval system think before it answers.",
     techStack: [
       "AWS Lambda",
       "Function URL response streaming",
@@ -230,10 +231,10 @@ export const projects: Project[] = [
   },
   {
     id: "two-minute-drill",
-    title: "Two-Minute Drill — Coach the Endgame",
+    title: "Two-Minute Drill",
     date: "2026-08-17",
-    oneLiner:
-      "Three hundred real NFL endgames, picked up with under two minutes left and one score in it \u2014 make the calls yourself, and the moment you diverge from what was actually done, a simulator takes over and you own what follows.",
+    note:
+      "Three hundred real NFL endgames. Make the calls; a simulator takes over when you diverge.",
     techStack: [
       "Monte Carlo simulation",
       "Web Workers",
@@ -281,10 +282,10 @@ export const projects: Project[] = [
   },
   {
     id: "adventureworks-chat",
-    title: "AdventureWorks Chat-Based Reporting",
+    title: "AdventureWorks Chat",
     date: "2026-05-22",
-    oneLiner:
-      "A reporting engine you talk to — natural-language questions on Microsoft's canonical AdventureWorksDW sales warehouse return T-SQL, sortable tables, interactive Plotly charts, and a senior-analyst narrative.",
+    note:
+      "What a reporting tool looks like when you can just ask it. The SQL is shown, the chart drawn.",
     techStack: [
       "Azure SQL Database",
       "Azure Functions",
@@ -342,8 +343,8 @@ export const projects: Project[] = [
     id: "religious-voices",
     title: "Religious Voices",
     date: "2026-05-20",
-    oneLiner:
-      "Converse with chatbot personas of religious leaders across eight traditions and two centuries — each grounded in the leader's own published writings, with extrapolation tagged when the model strays.",
+    note:
+      "Leaders across eight traditions and two centuries, answering in their own published words.",
     techStack: [
       "Next.js 16",
       "React 19",
@@ -403,8 +404,8 @@ export const projects: Project[] = [
     id: "nfl-prospect-comparables",
     title: "NFL Prospect Comparables",
     date: "2026-04-30",
-    oneLiner:
-      "A 3D comp engine and conversational scout for the 2026 NFL Draft class — every prospect projected against 1,000+ historical drafted peers.",
+    note:
+      "Every draft prospect looks like someone who came before him.",
     techStack: [
       "AWS Bedrock",
       "Bedrock Knowledge Bases",
@@ -462,10 +463,10 @@ export const projects: Project[] = [
   },
   {
     id: "march-madness-2026",
-    title: "March Madness 2026 — Bracket Prediction Engine",
+    title: "March Madness 2026",
     date: "2026-04-16",
-    oneLiner:
-      "Four independent bracket models — calibrated logistic, gradient-boosted, an Anthropic-powered Animal Kingdom heuristic, and a Vegas-odds fallback — tracked against the live tournament week by week.",
+    note:
+      "Four bracket models, one tournament, scored week by week as it played out.",
     techStack: [
       "Python",
       "scikit-learn",
@@ -517,10 +518,10 @@ export const projects: Project[] = [
   },
   {
     id: "scale-or-sell",
-    title: "Sell now, or build to sell?",
+    title: "Startup Exit: Sell or Scale?",
     date: "2025-12-05",
-    oneLiner:
-      "An exit-timing scenario model for a founder-led B2B services firm — comparing a sell-now exit, organic compounding, and a build-to-sell path that adds a ramped growth lift from management infrastructure.",
+    note:
+      "A founder's question with a number attached: cash out today, or build the firm someone else will pay more for.",
     techStack: [
       "Next.js 16",
       "React 19",
@@ -563,10 +564,10 @@ export const projects: Project[] = [
   },
   {
     id: "draft-2026-talent-vs-market",
-    title: "2026 NFL Draft — Talent vs. Market",
+    title: "2026 Draft: Talent vs. Market",
     date: "2026-04-20",
-    oneLiner:
-      "A pre-draft prospect board that pits a model's talent score against the analyst-consensus market score — the delta is the story.",
+    note:
+      "A model's view of the draft class against the analysts'. The gap is the story.",
     techStack: [
       "Python 3.11",
       "scikit-learn",
@@ -622,10 +623,10 @@ export const projects: Project[] = [
   },
   {
     id: "emba-roi-analysis",
-    title: "EMBA — Is It Worth It?",
+    title: "EMBA: Is It Worth It?",
     date: "2024-10-24",
-    oneLiner:
-      "An interactive scenario calculator for whether a top-tier executive MBA pays back, sweeping cost, salary boost, market returns, and the savings discipline that quietly does most of the work.",
+    note:
+      "Does an executive MBA pay back? Mostly it depends on what you do with the savings.",
     techStack: [
       "Next.js 16",
       "React 19",
@@ -662,3 +663,7 @@ export const projects: Project[] = [
     thumbnail: "/landing/emba-roi-analysis.png",
   },
 ];
+
+/** Papers are numbered by date, oldest first, so the count is always the current one. */
+const BY_DATE = [...projects].sort((a, b) => a.date.localeCompare(b.date)).map((p) => p.id);
+export const paperNo = (id: string) => BY_DATE.indexOf(id) + 1;

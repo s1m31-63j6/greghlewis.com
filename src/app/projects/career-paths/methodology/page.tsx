@@ -12,7 +12,7 @@ import "../styles.css";
 import "./methodology.css";
 
 export const metadata: Metadata = {
-  title: "Should You Join a Startup? — Methodology · Greg Lewis",
+  title: "Should New Grads Join a Startup? — Methodology · Greg Lewis",
   description:
     "How the career simulation works: one engine for the plinko and the sankey, every parameter "
     + "with its source, the benchmarks it is held to, and where it is honest about guessing.",

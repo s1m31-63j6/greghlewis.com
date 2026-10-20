@@ -1,4 +1,4 @@
-// Content module for "Should You Join a Startup?"
+// Content module for "Should New Grads Join a Startup?"
 // Numbers are drawn from projects/career-paths/research/sources_startup.md.
 // Where that file marks a figure as an estimate, the prose says "roughly" and keeps a range.
 

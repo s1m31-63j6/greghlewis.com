@@ -7,7 +7,7 @@ import "./adventure.css";
 import "./brief.css";
 
 export const metadata: Metadata = {
-  title: "Should You Join a Startup? · Greg Lewis",
+  title: "Should New Grads Join a Startup? · Greg Lewis",
   description:
     "Nine thousand simulated careers, dropped one year at a time: what a first job at a startup, "
     + "a corporation, or a consulting firm tends to pay over thirty years, and what funding stage "

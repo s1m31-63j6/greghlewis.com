@@ -1,0 +1,35 @@
+/* The Index of papers. Sheet styles come from _paper/paper.css. */
+
+.ix-search { flex: 0 1 300px; padding: 6px 2px 5px; font-size: 14.5px; }
+.ix-search::-webkit-search-cancel-button { -webkit-appearance: none; }
+.ix-intro { margin: 18px auto 0; text-align: center; }
+.ix-count { margin: 20px 0 -16px; }
+
+.ix-list { list-style: none; margin: 24px 0 0; padding: 0; }
+.ix-list li + li { border-top: 1px solid var(--wp-hair); }
+
+.ix-row { display: grid; grid-template-columns: 112px minmax(0, 1fr) 250px; align-items: start; gap: 24px 32px; padding: 40px 0; }
+.ix-no { padding-top: 8px; font-size: 14px; font-weight: 500; color: var(--wp-label); }
+.ix-no b { display: block; font-weight: 600; color: var(--wp-ink); }
+.ix-title { margin: 0; font-size: 44px; font-weight: 600; line-height: .95; letter-spacing: -.045em; color: var(--a); text-shadow: 3px 2px 0 var(--b); }
+.ix-ext { font-size: .55em; vertical-align: .35em; color: var(--wp-label); text-shadow: none; }
+.ix-note { margin: 14px 0 0; max-width: 560px; font-size: 16px; line-height: 1.5; font-style: italic; color: var(--wp-label); }
+.ix-frame { position: relative; display: block; aspect-ratio: 5 / 3; background: var(--wp-paper); }
+
+.ix-foot-rule { margin-top: 96px; }
+.ix-footer { align-items: baseline; }
+.ix-foot-name { padding-top: 17px; font-size: 13px; font-weight: 500; color: var(--wp-footer); }
+
+@media (max-width: 860px) {
+  .ix-row { grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 32px 0; }
+  .ix-no { display: flex; gap: 12px; padding: 0; }
+  .ix-no b { display: inline; }
+  .ix-title { font-size: clamp(30px, 8vw, 40px); }
+  .ix-frame { max-width: 480px; }
+}
+@media (max-width: 720px) {
+  .wp-mast { flex-wrap: wrap; }
+  .ix-search { flex-basis: 100%; }
+  .ix-intro { margin-top: 14px; }
+  .ix-list { margin-top: 20px; }
+}

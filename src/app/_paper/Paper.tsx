@@ -10,6 +10,8 @@
 import Link from "next/link";
 import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
 
+import "./paper.css";
+
 export type Inks = { a: string; b: string; hl: string };
 
 /* ── Shell: masthead, rosette, hero, footer ─────────────────────────── */

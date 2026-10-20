@@ -1,32 +1,15 @@
 /* ─────────────────────────────────────────────────────────────────────
    Intro to Bond Yields, printed as a Working Paper (design/working-papers).
-   Tokens, rules, links, swipes, tooltips and motion come from tokens.css;
-   this file is the page's layout and its chart marks. Light only.
+   Tokens, rules, links, swipes, tooltips and motion come from tokens.css,
+   the sheet (masthead, hero, footer) from _paper/paper.css; this file is
+   the page's sections and its chart marks.
    ───────────────────────────────────────────────────────────────────── */
 
-/* ── Sheet ─────────────────────────────────────────────────────────── */
-
-.wp-shell { position: relative; overflow: hidden; min-height: 100vh; font-size: 16px; line-height: 1.5; }
-.wp-shell *, .wp-shell *::before, .wp-shell *::after { box-sizing: border-box; }
-.wp-sheet { position: relative; max-width: 1200px; margin: 0 auto; padding: 34px clamp(16px, 5vw, 64px) 48px; }
-.wp-rosette { right: -140px; top: -170px; width: 760px; height: 760px; }
-
-.wp-mast { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-bottom: 14px; font-size: 17px; }
-.wp-mast-l { display: flex; gap: 12px; align-items: baseline; }
-.wp-mast-l b { font-weight: 700; letter-spacing: -0.01em; }
-.wp-mast-l span, .wp-mast-r > span { color: var(--wp-label); }
-.wp-mast-r { display: flex; gap: 28px; align-items: baseline; font-size: 14px; font-weight: 500; }
-
-.wp-hero { position: relative; padding: 84px 0 72px; text-align: center; }
+/* ── Sections ─────────────────────────────────────────────────────── */
 
 .by-sec { padding: 30px 0 96px; }
 .by-sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px 32px; flex-wrap: wrap; }
 .by-idea-note { margin: 12px 0 0; max-width: 1072px; }
-
-.wp-foot-rule { margin-top: 10px; }
-.wp-footer { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px 24px; flex-wrap: wrap; padding-top: 16px; }
-.wp-foot { flex-wrap: wrap; }
-.wp-foot-links { display: flex; gap: 26px; padding-top: 17px; font-size: 13px; font-weight: 500; color: var(--wp-footer); }
 
 /* ── Chart frame ───────────────────────────────────────────────────── */
 
@@ -98,11 +81,6 @@
   .by-panel { margin: 0; padding: 18px 0 0; border-left: 0; border-top: 1px solid var(--wp-hair); }
 }
 @media (max-width: 720px) {
-  .wp-mast { font-size: 15px; }
-  .wp-mast-l, .wp-mast-r { gap: 10px; white-space: nowrap; }
-  .wp-mast-r { font-size: 13px; }
   .wp-cap { padding-left: 0; }
-  .wp-hero { padding: 56px 0 48px; }
   .by-sec { padding: 24px 0 64px; }
-  .wp-rosette { right: -300px; top: -220px; }
 }

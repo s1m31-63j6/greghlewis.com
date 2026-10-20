@@ -120,7 +120,7 @@ export default function ExitSimulator() {
             <p className="exit-kicker">Strategic analysis · 2025</p>
             <WantMore project="scale-or-sell" className="exit-want-more" />
           </div>
-          <h1 className="exit-h1">Sell now, or build to sell?</h1>
+          <h1 className="exit-h1">Startup exit: sell or scale?</h1>
           <p className="exit-dek">
             A founder-led B2B services firm at $25M ARR, doubling year over
             year, weighing a strategic sale three years out — and whether
